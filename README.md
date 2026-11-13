@@ -11,6 +11,7 @@ This repository is a standalone, sanitized release of a working personal deploym
 ## Features
 
 - GPU-rendered holographic core with transparent segmented instruments, a scanned energy sphere, projected J.A.R.V.I.S. lettering, particles and real audio-reactive movement.
+- Content screens appear only when requested: reopen retained radio, video, route, web and code windows without replaying actions, or open validated external links in a new tab. Phone screens form a compact horizontal strip.
 - A panoramic desktop workspace with suspended glass screens, a curved console and spatial grid, without characters or simulated telemetry.
 - Safari iPhone and desktop layouts, adaptive rendering quality and a non-WebGL fallback.
 - Optional local face tracking: move the core with your face and change its apparent size by moving closer or farther away.

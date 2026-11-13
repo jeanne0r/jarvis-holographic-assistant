@@ -19,7 +19,7 @@
   const header=node('header',null,'content-window-header'),heading=node('h2',title),close=node('button','×','content-close');heading.id=dialog.id+'-title';dialog.setAttribute('aria-labelledby',heading.id);close.type='button';close.setAttribute('aria-label','Fermer');close.onclick=()=>dialog.close();header.append(heading,close);
   const body=node('div',null,'content-window-body');dialog.append(header,body);document.body.append(dialog);
   dialog.addEventListener('close',()=>{syncOverlay();if(kind==='evolution'&&windows.get(kind)?.dialog===dialog)clearTimeout(poll);});
-  dialog.showModal();syncOverlay();const win={dialog,body,heading};windows.set(kind,win);return win;
+  dialog.showModal();syncOverlay();const win={dialog,body,heading};windows.set(kind,win);document.dispatchEvent(new CustomEvent('jarvis:content-window',{detail:{kind,dialog}}));return win;
  }
  function button(text,action){const b=node('button',text);b.type='button';b.onclick=()=>Promise.resolve(action()).catch(error=>note(mediaStatus,error.message));return b;}
  function applyVolume(){audio.volume=volume*(duck?.15:1);try{player?.setVolume(volume*(duck?.15:1)*100);}catch{}}
@@ -89,7 +89,7 @@
   if(!/^[a-f0-9-]{36}$/.test(effect.jobId||''))throw Error('Préparation inconnue.');
   clearTimeout(poll);const win=contentWindow('evolution','Évolution de Jarvis'),info=node('p','Chargement…','content-status'),output=node('p'),details=node('details'),patch=node('pre');info.id='evolutionStatus';details.id='evolutionDiff';details.hidden=true;details.append(node('summary','Voir les modifications'),patch);win.body.append(info,output,details);win.body.append(node('small','Version préparée séparément. Revue et essais nécessaires avant installation.','content-footnote'));
   const refresh=async()=>{if(space()!==selectedSpace||windows.get('evolution')!==win)return;try{const job=await api('evolution/status?id='+encodeURIComponent(effect.jobId),null,selectedSpace);if(windows.get('evolution')!==win)return;note(info,({queued:'Demande enregistrée',running:'Codex prépare les modifications…',ready:'Proposition prête · non installée',failed:'Préparation non validée',interrupted:'Préparation interrompue'})[job.status]||job.status);note(output,[job.request,job.summary,job.diffStat,job.limitations,job.message].filter(Boolean).join('\n\n'));if(job.status==='ready'){const data=await api('evolution/diff?id='+effect.jobId,null,selectedSpace);details.hidden=false;note(patch,data.patch);}else if(['queued','running'].includes(job.status)&&win.dialog.open)poll=setTimeout(refresh,4000);}catch(e){note(info,e.message);}};
-  await refresh();return {state:'draft_requested',installed:false};
+  win.onReopen=refresh;await refresh();return {state:'draft_requested',installed:false};
  }
  function webLink(label,value,site=false){
   const u=new URL(value);if(!(site?['http:','https:'].includes(u.protocol):u.protocol==='https:')||u.username||u.password||(!site&&(!u.hostname.includes('.')||/(^|\.)(localhost|local|internal|invalid|test)$/.test(u.hostname)||/^[\d.]+$/.test(u.hostname))))throw Error('Adresse du site non autorisée.');return link(label,u.href,[u.hostname]);
@@ -127,5 +127,10 @@
  function reset(){mediaSerial++;routeSerial++;clearTimeout(poll);seen.clear();audio.pause();player?.destroy();player=null;playing=false;for(const win of windows.values()){if(win.dialog.open)win.dialog.close();win.dialog.remove();}windows.clear();mediaStatus=null;syncOverlay();}
  document.addEventListener('jarvis:spacechange',reset);
  window.addEventListener('pagehide',reset);
- window.jarvisCapabilities={execute,get state(){return {mediaKind,playing,volume,ducked:duck};}};
+ function openWindow(kind){
+  const win=windows.get(kind);if(!win?.dialog.isConnected)return false;
+  for(const dialog of document.querySelectorAll('dialog[open]'))if(dialog!==win.dialog)dialog.close();
+  if(!win.dialog.open)win.dialog.showModal();syncOverlay();win.onReopen?.();return true;
+ }
+ window.jarvisCapabilities={execute,openWindow,get state(){return {mediaKind,playing,volume,ducked:duck};}};
 })();

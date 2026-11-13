@@ -34,20 +34,7 @@ function buildEnvironment(){
  for(const [radius,alpha,color]of [[5.1,.5,cyan],[5.18,.16,blue],[4.54,.35,cyan],[4.48,.12,orange]])desk.add(circle(radius,0,color,alpha,Math.PI*.82,Math.PI*.09));
  const ribs=[];for(let i=0;i<50;i++){const a=Math.PI*.09+i/49*Math.PI*.82;ribs.push(new THREE.Vector3(Math.cos(a)*4.56,Math.sin(a)*4.56,0),new THREE.Vector3(Math.cos(a)*5.08,Math.sin(a)*5.08,0));}desk.add(stroke(ribs,cyan,.13,true));
  const deskFace=instances(G(new THREE.PlaneGeometry(.024,.35)),luminous(cyan,.45),50,(o,i)=>{const a=Math.PI*.09+i/49*Math.PI*.82;o.position.set(Math.cos(a)*5.1,Math.sin(a)*5.1,-.18);o.rotation.z=a-Math.PI/2;});desk.add(deskFace);
- // Four suspended glass planes form a curved workspace around the live core.
- const schematics=document.createElement('canvas');schematics.width=1024;schematics.height=768;const ctx=schematics.getContext('2d');ctx.strokeStyle='#54dfff';ctx.lineWidth=1.5;
- ctx.strokeRect(34,32,956,704);ctx.strokeRect(52,78,920,490);ctx.globalAlpha=.35;for(let i=0;i<22;i++){const x=75+i*41;ctx.beginPath();ctx.moveTo(x,90);ctx.lineTo(x,550);ctx.stroke();}for(let i=0;i<12;i++){ctx.beginPath();ctx.moveTo(65,100+i*39);ctx.lineTo(960,100+i*39);ctx.stroke();}ctx.globalAlpha=.9;
- // A wire diagram of the interface geometry, not a telemetry graph.
- for(let j=0;j<3;j++){ctx.beginPath();ctx.ellipse(520,310,120+j*45,165,Math.PI*.13,0,Math.PI*2);ctx.stroke();}ctx.beginPath();ctx.moveTo(220,310);ctx.lineTo(810,310);ctx.moveTo(520,120);ctx.lineTo(520,510);ctx.stroke();
- ctx.strokeStyle='#ffac59';ctx.strokeRect(74,610,180,14);ctx.strokeStyle='#54dfff';for(let j=0;j<3;j++)ctx.strokeRect(280+j*220,602,190,64);
- const map=new THREE.CanvasTexture(schematics);map.colorSpace=THREE.SRGBColorSpace;textures.add(map);
- const face=M(new THREE.MeshBasicMaterial({map,transparent:true,opacity:.45,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true,blending:THREE.AdditiveBlending}));
- for(let i=0;i<4;i++){
-  const left=i<2,index=i%2,screen=new THREE.Group();screen.position.set((left?-1:1)*(3.25+index*2.2),index?.05:.25,-1.15-index*.5);screen.rotation.y=(left?1:-1)*(.24+index*.18);screen.rotation.z=(left?-1:1)*.018;group.add(screen);
-  const pane=new THREE.Mesh(G(new THREE.PlaneGeometry(2.05,1.55)),face);screen.add(pane);
-  screen.add(stroke([new THREE.Vector3(-1.03,-.78,0),new THREE.Vector3(-1.03,.78,0),new THREE.Vector3(.91,.78,0),new THREE.Vector3(1.03,.66,0),new THREE.Vector3(1.03,-.78,0),new THREE.Vector3(-1.03,-.78,0)],cyan,.5));
-  const mount=stroke([new THREE.Vector3(0,-.8,0),new THREE.Vector3(0,-2.2,.6)],blue,.25);screen.add(mount);
- }
+ // Real content screens are accessible HTML surfaces in the same workspace.
  return group;
 }
 function build(){
