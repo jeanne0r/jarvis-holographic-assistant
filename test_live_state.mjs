@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';import vm from 'node:vm';
+const events=[],context=vm.createContext({window:{},performance});vm.runInContext(readFileSync('public/live-state.js','utf8'),context);
+const s=new context.window.JarvisLiveState(d=>events.push({...d}));
+s.connect();assert.equal(s.snapshot().state,'connecting');s.ready();assert.equal(s.snapshot().state,'listening');
+s.speechStart();s.input(.07,.15,true);assert.equal(s.snapshot().inputRms,.07);s.input(0,0,false);s.wait();assert.equal(s.snapshot().state,'thinking');assert.equal(s.snapshot().waitSource,'fin de parole locale');
+s.receivedAudio();assert.equal(s.snapshot().state,'thinking','packet receipt must not claim sound is playing');assert.equal(s.snapshot().outputRms,0);
+s.playback({rms:.18,peak:.3,playing:true,bufferedMs:180});assert.equal(s.snapshot().state,'speaking');assert.equal(s.snapshot().outputRms,.18);s.turnComplete();assert.equal(s.snapshot().state,'speaking','turnComplete does not stop queued actual playback');
+s.interrupt('local');assert.equal(s.snapshot().outputRms,0);assert.equal(s.snapshot().state,'listening');assert.equal(s.snapshot().bufferedMs,0);assert.equal(s.snapshot().interruptions,1);
+s.interrupt('server');assert.equal(s.snapshot().interruptions,1,'server confirmation must not double-count a local interruption');assert.equal(s.snapshot().serverInterruptions,1);s.wait('outil Gemini');assert.equal(s.snapshot().state,'thinking');assert.equal(s.snapshot().lastEvent,'Gemini · toolCall');s.turnComplete(true);assert.equal(s.snapshot().state,'thinking');s.playback({rms:.1,playing:true});s.generationComplete();assert.equal(s.snapshot().state,'speaking');s.turnComplete();s.drained();assert.equal(s.snapshot().state,'listening');
+s.mute(true);assert.equal(s.snapshot().state,'muted');s.wait('raisonnement');assert.equal(s.snapshot().state,'thinking','mute must not clear reasoning');s.playback({rms:.2,playing:true});s.mute(true);assert.equal(s.snapshot().state,'speaking','mute must preserve playback');assert.equal(s.snapshot().outputRms,.2);s.turnComplete();s.drained();assert.equal(s.snapshot().state,'muted','drain must not re-enable a manually muted mic');s.mute(false);assert.equal(s.snapshot().state,'listening');
+s.stop();assert.equal(s.snapshot().state,'idle');assert.equal(s.snapshot().inputRms,0);assert.equal(s.snapshot().outputRms,0);s.stop(true);assert.equal(s.snapshot().state,'error');
+console.log('PASS: measured lifecycle, explicit inferred wait, receipt != playback, turn completion != drain, immediate interrupt, cleared levels, tool wait and disconnect.');

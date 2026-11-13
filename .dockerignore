@@ -1,0 +1,8 @@
+.git
+.env
+.env.*
+data
+memory
+node_modules
+__pycache__
+.venv

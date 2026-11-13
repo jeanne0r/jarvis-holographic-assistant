@@ -1,0 +1,1 @@
+(async()=>{try{const {apps}=await fetch('/api/jarvis/apps').then(r=>r.json());const nav=document.querySelector('#gatewayApps');if(!apps.length)return;for(const app of apps){const a=document.createElement('a');a.href=app.url;a.textContent=app.title+' ↗';a.target='_blank';a.rel='noopener noreferrer';nav.querySelector('.gateway-app-links').append(a)}nav.hidden=false}catch{}})();

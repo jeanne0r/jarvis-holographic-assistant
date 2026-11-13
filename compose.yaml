@@ -1,0 +1,30 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.20.0
+    environment:
+      QDRANT__SERVICE__API_KEY: ${QDRANT__SERVICE__API_KEY:?Set a random semantic service key in .env}
+    ports:
+      - '127.0.0.1:6333:6333'
+    volumes:
+      - qdrant-data:/qdrant/storage
+    restart: unless-stopped
+  embeddings:
+    build:
+      context: .
+      dockerfile: semantic/Dockerfile
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      QDRANT__SERVICE__API_KEY: ${QDRANT__SERVICE__API_KEY:?Set a random semantic service key in .env}
+      JARVIS_MODEL_CACHE: /models
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      OMP_NUM_THREADS: '2'
+    ports:
+      - '127.0.0.1:6335:6335'
+    volumes:
+      - embedding-models:/models
+    depends_on:
+      - qdrant
+    restart: unless-stopped
+volumes:
+  qdrant-data:
+  embedding-models:

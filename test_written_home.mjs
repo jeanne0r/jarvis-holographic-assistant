@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {answerWithHomeAssistant} from './written-home.mjs';
+const finish={answer:'La maison consomme 321 W, selon Home Assistant.',sourceIds:[],action:{type:'none'},homeAssistantLookup:{requested:false}};
+const lookup=(query='total_w',extra={})=>({answer:'',sourceIds:[],action:{type:'none'},homeAssistantLookup:{requested:true,query,domain:'sensor',area:'',offset:0,details:false,...extra}});
+let reads=0,models=0;
+const context={space:'member2',history:[{role:'user',text:'Quelle est la consommation actuelle ?'},{role:'assistant',text:'Le capteur est total_w ?'}]};
+const dependencies={memories:async(action,{space})=>{assert.equal(space,'member2');return [{key:'puissance',fact:'total_w est la puissance de la maison',label:'Puissance maison',entity_id:'sensor.total_w',space:'shared'}];},consult:async(args,session)=>{reads++;assert.equal(args.query,'total_w');assert(!('service' in args));assert.equal(session.memories[0].entity_id,'sensor.total_w');return {connected:true,checkedAt:new Date().toISOString(),states:[{entity_id:'sensor.total_w',state:String(320+reads),unit:'W'}]};}};
+const generate=async(q,s,c)=>{models++;assert.equal(q,'C’est ça !');assert.deepEqual(c.history,context.history);if(!c.homeAssistant.observations.length)return lookup('total_w',{service:'turn_off'});assert.equal(c.homeAssistant.observations[0].result.states[0].state,String(320+reads));return structuredClone(finish);};
+const first=await answerWithHomeAssistant('C’est ça !',[],context,undefined,generate,dependencies);
+assert.equal(reads,1);assert.equal(models,2);assert(!('homeAssistantLookup' in first));
+await answerWithHomeAssistant('C’est ça !',[],context,undefined,generate,dependencies);assert.equal(reads,2,'new question requires a fresh lookup');
+let failures=0;
+await answerWithHomeAssistant('mesure',[],context,undefined,async(q,s,c)=>{if(!c.homeAssistant.observations.length)return lookup();assert.equal(c.homeAssistant.observations[0].result.connected,false);failures++;return structuredClone(finish);},{...dependencies,consult:async()=>{throw Error('private credential');}});assert.equal(failures,1);
+let bounded=0;const limited=await answerWithHomeAssistant('mesure',[],context,undefined,async()=>lookup(),{...dependencies,consult:async()=>{bounded++;return {connected:true,states:[]};}});assert.equal(bounded,3);assert(limited.answer.includes('certitude'));
+const controller=new AbortController();controller.abort();await assert.rejects(answerWithHomeAssistant('mesure',[],context,controller.signal,generate,dependencies),e=>e.name==='AbortError');assert.equal(reads,2);
+let normalReads=0;await answerWithHomeAssistant('bonjour',[],context,undefined,async()=>structuredClone(finish),{...dependencies,consult:async()=>normalReads++});assert.equal(normalReads,0);
+console.log('PASS: written follow-up, scoped aliases, fresh HA lookup each request, read-only allowlist, bounded retries, redacted failures, cancellation, ordinary conversation.');

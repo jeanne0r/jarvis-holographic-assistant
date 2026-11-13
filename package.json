@@ -1,0 +1,20 @@
+{
+  "name":"jarvis-holographic-assistant",
+  "version":"0.1.0",
+  "private":true,
+  "type":"module",
+  "description":"A cinematic 3D home assistant with Gemini, Codex, Home Assistant and persistent memory.",
+  "license":"MIT",
+  "engines":{"node":">=22.6"},
+  "scripts":{
+    "setup":"node scripts/setup.mjs",
+    "start":"node --env-file=.env server.mjs",
+    "doctor":"node --env-file=.env scripts/doctor.mjs",
+    "test":"node scripts/test.mjs",
+    "test:browser":"node verify-speech.cjs",
+    "scan:public":"python3 scripts/scan-public.py",
+    "memory:index":"node --env-file=.env scripts/index-memory.mjs"
+  },
+  "dependencies":{"ws":"8.18.3"},
+  "devDependencies":{"playwright":"1.56.1"}
+}

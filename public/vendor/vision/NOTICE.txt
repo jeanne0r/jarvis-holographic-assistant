@@ -1,0 +1,4 @@
+MediaPipe Tasks Vision 0.10.32 (Google), Apache-2.0.
+https://github.com/google-ai-edge/mediapipe/blob/master/LICENSE
+BlazeFace short-range float16 v1 model from Google MediaPipe models.
+Model: https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite
