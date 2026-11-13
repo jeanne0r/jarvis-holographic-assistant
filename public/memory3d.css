@@ -5,3 +5,4 @@ body[data-screen='memory3d'] .shell{display:block}body[data-screen='memory3d'] .
 @media(min-width:1700px){#memory3dCanvas{height:min(72svh,1500px)}.map3d-layout{grid-template-columns:minmax(0,1fr) 340px}}
 
 .map3d-layout{align-items:start}@media(min-width:761px){.map3d-inspector{max-height:570px;overflow:auto}}@media(min-width:1700px){.map3d-inspector{max-height:min(72svh,1500px)}body[data-screen="memory3d"] main{max-width:none}}
+.map3d-gpu{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none;z-index:1}.map3d-zoom,.map3d-corners,#map3dHelp{z-index:2}

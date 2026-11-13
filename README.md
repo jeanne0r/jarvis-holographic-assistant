@@ -12,6 +12,9 @@ This repository is a standalone, sanitized release of a working personal deploym
 
 - GPU-rendered holographic core with transparent segmented instruments, a scanned energy sphere, projected J.A.R.V.I.S. lettering, particles and real audio-reactive movement.
 - Content screens appear only when requested: play YouTube directly in a miniature screen, enlarge or minimize the same attached player, and open validated external links in a new tab. Closing a window or dismissing its screen stops its media. Phone screens form a compact horizontal strip.
+- Drag virtual screens with their title grip (mouse/touch); arrow keys move a focused grip and Home restores its position. Memory, Ideas and the complete 3D map open as cockpit dialogs.
+- The 3D memory map progressively scrolls all current Qdrant points in the selected/shared spaces and renders them in one GPU draw call. It keeps canonical-source validation and does not call an AI model.
+- Live TV requests discover official broadcaster pages instead of defaulting to YouTube. Explicit browser searches can open Google results; blocked popups retain a user-clickable link.
 - A panoramic desktop workspace with suspended glass screens, a curved console and spatial grid, without characters or simulated telemetry.
 - Safari iPhone and desktop layouts, adaptive rendering quality and a non-WebGL fallback.
 - Optional local face tracking: move the core with your face and change its apparent size by moving closer or farther away.

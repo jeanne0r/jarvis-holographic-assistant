@@ -3,7 +3,7 @@ import {randomUUID} from 'node:crypto';
 import {createJarvisTools} from './tools-server.mjs';
 import {ANSWER_SCHEMA,CORE_INSTRUCTIONS} from './core-instructions.mjs';
 import {usage} from './usage.mjs';
-export const FAST_MODEL=process.env.JARVIS_GEMINI_TEXT_MODEL||'gemini-3.5-flash-lite';
+export const FAST_MODEL='gemini-3.5-flash-lite';
 const fail=message=>Error(message);
 export async function fastAnswer(question,sources,context={},signal,dependencies={}){
  const fetchImpl=dependencies.fetch||fetch,meter=dependencies.meter||usage;
@@ -13,7 +13,7 @@ export async function fastAnswer(question,sources,context={},signal,dependencies
  const observations=[],effects=[];
  const excerpts=sources.slice(0,3).map(source=>({...source,body:typeof source.body==='string'?source.body.slice(0,1200):'',title:source.title?.slice(0,160)}));
  const compactContext={...context,history:Array.isArray(context.history)?context.history.slice(-12).map(message=>({...message,text:message.text.slice(0,1500)})):[]};
- const instruction=(dependencies.instruction||CORE_INSTRUCTIONS)+' Utilise le protocole JSON toolCalls pour demander les outils : name et arguments_json contenant un objet JSON conforme au schéma de l’outil. Ne prétends jamais avoir le résultat avant de recevoir observations. Aucun outil nécessaire : toolCalls vide. Pendant une consultation : answer vide et action none. Tu peux regrouper les consultations indépendantes ; ne pilote pas une cible avant d’avoir lu les résultats de sa consultation et des commandes disponibles. Si toolCallsAllowed=false, réponds avec les observations acquises ou demande une précision. Un échec de commande ne justifie jamais une répétition.';
+ const instruction=(dependencies.instruction||CORE_INSTRUCTIONS)+' Utilise le protocole JSON toolCalls pour demander les outils : name et arguments_json contenant un objet JSON conforme au schéma de l’outil. Ne prétends jamais avoir le résultat avant de recevoir observations. Avant de conclure, assure-toi d’avoir accompli l’action concrète demandée. Chercher ne signifie pas ouvrir : si la personne demande une fenêtre ou une lecture, poursuis après la recherche avec lire/ouvrir ou le lecteur approprié ; une simple synthèse de résultats ne satisfait pas la demande. Ne termine pas tant que cette action manque, sauf blocage précis à annoncer honnêtement. Aucun outil nécessaire : toolCalls vide. Pendant une consultation : answer vide et action none. Tu peux regrouper les consultations indépendantes ; ne pilote pas une cible avant d’avoir lu les résultats de sa consultation et des commandes disponibles. Si toolCallsAllowed=false, réponds avec les observations acquises ou demande une précision. Un échec de commande ne justifie jamais une répétition.';
  for(let step=0;step<6;step++){
   signal?.throwIfAborted();
   let metadata;
@@ -32,6 +32,9 @@ export async function fastAnswer(question,sources,context={},signal,dependencies
    const text=data.candidates?.[0]?.content?.parts?.filter(p=>p.text&&!p.thought).map(p=>p.text).join('');
    let result;try{result=JSON.parse(text);}catch{throw fail('Jarvis n’a pas pu terminer sa réponse.');}
    if(typeof result.answer!=='string'||!Array.isArray(result.sourceIds)||!Array.isArray(result.toolCalls)||result.toolCalls.length>5)throw fail('Réponse Jarvis invalide.');
+   if(!result.toolCalls.length&&compactContext.displayRequested&&!effects.some(effect=>effect.type!=='web'||effect.kind==='site'||effect.kind==='search'&&effect.openResults===true)&&observations.length&&step<5&&!observations.some(o=>o.result?.error)){
+    observations.push({name:'verification_execution',result:{incomplete:true,message:'La personne demande une fenêtre/un lecteur. Aucun contenu demandé n’a été ouvert : les résultats de recherche ne sont pas cette fenêtre. Utilise les URLs des sources : lire peut résoudre leurs redirections et fournir les liens de navigation ; puis web_jarvis ouvrir sur le direct/site officiel vérifié. Si les outils échouent, annonce précisément le blocage sans prétendre avoir ouvert.'}});continue;
+   }
    if(!result.toolCalls.length){result.sourceIds=result.sourceIds.filter(sourceId=>sources.some(s=>s.id===sourceId));delete result.toolCalls;if(effects.length)result.effects=effects;return result;}
    if(step===5)throw fail('La demande nécessite une précision. Peux-tu nommer l’appareil exact ?');
    const handoff=await dependencies.preflight?.(result.toolCalls);if(handoff)return handoff;

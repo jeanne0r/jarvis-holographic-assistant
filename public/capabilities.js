@@ -19,9 +19,9 @@
   const header=node('header',null,'content-window-header'),heading=node('h2',title),close=node('button','×','content-close');heading.id=dialog.id+'-title';dialog.setAttribute('aria-labelledby',heading.id);close.type='button';close.setAttribute('aria-label','Fermer');close.onclick=()=>dialog.close();header.append(heading,close);
   const body=node('div',null,'content-window-body');dialog.append(header,body);document.body.append(dialog);
   const win={dialog,body,heading,internalCloses:0};windows.set(kind,win);
-  if(kind==='youtube'){const shrink=node('button','Réduire','content-minimize');shrink.type='button';shrink.onclick=()=>dockWindow(kind);header.insertBefore(shrink,close);}
+  {const shrink=node('button','Réduire','content-minimize');shrink.type='button';shrink.onclick=()=>dockWindow(kind);header.insertBefore(shrink,close);}
   dialog.addEventListener('close',()=>{if(win.internalCloses){win.internalCloses--;return;}if(windows.get(kind)===win)closeWindow(kind);syncOverlay();});
-  dialog.showModal();syncOverlay();document.dispatchEvent(new CustomEvent('jarvis:content-window',{detail:{kind,dialog}}));return win;
+  document.dispatchEvent(new CustomEvent('jarvis:content-window',{detail:{kind,dialog}}));if(!dialog.open)dialog.showModal();syncOverlay();return win;
  }
  function button(text,action){const b=node('button',text);b.type='button';b.onclick=()=>Promise.resolve(action()).catch(error=>note(mediaStatus,error.message));return b;}
  function applyVolume(){audio.volume=volume*(duck?.15:1);try{player?.setVolume(volume*(duck?.15:1)*100);}catch{}}
@@ -102,11 +102,12 @@
   const sources=(effect.sources||[]).slice(0,8).map(source=>({...source,anchor:webLink(source.title||'Source',source.url)}));
   const win=contentWindow('web',effect.title||'Web');win.dialog.dataset.webKind=effect.kind;
   if(effect.kind==='site'){
-   if(effect.embed){const frame=node('iframe',null,'content-site');frame.src=external.href;frame.title=effect.title||'Site demandé';frame.setAttribute('sandbox','allow-scripts allow-forms allow-same-origin');frame.setAttribute('allow',"camera 'none'; microphone 'none'; geolocation 'none'");frame.referrerPolicy='no-referrer';win.body.append(frame);win.body.append(node('p','Si le site refuse l’affichage intégré, utilise le lien ci-dessous.','content-footnote'));}
+   if(effect.embed){const frame=node('iframe',null,'content-site');frame.src=external.href;frame.title=effect.title||'Site demandé';frame.setAttribute('sandbox','allow-scripts allow-forms allow-same-origin');frame.setAttribute('allow',"autoplay; fullscreen; encrypted-media; picture-in-picture; camera 'none'; microphone 'none'; geolocation 'none'");frame.referrerPolicy='no-referrer';win.body.append(frame);win.body.append(node('p','Si le site refuse l’affichage intégré, utilise le lien ci-dessous.','content-footnote'));}
    else win.body.append(node('p','Ce site est à ouvrir directement dans le navigateur.'));
    win.body.append(external);return {state:effect.embed?'frame_requested':'external_link_ready',opened:false};
   }
   if(effect.kind==='search'){
+   if(effect.googleUrl){const google=link('Ouvrir les résultats Google ↗',effect.googleUrl,['www.google.com']);if(new URL(google.href).pathname!=='/search')throw Error('Recherche Google invalide.');win.body.append(google);if(effect.openResults){const tab=window.open('about:blank','_blank');if(tab){tab.opener=null;tab.location.replace(google.href);}else win.body.append(node('p','Appuie sur « Ouvrir les résultats Google » pour ouvrir la recherche dans ton navigateur.','content-status'));}}
    const paragraph=node('p'),answer=String(effect.answer||'');let cursor=0;
    for(const support of [...(effect.supports||[])].sort((a,b)=>a.segment?.endIndex-b.segment?.endIndex)){
     const end=support.segment?.endIndex;if(!Number.isInteger(end)||end<cursor||end>answer.length)continue;paragraph.append(document.createTextNode(answer.slice(cursor,end)));cursor=end;

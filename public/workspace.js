@@ -4,16 +4,30 @@
  const rail=document.createElement('section');rail.className='workspace-screens';rail.setAttribute('aria-label','Fenêtres de Jarvis');stage.append(rail);
  const screens=new Map(),labels={radio:'RADIO',youtube:'VIDÉO',travel:'ITINÉRAIRE',web:'WEB',evolution:'CODEX'};
  const make=(tag,cls,text)=>{const el=document.createElement(tag);el.className=cls;if(text)el.textContent=text;return el;};
- function discard(kind){const screen=screens.get(kind);if(!screen)return;screen.observer.disconnect();screen.card.remove();screens.delete(kind);}
+ function discard(kind){const screen=screens.get(kind);if(!screen)return;screen.observer.disconnect();screen.placeholder?.remove();screen.card.remove();screens.delete(kind);stage.classList.toggle('has-workspace-screens',screens.size>0);}
  document.addEventListener('jarvis:content-window',({detail:{kind,dialog}})=>{
   discard(kind);
-  const card=make('article','workspace-screen');card.dataset.content=kind;
+  const card=make('article','workspace-screen');card.dataset.content=kind;if(kind==='youtube')card.classList.add('workspace-video');
   const open=make('button','workspace-preview');open.type='button';
   const category=make('small','workspace-category',labels[kind]||'CONTENU'),title=make('strong','workspace-title'),summary=make('span','workspace-summary'),footer=make('span','workspace-open','Agrandir ↗');
-  open.append(category,title,summary,footer);open.onclick=()=>window.jarvisCapabilities.openWindow(kind);
+  open.append(title,summary,footer);open.onclick=()=>window.jarvisCapabilities.openWindow(kind);
   const external=make('a','workspace-external','Nouvel onglet ↗');external.target='_blank';external.rel='noopener noreferrer';external.hidden=true;
   const dismiss=make('button','workspace-dismiss','×');dismiss.type='button';dismiss.setAttribute('aria-label','Retirer cet écran');dismiss.onclick=()=>window.jarvisCapabilities.closeWindow(kind);
-  card.append(open,external,dismiss);rail.append(card);
+  const handle=make('button','workspace-drag','⠿ '+(labels[kind]||'CONTENU'));handle.type='button';handle.setAttribute('aria-label','Déplacer cet écran');handle.title='Glisser pour déplacer · flèches au clavier · Début pour réinitialiser';handle.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown Home');
+  card.append(handle,open,external,dismiss);rail.append(card);
+  let drag=null;
+  const bounds=()=>{const v=window.visualViewport;return {left:(v?.offsetLeft||0)+8,top:(v?.offsetTop||0)+8,width:(v?.width||innerWidth)-16,height:(v?.height||innerHeight)-16};};
+  const place=(x,y)=>{const b=bounds(),w=card.offsetWidth,h=card.offsetHeight;card.style.left=Math.max(b.left,Math.min(b.left+b.width-w,x))+'px';card.style.top=Math.max(b.top,Math.min(b.top+b.height-h,y))+'px';};
+  const float=()=>{if(card.classList.contains('workspace-floating'))return;const r=card.getBoundingClientRect(),placeholder=make('div','workspace-placeholder');placeholder.style.width=r.width+'px';placeholder.style.height=r.height+'px';placeholder.setAttribute('aria-hidden','true');card.before(placeholder);screens.get(kind).placeholder=placeholder;card.style.width=Math.min(r.width,bounds().width)+'px';card.classList.add('workspace-floating');place(r.left,r.top);};
+  const restore=()=>{const screen=screens.get(kind);screen?.placeholder?.remove();if(screen)screen.placeholder=null;card.classList.remove('workspace-floating');for(const name of ['left','top','width'])card.style.removeProperty(name);};
+  handle.addEventListener('pointerdown',event=>{if(event.button!==0||!event.isPrimary)return;event.preventDefault();handle.focus({preventScroll:true});float();const r=card.getBoundingClientRect();drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:r.left,top:r.top};handle.setPointerCapture(event.pointerId);card.classList.add('workspace-dragging');});
+  handle.addEventListener('pointermove',event=>{if(!drag||drag.id!==event.pointerId)return;event.preventDefault();place(drag.left+event.clientX-drag.x,drag.top+event.clientY-drag.y);});
+  const release=event=>{if(drag?.id!==event.pointerId)return;drag=null;card.classList.remove('workspace-dragging');if(handle.hasPointerCapture(event.pointerId))handle.releasePointerCapture(event.pointerId);};
+  handle.addEventListener('pointerup',release);handle.addEventListener('pointercancel',release);handle.addEventListener('lostpointercapture',release);handle.addEventListener('dblclick',restore);
+  handle.addEventListener('keydown',event=>{if(event.key==='Home'){event.preventDefault();restore();return;}const delta={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[event.key];if(!delta)return;event.preventDefault();float();const r=card.getBoundingClientRect(),step=event.shiftKey?40:12;place(r.left+delta[0]*step,r.top+delta[1]*step);});
+  card.addEventListener('pointerdown',()=>{for(const screen of screens.values())screen.card.classList.remove('workspace-front');card.classList.add('workspace-front');});
+  card.jarvisClamp=()=>{if(card.classList.contains('workspace-floating')){const r=card.getBoundingClientRect();card.style.width=Math.min(r.width,bounds().width)+'px';place(r.left,r.top);}};
+
   // Preview only actual text, status and validated links already present in the window.
   // No duplicate iframe, audio stream, Maps request or synthetic telemetry.
   const update=()=>{
@@ -28,10 +42,13 @@
 
    card.dataset.active=String(dialog.open);
   };
-  if(kind==='youtube'){card.append(dialog);window.jarvisCapabilities.dockWindow(kind);}
-  const observer=new MutationObserver(update);observer.observe(dialog,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['open','href']});screens.set(kind,{card,observer});update();
+  card.append(dialog);if(kind==='youtube')window.jarvisCapabilities.dockWindow(kind);
+  const observer=new MutationObserver(update);observer.observe(dialog,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['open','href']});screens.set(kind,{card,observer});stage.classList.add('has-workspace-screens');update();
  });
+ window.addEventListener('resize',()=>{for(const screen of screens.values())screen.card.jarvisClamp();});
+ window.visualViewport?.addEventListener('resize',()=>{for(const screen of screens.values())screen.card.jarvisClamp();});
  document.addEventListener('jarvis:content-closed',e=>discard(e.detail.kind));
  document.addEventListener('jarvis:spacechange',()=>{for(const kind of [...screens.keys()])discard(kind);});
- window.addEventListener('pagehide',()=>{for(const kind of [...screens.keys()])discard(kind);});
+
+ window.addEventListener('pagehide',()=>{for(const screen of screens.values())screen.observer.disconnect();screens.clear();});
 })();

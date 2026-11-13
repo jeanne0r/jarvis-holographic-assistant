@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add mouse/touch/keyboard screen positioning without moving player iframes between DOM parents.
+- Open Memory, Ideas and 3D memory as cockpit dialogs. Load every current scoped Qdrant point by cursor, use a stable approximate projection and draw the complete cloud on the client GPU.
+- Distinguish official live TV from YouTube, continue explicit opening tasks beyond search-only results, expose verified page navigation links, and support Google result opening with a blocked-popup fallback.
+
 - Route personal email, calendar, reminder and contact requests to Codex and its configured host workflows. Keep generic writing help and public searches on Gemini; require checking existing connections before reporting access unavailable.
 
 - Play YouTube in the miniature workspace screen using one attached iframe across modal enlargement/reduction. Closing a media window or dismissing its screen stops and releases the player; minimizing preserves playback.

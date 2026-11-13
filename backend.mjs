@@ -57,7 +57,7 @@ export async function handleJarvis(req,res,url){
   const data=JSON.parse((await body(req,180000)).toString());
   return json(res,200,await archive('record',{...data,space}));
  }
- if(action==='memory/map'&&req.method==='GET'){try{return json(res,200,await memoryMap(space))}catch(e){return json(res,503,{error:e.message})}}
+ if(action==='memory/map'&&req.method==='GET'){try{return json(res,200,await memoryMap(space,url.searchParams.get('offset')))}catch(e){return json(res,503,{error:e.message})}}
  if(action==='memory/status'&&req.method==='GET'){
   const memories=await memoryStore('list',{space});
   let index={state:'pending'};try{index=JSON.parse(await readFile(ROOT+'/data/semantic-index-status.json','utf8'))}catch{}

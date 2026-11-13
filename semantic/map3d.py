@@ -1,7 +1,6 @@
-"""Read-only Qdrant sample, validated against canonical SQLite, projected locally."""
+"""Read-only paginated Qdrant points, validated against canonical SQLite, projected locally."""
 import json,math,pathlib,sqlite3,sys,time,urllib.request,urllib.parse,socket,os
 from documents import ROOT,documents
-
 SPACES={'member1','member2','member3','member4','shared'}
 
 def project(vectors,iterations=18):
@@ -28,7 +27,7 @@ def project(vectors,iterations=18):
  scale=max((abs(v) for row in coordinates for v in row),default=1) or 1
  return [[round(v/scale,6) for v in row] for row in coordinates]
 
-def fetch_sample(spaces,limit):
+def fetch_sample(spaces,limit,offset=None):
  base=os.environ.get('QDRANT_URL','http://127.0.0.1:6333').rstrip('/')+'/collections/jarvis_memory_v1/points/'
  key=os.environ.get('QDRANT__SERVICE__API_KEY','')
  if not key:raise RuntimeError('Qdrant is not configured')
@@ -36,9 +35,9 @@ def fetch_sample(spaces,limit):
   req=urllib.request.Request(base+path,method='POST',headers={'api-key':key,'content-type':'application/json'},data=json.dumps(body).encode())
   with urllib.request.urlopen(req,timeout=10) as r:return json.load(r)['result']
  filt={'must':[{'key':'space','match':{'any':spaces}}]}
- result=request('scroll',{'filter':filt,'limit':limit,'with_payload':True,'with_vector':True})
- count=request('count',{'filter':filt,'exact':False})['count']
- return result['points'],count
+ result=request('scroll',{'filter':filt,'limit':limit,'with_payload':True,'with_vector':True,**({'offset':offset} if offset is not None else {})})
+ count=request('count',{'filter':filt,'exact':True})['count'] if offset is None else None
+ return result['points'],count,result.get('next_page_offset')
 
 def validate_points(points,canonical,spaces):
  valid=[]
@@ -55,14 +54,30 @@ def validate_points(points,canonical,spaces):
 def memory_map(data):
  space=data.get('space','member1')
  if space not in SPACES:raise ValueError('Espace inconnu.')
- spaces=sorted({space,'shared'});points,total=fetch_sample(spaces,360)
+ offset=data.get('offset')
+ if offset is not None:
+  if isinstance(offset,str) and offset.isdigit():offset=int(offset)
+  elif isinstance(offset,str):
+   import uuid
+   offset=str(uuid.UUID(offset))
+  elif not isinstance(offset,int) or isinstance(offset,bool) or offset<0:raise ValueError('Curseur invalide.')
+ spaces=sorted({space,'shared'});points,total,next_offset=fetch_sample(spaces,750,offset)
  canonical={d['doc_id']:d for d in documents() if d['space'] in spaces}
  db=sqlite3.connect('file:'+str(ROOT/'data/brain.sqlite')+'?mode=ro',uri=True)
  for doc_id,topic in db.execute('SELECT id,topic FROM docs WHERE space IN ('+','.join('?' for _ in spaces)+')',spaces):
   if 'brain:'+doc_id in canonical:canonical['brain:'+doc_id]['topic']=topic
  db.close()
- valid=validate_points(points,canonical,spaces);coords=project([v for _,v in valid])
- return {'points':[{**p,'position':xyz} for (p,_),xyz in zip(valid,coords)],'sampled':len(valid),'indexedPoints':total,'documents':len({p['docId'] for p,_ in valid}),'spaces':spaces,'projection':'PCA 3D','checkedAt':time.time(),'note':'Échantillon d’extraits Qdrant. Projection 3D approximative : la proximité visuelle ne conserve pas toutes les distances sémantiques.'}
+ valid=validate_points(points,canonical,spaces)
+ # A deterministic orthogonal projection keeps pages in the same coordinate system.
+ # No truncated sample and no quadratic PCA over all embeddings in the request.
+ axes=[]
+ for k in range(3):
+  axis=[math.sin((j+1)*(k+1)*1.61803398875) for j in range(384)]
+  for previous in axes:
+   dot=sum(a*b for a,b in zip(axis,previous));axis=[a-dot*b for a,b in zip(axis,previous)]
+  norm=math.sqrt(sum(a*a for a in axis));axes.append([a/norm for a in axis])
+ coords=[[round(sum(x*a for x,a in zip(v,axis)),7) for axis in axes] for _,v in valid]
+ return {'points':[{**p,'position':xyz} for (p,_),xyz in zip(valid,coords)],'sampled':len(valid),'scanned':len(points),'nextOffset':next_offset,'indexedPoints':total,'documents':len({p['docId'] for p,_ in valid}),'spaces':spaces,'projection':'Projection orthogonale 3D stable','checkedAt':time.time(),'note':'Tous les extraits courants sont parcourus par pages. Projection 3D approximative : la proximité visuelle ne conserve pas toutes les distances sémantiques.'}
 if __name__=='__main__':
  try:print(json.dumps({'ok':True,'data':memory_map(json.load(sys.stdin))}))
  except Exception:print(json.dumps({'ok':False,'error':'La carte Qdrant est indisponible. Réessaie dans un instant.'}))

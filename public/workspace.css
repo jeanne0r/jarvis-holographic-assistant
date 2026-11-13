@@ -52,18 +52,36 @@ body:not([data-screen='chat']) .workspace-screens{display:none}
  .workspace-screens{position:relative;inset:auto;grid-area:11/1/12/3;max-height:none;padding:4px 0 10px;scroll-snap-type:x proximity}
  .workspace-screens:empty{display:none}
  .workspace-screen{scroll-snap-align:start}.workspace-preview{min-height:110px}
- .command-stage.chat-intro:has(.workspace-screen){height:auto;grid-template-rows:20px 50px 54px minmax(240px,1fr) 28px auto 0px 48px 48px 30px auto}
+ .command-stage.chat-intro.has-workspace-screens{height:auto;grid-template-rows:20px 50px 54px minmax(240px,1fr) 28px auto 0px 48px 48px 30px auto}
 }
 @media(prefers-reduced-motion:reduce){.workspace-screen{transition:none}}
 .workspace-thumbnail{width:100%;max-height:94px;object-fit:cover;border:1px solid #4097b844;opacity:.9}
 /* The original YouTube iframe stays attached here while switching top-layer mode. */
-.workspace-screen:has(.content-docked){transform:none}
+.workspace-screen.workspace-video{transform:none}
 .content-window.content-docked{position:relative;inset:auto;margin:0;width:100%;max-width:none;max-height:none;padding:0;border:0;border-radius:0;box-shadow:none;overflow:hidden;background:#020b13}
-.content-docked .content-window-header,.content-docked .content-window-body>:not(.content-video):not(.content-status){display:none}
+.content-docked .content-window-header,.content-docked .content-window-body>:not(.content-video):not(.content-status):not(.content-site):not(.content-map):not(.content-controls){display:none}
 .content-docked .content-window-body{padding:0}
 .content-docked .content-video{aspect-ratio:16/9;min-height:0;height:auto}
 .content-docked .content-video iframe{width:100%;height:100%;min-height:0}
 .content-docked p.content-status{font-size:10px;margin:6px 9px}
 .content-window-header .content-minimize{margin-left:auto;font-size:12px}
-.workspace-screen:has(.content-docked) .workspace-preview{min-height:0;padding-bottom:8px;gap:7px}
-.workspace-screen:has(.content-docked) .workspace-summary{display:none}
+.workspace-screen.workspace-video .workspace-preview{min-height:0;padding-bottom:8px;gap:7px}
+.workspace-screen.workspace-video .workspace-summary{display:none}
+/* Drag only the title grip: video gestures, links and mobile page scroll stay native. */
+.workspace-drag{display:block;width:calc(100% - 36px);min-height:44px;padding:10px 13px;border:0;border-radius:0;background:transparent;color:#6ed7f0;font:9px var(--mono);letter-spacing:1.8px;text-align:left;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.workspace-screen .workspace-preview{padding-top:3px}
+.workspace-placeholder{pointer-events:none;visibility:hidden;min-width:0}
+.workspace-screen.workspace-floating,.workspace-screen.workspace-floating:nth-child(even){position:fixed;inset:auto;z-index:30;transform:none;translate:none;max-height:calc(100dvh - 16px);overflow:auto;scroll-snap-align:none;transition:border-color .2s}
+.workspace-screen.workspace-front{z-index:31}
+.workspace-screen.workspace-dragging{z-index:32;border-color:#bbf5ff;box-shadow:0 18px 65px #000c,0 0 22px #43d5ff33}
+.workspace-dragging .workspace-drag{cursor:grabbing}
+.workspace-drag:focus-visible{outline:2px solid #a2f2ff;outline-offset:-3px}
+@media(max-width:1099px){.workspace-placeholder{flex:0 0 210px}.workspace-screen.workspace-floating{flex:none}}
+#cockpitSheet.memory-sheet,#cockpitSheet.map-sheet{width:min(1200px,calc(100vw - 28px));max-height:calc(100dvh - 28px)}
+#cockpitSheet .toolbar{display:flex;flex-wrap:wrap;margin-top:12px;gap:9px}#cockpitSheet .toolbar .search{min-width:180px}#cockpitSheet #libraryView .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#cockpitSheet #libraryView .memory-card{text-align:left;min-width:0}#cockpitSheet #libraryView .memory-card p{font-size:13px}
+#cockpitSheet #memory3dView{padding:8px 0}#cockpitSheet #memory3dCanvas{height:min(58dvh,570px)}
+@media(max-width:760px){#cockpitSheet #libraryView .cards{grid-template-columns:1fr}#cockpitSheet .toolbar input{font-size:16px}#cockpitSheet #memory3dCanvas{height:45dvh;min-height:260px}}
+.memory-popup-tabs{display:flex;gap:6px;align-items:center}.memory-popup-tabs button{min-height:40px;padding:8px 12px;border:1px solid #318baa66;color:#b8e9f6;font-size:12px;background:#0b2b3e}
+
+.content-docked .content-site,.content-docked .content-map{display:block;width:100%;height:170px;min-height:0;border:0}.content-docked .content-controls{padding:4px 8px;gap:4px}.content-docked .content-controls button{min-height:36px;font-size:10px;padding:7px}
