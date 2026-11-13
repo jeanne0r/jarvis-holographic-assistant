@@ -6,6 +6,8 @@ This release is tested as a sanitized standalone application, separately from th
 
 The standalone release passed 21 JavaScript suites, 26 Python application tests and 9 Python semantic tests on Linux with Node 22.23.5. The browser speech regression passed against the standalone server on its own test port. The actual WebGL scene was rendered in desktop (1440 px) and mobile (390 px) screenshots with no page errors or horizontal overflow. Screenshots use generic profiles and empty memories. The optional embedding containers were not started in this build environment, which does not provide Docker.
 
+The holographic projection refresh also passed WebKit desktop/mobile rendering and non-WebGL fallback checks. Injected event fixtures verified input/output level response, interruption and bounded camera-proximity scaling. These are event/rendering checks, not physical camera/microphone certification.
+
 ## Automated checks
 
 - JavaScript unit/integration tests: routing, tool loops, real/unknown HA states, command validation, retries, media and URLs, scoped memory, grounded user corrections, metering and cancellation. Providers are simulated.

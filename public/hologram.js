@@ -1,10 +1,10 @@
 import * as THREE from './vendor/three.module.min.js';
 
-// Mechanical hologram: real depth, opaque housings, emissive circuitry.
+// Cinematic projection: transparent light, suspended instrumentation and volumetric depth.
 // Audio comes only from live-state.js / rendered PCM. No synthetic voice levels.
 const canvas=document.querySelector('#hologramCanvas'),stage=document.querySelector('.command-stage');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)'),small=matchMedia('(max-width:760px)');
-const stats={ready:false,state:'idle',frames:0,frameMs:0,quality:small.matches?'mobile':'desktop',paused:true,drawCalls:0,inputRms:0,outputRms:0,mechanism:'MK.II',bloom:false};
+const stats={ready:false,state:'idle',frames:0,frameMs:0,quality:small.matches?'mobile':'desktop',paused:true,drawCalls:0,inputRms:0,outputRms:0,mechanism:'HOLOGRAPHIC III',bloom:false};
 Object.defineProperty(window,'jarvisHologram',{get:()=>Object.freeze({...stats})});
 const geometries=new Set(),materials=new Set(),textures=new Set();
 const G=g=>(geometries.add(g),g),M=m=>(materials.add(m),m);
@@ -15,57 +15,59 @@ let voice={inputRms:0,outputRms:0,transport:'closed'},voiceAt=0,interruptAt=-Inf
 let pointer={x:0,y:0},look={x:0,y:0},gaze={enabled:false,tracking:false,x:0,y:0,depth:0},gazeDepth=0,coreBaseScale=1;
 let mechanisms=[],petals=[],modulators,crystal,innerCage,sparks,ground,scan,focusLight;
 const uniforms={time:{value:0},mic:{value:0},sound:{value:0},energy:{value:.18},pixelRatio:{value:1}};
-function luminous(color=cyan,opacity=1){return M(new THREE.MeshBasicMaterial({color,transparent:opacity<1,opacity,depthWrite:opacity>=1,side:THREE.DoubleSide}));}
-function metal(color=0x061c30,emissive=0x001426){return M(stats.quality==='low'?new THREE.MeshLambertMaterial({color,emissive,flatShading:true}):new THREE.MeshPhongMaterial({color,emissive,shininess:80,specular:0x397baa,flatShading:true}));}
+function luminous(color=cyan,opacity=1){return M(new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,forceSinglePass:true}));}
+function projection(color=cyan){return M(new THREE.ShaderMaterial({uniforms:{...uniforms,tint:{value:new THREE.Color(color)}},transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,forceSinglePass:true,vertexShader:'varying vec3 p;void main(){p=position;vec4 v=vec4(position,1.);\n#ifdef USE_INSTANCING\n v=instanceMatrix*v;\n#endif\n gl_Position=projectionMatrix*modelViewMatrix*v;}',fragmentShader:'uniform vec3 tint;uniform float time;uniform float energy;varying vec3 p;void main(){float lines=pow(.5+.5*cos(p.y*170.+time*1.4),18.);float circuit=pow(.5+.5*cos(p.x*95.+p.y*20.),30.);float sweep=pow(.5+.5*cos(p.y*2.-time*.6),22.);gl_FragColor=vec4(tint,.035+lines*.14+circuit*.11+sweep*.08+energy*.05);}' }));}
 const matrix=new THREE.Object3D();
 function instances(geo,material,count,place){const mesh=new THREE.InstancedMesh(geo,material,count);for(let i=0;i<count;i++){matrix.position.set(0,0,0);matrix.rotation.set(0,0,0);matrix.scale.set(1,1,1);place(matrix,i);matrix.updateMatrix();mesh.setMatrixAt(i,matrix.matrix);}mesh.instanceMatrix.needsUpdate=true;return mesh;}
 function radial(count,radius,width,length,depth,color,z=0,offset=0){const mesh=instances(G(new THREE.BoxGeometry(width,length,depth)),luminous(color),count,(o,i)=>{const a=offset+i/count*Math.PI*2;o.position.set(Math.sin(a)*radius,Math.cos(a)*radius,z);o.rotation.z=-a;});return mesh;}
 function stroke(points,color=cyan,opacity=.5,segments=false){return new (segments?THREE.LineSegments:THREE.Line)(G(new THREE.BufferGeometry().setFromPoints(points)),M(new THREE.LineBasicMaterial({color,transparent:true,opacity,depthWrite:false})));}
 function circle(radius,z=0,color=cyan,opacity=.5,length=Math.PI*2,start=0){const p=[];for(let i=0;i<=128;i++){const a=start+i/128*length;p.push(new THREE.Vector3(Math.cos(a)*radius,Math.sin(a)*radius,z));}return stroke(p,color,opacity);}
-function sector(inner,outer,angle,depth){const shape=new THREE.Shape();shape.absarc(0,0,outer,0,angle,false);shape.lineTo(Math.cos(angle)*inner,Math.sin(angle)*inner);shape.absarc(0,0,inner,angle,0,true);shape.closePath();return G(new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:true,bevelThickness:.012,bevelSize:.01,bevelSegments:1,curveSegments:Math.max(1,Math.ceil(angle/.1)),steps:1}));}
-function annulus(inner,outer,z,count,fill,material,offset=0){return instances(sector(inner,outer,Math.PI*2/count*fill,.065),material,count,(o,i)=>{o.position.z=z;o.rotation.z=offset+i/count*Math.PI*2;});}
+function sector(inner,outer,angle,depth){const shape=new THREE.Shape();shape.absarc(0,0,outer,0,angle,false);shape.lineTo(Math.cos(angle)*inner,Math.sin(angle)*inner);shape.absarc(0,0,inner,angle,0,true);shape.closePath();return G(new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:false,curveSegments:Math.max(1,Math.ceil(angle/.1)),steps:1}));}
+function annulus(inner,outer,z,count,fill,material,offset=0){return instances(sector(inner,outer,Math.PI*2/count*fill,.012),material,count,(o,i)=>{o.position.z=z;o.rotation.z=offset+i/count*Math.PI*2;});}
 function layer(z,velocity){const group=new THREE.Group();group.position.z=z;root.add(group);mechanisms.push({group,z,velocity});return group;}
-function dial(radius,z){const c=document.createElement('canvas');c.width=c.height=1024;const ctx=c.getContext('2d');ctx.translate(512,512);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#6dbbe8';ctx.font='20px monospace';for(let i=0;i<24;i++){ctx.save();ctx.rotate(i/24*Math.PI*2);ctx.translate(0,-460);ctx.fillText(String(i*15).padStart(3,'0'),0,0);ctx.restore();}const texture=new THREE.CanvasTexture(c);texture.anisotropy=renderer.capabilities.getMaxAnisotropy();textures.add(texture);const mesh=new THREE.Mesh(G(new THREE.PlaneGeometry(radius*2,radius*2)),M(new THREE.MeshBasicMaterial({map:texture,transparent:true,opacity:.85,depthWrite:false,side:THREE.DoubleSide})));mesh.position.z=z;return mesh;}
+function dial(radius,z){const c=document.createElement('canvas');c.width=c.height=1024;const ctx=c.getContext('2d');ctx.translate(512,512);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#6dbbe8';ctx.font='20px monospace';for(let i=0;i<24;i++){ctx.save();ctx.rotate(i/24*Math.PI*2);ctx.translate(0,-460);ctx.fillText(String(i*15).padStart(3,'0'),0,0);ctx.restore();}const texture=new THREE.CanvasTexture(c);texture.anisotropy=renderer.capabilities.getMaxAnisotropy();textures.add(texture);const mesh=new THREE.Mesh(G(new THREE.PlaneGeometry(radius*2,radius*2)),M(new THREE.MeshBasicMaterial({map:texture,transparent:true,opacity:.85,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true})));mesh.position.z=z;return mesh;}
 function build(){
  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'default',stencil:false,preserveDrawingBuffer:false});renderer.setClearColor(0,0);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NoToneMapping;
  const gl=renderer.getContext(),debug=gl.getExtension('WEBGL_debug_renderer_info');if(debug&&/swiftshader|llvmpipe|software/i.test(gl.getParameter(debug.UNMASKED_RENDERER_WEBGL)))stats.quality='low';
  renderer.debug.onShaderError=(gl,p,v,f)=>{lost=true;stats.ready=false;stats.fallbackReason=gl.getProgramInfoLog(p)+' '+gl.getShaderInfoLog(v)+' '+gl.getShaderInfoLog(f);document.body.classList.remove('hologram-ready');console.warn(stats.fallbackReason);};
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(43,1,.1,60);scene.add(new THREE.AmbientLight(0x528bc2,1.6));const key=new THREE.DirectionalLight(0xa9eaff,3.2);key.position.set(-2,4,6);scene.add(key);const rim=new THREE.DirectionalLight(0x1266ff,2.5);rim.position.set(4,-1,-3);scene.add(rim);
  root=new THREE.Group();scene.add(root);focusLight=new THREE.PointLight(0x29bfff,1.5,6);focusLight.position.set(0,0,1.5);root.add(focusLight);
- const dark=metal(),shellMaterial=metal(0x0b2941,0x00132b),slots=luminous(0x0c405d),light=luminous(cyan),pale=luminous(ice),electric=luminous(blue),amber=luminous(orange);
- // Coaxial, physically separated mechanisms. No intersecting atomic orbits.
- const back=layer(-.52,-.07);back.add(annulus(1.89,2.18,0,18,.87,shellMaterial));back.add(annulus(2.12,2.15,.09,54,.60,electric));back.add(radial(108,2.23,.014,.065,.018,cyan,.08));back.add(circle(2.28,.03,blue,.65));back.add(circle(2.32,.01,cyan,.22));back.add(dial(2.12,.10));
- const frameRing=layer(-.25,.045);frameRing.add(annulus(1.69,1.87,0,12,.77,dark,.08));frameRing.add(annulus(1.73,1.77,.09,48,.73,light));frameRing.add(annulus(1.81,1.83,.10,96,.5,electric));
- // Radial structural bridges and tiny circuit tracks; instancing keeps calls bounded.
- frameRing.add(radial(12,1.96,.055,.21,.05,0x174e6f,.03,.12));frameRing.add(radial(12,1.96,.012,.16,.01,cyan,.065,.12));
- const outerCircuit=[];for(let i=0;i<36;i++){const a=i/36*Math.PI*2,r=1.87,da=.018;const point=(radius,angle,z)=>new THREE.Vector3(Math.sin(angle)*radius,Math.cos(angle)*radius,z);outerCircuit.push(point(r,a,.09),point(r+.075,a,.09),point(r+.075,a,.09),point(r+.075,a+da,.09),point(r+.075,a+da,.09),point(r+.14,a+da,.09));}frameRing.add(stroke(outerCircuit,cyan,.65,true));
- const rotor=layer(.02,-.18);rotor.add(annulus(1.36,1.65,0,24,.80,shellMaterial));rotor.add(annulus(1.38,1.43,.09,72,.63,light));rotor.add(annulus(1.56,1.61,.10,24,.48,electric));rotor.add(radial(72,1.49,.011,.045,.01,ice,.105));rotor.add(annulus(1.63,1.65,.12,6,.15,amber));
- // Twelve articulated vanes: mechanical iris, not a fuzzy luminous sphere.
- const bladeShape=new THREE.Shape();bladeShape.moveTo(.72,-.10);bladeShape.lineTo(1.17,-.16);bladeShape.lineTo(1.28,.09);bladeShape.lineTo(.87,.24);bladeShape.lineTo(.72,.07);bladeShape.closePath();
- const bladeGeo=G(new THREE.ExtrudeGeometry(bladeShape,{depth:.09,bevelEnabled:true,bevelThickness:.015,bevelSize:.012,bevelSegments:1,steps:1}));
- const iris=layer(.20,.12);
- for(let i=0;i<12;i++){const pivot=new THREE.Group();const angle=i/12*Math.PI*2;pivot.rotation.z=angle;const vane=new THREE.Group();vane.add(new THREE.Mesh(bladeGeo,shellMaterial));const edge=stroke([new THREE.Vector3(.75,.065,.12),new THREE.Vector3(.89,.21,.12),new THREE.Vector3(1.22,.075,.12)],i%4?cyan:orange,.95);vane.add(edge);pivot.add(vane);iris.add(pivot);petals.push({vane,angle});}
- const aperture=layer(.48,-.095);aperture.add(annulus(.63,.73,0,12,.82,dark));aperture.add(annulus(.65,.68,.10,48,.68,pale));aperture.add(circle(.79,.02,blue,.72));aperture.add(radial(24,.86,.012,.04,.018,cyan,.06));
- // Dynamic voice actuators, driven by measured PCM level rather than a sine wave.
- modulators=instances(G(new THREE.BoxGeometry(.035,.10,.04)),light,64,(o,i)=>{const a=i/64*Math.PI*2;o.position.set(Math.sin(a)*1.29,Math.cos(a)*1.29,.42);o.rotation.z=-a;});root.add(modulators);
- // A sharp faceted energy kernel, with emissive triangle edges and moving traces.
- const crystalGeo=G(new THREE.IcosahedronGeometry(.53,0));crystalGeo.computeVertexNormals();const bary=new Float32Array(crystalGeo.attributes.position.count*3);for(let i=0;i<bary.length/3;i++)bary[i*3+i%3]=1;crystalGeo.setAttribute('bary',new THREE.BufferAttribute(bary,3));
- const kernelMaterial=M(new THREE.ShaderMaterial({uniforms,vertexShader:'attribute vec3 bary;varying vec3 b;varying vec3 n;varying vec3 p;void main(){b=bary;n=normalize(normalMatrix*normal);p=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:`uniform float time;uniform float energy;uniform float mic;uniform float sound;varying vec3 b;varying vec3 n;varying vec3 p;void main(){float edge=1.-smoothstep(.012,.032,min(b.x,min(b.y,b.z)));float face=.25+.75*max(0.,dot(normalize(n),normalize(vec3(-.4,.7,1.))));float traces=pow(max(0.,cos(p.y*45.+p.x*12.-time*2.)),22.);vec3 c=vec3(.012,.10,.21)*face+vec3(.1,.65,1.)*edge*(.7+energy*.3);c+=vec3(.01,.18,.35)*traces;c+=vec3(.07,.23,.35)*sound;gl_FragColor=vec4(c,1.);\n#include <colorspace_fragment>\n}` }));
- crystal=new THREE.Mesh(crystalGeo,kernelMaterial);crystal.position.z=.50;root.add(crystal);
- innerCage=new THREE.Group();innerCage.position.z=.46;const cageGeo=G(new THREE.EdgesGeometry(G(new THREE.OctahedronGeometry(.69,0))));innerCage.add(new THREE.LineSegments(cageGeo,M(new THREE.LineBasicMaterial({color:cyan,transparent:true,opacity:.7}))));root.add(innerCage);
- // Six separated front-mounted brackets add thickness and hard-edged highlights.
- const mounts=layer(.32,.035);mounts.add(radial(6,1.91,.095,.24,.13,0x103953,.0,.2));mounts.add(radial(6,1.91,.019,.16,.014,cyan,.081,.2));mounts.add(radial(6,2.06,.065,.024,.018,orange,.08,.2));
- scan=layer(.62,.28);scan.add(annulus(1.07,1.10,0,4,.19,luminous(cyan,.7)));scan.add(annulus(1.12,1.14,0,16,.12,luminous(blue,.7)));
- // Axial supports connect the back and front assembly: unambiguous 3D parallax.
- const supports=[];for(let i=0;i<12;i++){const a=i*Math.PI/6;supports.push(new THREE.Vector3(Math.cos(a)*1.88,Math.sin(a)*1.88,-.56),new THREE.Vector3(Math.cos(a)*1.88,Math.sin(a)*1.88,.42));}root.add(stroke(supports,blue,.6,true));
- // Fine energy particles travel through the assembly, not on orbital ellipses.
- const count=small.matches?300:650,positions=new Float32Array(count*3),seed=new Float32Array(count);let rs=29;const random=()=>{rs=(Math.imul(rs,1664525)+1013904223)|0;return(rs>>>0)/4294967296;};
- for(let i=0;i<count;i++){const a=random()*Math.PI*2,r=.8+random()*1.7;positions.set([Math.sin(a)*r,Math.cos(a)*r,random()*2.5-1.25],i*3);seed[i]=random();}
+ const light=luminous(cyan,.9),pale=luminous(ice,.9),electric=luminous(blue,.8),amber=luminous(orange,.85),glass=projection(cyan);
+ // Suspended concentric instruments: interrupted arcs and fine indexed ticks.
+ const back=layer(-.50,-.035);back.add(circle(2.26,0,cyan,.44));back.add(circle(2.30,0,blue,.3));back.add(radial(144,2.25,.009,.035,.008,cyan));back.add(annulus(2.08,2.15,.02,48,.52,electric));back.add(dial(2.08,.04));
+ const halo=layer(-.28,.045);halo.add(annulus(1.83,2.02,0,24,.83,glass));halo.add(annulus(1.97,2.01,.02,12,.62,light));halo.add(radial(96,1.91,.008,.055,.006,cyan,.03));halo.add(circle(1.81,.02,cyan,.28));
+ const orbit=layer(-.07,-.11);orbit.add(annulus(1.61,1.69,0,36,.75,light));orbit.add(annulus(1.56,1.59,.03,8,.50,electric));orbit.add(radial(72,1.74,.008,.034,.006,ice));orbit.add(annulus(1.71,1.73,.02,6,.12,amber));
+ // A shallow, tilted data plane provides parallax rather than atom-like orbits.
+ const lattice=layer(.09,.025);lattice.rotation.x=.13;
+ const paths=[];for(let i=0;i<32;i++){const a=i/32*Math.PI*2,r=1.82;const pt=(v,t,z)=>new THREE.Vector3(Math.sin(t)*v,Math.cos(t)*v,z);paths.push(pt(r,a,0),pt(r-.13,a,0),pt(r-.13,a,0),pt(r-.13,a+.035,0),pt(r-.13,a+.035,0),pt(r-.24,a+.035,.05));}lattice.add(stroke(paths,cyan,.5,true));
+ lattice.add(annulus(1.25,1.51,0,16,.76,glass));lattice.add(circle(1.31,.04,blue,.32));
+ // Articulated holographic shutters remain legible through every other layer.
+ const iris=layer(.24,.065),panel=G(new THREE.PlaneGeometry(.30,.11));
+ for(let i=0;i<12;i++){const pivot=new THREE.Group(),a=i/12*Math.PI*2;pivot.rotation.z=a;const vane=new THREE.Group();const pane=new THREE.Mesh(panel,glass);pane.position.x=1.11;vane.add(pane);vane.add(stroke([new THREE.Vector3(.94,-.055,.01),new THREE.Vector3(1.22,-.055,.01),new THREE.Vector3(1.29,.04,.01)],i%4?cyan:orange,.75));pivot.add(vane);iris.add(pivot);petals.push({vane,angle:a});}
+ const aperture=layer(.41,-.07);aperture.add(circle(.83,.02,cyan,.9));aperture.add(circle(.88,.01,blue,.55));aperture.add(annulus(.92,.95,0,32,.66,pale));aperture.add(annulus(.98,1.0,.01,8,.42,light));
+ modulators=instances(G(new THREE.BoxGeometry(.018,.05,.009)),light,64,(o,i)=>{const a=i/64*Math.PI*2;o.position.set(Math.sin(a)*1.29,Math.cos(a)*1.29,.42);o.rotation.z=-a;});root.add(modulators);
+ // Transparent energy field: analytic scanlines, rim light and no opaque crystal.
+ const sphere=G(new THREE.SphereGeometry(.67,32,24));
+ const field=M(new THREE.ShaderMaterial({uniforms,transparent:true,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true,blending:THREE.AdditiveBlending,vertexShader:'varying vec3 p;varying vec3 n;varying vec3 eye;void main(){p=position;n=normalize(normalMatrix*normal);vec4 v=modelViewMatrix*vec4(position,1.);eye=normalize(-v.xyz);gl_Position=projectionMatrix*v;}',fragmentShader:'uniform float time;uniform float energy;uniform float sound;varying vec3 p;varying vec3 n;varying vec3 eye;void main(){float rim=pow(1.-abs(dot(normalize(n),normalize(eye))),3.);float bands=pow(.5+.5*cos(p.y*145.-time*2.),22.);float scan=pow(.5+.5*cos(p.y*5.-time*.7),42.);vec3 c=mix(vec3(.02,.22,.65),vec3(.32,.85,1.),rim);gl_FragColor=vec4(c,.035+rim*.30+bands*.13+scan*.18+sound*.09);}' }));
+ crystal=new THREE.Mesh(sphere,field);crystal.position.z=.5;root.add(crystal);
+ innerCage=new THREE.Group();innerCage.position.z=.5;const grid=[];
+ const link=(p,q)=>grid.push(p,q);const globe=(lat,lon)=>new THREE.Vector3(.695*Math.cos(lat)*Math.cos(lon),.695*Math.sin(lat),.695*Math.cos(lat)*Math.sin(lon));
+ for(let j=-3;j<=3;j++)for(let i=0;i<64;i++)link(globe(j*Math.PI/12,i*Math.PI/32),globe(j*Math.PI/12,(i+1)*Math.PI/32));
+ for(let j=0;j<12;j++)for(let i=0;i<32;i++)link(globe(-Math.PI/2+i*Math.PI/32,j*Math.PI/6),globe(-Math.PI/2+(i+1)*Math.PI/32,j*Math.PI/6));
+ innerCage.add(stroke(grid,cyan,.20,true));root.add(innerCage);
+ // Projected identifier, not an image of a film prop. Always luminous and crisp.
+ const label=document.createElement('canvas');label.width=1024;label.height=384;const ctx=label.getContext('2d');ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#bbf5ff';ctx.font='500 128px monospace';ctx.fillText('J.A.R.V.I.S.',512,170);ctx.fillStyle='#5cc6eb';ctx.font='20px monospace';ctx.fillText('N E U R A L   I N T E R F A C E',512,260);
+ const texture=new THREE.CanvasTexture(label);texture.colorSpace=THREE.SRGBColorSpace;textures.add(texture);const sign=new THREE.Mesh(G(new THREE.PlaneGeometry(1.65,.62)),M(new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,depthTest:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,forceSinglePass:true})));sign.position.z=1.22;sign.renderOrder=10;root.add(sign);
+ scan=layer(.60,.20);scan.add(annulus(1.14,1.15,0,4,.18,luminous(cyan,.8)));scan.add(circle(1.19,.01,cyan,.25));
+ const mounts=layer(.15,-.022);mounts.add(radial(12,2.16,.011,.13,.01,cyan,0,.08));mounts.add(radial(6,2.18,.028,.019,.008,orange,.01,.08));
+ const supports=[];for(let i=0;i<8;i++){const a=i*Math.PI/4;supports.push(new THREE.Vector3(Math.cos(a)*1.85,Math.sin(a)*1.85,-.52),new THREE.Vector3(Math.cos(a)*1.85,Math.sin(a)*1.85,.32));}root.add(stroke(supports,blue,.22,true));
+ // Suspended light motes. Bounded instancing and point sprites keep mobile cost low.
+ const count=small.matches?240:480,positions=new Float32Array(count*3),seed=new Float32Array(count);let rs=29;const random=()=>{rs=(Math.imul(rs,1664525)+1013904223)|0;return(rs>>>0)/4294967296;};
+ for(let i=0;i<count;i++){const a=random()*Math.PI*2,r=.9+random()*1.6;positions.set([Math.sin(a)*r,Math.cos(a)*r,random()*2.5-1.25],i*3);seed[i]=random();}
  const particles=G(new THREE.BufferGeometry());particles.setAttribute('position',new THREE.BufferAttribute(positions,3));particles.setAttribute('seed',new THREE.BufferAttribute(seed,1));
- sparks=new THREE.Points(particles,M(new THREE.ShaderMaterial({uniforms,transparent:true,depthWrite:false,vertexShader:'uniform float time;uniform float energy;uniform float pixelRatio;attribute float seed;varying float a;varying float k;void main(){vec3 p=position;float phase=fract(seed+time*(.05+energy*.08));p.z=(phase-.5)*2.5;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((1.+seed)*pixelRatio*7./-mv.z,1.,4.);a=sin(phase*3.14159);k=seed;}',fragmentShader:'varying float a;varying float k;void main(){vec2 p=abs(gl_PointCoord-.5);if(p.x+p.y>.5)discard;gl_FragColor=vec4(k>.95?vec3(1.,.5,.12):vec3(.2,.7,1.),a*.8);}' })));root.add(sparks);
- // A restrained projection platform leaves the machinery sharply legible.
- ground=new THREE.Group();ground.position.y=-2.48;scene.add(ground);const platform=new THREE.Group();platform.rotation.x=-Math.PI/2;ground.add(platform);platform.add(circle(2.08,0,blue,.3));platform.add(circle(2.16,0,cyan,.4,Math.PI*1.85));platform.add(radial(90,2.1,.007,.055,.01,cyan,.01));platform.add(circle(1.75,0,blue,.2));
- const beams=[];for(let i=0;i<8;i++){const a=i*Math.PI/4;beams.push(new THREE.Vector3(Math.sin(a)*1.7,0,Math.cos(a)*1.7),new THREE.Vector3(Math.sin(a)*1.35,1.6,Math.cos(a)*.6));}ground.add(stroke(beams,blue,.12,true));
+ sparks=new THREE.Points(particles,M(new THREE.ShaderMaterial({uniforms,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,vertexShader:'uniform float time;uniform float energy;uniform float pixelRatio;attribute float seed;varying float a;varying float k;void main(){vec3 p=position;float phase=fract(seed+time*(.035+energy*.08));p.z=(phase-.5)*2.5;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((1.+seed)*pixelRatio*7./-mv.z,1.,3.);a=sin(phase*3.14159);k=seed;}',fragmentShader:'varying float a;varying float k;void main(){vec2 p=abs(gl_PointCoord-.5);if(p.x+p.y>.5)discard;gl_FragColor=vec4(k>.97?vec3(1.,.5,.12):vec3(.2,.7,1.),a*.6);}' })));root.add(sparks);
+ ground=new THREE.Group();ground.position.y=-2.48;scene.add(ground);const platform=new THREE.Group();platform.rotation.x=-Math.PI/2;ground.add(platform);platform.add(circle(2.05,0,blue,.18));platform.add(circle(2.13,0,cyan,.35,Math.PI*1.85));platform.add(radial(90,2.1,.006,.035,.006,cyan,.01));platform.add(circle(1.74,0,blue,.18));
+ const beams=[];for(let i=0;i<12;i++){const a=i*Math.PI/6;beams.push(new THREE.Vector3(Math.sin(a)*1.65,0,Math.cos(a)*1.65),new THREE.Vector3(Math.sin(a)*1.35,1.6,Math.cos(a)*.6));}ground.add(stroke(beams,cyan,.075,true));
  renderer.compile(scene,camera);
 }
 function resize(){if(!renderer||!root||lost||disposed)return;const r=(small.matches?document.querySelector('.holo-scene'):stage).getBoundingClientRect();if(r.width<1||r.height<1)return;const mobile=r.width<761;
@@ -93,11 +95,11 @@ function render(timestamp){frame=0;if(!runnable()){stats.paused=true;return;}con
  const stableProximity=1+Math.sign(proximity-1)*Math.max(0,Math.abs(proximity-1)-.035);
  const coreScale=reduced.matches?1:Math.max(.65,Math.min(small.matches?1.16:1.3,stableProximity));
  root.scale.setScalar(coreBaseScale*coreScale);stats.coreScale=coreScale;
- root.rotation.set(.10+look.y*.25+Math.sin(time*.12)*.035,-.43+look.x*.42+Math.sin(time*.10)*.10,.015);
+ root.rotation.set(.08+look.y*.25+Math.sin(time*.12)*.025,-.25+look.x*.42+Math.sin(time*.10)*.075,.015);
  for(let i=0;i<mechanisms.length;i++){const o=mechanisms[i];if(!reduced.matches)o.group.rotation.z+=dt*o.velocity*(1+speed*5)*(1-impulse*.85);o.group.position.z=o.z+deploy*(i%2?.20:-.12)+(speaking&&!reduced.matches?sound*.05:0);}
  petals.forEach(({vane},i)=>{vane.rotation.x=deploy*.38+(reduced.matches?0:mic*.1);vane.rotation.z=-deploy*.18;vane.position.z=reduced.matches?0:mic*.045-impulse*.06;});
  for(let i=0;i<64;i++){const a=i/64*Math.PI*2,response=reduced.matches?0:(listening?mic:speaking?sound:0),pattern=.3+.7*Math.abs(Math.sin(a*3+.4));matrix.position.set(Math.sin(a)*1.29,Math.cos(a)*1.29,.43+deploy*.12);matrix.rotation.set(0,0,-a);matrix.scale.set(1,1+response*pattern*3.8+(thinking?.35:0),1);matrix.updateMatrix();modulators.setMatrixAt(i,matrix.matrix);}modulators.instanceMatrix.needsUpdate=true;
- if(!reduced.matches){crystal.rotation.y+=dt*(.18+sound*.4);crystal.rotation.x+=dt*.08;innerCage.rotation.z-=dt*.14;innerCage.rotation.y=Math.sin(time*.17)*.35;}
+ if(!reduced.matches){crystal.rotation.y+=dt*(.07+sound*.25);crystal.rotation.x+=dt*.08;innerCage.rotation.z-=dt*.14;innerCage.rotation.y=Math.sin(time*.17)*.35;}
  crystal.scale.setScalar(reduced.matches?1:1+mic*.07+sound*.10-impulse*.08);crystal.position.z=.5+deploy*.1;focusLight.intensity=1.5+energy*1.5;
  const start=performance.now();try{renderer.render(scene,camera);}catch(error){lost=true;stats.ready=false;stats.fallbackReason=error.message;document.body.classList.remove('hologram-ready');return;}
  if(lost)return;stats.frames++;stats.frameMs=stats.frameMs*.9+(performance.now()-start)*.1;stats.drawCalls=renderer.info.render.calls;stats.ready=true;stats.paused=reduced.matches;if(!document.body.classList.contains('hologram-ready'))document.body.classList.add('hologram-ready');

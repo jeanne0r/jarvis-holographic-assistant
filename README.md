@@ -10,7 +10,7 @@ This repository is a standalone, sanitized release of a working personal deploym
 
 ## Features
 
-- GPU-rendered 3D core with layered mechanical rings, energy particles and real audio-reactive movement.
+- GPU-rendered holographic core with transparent segmented instruments, a scanned energy sphere, projected J.A.R.V.I.S. lettering, particles and real audio-reactive movement.
 - Safari iPhone and desktop layouts, adaptive rendering quality and a non-WebGL fallback.
 - Optional local face tracking: move the core with your face and change its apparent size by moving closer or farther away.
 - Text chat and Gemini transcription/speech; natural interruption and uninterrupted dictation modes.

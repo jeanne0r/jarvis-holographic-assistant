@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Replace opaque mechanical housings and the faceted crystal with a transparent cyan holographic projection, energy globe and central projected identifier.
+- Preserve real voice-state/audio reactions, manual microphone controls and camera proximity.
+- Refresh the non-WebGL fallback and sanitized desktop/mobile screenshots.
+
 ## 0.1.0
 
 Initial standalone public release:
