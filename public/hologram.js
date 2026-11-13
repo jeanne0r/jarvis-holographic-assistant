@@ -4,7 +4,7 @@ import * as THREE from './vendor/three.module.min.js';
 // Audio comes only from live-state.js / rendered PCM. No synthetic voice levels.
 const canvas=document.querySelector('#hologramCanvas'),stage=document.querySelector('.command-stage');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)'),small=matchMedia('(max-width:760px)');
-const stats={ready:false,state:'idle',frames:0,frameMs:0,quality:small.matches?'mobile':'desktop',paused:true,drawCalls:0,inputRms:0,outputRms:0,mechanism:'HOLOGRAPHIC III',bloom:false};
+const stats={ready:false,state:'idle',frames:0,frameMs:0,quality:small.matches?'mobile':'desktop',paused:true,drawCalls:0,inputRms:0,outputRms:0,mechanism:'PANORAMIC LAB',bloom:false};
 Object.defineProperty(window,'jarvisHologram',{get:()=>Object.freeze({...stats})});
 const geometries=new Set(),materials=new Set(),textures=new Set();
 const G=g=>(geometries.add(g),g),M=m=>(materials.add(m),m);
@@ -13,7 +13,7 @@ let renderer,scene,camera,root,frame=0,disposed=false,lost=false,visible=true,la
 let reducedBucket=0,lastReducedLevel=0;
 let voice={inputRms:0,outputRms:0,transport:'closed'},voiceAt=0,interruptAt=-Infinity,impulse=0,mic=0,sound=0,deploy=0,speed=.08;
 let pointer={x:0,y:0},look={x:0,y:0},gaze={enabled:false,tracking:false,x:0,y:0,depth:0},gazeDepth=0,coreBaseScale=1;
-let mechanisms=[],petals=[],modulators,crystal,innerCage,sparks,ground,scan,focusLight;
+let environment;let mechanisms=[],petals=[],modulators,crystal,innerCage,sparks,ground,scan,focusLight;
 const uniforms={time:{value:0},mic:{value:0},sound:{value:0},energy:{value:.18},pixelRatio:{value:1}};
 function luminous(color=cyan,opacity=1){return M(new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,forceSinglePass:true}));}
 function projection(color=cyan){return M(new THREE.ShaderMaterial({uniforms:{...uniforms,tint:{value:new THREE.Color(color)}},transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,forceSinglePass:true,vertexShader:'varying vec3 p;void main(){p=position;vec4 v=vec4(position,1.);\n#ifdef USE_INSTANCING\n v=instanceMatrix*v;\n#endif\n gl_Position=projectionMatrix*modelViewMatrix*v;}',fragmentShader:'uniform vec3 tint;uniform float time;uniform float energy;varying vec3 p;void main(){float lines=pow(.5+.5*cos(p.y*170.+time*1.4),18.);float circuit=pow(.5+.5*cos(p.x*95.+p.y*20.),30.);float sweep=pow(.5+.5*cos(p.y*2.-time*.6),22.);gl_FragColor=vec4(tint,.035+lines*.14+circuit*.11+sweep*.08+energy*.05);}' }));}
@@ -26,6 +26,30 @@ function sector(inner,outer,angle,depth){const shape=new THREE.Shape();shape.abs
 function annulus(inner,outer,z,count,fill,material,offset=0){return instances(sector(inner,outer,Math.PI*2/count*fill,.012),material,count,(o,i)=>{o.position.z=z;o.rotation.z=offset+i/count*Math.PI*2;});}
 function layer(z,velocity){const group=new THREE.Group();group.position.z=z;root.add(group);mechanisms.push({group,z,velocity});return group;}
 function dial(radius,z){const c=document.createElement('canvas');c.width=c.height=1024;const ctx=c.getContext('2d');ctx.translate(512,512);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#6dbbe8';ctx.font='20px monospace';for(let i=0;i<24;i++){ctx.save();ctx.rotate(i/24*Math.PI*2);ctx.translate(0,-460);ctx.fillText(String(i*15).padStart(3,'0'),0,0);ctx.restore();}const texture=new THREE.CanvasTexture(c);texture.anisotropy=renderer.capabilities.getMaxAnisotropy();textures.add(texture);const mesh=new THREE.Mesh(G(new THREE.PlaneGeometry(radius*2,radius*2)),M(new THREE.MeshBasicMaterial({map:texture,transparent:true,opacity:.85,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true})));mesh.position.z=z;return mesh;}
+// Spatial architecture only: no fabricated machine readings, people or camera imagery.
+function buildEnvironment(){
+ const group=new THREE.Group();scene.add(group);
+ const grid=[];for(let i=-12;i<=12;i++){grid.push(new THREE.Vector3(i,-2.56,-8),new THREE.Vector3(i,-2.56,5));grid.push(new THREE.Vector3(-12,-2.56,i),new THREE.Vector3(12,-2.56,i));}group.add(stroke(grid,blue,.10,true));
+ const desk=new THREE.Group();desk.position.set(0,-2.30,1.0);desk.rotation.x=-Math.PI/2;group.add(desk);
+ for(const [radius,alpha,color]of [[5.1,.5,cyan],[5.18,.16,blue],[4.54,.35,cyan],[4.48,.12,orange]])desk.add(circle(radius,0,color,alpha,Math.PI*.82,Math.PI*.09));
+ const ribs=[];for(let i=0;i<50;i++){const a=Math.PI*.09+i/49*Math.PI*.82;ribs.push(new THREE.Vector3(Math.cos(a)*4.56,Math.sin(a)*4.56,0),new THREE.Vector3(Math.cos(a)*5.08,Math.sin(a)*5.08,0));}desk.add(stroke(ribs,cyan,.13,true));
+ const deskFace=instances(G(new THREE.PlaneGeometry(.024,.35)),luminous(cyan,.45),50,(o,i)=>{const a=Math.PI*.09+i/49*Math.PI*.82;o.position.set(Math.cos(a)*5.1,Math.sin(a)*5.1,-.18);o.rotation.z=a-Math.PI/2;});desk.add(deskFace);
+ // Four suspended glass planes form a curved workspace around the live core.
+ const schematics=document.createElement('canvas');schematics.width=1024;schematics.height=768;const ctx=schematics.getContext('2d');ctx.strokeStyle='#54dfff';ctx.lineWidth=1.5;
+ ctx.strokeRect(34,32,956,704);ctx.strokeRect(52,78,920,490);ctx.globalAlpha=.35;for(let i=0;i<22;i++){const x=75+i*41;ctx.beginPath();ctx.moveTo(x,90);ctx.lineTo(x,550);ctx.stroke();}for(let i=0;i<12;i++){ctx.beginPath();ctx.moveTo(65,100+i*39);ctx.lineTo(960,100+i*39);ctx.stroke();}ctx.globalAlpha=.9;
+ // A wire diagram of the interface geometry, not a telemetry graph.
+ for(let j=0;j<3;j++){ctx.beginPath();ctx.ellipse(520,310,120+j*45,165,Math.PI*.13,0,Math.PI*2);ctx.stroke();}ctx.beginPath();ctx.moveTo(220,310);ctx.lineTo(810,310);ctx.moveTo(520,120);ctx.lineTo(520,510);ctx.stroke();
+ ctx.strokeStyle='#ffac59';ctx.strokeRect(74,610,180,14);ctx.strokeStyle='#54dfff';for(let j=0;j<3;j++)ctx.strokeRect(280+j*220,602,190,64);
+ const map=new THREE.CanvasTexture(schematics);map.colorSpace=THREE.SRGBColorSpace;textures.add(map);
+ const face=M(new THREE.MeshBasicMaterial({map,transparent:true,opacity:.45,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true,blending:THREE.AdditiveBlending}));
+ for(let i=0;i<4;i++){
+  const left=i<2,index=i%2,screen=new THREE.Group();screen.position.set((left?-1:1)*(3.25+index*2.2),index?.05:.25,-1.15-index*.5);screen.rotation.y=(left?1:-1)*(.24+index*.18);screen.rotation.z=(left?-1:1)*.018;group.add(screen);
+  const pane=new THREE.Mesh(G(new THREE.PlaneGeometry(2.05,1.55)),face);screen.add(pane);
+  screen.add(stroke([new THREE.Vector3(-1.03,-.78,0),new THREE.Vector3(-1.03,.78,0),new THREE.Vector3(.91,.78,0),new THREE.Vector3(1.03,.66,0),new THREE.Vector3(1.03,-.78,0),new THREE.Vector3(-1.03,-.78,0)],cyan,.5));
+  const mount=stroke([new THREE.Vector3(0,-.8,0),new THREE.Vector3(0,-2.2,.6)],blue,.25);screen.add(mount);
+ }
+ return group;
+}
 function build(){
  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'default',stencil:false,preserveDrawingBuffer:false});renderer.setClearColor(0,0);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.NoToneMapping;
  const gl=renderer.getContext(),debug=gl.getExtension('WEBGL_debug_renderer_info');if(debug&&/swiftshader|llvmpipe|software/i.test(gl.getParameter(debug.UNMASKED_RENDERER_WEBGL)))stats.quality='low';
@@ -68,12 +92,14 @@ function build(){
  sparks=new THREE.Points(particles,M(new THREE.ShaderMaterial({uniforms,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,vertexShader:'uniform float time;uniform float energy;uniform float pixelRatio;attribute float seed;varying float a;varying float k;void main(){vec3 p=position;float phase=fract(seed+time*(.035+energy*.08));p.z=(phase-.5)*2.5;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((1.+seed)*pixelRatio*7./-mv.z,1.,3.);a=sin(phase*3.14159);k=seed;}',fragmentShader:'varying float a;varying float k;void main(){vec2 p=abs(gl_PointCoord-.5);if(p.x+p.y>.5)discard;gl_FragColor=vec4(k>.97?vec3(1.,.5,.12):vec3(.2,.7,1.),a*.6);}' })));root.add(sparks);
  ground=new THREE.Group();ground.position.y=-2.48;scene.add(ground);const platform=new THREE.Group();platform.rotation.x=-Math.PI/2;ground.add(platform);platform.add(circle(2.05,0,blue,.18));platform.add(circle(2.13,0,cyan,.35,Math.PI*1.85));platform.add(radial(90,2.1,.006,.035,.006,cyan,.01));platform.add(circle(1.74,0,blue,.18));
  const beams=[];for(let i=0;i<12;i++){const a=i*Math.PI/6;beams.push(new THREE.Vector3(Math.sin(a)*1.65,0,Math.cos(a)*1.65),new THREE.Vector3(Math.sin(a)*1.35,1.6,Math.cos(a)*.6));}ground.add(stroke(beams,cyan,.075,true));
+ environment=buildEnvironment();
  renderer.compile(scene,camera);
 }
 function resize(){if(!renderer||!root||lost||disposed)return;const r=(small.matches?document.querySelector('.holo-scene'):stage).getBoundingClientRect();if(r.width<1||r.height<1)return;const mobile=r.width<761;
  let dpr=Math.min(devicePixelRatio||1,mobile?2:1.75,(stats.quality==='low'?1700:3200)/Math.max(r.width,r.height));if(stats.quality==='low')dpr=Math.min(dpr,1.15);
  renderer.setPixelRatio(dpr);renderer.setSize(r.width,r.height,false);uniforms.pixelRatio.value=dpr;camera.aspect=r.width/r.height;camera.updateProjectionMatrix();camera.position.set(0,mobile?.8:.7,mobile?6.8:9.05);camera.lookAt(0,-.42,0);
- coreBaseScale=mobile?.90:1;root.scale.setScalar(coreBaseScale);root.position.set(mobile?0:.22,mobile?.13:.12,0);ground.scale.setScalar(mobile?.84:1);ground.position.y=mobile?-1.98:-2.48;stats.quality=stats.quality==='low'?'low':mobile?'mobile':'desktop';staticSignature='';
+ environment.visible=!mobile&&r.width>=1100;stats.panorama=environment.visible;
+ coreBaseScale=mobile?.90:r.width>=1100?.78:1;root.scale.setScalar(coreBaseScale);root.position.set(mobile?0:.0,mobile?.13:.22,0);ground.scale.setScalar(mobile?.84:1);ground.position.y=mobile?-1.98:-2.48;stats.quality=stats.quality==='low'?'low':mobile?'mobile':'desktop';staticSignature='';
 }
 function runnable(){return !!renderer&&!!root&&!lost&&!disposed&&!document.hidden&&visible&&document.body.dataset.screen==='chat'&&!document.body.classList.contains('hud-sheet-open');}
 function render(timestamp){frame=0;if(!runnable()){stats.paused=true;return;}const interval=small.matches||stats.quality==='low'?32:16;if(timestamp-lastFrame<interval&&!reduced.matches){frame=requestAnimationFrame(render);return;}

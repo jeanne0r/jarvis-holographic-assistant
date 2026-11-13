@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a panoramic holographic desktop workspace with spatial screens, a curved console and perspective-framed real controls. Keep the compact phone layout and content-on-demand windows; no human characters or fabricated telemetry.
+
 - Replace opaque mechanical housings and the faceted crystal with a transparent cyan holographic projection, energy globe and central projected identifier.
 - Preserve real voice-state/audio reactions, manual microphone controls and camera proximity.
 - Refresh the non-WebGL fallback and sanitized desktop/mobile screenshots.
