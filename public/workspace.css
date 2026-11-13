@@ -110,3 +110,19 @@ body:not([data-screen='chat']) .workspace-screens{display:none}
 @media(max-width:1099px){.workspace-screens{padding:12px 8px 18px;max-height:190px}.workspace-screen,.workspace-screen:nth-child(even),.workspace-screen[data-side]{--screen-y:-8deg;transform:perspective(800px) rotateY(var(--screen-y)) rotateX(2deg)}.workspace-screen.workspace-video{transform:perspective(800px) rotateY(var(--screen-y)) rotateX(2deg)}}
 @media(max-width:760px){.workspace-screens{max-height:none}.workspace-screen:has(:focus-visible){transform:none}}
 @media(prefers-reduced-motion:reduce){.workspace-screen{transition:none;--pointer-x:0deg;--pointer-y:0deg}}
+
+/* Native media stays attached throughout two-axis resizing. */
+.workspace-resize{position:absolute;right:-5px;bottom:-5px;z-index:3;width:44px;height:44px;min-height:44px;padding:12px 6px 2px 14px;border:0;background:transparent;color:#a9eeff;font:20px/1 monospace;cursor:nwse-resize;touch-action:none;user-select:none;-webkit-user-select:none;text-shadow:0 0 8px #45dafa66}
+.workspace-resize:focus-visible{outline:2px solid #a2f2ff;outline-offset:-5px}
+.workspace-screen.workspace-sized{display:flex;flex-direction:column}
+.workspace-sized>.workspace-drag,.workspace-sized>.workspace-preview,.workspace-sized>.workspace-external{flex-shrink:0}
+.workspace-sized>.content-window.content-docked{flex:1;min-height:80px;overflow:auto}
+.workspace-sized>.content-docked .content-window-body{display:flex;flex-direction:column;min-height:100%;height:100%}
+.workspace-sized .content-docked .content-video{flex:1;min-height:90px;aspect-ratio:auto;margin-bottom:0}
+.workspace-sized .content-docked .content-site,.workspace-sized .content-docked .content-map{flex:1;min-height:100px;height:100%}
+.workspace-screen.workspace-resizing,.workspace-screen.workspace-floating.workspace-resizing,.workspace-screen.workspace-resizing:nth-child(even){transform:none;transition:none}
+.workspace-resizing iframe{pointer-events:none}
+.workspace-sized>.workspace-preview{min-height:72px}
+.workspace-sized>.workspace-external{padding-bottom:8px}
+
+@media(max-width:760px){.workspace-screen.workspace-floating.workspace-sized,.workspace-screen.workspace-floating.workspace-sized:nth-child(even){transform:none}}
