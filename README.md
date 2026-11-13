@@ -6,7 +6,9 @@ A personal assistant with a living 3D holographic core, natural voice conversati
 
 This repository is a standalone, sanitized release of a working personal deployment. It starts with empty memory and generic profiles. It contains no personal conversations, API keys, cloud credentials, host certificates or original deployment history.
 
-![Jarvis holographic cockpit on desktop](docs/images/desktop.png)
+![Jarvis holographic cockpit with YouTube, live radio and a web search screen](docs/images/workspace-active.png)
+
+*Actual app screenshot with demonstration requests: an embedded YouTube player (paused), Radio Swiss Jazz playing, and a sample web search. Captured from the standalone release with a generic profile and empty personal memory.*
 
 ## Features
 
