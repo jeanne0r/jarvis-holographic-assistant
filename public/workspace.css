@@ -56,3 +56,14 @@ body:not([data-screen='chat']) .workspace-screens{display:none}
 }
 @media(prefers-reduced-motion:reduce){.workspace-screen{transition:none}}
 .workspace-thumbnail{width:100%;max-height:94px;object-fit:cover;border:1px solid #4097b844;opacity:.9}
+/* The original YouTube iframe stays attached here while switching top-layer mode. */
+.workspace-screen:has(.content-docked){transform:none}
+.content-window.content-docked{position:relative;inset:auto;margin:0;width:100%;max-width:none;max-height:none;padding:0;border:0;border-radius:0;box-shadow:none;overflow:hidden;background:#020b13}
+.content-docked .content-window-header,.content-docked .content-window-body>:not(.content-video):not(.content-status){display:none}
+.content-docked .content-window-body{padding:0}
+.content-docked .content-video{aspect-ratio:16/9;min-height:0;height:auto}
+.content-docked .content-video iframe{width:100%;height:100%;min-height:0}
+.content-docked p.content-status{font-size:10px;margin:6px 9px}
+.content-window-header .content-minimize{margin-left:auto;font-size:12px}
+.workspace-screen:has(.content-docked) .workspace-preview{min-height:0;padding-bottom:8px;gap:7px}
+.workspace-screen:has(.content-docked) .workspace-summary{display:none}

@@ -10,16 +10,18 @@
  }
  const config=()=>configPromise??=api('capabilities').catch(e=>{configPromise=null;throw e});
  function link(text,url,hosts){const u=new URL(url);if(u.protocol!=='https:'||!hosts.includes(u.hostname)||u.username||u.password)throw Error('Lien non autorisé.');const a=node('a',text);a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';return a;}
- function syncOverlay(){document.body.classList.toggle('hud-sheet-open',!!document.querySelector('dialog[open]'));}
+ function syncOverlay(){document.body.classList.toggle('hud-sheet-open',!!document.querySelector('dialog[open]:not(.content-docked)'));}
  function contentWindow(kind,title){
   const old=$('#cockpitSheet');if(old?.open)old.close();
-  for(const win of windows.values())if(win.dialog.open)win.dialog.close();
+  for(const win of windows.values())if(win.dialog.open&&!win.dialog.classList.contains('content-docked'))hideWindow(win);
   const previous=windows.get(kind);previous?.dialog.remove();
   const dialog=node('dialog',null,'content-window');dialog.dataset.content=kind;dialog.id='jarvis-window-'+kind;
   const header=node('header',null,'content-window-header'),heading=node('h2',title),close=node('button','×','content-close');heading.id=dialog.id+'-title';dialog.setAttribute('aria-labelledby',heading.id);close.type='button';close.setAttribute('aria-label','Fermer');close.onclick=()=>dialog.close();header.append(heading,close);
   const body=node('div',null,'content-window-body');dialog.append(header,body);document.body.append(dialog);
-  dialog.addEventListener('close',()=>{syncOverlay();if(kind==='evolution'&&windows.get(kind)?.dialog===dialog)clearTimeout(poll);});
-  dialog.showModal();syncOverlay();const win={dialog,body,heading};windows.set(kind,win);document.dispatchEvent(new CustomEvent('jarvis:content-window',{detail:{kind,dialog}}));return win;
+  const win={dialog,body,heading,internalCloses:0};windows.set(kind,win);
+  if(kind==='youtube'){const shrink=node('button','Réduire','content-minimize');shrink.type='button';shrink.onclick=()=>dockWindow(kind);header.insertBefore(shrink,close);}
+  dialog.addEventListener('close',()=>{if(win.internalCloses){win.internalCloses--;return;}if(windows.get(kind)===win)closeWindow(kind);syncOverlay();});
+  dialog.showModal();syncOverlay();document.dispatchEvent(new CustomEvent('jarvis:content-window',{detail:{kind,dialog}}));return win;
  }
  function button(text,action){const b=node('button',text);b.type='button';b.onclick=()=>Promise.resolve(action()).catch(error=>note(mediaStatus,error.message));return b;}
  function applyVolume(){audio.volume=volume*(duck?.15:1);try{player?.setVolume(volume*(duck?.15:1)*100);}catch{}}
@@ -40,24 +42,24 @@
  async function media(effect){
   const action=effect.action;if(!['radio','youtube','pause','reprendre','arreter','volume'].includes(action))throw Error('Commande média inconnue.');
   if(action==='volume'){if(!Number.isFinite(effect.volume)||effect.volume<0||effect.volume>1)throw Error('Volume invalide.');volume=effect.volume;document.querySelectorAll('.content-volume input').forEach(input=>input.value=Math.round(volume*100));applyVolume();return {state:'volume_set',volume};}
-  if(action==='pause'||action==='arreter'){audio.pause();player?.pauseVideo();if(action==='arreter'){player?.stopVideo();audio.removeAttribute('src');audio.load();}if(mediaKind==='radio')playing=false;note(mediaStatus,action==='pause'?'En pause':'Lecture arrêtée');return {state:mediaKind==='youtube'?(action==='pause'?'pause_requested':'stop_requested'):action==='pause'?'paused':'stopped'};}
+  if(action==='pause'||action==='arreter'){audio.pause();player?.pauseVideo?.();if(action==='arreter'){player?.stopVideo?.();audio.removeAttribute('src');audio.load();}if(mediaKind==='radio')playing=false;note(mediaStatus,action==='pause'?'En pause':'Lecture arrêtée');return {state:mediaKind==='youtube'?(action==='pause'?'pause_requested':'stop_requested'):action==='pause'?'paused':'stopped'};}
   if(action==='reprendre'){if(mediaKind==='youtube'&&player){player.playVideo();return {state:player.getPlayerState()===1?'playing':'play_requested'};}return playAudio();}
   const serial=++mediaSerial;
   if(action==='radio'){
    const stream=new URL(effect.url);if(stream.protocol!=='https:'||stream.username||stream.password)throw Error('Flux radio non autorisé.');const station={name:effect.title||effect.radio?.name||'Radio',url:stream.href};if(serial!==mediaSerial)return {state:'cancelled'};
-   player?.pauseVideo();mediaKind='radio';playing=false;const win=contentWindow('radio',station.name);win.body.append(node('div','RADIO · EN DIRECT','content-eyebrow'));mediaStatus=node('p','Connexion…','content-status');mediaStatus.id='radioStatus';win.body.append(mediaStatus);radioControls(win.body);
+   player?.pauseVideo?.();mediaKind='radio';playing=false;const win=contentWindow('radio',station.name);win.body.append(node('div','RADIO · EN DIRECT','content-eyebrow'));mediaStatus=node('p','Connexion…','content-status');mediaStatus.id='radioStatus';win.body.append(mediaStatus);radioControls(win.body);
    audio.src=station.url;applyVolume();return playAudio();
   }
   const external=effect.search?link('Voir les résultats sur YouTube ↗',effect.search,['www.youtube.com']):link('Ouvrir sur YouTube ↗','https://www.youtube.com/watch?v='+effect.videoId,['www.youtube.com']);
   if(effect.search&&new URL(effect.search).pathname!=='/results')throw Error('Recherche YouTube invalide.');
   if(!effect.search&&!/^[\w-]{11}$/.test(effect.videoId||''))throw Error('Vidéo YouTube invalide.');
-  audio.pause();player?.destroy();player=null;mediaKind='youtube';playing=false;
+  audio.pause();player?.destroy?.();player=null;mediaKind='youtube';playing=false;
   const win=contentWindow('youtube',effect.title||'YouTube');mediaStatus=node('p',effect.search?'Choisis une vidéo dans les résultats.':'Ouverture de la vidéo…','content-status');mediaStatus.id='youtubeStatus';win.body.append(mediaStatus);
   if(effect.search){win.body.append(external);return {state:'search_ready',playing:false};}
   const mount=node('div',null,'content-video');mount.id='youtubeMount';win.body.prepend(mount);const target=node('div');mount.append(target);win.body.append(external);
   await youtube();if(serial!==mediaSerial)return {state:'cancelled'};
   const status=mediaStatus;
-  player=new YT.Player(target,{width:'100%',height:'250',videoId:effect.videoId,playerVars:{playsinline:1,origin:location.origin,autoplay:1},events:{onReady:event=>{applyVolume();event.target.playVideo();},onStateChange:event=>{if(serial!==mediaSerial)return;playing=event.data===1;note(status,playing?'':event.data===2?'En pause':'Appuie sur la vidéo pour démarrer.');},onAutoplayBlocked:()=>{if(serial!==mediaSerial)return;note(status,'Appuie sur la vidéo pour autoriser le son.');},onError:()=>note(status,'Cette vidéo ne peut pas être lue ici. Utilise « Ouvrir sur YouTube ».')}});
+  player=new YT.Player(target,{width:'100%',height:'250',videoId:effect.videoId,playerVars:{playsinline:1,origin:location.origin,autoplay:1},events:{onReady:event=>{if(serial!==mediaSerial||windows.get('youtube')!==win){event.target.destroy();return;}applyVolume();event.target.playVideo();},onStateChange:event=>{if(serial!==mediaSerial)return;playing=event.data===1;note(status,playing?'':event.data===2?'En pause':'Appuie sur la vidéo pour démarrer.');},onAutoplayBlocked:()=>{if(serial!==mediaSerial)return;note(status,'Appuie sur la vidéo pour autoriser le son.');},onError:()=>note(status,'Cette vidéo ne peut pas être lue ici. Utilise « Ouvrir sur YouTube ».')}});
   return {state:'player_ready',playing:false,hint:'Attendre l’événement de lecture ; Safari ou l’auteur peut bloquer la lecture intégrée.'};
  }
  async function loadMaps(key){
@@ -117,20 +119,32 @@
   return {state:'sources_displayed',sourceCount:sources.length};
  }
  async function execute(effect,context={}){
-  if(effect?.type==='interface'&&effect.action==='close'){const targets=effect.target==='toutes'?[...document.querySelectorAll('dialog[open]')]:[document.querySelector('.content-window[open]')||document.querySelector('dialog[open]')].filter(Boolean);for(const dialog of targets)dialog.close();syncOverlay();return {state:'closed',count:targets.length};}
+  if(effect?.type==='interface'&&effect.action==='close'){const targets=effect.target==='toutes'?[...document.querySelectorAll('dialog[open]')]:[document.querySelector('.content-window[open]:not(.content-docked)')||document.querySelector('dialog[open]:not(.content-docked)')||document.querySelector('.content-docked[open]')].filter(Boolean);for(const dialog of targets)dialog.close();syncOverlay();return {state:'closed',count:targets.length};}
   if(!effect||!['media','travel','evolution','web'].includes(effect.type))throw Error('Action inconnue.');
   const selectedSpace=context.space||space();if(selectedSpace!==space())return {state:'cancelled'};
   if(effect.id&&seen.has(effect.id))return seen.get(effect.id);
   const promise=(async()=>{try{return effect.type==='media'?await media(effect):effect.type==='travel'?await travel(effect):effect.type==='web'?await webContent(effect):await evolution(effect,selectedSpace);}catch(error){note(effect.type==='media'?mediaStatus:windows.get(effect.type)?.body.querySelector('.content-status'),error.message);return {state:'error',error:error.message};}})();
   if(effect.id){seen.set(effect.id,promise);if(seen.size>100)seen.delete(seen.keys().next().value);}return promise;
  }
- function reset(){mediaSerial++;routeSerial++;clearTimeout(poll);seen.clear();audio.pause();player?.destroy();player=null;playing=false;for(const win of windows.values()){if(win.dialog.open)win.dialog.close();win.dialog.remove();}windows.clear();mediaStatus=null;syncOverlay();}
+ function reset(){mediaSerial++;routeSerial++;clearTimeout(poll);seen.clear();audio.pause();player?.destroy?.();player=null;playing=false;for(const win of windows.values()){if(win.dialog.open)win.dialog.close();win.dialog.remove();}windows.clear();mediaStatus=null;syncOverlay();}
  document.addEventListener('jarvis:spacechange',reset);
  window.addEventListener('pagehide',reset);
+ function hideWindow(win){if(win.dialog.open){win.internalCloses++;win.dialog.close();}}
+ function dockWindow(kind){const win=windows.get(kind);if(!win)return false;hideWindow(win);win.dialog.classList.add('content-docked');win.dialog.show();syncOverlay();return true;}
+ function closeWindow(kind){
+  const win=windows.get(kind);if(!win)return false;windows.delete(kind);
+  if(kind==='radio'){audio.pause();audio.removeAttribute('src');audio.load();}
+  if(kind==='youtube'){player?.stopVideo?.();player?.destroy?.();player=null;}
+  if(kind===mediaKind){mediaSerial++;playing=false;mediaStatus=null;}
+  if(kind==='evolution')clearTimeout(poll);
+  hideWindow(win);win.dialog.remove();document.dispatchEvent(new CustomEvent('jarvis:content-closed',{detail:{kind}}));syncOverlay();return true;
+ }
  function openWindow(kind){
   const win=windows.get(kind);if(!win?.dialog.isConnected)return false;
-  for(const dialog of document.querySelectorAll('dialog[open]'))if(dialog!==win.dialog)dialog.close();
+  for(const other of windows.values())if(other!==win&&other.dialog.open&&!other.dialog.classList.contains('content-docked'))hideWindow(other);
+  const sheet=$('#cockpitSheet');if(sheet?.open)sheet.close();
+  if(win.dialog.classList.contains('content-docked')){hideWindow(win);win.dialog.classList.remove('content-docked');}
   if(!win.dialog.open)win.dialog.showModal();syncOverlay();win.onReopen?.();return true;
  }
- window.jarvisCapabilities={execute,openWindow,get state(){return {mediaKind,playing,volume,ducked:duck};}};
+ window.jarvisCapabilities={execute,openWindow,dockWindow,closeWindow,get state(){return {mediaKind,playing,volume,ducked:duck};}};
 })();

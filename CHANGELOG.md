@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Route personal email, calendar, reminder and contact requests to Codex and its configured host workflows. Keep generic writing help and public searches on Gemini; require checking existing connections before reporting access unavailable.
+
+- Play YouTube in the miniature workspace screen using one attached iframe across modal enlargement/reduction. Closing a media window or dismissing its screen stops and releases the player; minimizing preserves playback.
+
 - Replace decorative side screens with real, accessible content previews. Click to reopen the retained window; external links open a new tab. Preserve media playback, live status, profile isolation and the compact mobile layout.
 
 - Add a panoramic holographic desktop workspace with spatial screens, a curved console and perspective-framed real controls. Keep the compact phone layout and content-on-demand windows; no human characters or fabricated telemetry.

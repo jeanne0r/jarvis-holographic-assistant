@@ -12,7 +12,7 @@
   const category=make('small','workspace-category',labels[kind]||'CONTENU'),title=make('strong','workspace-title'),summary=make('span','workspace-summary'),footer=make('span','workspace-open','Agrandir ↗');
   open.append(category,title,summary,footer);open.onclick=()=>window.jarvisCapabilities.openWindow(kind);
   const external=make('a','workspace-external','Nouvel onglet ↗');external.target='_blank';external.rel='noopener noreferrer';external.hidden=true;
-  const dismiss=make('button','workspace-dismiss','×');dismiss.type='button';dismiss.setAttribute('aria-label','Retirer cet écran');dismiss.onclick=()=>discard(kind);
+  const dismiss=make('button','workspace-dismiss','×');dismiss.type='button';dismiss.setAttribute('aria-label','Retirer cet écran');dismiss.onclick=()=>window.jarvisCapabilities.closeWindow(kind);
   card.append(open,external,dismiss);rail.append(card);
   // Preview only actual text, status and validated links already present in the window.
   // No duplicate iframe, audio stream, Maps request or synthetic telemetry.
@@ -24,16 +24,14 @@
    let href=null;try{const u=new URL(source?.href);if(['http:','https:'].includes(u.protocol)&&!u.username&&!u.password)href=u.href;}catch{}
    external.hidden=!href;if(href)external.href=href;else external.removeAttribute('href');
    external.setAttribute('aria-label','Ouvrir '+heading+' dans un nouvel onglet');
-   if(kind==='youtube'&&href){
-    const u=new URL(href),id=u.hostname==='www.youtube.com'&&u.pathname==='/watch'?u.searchParams.get('v'):null;
-    if(id&&/^[\w-]{11}$/.test(id)&&!card.querySelector('img')){const image=make('img','workspace-thumbnail');image.alt='';image.loading='lazy';image.referrerPolicy='no-referrer';image.src='https://i.ytimg.com/vi/'+id+'/mqdefault.jpg';open.insertBefore(image,summary);}
-   }
    if(!summary.textContent&&href)summary.textContent=new URL(href).hostname;
 
    card.dataset.active=String(dialog.open);
   };
+  if(kind==='youtube'){card.append(dialog);window.jarvisCapabilities.dockWindow(kind);}
   const observer=new MutationObserver(update);observer.observe(dialog,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['open','href']});screens.set(kind,{card,observer});update();
  });
+ document.addEventListener('jarvis:content-closed',e=>discard(e.detail.kind));
  document.addEventListener('jarvis:spacechange',()=>{for(const kind of [...screens.keys()])discard(kind);});
  window.addEventListener('pagehide',()=>{for(const kind of [...screens.keys()])discard(kind);});
 })();
