@@ -85,3 +85,22 @@ body:not([data-screen='chat']) .workspace-screens{display:none}
 .memory-popup-tabs{display:flex;gap:6px;align-items:center}.memory-popup-tabs button{min-height:40px;padding:8px 12px;border:1px solid #318baa66;color:#b8e9f6;font-size:12px;background:#0b2b3e}
 
 .content-docked .content-site,.content-docked .content-map{display:block;width:100%;height:170px;min-height:0;border:0}.content-docked .content-controls{padding:4px 8px;gap:4px}.content-docked .content-controls button{min-height:36px;font-size:10px;padding:7px}
+/* Suspended holographic glass. Content stays in its original browsing context. */
+.workspace-screens{padding:14px 16px 20px;isolation:isolate}
+.workspace-screen{--screen-y:13deg;--pointer-x:0deg;--pointer-y:0deg;--light-x:35%;--light-y:15%;overflow:visible;transform-origin:center;transform:perspective(1100px) rotateX(calc(5deg + var(--pointer-x))) rotateY(calc(var(--screen-y) + var(--pointer-y)));transform-style:preserve-3d;border:1px solid #72dcf480;border-left:2px solid #b5f6ff;background:radial-gradient(ellipse at var(--light-x) var(--light-y),#17608057,transparent 68%),linear-gradient(125deg,#062334e8,#020c18ee);box-shadow:inset 0 0 22px #29a9e914,inset 0 1px #e5fbff66,0 25px 35px -17px #000c,0 0 16px #29bde31a;transition:transform .35s ease-out,border-color .2s,box-shadow .2s}
+.workspace-screen:nth-child(even){--screen-y:-13deg;transform:perspective(1100px) rotateX(calc(5deg + var(--pointer-x))) rotateY(calc(var(--screen-y) + var(--pointer-y)));transform-origin:center}
+.workspace-screen::before,.workspace-screen::after{content:'';position:absolute;pointer-events:none;inset:0}
+.workspace-screen::before{inset:5px -7px -8px 6px;transform:translateZ(-9px);border:1px solid #3cb5df60;border-right:2px solid #42c3ee88;background:linear-gradient(135deg,#16749d15,transparent 55%);box-shadow:0 0 12px #138acd19}
+.workspace-screen::after{inset:-5px;transform:translateZ(2px);background:linear-gradient(#bef7ff,#bef7ff) left top/22px 2px no-repeat,linear-gradient(#78e3ff,#78e3ff) left top/2px 18px no-repeat,linear-gradient(#61d5f3,#61d5f3) right bottom/25px 2px no-repeat,linear-gradient(#61d5f3,#61d5f3) right bottom/2px 18px no-repeat,linear-gradient(#ffb556,#ffb556) right top/12px 2px no-repeat;opacity:.85}
+.workspace-drag{border-bottom:1px solid #4eb9d628;background:linear-gradient(90deg,#3ebce915,transparent);text-shadow:0 0 8px #37cef970}
+.workspace-title{color:#d5f6ff;text-shadow:0 0 12px #70dafa35}
+.workspace-screen.workspace-video{transform:perspective(1100px) rotateX(calc(5deg + var(--pointer-x))) rotateY(calc(var(--screen-y) + var(--pointer-y)))}
+/* Facing the viewer makes native video controls and keyboard targets predictable. */
+.workspace-screen:focus-within,.workspace-screen:has(.content-window[open]:not(.content-docked)){--screen-y:0deg;--pointer-x:0deg;--pointer-y:0deg;transform:none;translate:none}
+.workspace-screen.workspace-floating,.workspace-screen.workspace-floating:nth-child(even){translate:none;overflow:visible;transform:perspective(1100px) rotateX(calc(5deg + var(--pointer-x))) rotateY(calc(var(--screen-y) + var(--pointer-y)))}
+.workspace-screen.workspace-floating:focus-within,.workspace-screen.workspace-dragging,.workspace-screen.workspace-floating:has(.content-window[open]:not(.content-docked)){transform:none}
+.workspace-screen.workspace-dragging::before{opacity:.3}
+@media(hover:hover) and (pointer:fine){.workspace-screen:hover{--screen-y:0deg;translate:none;border-color:#b7f4ff;box-shadow:inset 0 1px #efffff88,0 25px 40px -15px #000d,0 0 25px #29bde32a}}
+@media(max-width:1099px){.workspace-screens{padding:12px 8px 18px;max-height:190px}.workspace-screen,.workspace-screen:nth-child(even){--screen-y:-5deg;transform:perspective(950px) rotateY(var(--screen-y)) rotateX(2deg)}.workspace-screen.workspace-video{transform:perspective(950px) rotateY(var(--screen-y)) rotateX(2deg)}}
+@media(max-width:760px){.workspace-screens{max-height:none}.workspace-screen:focus-within{transform:none}}
+@media(prefers-reduced-motion:reduce){.workspace-screen{transition:none;--pointer-x:0deg;--pointer-y:0deg}}

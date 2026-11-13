@@ -15,6 +15,16 @@
   const dismiss=make('button','workspace-dismiss','×');dismiss.type='button';dismiss.setAttribute('aria-label','Retirer cet écran');dismiss.onclick=()=>window.jarvisCapabilities.closeWindow(kind);
   const handle=make('button','workspace-drag','⠿ '+(labels[kind]||'CONTENU'));handle.type='button';handle.setAttribute('aria-label','Déplacer cet écran');handle.title='Glisser pour déplacer · flèches au clavier · Début pour réinitialiser';handle.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown Home');
   card.append(handle,open,external,dismiss);rail.append(card);
+  // Pointer-only optical parallax: no camera permission, audio work or render loop.
+  const tiltAllowed=matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  let tiltFrame=0;
+  const resetTilt=()=>{cancelAnimationFrame(tiltFrame);tiltFrame=0;for(const key of ['--pointer-x','--pointer-y','--light-x','--light-y'])card.style.removeProperty(key);};
+  card.addEventListener('pointermove',event=>{
+   if(!tiltAllowed.matches||event.pointerType!=='mouse'||card.classList.contains('workspace-floating')||card.contains(document.activeElement))return;
+   const rect=card.getBoundingClientRect(),x=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),y=Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height));
+   cancelAnimationFrame(tiltFrame);tiltFrame=requestAnimationFrame(()=>{tiltFrame=0;card.style.setProperty('--pointer-x',((.5-y)*5).toFixed(2)+'deg');card.style.setProperty('--pointer-y',((x-.5)*7).toFixed(2)+'deg');card.style.setProperty('--light-x',(x*100).toFixed(1)+'%');card.style.setProperty('--light-y',(y*100).toFixed(1)+'%');});
+  });
+  card.addEventListener('pointerleave',resetTilt);card.addEventListener('focusin',resetTilt);
   let drag=null;
   const bounds=()=>{const v=window.visualViewport;return {left:(v?.offsetLeft||0)+8,top:(v?.offsetTop||0)+8,width:(v?.width||innerWidth)-16,height:(v?.height||innerHeight)-16};};
   const place=(x,y)=>{const b=bounds(),w=card.offsetWidth,h=card.offsetHeight;card.style.left=Math.max(b.left,Math.min(b.left+b.width-w,x))+'px';card.style.top=Math.max(b.top,Math.min(b.top+b.height-h,y))+'px';};
