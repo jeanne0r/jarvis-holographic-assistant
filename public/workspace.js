@@ -2,9 +2,10 @@
 (() => {
  const stage=document.querySelector('.command-stage');if(!stage)return;
  const rail=document.createElement('section');rail.className='workspace-screens';rail.setAttribute('aria-label','Fenêtres de Jarvis');stage.append(rail);
+ const syncSides=()=>{let index=0;for(const card of rail.children){if(card.classList.contains('workspace-floating'))continue;if(card.classList.contains('workspace-screen'))card.dataset.side=index%2?'right':'left';index++;}};
  const screens=new Map(),labels={radio:'RADIO',youtube:'VIDÉO',travel:'ITINÉRAIRE',web:'WEB',evolution:'CODEX'};
  const make=(tag,cls,text)=>{const el=document.createElement(tag);el.className=cls;if(text)el.textContent=text;return el;};
- function discard(kind){const screen=screens.get(kind);if(!screen)return;screen.observer.disconnect();screen.placeholder?.remove();screen.card.remove();screens.delete(kind);stage.classList.toggle('has-workspace-screens',screens.size>0);}
+ function discard(kind){const screen=screens.get(kind);if(!screen)return;screen.observer.disconnect();screen.placeholder?.remove();screen.card.remove();screens.delete(kind);syncSides();stage.classList.toggle('has-workspace-screens',screens.size>0);}
  document.addEventListener('jarvis:content-window',({detail:{kind,dialog}})=>{
   discard(kind);
   const card=make('article','workspace-screen');card.dataset.content=kind;if(kind==='youtube')card.classList.add('workspace-video');
@@ -14,22 +15,22 @@
   const external=make('a','workspace-external','Nouvel onglet ↗');external.target='_blank';external.rel='noopener noreferrer';external.hidden=true;
   const dismiss=make('button','workspace-dismiss','×');dismiss.type='button';dismiss.setAttribute('aria-label','Retirer cet écran');dismiss.onclick=()=>window.jarvisCapabilities.closeWindow(kind);
   const handle=make('button','workspace-drag','⠿ '+(labels[kind]||'CONTENU'));handle.type='button';handle.setAttribute('aria-label','Déplacer cet écran');handle.title='Glisser pour déplacer · flèches au clavier · Début pour réinitialiser';handle.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown Home');
-  card.append(handle,open,external,dismiss);rail.append(card);
+  card.append(handle,open,external,dismiss);rail.append(card);syncSides();
   // Pointer-only optical parallax: no camera permission, audio work or render loop.
   const tiltAllowed=matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
   let tiltFrame=0;
   const resetTilt=()=>{cancelAnimationFrame(tiltFrame);tiltFrame=0;for(const key of ['--pointer-x','--pointer-y','--light-x','--light-y'])card.style.removeProperty(key);};
   card.addEventListener('pointermove',event=>{
-   if(!tiltAllowed.matches||event.pointerType!=='mouse'||card.classList.contains('workspace-floating')||card.contains(document.activeElement))return;
+   if(!tiltAllowed.matches||event.pointerType!=='mouse'||card.contains(document.activeElement))return;
    const rect=card.getBoundingClientRect(),x=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),y=Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height));
    cancelAnimationFrame(tiltFrame);tiltFrame=requestAnimationFrame(()=>{tiltFrame=0;card.style.setProperty('--pointer-x',((.5-y)*5).toFixed(2)+'deg');card.style.setProperty('--pointer-y',((x-.5)*7).toFixed(2)+'deg');card.style.setProperty('--light-x',(x*100).toFixed(1)+'%');card.style.setProperty('--light-y',(y*100).toFixed(1)+'%');});
   });
   card.addEventListener('pointerleave',resetTilt);card.addEventListener('focusin',resetTilt);
   let drag=null;
   const bounds=()=>{const v=window.visualViewport;return {left:(v?.offsetLeft||0)+8,top:(v?.offsetTop||0)+8,width:(v?.width||innerWidth)-16,height:(v?.height||innerHeight)-16};};
-  const place=(x,y)=>{const b=bounds(),w=card.offsetWidth,h=card.offsetHeight;card.style.left=Math.max(b.left,Math.min(b.left+b.width-w,x))+'px';card.style.top=Math.max(b.top,Math.min(b.top+b.height-h,y))+'px';};
+  const place=(x,y)=>{const b=bounds(),w=card.offsetWidth,h=card.offsetHeight;card.style.left=Math.max(b.left,Math.min(b.left+b.width-w,x))+'px';card.style.top=Math.max(b.top,Math.min(b.top+b.height-h,y))+'px';card.dataset.side=parseFloat(card.style.left)+w/2<innerWidth/2?'left':'right';};
   const float=()=>{if(card.classList.contains('workspace-floating'))return;const r=card.getBoundingClientRect(),placeholder=make('div','workspace-placeholder');placeholder.style.width=r.width+'px';placeholder.style.height=r.height+'px';placeholder.setAttribute('aria-hidden','true');card.before(placeholder);screens.get(kind).placeholder=placeholder;card.style.width=Math.min(r.width,bounds().width)+'px';card.classList.add('workspace-floating');place(r.left,r.top);};
-  const restore=()=>{const screen=screens.get(kind);screen?.placeholder?.remove();if(screen)screen.placeholder=null;card.classList.remove('workspace-floating');for(const name of ['left','top','width'])card.style.removeProperty(name);};
+  const restore=()=>{const screen=screens.get(kind);screen?.placeholder?.remove();if(screen)screen.placeholder=null;card.classList.remove('workspace-floating');for(const name of ['left','top','width'])card.style.removeProperty(name);syncSides();};
   handle.addEventListener('pointerdown',event=>{if(event.button!==0||!event.isPrimary)return;event.preventDefault();handle.focus({preventScroll:true});float();const r=card.getBoundingClientRect();drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:r.left,top:r.top};handle.setPointerCapture(event.pointerId);card.classList.add('workspace-dragging');});
   handle.addEventListener('pointermove',event=>{if(!drag||drag.id!==event.pointerId)return;event.preventDefault();place(drag.left+event.clientX-drag.x,drag.top+event.clientY-drag.y);});
   const release=event=>{if(drag?.id!==event.pointerId)return;drag=null;card.classList.remove('workspace-dragging');if(handle.hasPointerCapture(event.pointerId))handle.releasePointerCapture(event.pointerId);};

@@ -6,7 +6,7 @@ A personal assistant with a living 3D holographic core, natural voice conversati
 
 This repository is a standalone, sanitized release of a working personal deployment. It starts with empty memory and generic profiles. It contains no personal conversations, API keys, cloud credentials, host certificates or original deployment history.
 
-![Jarvis holographic cockpit with YouTube, live radio and a web search screen](docs/images/workspace-active.png)
+![Jarvis transparent holographic desk with YouTube, live radio and a web search screen](docs/images/workspace-desk.png)
 
 *Actual app screenshot with demonstration requests: an embedded YouTube player (paused), Radio Swiss Jazz playing, and a sample web search. Captured from the standalone release with a generic profile and empty personal memory.*
 
@@ -17,7 +17,7 @@ This repository is a standalone, sanitized release of a working personal deploym
 - Drag virtual screens with their title grip (mouse/touch); arrow keys move a focused grip and Home restores its position. Memory, Ideas and the complete 3D map open as cockpit dialogs.
 - The 3D memory map progressively scrolls all current Qdrant points in the selected/shared spaces and renders them in one GPU draw call. It keeps canonical-source validation and does not call an AI model.
 - Live TV requests discover official broadcaster pages instead of defaulting to YouTube. Explicit browser searches can open Google results; blocked popups retain a user-clickable link.
-- Holographic content screens with layered luminous edges, perspective and pointer parallax; keyboard focus and dragging face the viewer, with reduced motion respected.
+- Transparent holographic content screens arranged in a desk-view arc: outer edges approach the viewer and inner edges recede toward the core. Thin luminous edges and pointer parallax preserve the scene behind the glass; native videos remain opaque. Keyboard focus and dragging face the viewer, with reduced motion respected.
 - A panoramic desktop workspace with suspended glass screens, a curved console and spatial grid, without characters or simulated telemetry.
 - Safari iPhone and desktop layouts, adaptive rendering quality and a non-WebGL fallback.
 - Optional local face tracking: move the core with your face and change its apparent size by moving closer or farther away.
