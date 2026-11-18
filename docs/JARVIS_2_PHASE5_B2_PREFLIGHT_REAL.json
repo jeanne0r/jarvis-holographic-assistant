@@ -1,0 +1,108 @@
+{
+  "firewall_rules_scoped": true,
+  "profiles_enabled": true,
+  "physical_adapter_count": 1,
+  "physical_ipv6_disabled": true,
+  "source_attestation": [
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 0,
+      "seconds": 0.783
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 2500,
+      "seconds": 0.769
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 5000,
+      "seconds": 0.73
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 7500,
+      "seconds": 0.706
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 10000,
+      "seconds": 0.742
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 12500,
+      "seconds": 0.756
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 15000,
+      "seconds": 0.723
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 17500,
+      "seconds": 0.74
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 20000,
+      "seconds": 0.728
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 22500,
+      "seconds": 0.72
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 615,
+      "total_files": 25615,
+      "start": 25000,
+      "seconds": 0.237
+    }
+  ],
+  "final_window": {
+    "started_at": 1794684978.1522195,
+    "expires_at": 1794686178.1522195,
+    "closed": true,
+    "calls": 8,
+    "missions": 3,
+    "limits": {
+      "calls": 16,
+      "missions": 3
+    },
+    "local_token_limit": 98304
+  }
+}

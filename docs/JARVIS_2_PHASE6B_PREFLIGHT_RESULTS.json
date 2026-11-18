@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "01-inert-server-libraries patch integrity",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/jarvis-session-auth.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/hermes-server-auth.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/hermes-voice-tools.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/hermes-bridge-client.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/jarvis-hermes-experimental.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/hybrid-mission-admission.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/phase6-gateway.mjs",
+      "passed": true
+    },
+    {
+      "check": "02-authenticated-legacy-routes patch integrity",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/backend.mjs",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/voice-memory.py",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/workspace/jarvis/store.py",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/gateway/server.js",
+      "passed": true
+    },
+    {
+      "check": "03-holographic-panel patch integrity",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/gateway/public/jarvis/index.html",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/gateway/public/jarvis/hermes-missions.js",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/gateway/public/jarvis/hermes-missions.css",
+      "passed": true
+    },
+    {
+      "check": "production preimage /home/user/gateway/public/jarvis/voice-router.js",
+      "passed": true
+    },
+    {
+      "check": "04-hybrid-opt-in patch integrity",
+      "passed": true
+    },
+    {
+      "check": "unchanged conversation/audio codex-voice.js",
+      "passed": true
+    },
+    {
+      "check": "unchanged conversation/audio app.js",
+      "passed": true
+    },
+    {
+      "check": "unchanged conversation/audio live.js",
+      "passed": true
+    },
+    {
+      "check": "active hybrid configuration",
+      "passed": true
+    },
+    {
+      "check": "isolated worktree branch",
+      "passed": true
+    }
+  ],
+  "pilot_authorized": false,
+  "windows_started": false,
+  "production_writes": 0,
+  "private_content_read": false,
+  "additional_remote_budget_chf": 0
+}

@@ -1,0 +1,1 @@
+{"name":"diagnostic_refroidissement_s19","version":2,"description":"Synthetic cooling diagnostic with freshness check","allowed_tools":["memory.search","report"],"checks":["freshness","flow"]}

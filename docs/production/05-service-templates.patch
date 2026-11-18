@@ -1,0 +1,120 @@
+--- /dev/null
++++ b/security/production/jarvis-codex-broker.service.in
+@@ -0,0 +1,19 @@
++[Unit]
++Description=Jarvis private Codex admission ledger
++[Service]
++User=jarvis-broker
++Group=jarvis-broker
++SupplementaryGroups=jarvis-broker-ipc
++WorkingDirectory=/opt/jarvis-2/release
++ExecStart=/usr/bin/python3 -m memory_manager.phase6d.broker.main --config /etc/jarvis-broker/config.json
++UMask=0077
++NoNewPrivileges=yes
++PrivateTmp=yes
++PrivateNetwork=yes
++ProtectHome=yes
++ProtectSystem=strict
++ReadWritePaths=/var/lib/jarvis-broker /run/jarvis-broker
++RestrictAddressFamilies=AF_UNIX
++TasksMax=16
++MemoryMax=256M
++Restart=no
+--- /dev/null
++++ b/security/production/jarvis-codex-executor.service.in
+@@ -0,0 +1,22 @@
++# REVIEW ONLY. No provider enabled and no automatic worker loop.
++[Unit]
++Description=Jarvis isolated Codex job executor
++[Service]
++Type=oneshot
++User=jarvis-code-exec
++Group=jarvis-code-exec
++WorkingDirectory=/opt/jarvis-2/release
++ExecStart=/usr/bin/python3 -m memory_manager.phase6d.broker.execute --config /etc/jarvis-code-exec/config.json --job-file /run/jarvis-code-exec/job.json
++UMask=0077
++PrivateTmp=yes
++PrivateNetwork=yes
++ProtectHome=yes
++ProtectSystem=strict
++ReadWritePaths=/var/lib/jarvis-code-exec
++RestrictSUIDSGID=yes
++TasksMax=64
++MemoryMax=1536M
++RuntimeMaxSec=310
++Restart=no
++# Bubblewrap user-namespace compatibility must be verified under this UID/unit.
++# A template does not prove separation; no privilege/root fallback is permitted.
+--- /dev/null
++++ b/security/production/jarvis-gateway.service.in
+@@ -0,0 +1,21 @@
++# REVIEW ONLY. Replace existing launch only after all acceptance gates pass.
++[Unit]
++Description=Jarvis hybrid gateway with private service bindings
++[Service]
++User=jarvis-gateway
++Group=jarvis-gateway
++SupplementaryGroups=jarvis-storage-ipc jarvis-broker-ipc jarvis-voice-ipc jarvis-apps-ipc
++WorkingDirectory=/opt/jarvis-2/release
++ExecStart=/usr/bin/node /opt/jarvis-2/release/gateway-production-main.mjs /etc/jarvis-gateway/config.json
++Environment=JARVIS_CORE_SETTINGS_FILE=/etc/jarvis-gateway/core-engine.json
++UMask=0077
++NoNewPrivileges=yes
++PrivateTmp=yes
++ProtectHome=yes
++ProtectSystem=strict
++ReadWritePaths=/var/lib/jarvis-gateway
++# Only UNIX services plus listener and approved Gemini public-answer endpoint.
++RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
++TasksMax=32
++MemoryMax=768M
++Restart=no
+--- /dev/null
++++ b/security/production/jarvis-power.service.in
+@@ -0,0 +1,19 @@
++# REVIEW ONLY: entry/config/network and independent physical approvals required.
++[Unit]
++Description=Existing S9 power bridge, separated from the web gateway
++[Service]
++User=jarvis-power
++Group=jarvis-power
++WorkingDirectory=/opt/jarvis-2/release
++ExecStart=/usr/bin/node /opt/jarvis-2/release/s9-power-main.mjs /etc/jarvis-power/config.json
++UMask=0077
++NoNewPrivileges=yes
++PrivateTmp=yes
++ProtectHome=yes
++ProtectSystem=strict
++ReadWritePaths=/var/lib/jarvis-power
++RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
++TasksMax=16
++MemoryMax=128M
++Restart=no
++# IPAddressDeny/Allow must name only the verified HA/miner addresses. Not applied.
+--- /dev/null
++++ b/security/production/jarvis-storage.service.in
+@@ -0,0 +1,24 @@
++# REVIEW ONLY; all identities, paths, migration and IPC grants need approval.
++[Unit]
++Description=Jarvis canonical legacy storage with enforced resource ACL
++[Service]
++User=jarvis-storage
++Group=jarvis-storage
++SupplementaryGroups=jarvis-storage-ipc
++WorkingDirectory=/opt/jarvis-2/release
++ExecStart=/usr/bin/python3 -m memory_manager.production.storage_main --config /etc/jarvis-storage/config.json
++UMask=0077
++NoNewPrivileges=yes
++PrivateTmp=yes
++PrivateNetwork=no
++IPAddressDeny=any
++IPAddressAllow=localhost
++# Add only the approved CT205 address for the optional read-only index connector.
++ProtectHome=yes
++ProtectSystem=strict
++# Approved canonical files must be bound here; no copying to a shadow knowledge DB.
++ReadWritePaths=/var/lib/jarvis-storage /run/jarvis-storage
++RestrictAddressFamilies=AF_UNIX AF_INET
++TasksMax=16
++MemoryMax=768M
++Restart=no

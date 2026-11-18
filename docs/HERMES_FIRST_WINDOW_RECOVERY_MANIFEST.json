@@ -1,0 +1,10 @@
+{
+  "purpose": "Explicit one-shot recovery of reviewed BPF failure; old receipt preserved and linked",
+  "reviewed_failed_window": "20261115T195459Z-a89456c1",
+  "files": {
+    "ops/pilot-network/run-worker-window.py": "21c3c82a77d554fb37f36eb70b21722dec5ab1e4e453bbc56f3e538fd6f38abf",
+    "ops/pilot-network/restore-readonly-pilot.py": "9fb606beeef922255220646bb6b4a99170472d5528915077a5c356f8efea2e3d",
+    "memory_manager/phase6/test_worker_window_admin.py": "1296f2e0e0e7fae6978f932bc8b775175005402cf9262d0e3942f9b87056efe2"
+  },
+  "previous_manifest_sha256": "a1a323d5f805589f8dcbc189c7d0b6aff669449767f0620ca7bc3cd3c253b6d9"
+}

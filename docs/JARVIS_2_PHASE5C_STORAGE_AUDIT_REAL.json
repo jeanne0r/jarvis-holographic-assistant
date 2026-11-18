@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-11-14 19:55:51 UTC",
+  "mode": "read-only storage metadata; no transfer, mount, deletion or restore",
+  "physical_disks": [
+    {
+      "name": "sda",
+      "bytes": 1000204886016
+    },
+    {
+      "name": "nvme0n1",
+      "bytes": 256060514304
+    }
+  ],
+  "hdd_mount": "/mnt/hdd",
+  "hdd_source": "/dev/sda1",
+  "available_bytes": 778220515328,
+  "ct205_rootfs": "local-lvm:vm-205-disk-0,size=8G",
+  "ct205_physical_parent": "nvme0n1",
+  "candidate_destination": "/mnt/hdd/jarvis-backups/qdrant/<new-id>/",
+  "different_physical_disk": true,
+  "different_host": false,
+  "transfer_authorized": false
+}

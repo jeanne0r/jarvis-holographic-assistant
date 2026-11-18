@@ -1,0 +1,9 @@
+[Unit]
+Description=Verified private Jarvis queue startup (no model)
+After=network-online.target
+Before=jarvis-hermes-supervisor.service
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -B /opt/jarvis-hermes-supervisor/ops/demand/start-private-queue.py --approved-installed-profile
+RemainAfterExit=true
+TimeoutStartSec=90

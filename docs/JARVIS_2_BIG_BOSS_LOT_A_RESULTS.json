@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "lot": "A",
+  "backup": "/home/user/gateway/data/backups/hermes-ui-A-20261115T204654Z-16bbad1e",
+  "exactly_two_assets_updated": true,
+  "backup_restore_copy_verified": true,
+  "https_served_hashes_verified": true,
+  "anonymous_401": true,
+  "hybrid_unchanged": true,
+  "protected_inputs_unchanged": true,
+  "service_pids_unchanged": true,
+  "flags_unchanged": true,
+  "gateway_restarts": 0,
+  "windows_started": false,
+  "new_missions": 0,
+  "remote_api_calls": 0,
+  "authenticated_production_browser": "not_tested_no_operator_credential_read",
+  "approved_commit": "cc73bed",
+  "date_local": "2026-11-15 Europe/Zurich",
+  "files": [
+    {
+      "target": "/home/user/gateway/public/jarvis/hermes-embedded.js",
+      "before_sha256": "ad55cebc8493e2c98a72b82d2f6876cac9b88d16109f5e8b07d0bd78be7f4fa9",
+      "after_sha256": "2d2fd69a97449766dc96803d112296957dcf6a151e18b9aa6438e9db359d03e0",
+      "artifact": "hermes-embedded.js",
+      "backup": "hermes-embedded.js.before"
+    },
+    {
+      "target": "/home/user/gateway/public/jarvis/hermes-embedded.css",
+      "before_sha256": "76a0a2d8754824d147134f23d33c5b6425309f4c598d1a4feb5f8fc643ac16a3",
+      "after_sha256": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77",
+      "artifact": "hermes-embedded.css",
+      "backup": "hermes-embedded.css.before"
+    }
+  ],
+  "operator_credential_read": false,
+  "separate_private_login_preserved": true
+}

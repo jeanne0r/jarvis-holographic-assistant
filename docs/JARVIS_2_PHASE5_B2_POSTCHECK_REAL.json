@@ -1,0 +1,81 @@
+{
+  "observed_at": 1794685222.0876982,
+  "scope": "Host postcheck, not another Hermes mission or generative-model call",
+  "query": "masse nominale identique",
+  "fts_count": 1,
+  "results": [
+    {
+      "memory_id": "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+      "revision": "5f1fb8b3-9f2a-463c-ae52-6d31a73779c2",
+      "source": "synthetic://doselab/correction",
+      "retrieval_mode": "semantic_and_fts",
+      "content": {
+        "capacities_kg": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "description": "Quatre cellules de pesée identiques, capacité un kilogramme chacune."
+      }
+    },
+    {
+      "memory_id": "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+      "revision": "c78417d0-ce33-4bb8-a294-a22049d84ddd",
+      "source": "synthetic://doselab/experience",
+      "retrieval_mode": "semantic_and_fts",
+      "content": {
+        "lesson": "Vérifier la fraîcheur avant de produire un diagnostic ; demander une revue humaine sinon.",
+        "result": "Une procédure a échoué faute de contrôle de fraîcheur des mesures."
+      }
+    },
+    {
+      "memory_id": "2b9302b1-5d37-49d9-bff3-9f67dc4f789b",
+      "revision": "7fcb8944-36db-4944-8bca-d9d154ef52f7",
+      "source": "mission://f2a8d773-466b-4667-8b84-45c8684ba638",
+      "retrieval_mode": "semantic_and_fts",
+      "content": {
+        "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+        "model": "qwen3.5:4b",
+        "native_run_id": "run_62a82a0e0da548bdbef8c2fa46c99e86",
+        "result": "**Configuration actuelle DoseLab X4 :** 4 cellules de pesée identiques à 1 kg chacune (réf. `synthetic://doselab/correction`).\n\n**Valeurs précédentes remplacées :**\n- **v1 (old) :** [1, 2, 5, 10] kg — ref. `synthetic://doselab/old`\n- **v2 (intermédiaire) :** [1, 1, 1, 1] kg — ref. `synthetic://doselab/correction`\n\n**Leçon diagnostique :** Vérifier la fraîcheur avant de produire un diagnostic ; demander une revue humaine sinon (ref. `synthetic://doselab/experience`)."
+      }
+    }
+  ],
+  "expected_memory_id": "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+  "only_current_canonical_references": true,
+  "expected_rank": 1,
+  "skills": [
+    {
+      "name": "doselab_freshness",
+      "version": 1,
+      "state": "candidate",
+      "fingerprint": "ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba"
+    }
+  ],
+  "published_skill_count": 0,
+  "window": {
+    "started_at": 1794684978.1522195,
+    "expires_at": 1794686178.1522195,
+    "closed": true,
+    "calls": 8,
+    "missions": 3,
+    "limits": {
+      "calls": 16,
+      "missions": 3
+    },
+    "local_token_limit": 98304
+  },
+  "experimental_collection_points": 16,
+  "windows_listeners_after": {
+    "hermes": false,
+    "ollama": false
+  },
+  "controller_listeners_after": {
+    "8792": false,
+    "11436": false,
+    "8643": false,
+    "11435": false
+  },
+  "passed": false
+}

@@ -1,0 +1,5 @@
+{
+  "ops/pilot-network/check-system-filter.py": "d9e3fae0333f2ce0d2aae1af477aff0b7be2a67f66450a054d6c5aedcd8c63a4",
+  "ops/pilot-network/startup-guard.py": "aeeecd87016da9d7ea89a3d147738f74f33c6582dbc5818a92b5d326788af86e",
+  "ops/pilot-network/jarvis-hermes-pilot-system.service": "51cb6ef4965292630989916280134f41e79bd1bc122f942eb616bccb826f1e7e"
+}

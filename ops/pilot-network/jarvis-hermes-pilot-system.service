@@ -1,0 +1,31 @@
+# Prepared only; root installation/account creation require separate approval.
+[Unit]
+Description=Jarvis private synthetic Hermes panel (system isolation)
+After=network.target
+[Service]
+Type=simple
+User=jarvis-pilot
+Group=jarvis-pilot
+WorkingDirectory=/opt/jarvis-hermes-pilot
+ExecStartPre=/usr/bin/python3 /opt/jarvis-hermes-pilot/ops/pilot-network/startup-guard.py
+TimeoutStartSec=45s
+ExecStart=/usr/bin/env -i PATH=/usr/local/bin:/usr/bin:/bin LANG=C.UTF-8 PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m memory_manager.phase6.interactive --config /var/lib/jarvis-hermes-pilot/config.json
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/jarvis-hermes-pilot
+InaccessiblePaths=/home/user/gateway /home/user/.ssh /home/user/.codex /home/user/workspace/jarvis
+RestrictAddressFamilies=AF_INET AF_UNIX
+IPAddressDeny=any
+IPAddressAllow=localhost
+TasksMax=32
+MemoryMax=384M
+TimeoutStopSec=10
+KillMode=control-group
+Restart=no
+# No boot enablement, Windows process, dispatch or automatic mission.

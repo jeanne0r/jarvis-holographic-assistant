@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "input_encoding": "utf-8",
+  "errors": "strict",
+  "windows_executed": true,
+  "http_simulated": true,
+  "hermes_started": false,
+  "model_calls": 0
+}

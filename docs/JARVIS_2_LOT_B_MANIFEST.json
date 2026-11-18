@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-11-15T21:21:24.213745+00:00",
+  "base_commit": "b15ebc6289993741ee54677b6e24a41c99f31851",
+  "production_modified": false,
+  "activation": "NO-GO",
+  "sources_sha256": {
+    "gateway-production-main.mjs": "66575a1377447bc13a9181cbd2049d9fdcd09c5b5cc5b01e6138983a5663d61b",
+    "hermes-embedded-api.mjs": "0a920aae3ada75d16aaeb040d747ca54c3c5cbc22818c2f7228e1b5d2c023401",
+    "hermes-embedded-relay.mjs": "bc757b46af9e483465485d8d58ee823ff7c244e1a0d132990fa32b5b5fdcc69d",
+    "hermes-human-delegation.mjs": "0918bdf98c30269fdd612ad900d67a7dbd41b701c1b2b2e626a3b045d2b4861b",
+    "hermes-human-gateway.mjs": "d1cd56f9f60ade2e2b022ea5239e123e2a253c3de3e82035b0c8fba93ffaa7ee",
+    "hermes-human-mount.mjs": "cf5f5eeb7fcb6d4b33c3d2e14888995f6927b7a9ded854454e151a435c789433",
+    "hermes-private-human-policy.mjs": "118d10ac9d64b7b3d41f973eabca9bf782befa9a7325d8516eb55cb115155441",
+    "jarvis-session-auth.mjs": "c565ca82dd202d4c295487d7820a85c93205cc6de80535462aaa1f0c44e8064b",
+    "memory_manager/phase6/test_human_assets.py": "b27756b426b63483edf4dd594838c7715fe550b7ea8cf25f32afa3115510df48",
+    "ops/pilot-embedded.mjs": "3d025766c3d6e31c893f2708a7e43f69b6417b7327b8a8f21b359a44431a3708",
+    "scripts/prepare_embedded_panel.py": "f5e38b0a6df7ecab8c4c22503fb352ecb2b784ab8df09bcb9c1b9a9d342543ea",
+    "scripts/prepare_human_missions.py": "30191be5f8c1cca86aa347de49efdaec5b0ec7f5545b6551c4d0307aa5c04475",
+    "scripts/prepare_human_sso.py": "dab1c887f4ebf911da64719adc4de8d08e909e08ad6b4f7abcae58822dd56a51",
+    "scripts/prepare_mission_policy.py": "c117e5ffa70a6d4be13e42a1641f379d0a3f1b21b35ca9774b94538e5b66c223",
+    "scripts/prepare_operational_hermes.py": "a9b596ecd9019bab52015e0e4ebbe088d1ea8fc9a9156b4845cd94995fc749f5",
+    "test_hermes_human_mount.mjs": "474bab9f8d67c743f096d77433fb200f60326b4b3909f6dd6bf4be34980b368c",
+    "test_hermes_private_human_policy.mjs": "11f4849b564f73e624d2581fb7448b1b4262783d35630de71686195266d56bf1",
+    "test_hermes_single_session.mjs": "ec79f20f75bdceeeffece32d677198009f65ff1fd817a632d7af94078dd6aa37",
+    "test_hermes_sso_browser.cjs": "7a3ca856bebd585a02fee9c0d8d6d1db84842132a21c9486fd6a33bed6ea4416",
+    "test_jarvis_policy_revision.mjs": "5178d28293d62fea376216c7fa3263107a0f84b4080db8ebaabb19d81bee14a2"
+  },
+  "active_preimages_sha256": {
+    "/home/user/gateway/server.js": "b6e95e20db96b1074ca8ddc5adb460ba916d5f06ba34f1152868b604c88cf9bf",
+    "/home/user/workspace/jarvis/backend.mjs": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+    "/home/user/gateway/public/jarvis/hermes-embedded.js": "2d2fd69a97449766dc96803d112296957dcf6a151e18b9aa6438e9db359d03e0",
+    "/home/user/gateway/public/jarvis/hermes-embedded.css": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77"
+  },
+  "review_packages": {
+    "private_and_gateway": "data/lot-b-sso/review/manifest.json",
+    "frontend": "data/lot-b-sso/frontend/manifest.json"
+  },
+  "review_manifest_sha256": {
+    "data/lot-b-sso/review/manifest.json": "4bdfa157ae239393a29d930a521aa99f048a603c32cf347c1657d5486ad88351",
+    "data/lot-b-sso/frontend/manifest.json": "53616bc4b414e84944d7ce1a48f310ab1ed07a6519498f42acc589e21299dda1"
+  },
+  "requires_explicit_approval": [
+    "secured entry commissioning and executor isolation",
+    "named human enrollment and distinct private delegation key",
+    "private service installation and restart",
+    "gateway patch review and controlled restart",
+    "single-login frontend activation"
+  ],
+  "no_gpu_or_paid_calls": true
+}

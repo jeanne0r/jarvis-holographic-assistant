@@ -1,0 +1,8 @@
+{
+  "purpose": "Exact expected register transition only; canonical tables unchanged",
+  "previous_manifest_sha256": "260b06d5be0c7cfc0be56b4d3a152d1ce2cda457f1b3093c499b947512ef337b",
+  "files": {
+    "ops/pilot-network/restore-readonly-pilot.py": "6db6823db392887febdfe3fb206dc98be5a85f995fffb62b68a063e64eed4717",
+    "memory_manager/phase6/test_readonly_restore.py": "f575b92397547db029f3d5a9970d9d2e8e9ce41da154cdd03a46ca8094f4234c"
+  }
+}

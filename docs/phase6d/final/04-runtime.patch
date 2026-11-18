@@ -1,0 +1,463 @@
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/__init__.py
+@@ -0,0 +1 @@
++"""Private technical-job broker; separate from canonical knowledge storage."""
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/execute.py
+@@ -0,0 +1,24 @@
++"""Explicit transient executor entry; no daemon, no provider fallback."""
++import argparse,json,os,stat,time
++from .executor import Executor
++
++def control_file(path,allowed_owners):
++ fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
++ try:
++  info=os.fstat(fd)
++  if info.st_uid not in allowed_owners or info.st_mode&0o022 or not stat.S_ISREG(info.st_mode) or info.st_size>65536:raise PermissionError('Immutable trusted control file required')
++  return json.loads(os.read(fd,65537))
++ finally:os.close(fd)
++
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--config',required=True);p.add_argument('--job-file',required=True);a=p.parse_args()
++ # The untrusted executor UID cannot create its own launch authority.
++ cfg=control_file(a.config,{0})
++ if os.getuid() in (0,cfg['gateway_uid'],cfg['broker_uid']) or os.getuid()!=cfg['executor_uid']:raise PermissionError('Distinct executor identity required')
++ job=control_file(a.job_file,{0,cfg['broker_uid']})
++ if job.get('approved') is not True or type(job.get('remote_budget_micros')) is not int or job['remote_budget_micros']<=0 or time.time()>=job.get('expires',0):raise PermissionError('Unexpired approved job and remote budget required')
++ value=Executor(cfg['workspace_root'],cfg['runtime'],cfg['executor_uid'],cfg['gateway_uid'],provider_socket=job['provider_socket'],tools_socket=job.get('tools_socket'),schema=cfg['answer_schema'])(job['record'])
++ # Supervisor must reconcile this exact ID/result; an interrupted process is
++ # uncertain. This command never updates the broker DB as the executor UID.
++ print(json.dumps({'job_id':job['record']['id'],'result':value,'validation':'unreviewed'}))
++if __name__=='__main__':main()
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/executor.py
+@@ -0,0 +1,53 @@
++"""One bounded launch under a distinct approved OS identity, no inherited secrets."""
++import json,os,selectors,signal,stat,subprocess,time
++from pathlib import Path
++from .isolation import check_uid,plan
++
++def bounded(command,payload,*,seconds=300,limit=1048576):
++ if len(payload)>32000:raise ValueError('Input bound')
++ proc=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True,env={'LANG':'C.UTF-8','PATH':'/usr/bin:/bin'})
++ poll=selectors.DefaultSelector();outputs={'stdout':bytearray(),'stderr':bytearray()};pending=memoryview(payload);end=time.monotonic()+seconds
++ for file,name in [(proc.stdout,'stdout'),(proc.stderr,'stderr')]:os.set_blocking(file.fileno(),False);poll.register(file,selectors.EVENT_READ,name)
++ os.set_blocking(proc.stdin.fileno(),False);poll.register(proc.stdin,selectors.EVENT_WRITE,'stdin')
++ try:
++  while poll.get_map():
++   if time.monotonic()>=end:raise TimeoutError('Executor deadline')
++   for key,events in poll.select(min(.2,max(0,end-time.monotonic()))):
++    if key.data=='stdin':
++     try:sent=os.write(key.fileobj.fileno(),pending[:4096]);pending=pending[sent:]
++     except BrokenPipeError:pending=memoryview(b'')
++     if not pending:poll.unregister(key.fileobj);key.fileobj.close()
++    else:
++     part=os.read(key.fileobj.fileno(),65536)
++     if not part:poll.unregister(key.fileobj);key.fileobj.close();continue
++     outputs[key.data]+=part
++     if len(outputs[key.data])>limit:raise ValueError('Output quota')
++  if proc.wait(timeout=max(.1,end-time.monotonic()))!=0:raise ValueError('Executor failed')
++  return outputs
++ finally:
++  poll.close()
++  if proc.poll() is None:
++   try:os.killpg(proc.pid,signal.SIGKILL)
++   except ProcessLookupError:pass
++  proc.wait()
++  for f in (proc.stdin,proc.stdout,proc.stderr):f.close()
++
++class Executor:
++ def __init__(self,root,runtime,uid,gateway_uid,provider_socket=None,schema=None,tools_socket=None):self.root,self.runtime,self.uid,self.gateway_uid,self.provider_socket,self.schema=Path(root).resolve(),runtime,uid,gateway_uid,provider_socket,schema;self.tools_socket=tools_socket
++ def __call__(self,job):
++  check_uid(self.uid,self.gateway_uid)
++  workspace=(self.root/job['id']).resolve(strict=True)
++  if workspace.parent!=self.root:raise PermissionError('Job root boundary')
++  if not self.schema or not self.provider_socket:raise PermissionError('Reviewed schema/provider configuration required')
++  command=plan(workspace,self.runtime,gateway_uid=self.gateway_uid,executor_uid=self.uid,proxy_socket=self.provider_socket,tools_socket=self.tools_socket)
++  split=command.index('--');command[split:split]=['--ro-bind',str(Path(self.schema).resolve(strict=True)),'/runtime/answer-schema.json']
++  command[-1:-1]=['--output-schema','/runtime/answer-schema.json']
++  bounded(command,job['payload'].encode())
++  fd=os.open(workspace/'result.json',os.O_RDONLY|os.O_NOFOLLOW)
++  try:
++   info=os.fstat(fd)
++   if not stat.S_ISREG(info.st_mode) or info.st_size>64000 or info.st_uid!=self.uid:raise ValueError('Result file denied')
++   result=json.loads(os.read(fd,64001))
++  finally:os.close(fd)
++  if not isinstance(result,dict) or not isinstance(result.get('answer'),str) or not isinstance(result.get('speech'),str) or not isinstance(result.get('sourceIds'),list):raise ValueError('Incomplete structured result')
++  return result
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/https_provider.py
+@@ -0,0 +1,19 @@
++"""The sole remote connector; TLS host/path fixed, no redirects or env proxy."""
++import http.client,ipaddress,json,socket,ssl
++class HTTPSProvider:
++ def __init__(self,api_key):self.api_key=api_key
++ def __call__(self,host,path,body):
++  if host!='api.openai.com' or path!='/v1/responses':raise PermissionError('Fixed provider only')
++  addresses=socket.getaddrinfo(host,443,type=socket.SOCK_STREAM)
++  ips=[r[4][0] for r in addresses]
++  if not ips or any(not ipaddress.ip_address(ip).is_global for ip in ips):raise PermissionError('Provider resolved to non-public network')
++  conn=http.client.HTTPSConnection(host,443,timeout=60,context=ssl.create_default_context())
++  conn._create_connection=lambda address,timeout,source_address=None:socket.create_connection((ips[0],443),timeout,source_address)
++  try:
++   conn.request('POST',path,json.dumps(body).encode(),{'Authorization':'Bearer '+self.api_key,'Content-Type':'application/json'})
++   response=conn.getresponse()
++   if 300<=response.status<400:raise PermissionError('No provider redirects')
++   raw=response.read(4*1024*1024+1)
++   if len(raw)>4*1024*1024:raise ValueError('Provider reply bound')
++   return {'status':response.status,'type':response.getheader('Content-Type','application/json'),'body':raw.decode('utf8','strict')}
++  finally:conn.close()
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/isolation.py
+@@ -0,0 +1,30 @@
++"""Explicit namespace plan. Never executes Codex during preparation/tests."""
++import os
++from pathlib import Path
++
++def plan(workspace,runtime,*,gateway_uid,executor_uid,model='gpt-6.1-sol',proxy_socket=None,tools_socket=None):
++ if executor_uid==gateway_uid or executor_uid==0:raise PermissionError('Distinct non-root executor UID required')
++ workspace=Path(workspace).resolve(strict=True);runtime=Path(runtime).resolve(strict=True)
++ if not workspace.is_dir() or not runtime.is_dir() or workspace==runtime:raise ValueError('Independent roots')
++ # Runtime is a reviewed read-only bundle containing the existing CLI, no home,
++ # gateway, HA or Hermes configuration. No free --add-dir/network/sandbox flags.
++ prefix=['/usr/bin/bwrap','--die-with-parent','--new-session','--unshare-all','--cap-drop','ALL','--clearenv',
++ '--ro-bind','/usr','/usr','--ro-bind','/lib','/lib','--ro-bind','/lib64','/lib64','--proc','/proc','--dev','/dev','--tmpfs','/tmp','--tmpfs','/home','--dir','/home/agent',
++ '--dir','/ipc','--dir','/workspace','--bind',str(workspace),'/workspace','--dir','/runtime','--ro-bind',str(runtime),'/runtime',
++ '--setenv','HOME','/home/agent','--setenv','CODEX_HOME','/home/agent/.codex','--setenv','PATH','/usr/bin:/bin','--setenv','LANG','C.UTF-8','--chdir','/workspace']
++ args=['/runtime/bin/codex','exec','--ignore-user-config','--ignore-rules','--ephemeral','--skip-git-repo-check','--sandbox','workspace-write',
++ '-c','approval_policy="never"','-c','sandbox_workspace_write.network_access=false','--model',model,'--json','--output-last-message','/workspace/result.json','-']
++ for feature in ['apps','plugins','multi_agent','multi_agent_v2','browser_use','computer_use','image_generation','hooks','memories']:args[-1:-1]=['--disable',feature]
++ if proxy_socket is not None:
++  source=Path(__file__).with_name('relay.py').resolve(strict=True)
++  prefix+=['--ro-bind',str(Path(proxy_socket).resolve(strict=True)),'/ipc/provider.sock','--ro-bind',str(source),'/runtime/relay.py']
++  args=['/usr/bin/python3','-I','/runtime/relay.py']+args[2:]
++ if tools_socket is not None:
++  source=Path(__file__).resolve().parents[3]/'codex-tool-proxy.mjs'
++  if not source.is_file():raise ValueError('Reviewed tool proxy missing')
++  prefix+=['--ro-bind',str(Path(tools_socket).resolve(strict=True)),'/ipc/tools.sock','--ro-bind',str(source),'/runtime/tool-proxy.mjs']
++  args[-1:-1]=['-c','mcp_servers.jarvis.command="/usr/bin/node"','-c','mcp_servers.jarvis.args=["/runtime/tool-proxy.mjs"]','-c','mcp_servers.jarvis.required=true']
++ return prefix+['--']+args
++
++def check_uid(expected,gateway_uid):
++ if os.getuid()!=expected or expected in (0,gateway_uid):raise PermissionError('Executor UID mismatch')
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/main.py
+@@ -0,0 +1,25 @@
++"""Explicit broker service entry point; no inference worker starts on import."""
++import argparse,json,os,stat
++from pathlib import Path
++from .store import Jobs
++from .service import Broker
++from .transport import Server
++
++def main():
++ parser=argparse.ArgumentParser();parser.add_argument('--config',required=True);args=parser.parse_args()
++ fd=os.open(args.config,os.O_RDONLY|os.O_NOFOLLOW)
++ try:
++  info=os.fstat(fd)
++  if info.st_uid!=os.getuid() or info.st_mode&0o077 or not stat.S_ISREG(info.st_mode) or info.st_size>65536:raise PermissionError('Private owned broker config required')
++  cfg=json.loads(os.read(fd,65537))
++ finally:os.close(fd)
++ if os.getuid() in (0,cfg['gateway_uid']) or os.getuid()!=cfg['broker_uid']:raise PermissionError('Distinct broker UID required')
++ state=Path(cfg['state_directory']).resolve(strict=True)
++ if state.stat().st_uid!=os.getuid() or state.stat().st_mode&0o077:raise PermissionError('Private state directory required')
++ os.umask(0o077);jobs=Jobs(state/'jobs.sqlite');broker=Broker(jobs,cfg['project_grants'])
++ # Admission/reconciliation service only. No worker/remote budget can be enabled
++ # by an incoming RPC. Supervisor execution is a separate approved operation.
++ server=Server(cfg['socket'],broker,cfg['credentials'])
++ try:server.serve_forever()
++ finally:server.server_close();jobs.close()
++if __name__=='__main__':main()
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/provider.py
+@@ -0,0 +1,37 @@
++"""Fixed-origin provider policy and durable conservative cost reservation.
++
++No remote call is made by constructing this object. Default budget is zero.
++The trusted host supplies a forwarding implementation and approved price ceilings.
++"""
++import json,math,sqlite3,time
++class Provider:
++ def __init__(self,path,job,models,*,budget_micros=0,forward=None,authorized=None):
++    self.db=sqlite3.connect(path);self.db.execute('CREATE TABLE IF NOT EXISTS provider_reservations(id INTEGER PRIMARY KEY,job TEXT NOT NULL,month TEXT NOT NULL,micros INTEGER NOT NULL,created REAL NOT NULL)');self.db.commit()
++    self.job,self.models,self.budget,self.forward,self.authorized=job,dict(models),budget_micros,forward,authorized
++ def request(self,method,path,body):
++    if method!='POST' or path!='/v1/responses' or not isinstance(body,dict):raise PermissionError('Provider path denied')
++    if self.budget<=0 or not self.forward or not self.authorized or self.authorized(self.job) is not True:raise PermissionError('Remote budget/authority unavailable')
++    if body.get('model') not in self.models or any(t.get('type') not in {'function','custom'} for t in body.get('tools',[])):raise PermissionError('Model or paid hosted tool denied')
++    def text_only(value):
++     if isinstance(value,dict):
++      if any(k in value for k in ['image_url','image','audio','file_url','file_id']) or value.get('type') in {'input_image','input_audio','input_file','image_generation'}:raise PermissionError('Text-only provider profile')
++      for item in value.values():text_only(item)
++     elif isinstance(value,list):
++      for item in value:text_only(item)
++    text_only(body)
++    raw=json.dumps(body,allow_nan=False).encode()
++    if len(raw)>65536:raise ValueError('Provider context bound')
++    model=self.models[body['model']];maximum=body.get('max_output_tokens',2048)
++    if type(maximum) is not int or not 1<=maximum<=model['output_limit']:raise ValueError('Output token bound')
++    safe={**body,'max_output_tokens':maximum,'store':False}
++    if min(model['input_micros_per_token'],model['output_micros_per_token'])<=0:raise ValueError('Approved conservative CHF price ceilings required')
++    reservation=math.ceil((len(raw)+4096)*model['input_micros_per_token']+maximum*model['output_micros_per_token']);month=time.strftime('%Y-%m',time.gmtime())
++    self.db.execute('BEGIN IMMEDIATE')
++    try:
++        used=self.db.execute('SELECT COALESCE(sum(micros),0) FROM provider_reservations WHERE month=?',(month,)).fetchone()[0]
++        if used+reservation>self.budget:raise PermissionError('Hard monthly CHF cap')
++        self.db.execute('INSERT INTO provider_reservations(job,month,micros,created) VALUES(?,?,?,?)',(self.job,month,reservation,time.time()));self.db.commit()
++    except Exception:self.db.rollback();raise
++    # Failure never refunds an uncertain request or triggers a paid retry.
++    return self.forward('api.openai.com','/v1/responses',safe)
++ def close(self):self.db.close()
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/provider_socket.py
+@@ -0,0 +1,24 @@
++"""Per-job Unix endpoint around the fixed-origin budgeted provider."""
++import json,os,socketserver,struct
++class Server(socketserver.UnixStreamServer):
++ def __init__(self,path,provider):self.provider=provider;super().__init__(str(path),Handler);os.chmod(path,0o600)
++class Handler(socketserver.BaseRequestHandler):
++ def handle(self):
++  self.request.settimeout(60)
++  def exact(n):
++   out=b''
++   while len(out)<n:
++    part=self.request.recv(n-len(out))
++    if not part:raise ValueError('Truncated')
++    out+=part
++   return out
++  try:
++   size=struct.unpack('!I',exact(4))[0]
++   if not 0<size<=65536:raise ValueError('Bound')
++   data=json.loads(exact(size))
++   if set(data)!={'method','path','body'}:raise ValueError('Envelope')
++   result=self.server.provider.request(data['method'],data['path'],data['body'])
++  except Exception:result={'status':503,'type':'application/json','body':'{"error":"Provider denied; no fallback"}'}
++  raw=json.dumps(result).encode()
++  if len(raw)>4*1024*1024:raw=b'{"status":503,"body":"Provider response bound"}'
++  self.request.sendall(struct.pack('!I',len(raw))+raw)
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/relay.py
+@@ -0,0 +1,36 @@
++"""Inside-namespace HTTP→Unix relay for the current CLI custom Responses provider."""
++import http.server,json,socket,struct,subprocess,sys,threading
++LIMIT=4*1024*1024
++
++def profile(port):
++ return ['-c','model_provider="jarvis_private"','-c','model_providers.jarvis_private.name="Jarvis isolated provider"','-c',f'model_providers.jarvis_private.base_url="http://127.0.0.1:{port}/v1"','-c','model_providers.jarvis_private.wire_api="responses"']
++
++def server(sockpath):
++ class Handler(http.server.BaseHTTPRequestHandler):
++  def log_message(self,*_args):pass
++  def do_POST(self):
++   try:
++    size=int(self.headers.get('Content-Length',0))
++    if not 0<size<=65536 or self.headers.get('Transfer-Encoding') or self.path!='/v1/responses':raise ValueError('Denied')
++    data=json.loads(self.rfile.read(size));payload=json.dumps({'method':'POST','path':self.path,'body':data}).encode()
++    with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as s:
++     s.settimeout(60);s.connect(sockpath);s.sendall(struct.pack('!I',len(payload))+payload)
++     def exact(n):
++      chunks=[]
++      while n:
++       c=s.recv(n)
++       if not c:raise ValueError('Truncated provider reply')
++       chunks.append(c);n-=len(c)
++      return b''.join(chunks)
++     length=struct.unpack('!I',exact(4))[0]
++     if not 0<length<=LIMIT:raise ValueError('Reply bound')
++     result=json.loads(exact(length))
++    raw=result['body'].encode();self.send_response(result['status']);self.send_header('Content-Type',result.get('type','application/json'));self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
++   except Exception:self.send_error(503,'Provider denied or unavailable; no fallback')
++ return http.server.ThreadingHTTPServer(('127.0.0.1',0),Handler)
++
++def main():
++ srv=server('/ipc/provider.sock');thread=threading.Thread(target=srv.serve_forever,daemon=True);thread.start()
++ try:return subprocess.call(['/runtime/bin/codex','exec',*profile(srv.server_port),*sys.argv[1:]])
++ finally:srv.shutdown();srv.server_close();thread.join()
++if __name__=='__main__':raise SystemExit(main())
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/service.py
+@@ -0,0 +1,41 @@
++"""Host-only broker controller. Gateway/Hermes never select executable or environment."""
++import json
++from .store import Jobs
++class Broker:
++ def __init__(self,jobs,grants,*,launch=None,authorize=None):self.jobs,self.grants,self.launch,self.authorize=jobs,grants,launch,authorize
++ def call(self,service,method,args):
++    if service!='gateway-human':raise PermissionError('Gateway identity required; Hermes denied')
++    if set(args)-{'subject','project','key','payload','job'}:raise ValueError('Broker fields')
++    subject=args.get('subject');grant=self.grants.get(subject,{})
++    project=args.get('project')
++    if method=='submit':
++        if project not in grant.get('write',[]):raise PermissionError('Project write denied')
++        payload=args.get('payload')
++        if not isinstance(payload,dict) or set(payload)!={'question','context'} or not isinstance(payload['question'],str) or not 1<=len(payload['question'])<=8000:raise ValueError('Technical payload')
++        # Context is data. Never accept flags, command, cwd, environment or permissions.
++        ctx=payload['context']
++        if not isinstance(ctx,dict) or set(ctx)-{'history','space','channel','view','application'}:raise ValueError('Context fields')
++        job=self.jobs.admit(subject,project,args['key'],payload);return {'id':job,'state':self.jobs.get(subject,job)['state']}
++    if method=='list':return self.jobs.list(subject,grant.get('read',[]))
++    row=self.jobs.get(subject,args['job'])
++    if row['project'] not in grant.get('read',[]):raise PermissionError('Project read denied')
++    if method=='get':return row
++    if method=='cancel':
++        if row['project'] not in grant.get('write',[]):raise PermissionError('Cancel denied')
++        return self.jobs.cancel(subject,row['id'])
++    raise PermissionError('Broker operation denied')
++ def work(self,job,*,approved=False,remote_budget_micros=0):
++    # Explicit supervisor operation, never reachable through the gateway RPC.
++    if approved is not True or remote_budget_micros<=0:raise PermissionError('No approved remote execution budget')
++    row=self.jobs.db.execute('SELECT * FROM jobs WHERE id=?',(job,)).fetchone()
++    if not row or row['state']!='queued':raise PermissionError('Not a queued job; no automatic replay')
++    if self.launch is None or self.authorize is None or self.authorize(dict(row)) is not True:raise PermissionError('Executor or current human authorization missing')
++    with self.jobs.db:
++        cursor=self.jobs.db.execute("UPDATE jobs SET state='running' WHERE id=? AND state='queued'",(job,))
++        if cursor.rowcount!=1:raise PermissionError('Job cancelled or already claimed')
++    try:
++        result=self.launch(dict(row))
++        with self.jobs.db:self.jobs.db.execute("UPDATE jobs SET state='completed',result=? WHERE id=? AND state='running'",(json.dumps(result),job))
++    except Exception:
++        with self.jobs.db:self.jobs.db.execute("UPDATE jobs SET state='uncertain' WHERE id=?",(job,))
++        raise
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/store.py
+@@ -0,0 +1,38 @@
++"""Durable technical run ledger. No automatic adoption of historical jobs."""
++import hashlib,json,sqlite3,time,uuid
++from pathlib import Path
++from ...store import snapshot
++class Jobs:
++ def __init__(self,path):
++    self.db=sqlite3.connect(path);self.db.row_factory=sqlite3.Row
++    if self.db.execute("SELECT 1 FROM sqlite_master WHERE name='jobs'").fetchone() and not self.db.execute("SELECT 1 FROM sqlite_master WHERE name='job_events'").fetchone():snapshot(path,str(path)+'.before-job-events-'+uuid.uuid4().hex)
++    self.db.executescript('CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY,owner TEXT NOT NULL,project TEXT NOT NULL,key TEXT NOT NULL,fingerprint TEXT NOT NULL,payload TEXT NOT NULL,state TEXT NOT NULL,result TEXT,created REAL NOT NULL,UNIQUE(owner,key));')
++    self.db.executescript("""CREATE TABLE IF NOT EXISTS job_events(seq INTEGER PRIMARY KEY AUTOINCREMENT,job TEXT NOT NULL,owner TEXT NOT NULL,state TEXT NOT NULL,created REAL NOT NULL);
++CREATE TRIGGER IF NOT EXISTS job_admission AFTER INSERT ON jobs BEGIN INSERT INTO job_events(job,owner,state,created) VALUES(new.id,new.owner,new.state,unixepoch()); END;
++CREATE TRIGGER IF NOT EXISTS job_transition AFTER UPDATE OF state ON jobs WHEN old.state!=new.state BEGIN INSERT INTO job_events(job,owner,state,created) VALUES(new.id,new.owner,new.state,unixepoch()); END;
++CREATE TRIGGER IF NOT EXISTS job_events_no_update BEFORE UPDATE ON job_events BEGIN SELECT RAISE(ABORT,'immutable event'); END;
++CREATE TRIGGER IF NOT EXISTS job_events_no_delete BEFORE DELETE ON job_events BEGIN SELECT RAISE(ABORT,'immutable event'); END;""")
++    with self.db:self.db.execute("UPDATE jobs SET state='uncertain' WHERE state IN ('running','cancel_requested')")
++ def admit(self,owner,project,key,payload):
++    if not isinstance(key,str) or not 1<=len(key)<=120:raise ValueError('Idempotency key')
++    raw=json.dumps(payload,sort_keys=True,ensure_ascii=False,allow_nan=False);fp=hashlib.sha256((project+'\n'+raw).encode()).hexdigest()
++    if len(raw.encode())>32000:raise ValueError('Payload bound')
++    with self.db:
++        old=self.db.execute('SELECT id,fingerprint FROM jobs WHERE owner=? AND key=?',(owner,key)).fetchone()
++        if old:
++            if old['fingerprint']!=fp:raise ValueError('Idempotency conflict')
++            return old['id']
++        job=str(uuid.uuid4());self.db.execute('INSERT INTO jobs VALUES(?,?,?,?,?,?,?,?,?)',(job,owner,project,key,fp,raw,'queued',None,time.time()));return job
++ def get(self,owner,job):
++    row=self.db.execute('SELECT * FROM jobs WHERE id=? AND owner=?',(job,owner)).fetchone()
++    if not row:raise PermissionError('Job owner denied')
++    return {**dict(row),'events':[{'seq':r['seq'],'data':{'type':'status','status':r['state']},'created':r['created']} for r in self.db.execute('SELECT * FROM job_events WHERE job=? AND owner=? ORDER BY seq LIMIT 200',(job,owner))]}
++ def list(self,owner,projects):return [dict(r) for r in self.db.execute('SELECT * FROM jobs WHERE owner=? ORDER BY created DESC LIMIT 100',(owner,)) if r['project'] in projects]
++ def cancel(self,owner,job):
++    row=self.get(owner,job)
++    if row['state']=='queued':
++        with self.db:self.db.execute("UPDATE jobs SET state='cancelled' WHERE id=? AND state='queued'",(job,))
++    elif row['state']=='running':
++        with self.db:self.db.execute("UPDATE jobs SET state='cancel_requested' WHERE id=?",(job,))
++    return self.get(owner,job)
++ def close(self):self.db.close()
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/broker/transport.py
+@@ -0,0 +1,31 @@
++"""Bounded Unix-domain RPC. File permissions + per-service credential, no TCP listener."""
++import hashlib,hmac,json,os,socketserver,struct
++MAX=65536
++class Server(socketserver.UnixStreamServer):
++ def __init__(self,path,broker,credentials):
++    # Never unlink or adopt an existing socket/path silently.
++    self.broker,self.credentials=broker,credentials
++    super().__init__(str(path),Handler);os.chmod(path,0o600)
++class Handler(socketserver.BaseRequestHandler):
++ def handle(self):
++    self.request.settimeout(2)
++    def exact(n):
++        chunks=[]
++        while n:
++            c=self.request.recv(n)
++            if not c:raise ValueError('Truncated')
++            chunks.append(c);n-=len(c)
++        return b''.join(chunks)
++    try:
++        size=struct.unpack('!I',exact(4))[0]
++        if not 0<size<=MAX:raise ValueError('Frame bound')
++        message=json.loads(exact(size))
++        if set(message)!={'credential','method','args'}:raise ValueError('RPC envelope')
++        digest=hashlib.sha256(message['credential'].encode()).hexdigest()
++        identity=next((v for k,v in self.server.credentials.items() if hmac.compare_digest(k,digest)),None)
++        if not identity or message['args'].get('subject') not in identity['subjects']:raise PermissionError('Service denied')
++        value=self.server.broker.call(identity['service'],message['method'],message['args']);result={'ok':True,'value':value}
++    except Exception:result={'ok':False,'error':'Broker operation denied'}
++    raw=json.dumps(result,allow_nan=False).encode()
++    if len(raw)>MAX:raw=b'{"ok":false,"error":"Response bound"}'
++    self.request.sendall(struct.pack('!I',len(raw))+raw)
+--- /dev/null
++++ b/opt/jarvis-2/review/memory_manager/phase6d/legacy_repository.py
+@@ -0,0 +1,65 @@
++"""ACL join over the existing brain.sqlite schema; no knowledge duplication.
++
++Run under the storage identity, never as an unrestricted gateway subprocess.
++Unknown historical owners stay unclaimed until an approved explicit mapping.
++"""
++import json,re,sqlite3,time,uuid
++from pathlib import Path
++from ..store import snapshot
++class LegacyRepository:
++ def __init__(self,path):
++    self.path=Path(path);self.db=sqlite3.connect(path);self.db.row_factory=sqlite3.Row
++ def migrate(self):
++    if self.db.execute("SELECT 1 FROM sqlite_master WHERE name='g_resource_acl'").fetchone():return {'changed':False}
++    backup=snapshot(self.path,self.path.with_name(self.path.name+'.before-business-acl-'+uuid.uuid4().hex))
++    with self.db:self.db.execute('CREATE TABLE g_resource_acl(kind TEXT NOT NULL,id TEXT NOT NULL,owner TEXT NOT NULL,space TEXT NOT NULL,project TEXT,version INTEGER NOT NULL,PRIMARY KEY(kind,id))')
++    return {'changed':True,'backup':backup}
++ def claim(self,kind,key,owner,space,project=None,*,approved=False):
++    if approved is not True:raise PermissionError('Explicit owner mapping approval required')
++    if kind=='document':
++        row=self.db.execute('SELECT space FROM docs WHERE id=?',(key,)).fetchone()
++        if not row or row['space']!=space:raise PermissionError('Source/space mismatch')
++    with self.db:
++        old=self.metadata(kind,key)
++        if old:raise PermissionError('Existing ownership cannot be overwritten')
++        self.db.execute('INSERT INTO g_resource_acl VALUES(?,?,?,?,?,1)',(kind,key,owner,space,project))
++ def metadata(self,kind,key):
++    row=self.db.execute('SELECT * FROM g_resource_acl WHERE kind=? AND id=?',(kind,key)).fetchone()
++    return dict(row) if row else None
++ def list(self,kind,query):
++    if kind!='document':raise ValueError('Use the native repository for this resource kind')
++    spaces=query.get('spaces',[]);projects=query.get('projects',[])
++    if not spaces:return []
++    placeholders=','.join('?' for _ in spaces)
++    columns="d.id,d.title,d.kind,d.topic,d.status,d.source,d.updated,substr(d.body,1,240) AS preview,d.space,a.owner,a.project,a.version"
++    clause=f"a.space IN ({placeholders}) AND (a.owner=? OR a.space='commun')"
++    params=[*spaces,query['owner']]
++    words=re.findall(r'\w+',query.get('q',''),re.UNICODE)[:20]
++    if query.get('q','').strip() and not words:return []
++    join="JOIN g_resource_acl a ON a.id=d.id AND a.kind='document' AND a.space=d.space"
++    if words:
++        match=' OR '.join('"'+word+'"' for word in words)
++        rows=self.db.execute(f"SELECT {columns} FROM search JOIN docs d ON d.id=search.id {join} WHERE search MATCH ? AND {clause} ORDER BY bm25(search) LIMIT 500",[match,*params]).fetchall()
++    else:rows=self.db.execute(f"SELECT {columns} FROM docs d {join} WHERE {clause} ORDER BY d.updated DESC LIMIT 1200",params).fetchall()
++    return [dict(r) for r in rows if not r['project'] or r['project'] in projects]
++
++ def get(self,kind,key):
++    if kind!='document':raise ValueError('Native repository required')
++    row=self.db.execute("SELECT d.*,a.owner,a.project,a.version FROM docs d JOIN g_resource_acl a ON a.kind='document' AND a.id=d.id AND a.space=d.space WHERE d.id=?",(key,)).fetchone()
++    return dict(row) if row else None
++ def create(self,kind,data):
++    if kind!='document' or not isinstance(data.get('title'),str) or not isinstance(data.get('body'),str) or not 1<=len(data['title'])<=180 or not 1<=len(data['body'])<=30000:raise ValueError('Document schema')
++    key='note:'+uuid.uuid4().hex;now=time.time()
++    with self.db:
++        self.db.execute('INSERT INTO docs(id,title,body,kind,topic,status,source,updated,fingerprint,space) VALUES(?,?,?,?,?,?,?,?,?,?)',(key,data['title'],data['body'],'Atelier',data.get('topic','Idées libres'),data.get('status','Idée'),'Ajouté dans Jarvis',now,None,data['space']))
++        self.db.execute('INSERT INTO search(id,title,body) VALUES(?,?,?)',(key,data['title'],data['body']))
++        self.db.execute('INSERT INTO g_resource_acl VALUES(?,?,?,?,?,1)',('document',key,data['owner'],data['space'],data.get('project')))
++    return self.get(kind,key)
++ def mutate(self,kind,key,change,guard):
++    if kind!='document' or set(change)!={'target'}:raise ValueError('Document mutation schema')
++    with self.db:
++        cursor=self.db.execute('UPDATE g_resource_acl SET space=?,version=version+1 WHERE kind=? AND id=? AND owner=? AND version=?',(change['target'],kind,key,guard['expectedOwner'],guard['expectedVersion']))
++        if cursor.rowcount!=1:raise PermissionError('Ownership/version changed')
++        self.db.execute('UPDATE docs SET space=? WHERE id=?',(change['target'],key))
++    return {'moved':True,'space':change['target']}
++ def close(self):self.db.close()

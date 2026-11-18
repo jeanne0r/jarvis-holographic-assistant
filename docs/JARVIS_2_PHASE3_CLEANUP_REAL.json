@@ -1,0 +1,17 @@
+{
+  "gateway_http": 200,
+  "tailscale_guest_ssh_reachable": true,
+  "tailscaled_daemon_independently_verified": false,
+  "local_pilot_listeners": {
+    "11435": false,
+    "11436": false,
+    "8792": false,
+    "8643": false
+  },
+  "windows_ollama_listener": {
+    "listening": false
+  },
+  "canonical_experience_found_after_reopen": true,
+  "local_metered_calls": 7,
+  "local_used_tokens": 29178
+}

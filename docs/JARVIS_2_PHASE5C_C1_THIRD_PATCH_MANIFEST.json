@@ -1,0 +1,15 @@
+{
+  "mode": "prepared-only-not-authorized",
+  "windows_root": "C:/JarvisHermesLab/app",
+  "upstream_hermes_unchanged": true,
+  "apply_authorized": false,
+  "files": [
+    {
+      "path": "memory_manager/phase2/mcp.py",
+      "base_sha256": "4768e36167a74c52b70899de8cefeeadc39704a976f0d2189086b9e2c5883252",
+      "new_sha256": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef",
+      "new_file": false
+    }
+  ],
+  "notes": "Descriptions only; schemas, results, ACL and capability lists unchanged. No deployment performed."
+}

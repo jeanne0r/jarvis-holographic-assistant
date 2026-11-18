@@ -1,0 +1,11 @@
+--- a/memory_manager/phase6/interactive.py
++++ b/memory_manager/phase6/interactive.py
+@@ -47,7 +47,7 @@
+  threading.Thread(target=bridge.serve_forever,daemon=True).start()
+  child=None
+  try:
+-  child=subprocess.Popen(['node',str(ROOT/'ops/pilot-interactive.mjs'),str(path.resolve())],cwd=ROOT,env={'PATH':os.environ['PATH'],'LANG':'C.UTF-8','HOME':str(folder/'empty-home')})
++  child=subprocess.Popen(['node',str(ROOT/'ops/pilot-embedded.mjs'),str(path.resolve())],cwd=ROOT,env={'PATH':os.environ['PATH'],'LANG':'C.UTF-8','HOME':str(folder/'empty-home')})
+   while not stop.wait(.25):
+    if child.poll() is not None:raise RuntimeError('Panel exited; no automatic restart/replay')
+  finally:

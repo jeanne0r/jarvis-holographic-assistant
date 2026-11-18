@@ -1,0 +1,33 @@
+{
+  "computer_name": "GAMER",
+  "syntax_checks": [
+    {
+      "error_count": 0,
+      "file": "phase4-audit-windows.ps1"
+    },
+    {
+      "error_count": 0,
+      "file": "phase4-provision-account.ps1"
+    },
+    {
+      "error_count": 0,
+      "file": "phase4-install-windows.ps1"
+    },
+    {
+      "error_count": 0,
+      "file": "phase4-seal-tokens.ps1"
+    },
+    {
+      "error_count": 0,
+      "file": "phase4-network-policy.ps1"
+    }
+  ],
+  "executed_prepared_scripts": false,
+  "source_sha256": {
+    "phase4-audit-windows.ps1": "ab72c1e79a2baa47c021a3466f362cde7f8c5f965ffe3dcee145c7b1d5327b9a",
+    "phase4-provision-account.ps1": "8e52bd2a0eeb9179cc87944d4b43e91ba18d80ef15f6de66d462bdfa51b8e83a",
+    "phase4-install-windows.ps1": "d811d711f4b1c2ab228111ee45ddbcd06dd38afc4bc1b6b0e00da4badc171434",
+    "phase4-seal-tokens.ps1": "066ee208cfbf800b2b0910df743cf8d93be6326057b7f682d4e9df17603715d2",
+    "phase4-network-policy.ps1": "2d4ae21f412da752d697745704ed78f0f80ac7a904881cfef9eb37f15f78147a"
+  }
+}

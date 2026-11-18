@@ -1,0 +1,1640 @@
+{
+  "mode": "static-source-audit-no-handler-import",
+  "sources": [
+    {
+      "source": "/home/user/gateway/server.js",
+      "sha256": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+      "route_conditions": [
+        {
+          "line": 1570,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/health\") {"
+        },
+        {
+          "line": 1574,
+          "code": "if (url.pathname.startsWith(\"/api/s9/\") && !isAuthorized(req)) {"
+        },
+        {
+          "line": 1578,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/s9/control\") {"
+        },
+        {
+          "line": 1592,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/s9/power\") {"
+        },
+        {
+          "line": 1601,
+          "code": "if (url.pathname.startsWith(\"/api/icloud/\") && !isAuthorized(req)) {"
+        },
+        {
+          "line": 1606,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/magic-mirror\") {"
+        },
+        {
+          "line": 1614,
+          "code": "if (url.pathname === \"/api/mirror/apple\") {"
+        },
+        {
+          "line": 1634,
+          "code": "if (url.pathname === \"/api/mirror/tasks\") {"
+        },
+        {
+          "line": 1674,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/mining-report\") {"
+        },
+        {
+          "line": 1682,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/home-report\") {"
+        },
+        {
+          "line": 1691,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/fridge/stock\") {"
+        },
+        {
+          "line": 1709,
+          "code": "const productMatch = url.pathname.match(/^\\/api\\/fridge\\/product\\/([^/]+)$/);"
+        },
+        {
+          "line": 1718,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/fridge/vision\") {"
+        },
+        {
+          "line": 1727,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/fridge/barcode\") {"
+        },
+        {
+          "line": 1736,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/fridge/date\") {"
+        },
+        {
+          "line": 1745,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/fridge/name\") {"
+        },
+        {
+          "line": 1754,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/fridge/items\") {"
+        },
+        {
+          "line": 1763,
+          "code": "const fridgeUpdateMatch = url.pathname.match(/^\\/api\\/fridge\\/items\\/([^/]+)$/);"
+        },
+        {
+          "line": 1773,
+          "code": "const fridgeRemoveMatch = url.pathname.match(/^\\/api\\/fridge\\/items\\/([^/]+)\\/remove$/);"
+        },
+        {
+          "line": 1783,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/fridge/remove-by-barcode\") {"
+        },
+        {
+          "line": 1792,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/dosing-calibration/run\") {"
+        },
+        {
+          "line": 1801,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/dosing-calibration/latest\") {"
+        },
+        {
+          "line": 1810,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/energy-live\") {"
+        },
+        {
+          "line": 1818,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/nilm-report\") {"
+        },
+        {
+          "line": 1828,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/icloud/status\") {"
+        },
+        {
+          "line": 1832,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/icloud/calendars\") {"
+        },
+        {
+          "line": 1840,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/icloud/events\") {"
+        },
+        {
+          "line": 1852,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/icloud/addressbooks\") {"
+        },
+        {
+          "line": 1860,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/icloud/contacts\") {"
+        },
+        {
+          "line": 1873,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/projects\") {"
+        },
+        {
+          "line": 1877,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/tree\") {"
+        },
+        {
+          "line": 1887,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/chat\") {"
+        },
+        {
+          "line": 1896,
+          "code": "if (req.method === \"DELETE\" && url.pathname === \"/api/chat\") {"
+        },
+        {
+          "line": 1908,
+          "code": "if (req.method === \"GET\" && url.pathname === \"/api/runs\") {"
+        },
+        {
+          "line": 1914,
+          "code": "if (req.method === \"POST\" && url.pathname === \"/api/runs\") {"
+        },
+        {
+          "line": 1925,
+          "code": "const runMatch = url.pathname.match(/^\\/api\\/runs\\/([^/]+)$/);"
+        },
+        {
+          "line": 1932,
+          "code": "const eventsMatch = url.pathname.match(/^\\/api\\/runs\\/([^/]+)\\/events$/);"
+        },
+        {
+          "line": 1998,
+          "code": "if (url.pathname.startsWith('/api/solana-paper/')) return handlePaper(req, res, url);"
+        },
+        {
+          "line": 1999,
+          "code": "if (url.pathname === '/solana-paper') { res.writeHead(302, { location: '/solana-paper/' }); return res.end(); }"
+        },
+        {
+          "line": 2000,
+          "code": "if (url.pathname === '/solana-paper/') return serveStatic(res, 'solana-paper/index.html');"
+        },
+        {
+          "line": 2001,
+          "code": "if (url.pathname.startsWith(\"/api/jarvis/\")) return handleJarvis(req, res, url);"
+        },
+        {
+          "line": 2002,
+          "code": "if (url.pathname === \"/miroir\") { res.writeHead(302, { location: \"/miroir/\" }); return res.end(); }"
+        },
+        {
+          "line": 2003,
+          "code": "if (url.pathname === \"/miroir/\") return serveStatic(res, \"miroir/index.html\");"
+        },
+        {
+          "line": 2004,
+          "code": "if (url.pathname === \"/jarvis\") { res.writeHead(302, { location: \"/jarvis/\" }); return res.end(); }"
+        },
+        {
+          "line": 2005,
+          "code": "if (url.pathname === \"/jarvis/\") return serveStatic(res, \"jarvis/index.html\");"
+        },
+        {
+          "line": 2006,
+          "code": "if (url.pathname.startsWith(\"/api/astro/\")) return handleAstro(req, res, url);"
+        },
+        {
+          "line": 2007,
+          "code": "if (url.pathname === \"/astro\") { res.writeHead(302, { location: \"/astro/\" }); return res.end(); }"
+        },
+        {
+          "line": 2008,
+          "code": "if (url.pathname === \"/astro/\") return serveStatic(res, \"astro/index.html\");"
+        },
+        {
+          "line": 2009,
+          "code": "if (url.pathname.startsWith(\"/api/german/\")) return handleGerman(req, res, url);"
+        },
+        {
+          "line": 2010,
+          "code": "if (url.pathname.startsWith(\"/api/\")) return handleApi(req, res, url);"
+        },
+        {
+          "line": 2011,
+          "code": "if (url.pathname === \"/\") return serveStatic(res, \"index.html\");"
+        },
+        {
+          "line": 2012,
+          "code": "return serveStatic(res, url.pathname.slice(1));"
+        }
+      ]
+    },
+    {
+      "source": "/home/user/workspace/jarvis/backend.mjs",
+      "sha256": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+      "route_conditions": [
+        {
+          "line": 40,
+          "code": "const action=url.pathname.slice('/api/jarvis/'.length);"
+        },
+        {
+          "line": 43,
+          "code": "if(action==='capabilities'&&req.method==='GET')return json(res,200,{radioDiscovery:true,maps:await mapsConfig(),youtubeSearchConfigured:Boolean(await youtubeKey())});"
+        },
+        {
+          "line": 44,
+          "code": "if(action==='capabilities/run'&&req.method==='POST'){"
+        },
+        {
+          "line": 49,
+          "code": "if(action==='evolution/status'&&req.method==='GET')return json(res,200,await evolutionStatus(url.searchParams.get('id'),space));"
+        },
+        {
+          "line": 50,
+          "code": "if(action==='evolution/diff'&&req.method==='GET'){"
+        },
+        {
+          "line": 54,
+          "code": "if(action==='conversations/record'&&req.method==='POST'){"
+        },
+        {
+          "line": 59,
+          "code": "if(action==='memory/map'&&req.method==='GET'){try{return json(res,200,await memoryMap(space,url.searchParams.get('offset')))}catch(e){return json(res,503,{error:e.message})}}"
+        },
+        {
+          "line": 60,
+          "code": "if(action==='memory/status'&&req.method==='GET'){"
+        },
+        {
+          "line": 65,
+          "code": "if(action==='voice/status'&&req.method==='GET')return json(res,200,speechStatus());"
+        },
+        {
+          "line": 66,
+          "code": "if(action==='live/status'&&req.method==='GET')return json(res,200,{...liveStatus(),...coreInfo(),speechOnly:['codex','hybrid'].includes(coreInfo().engine)});"
+        },
+        {
+          "line": 67,
+          "code": "if(action==='openai/usage'&&req.method==='GET')return json(res,200,await openaiUsage());"
+        },
+        {
+          "line": 68,
+          "code": "if(action==='live/costs'&&req.method==='GET')return json(res,200,await usage('summary'));"
+        },
+        {
+          "line": 69,
+          "code": "if(['live/usage','live/balance'].includes(action)&&req.method==='POST'){"
+        },
+        {
+          "line": 72,
+          "code": "return json(res,200,await usage(action==='live/usage'?'report':'balance',data));"
+        },
+        {
+          "line": 74,
+          "code": "if(['live/tool','live/session'].includes(action)&&req.method==='POST'){"
+        },
+        {
+          "line": 79,
+          "code": "try{return json(res,200,action==='live/session'?await createLiveSession(space):await liveTool({...data,space}));}"
+        },
+        {
+          "line": 82,
+          "code": "if(['voice/session','voice/transcribe','voice/speak'].includes(action)&&req.method==='POST'){"
+        },
+        {
+          "line": 88,
+          "code": "if(action==='voice/session'){await body(req,2000);return json(res,200,speechSession(space));}"
+        },
+        {
+          "line": 89,
+          "code": "if(action==='voice/transcribe')return json(res,200,await transcribeSpeech(req.headers['x-jarvis-voice-session'],space,await body(req,1920044)));"
+        },
+        {
+          "line": 103,
+          "code": "if(action==='move'&&req.method==='POST')return json(res,200,await store('move',{...JSON.parse((await body(req)).toString()),space}));"
+        },
+        {
+          "line": 104,
+          "code": "if(action==='docs'&&req.method==='GET')return json(res,200,await store('list',{q:url.searchParams.get('q')||'',space}));"
+        },
+        {
+          "line": 105,
+          "code": "if(action==='doc'&&req.method==='GET'){let d=await store('get',{id:url.searchParams.get('id'),space});return json(res,d?200:404,d||{error:'Souvenir introuvable.'})}"
+        },
+        {
+          "line": 106,
+          "code": "if(action==='sync'&&req.method==='POST')return json(res,200,await sync());"
+        },
+        {
+          "line": 107,
+          "code": "if(action==='notes'&&req.method==='POST')return json(res,201,await store('save',{...JSON.parse((await body(req)).toString()),space}));"
+        },
+        {
+          "line": 108,
+          "code": "if(action==='import'&&req.method==='POST'){const path=await saveImport(req);try{return json(res,200,await store('import_path',{path,space},space))}finally{await unlink(path).catch(()=>{})}}"
+        },
+        {
+          "line": 109,
+          "code": "if(action==='ask'&&req.method==='POST'){"
+        }
+      ]
+    },
+    {
+      "source": "/home/user/workspace/astro-degustation/gateway.mjs",
+      "sha256": "ede7c2e733d4ef3006efcf533b8acbcbafb5ea6c8bcc2781a65636925d03268c",
+      "route_conditions": [
+        {
+          "line": 2,
+          "code": "const route=url.pathname.slice('/api/astro'.length);"
+        },
+        {
+          "line": 5,
+          "code": "if(req.method!==(route==='/connect'?'POST':'GET'))return send(405,{error:'Méthode non autorisée'});"
+        }
+      ]
+    },
+    {
+      "source": "/home/user/workspace/solana-paper/gateway.mjs",
+      "sha256": "a4b6be928951611cb499f3c4557bc72d89aa47002b0de3ef60af1ca25f279e02",
+      "route_conditions": [
+        {
+          "line": 9,
+          "code": "if (url.pathname === '/api/solana-paper/report' || url.pathname === '/api/solana-paper/fast' || url.pathname === '/api/solana-paper/lightning' || url.pathname === '/api/solana-paper/trail-lab' || url.pathname === '/api/solana-paper/loss-audit') {"
+        },
+        {
+          "line": 14,
+          "code": "if (url.pathname.endsWith('/loss-audit')) {"
+        },
+        {
+          "line": 19,
+          "code": "if (url.pathname.endsWith('/trail-lab')) {"
+        },
+        {
+          "line": 24,
+          "code": "if (url.pathname.endsWith('/lightning')) {"
+        },
+        {
+          "line": 29,
+          "code": "if (url.pathname.endsWith('/fast')) {"
+        },
+        {
+          "line": 43,
+          "code": "const archived = url.pathname.match(/^\\/api\\/solana-paper\\/runs\\/(\\d{10})\\/(paper-financial\\.json\\.gz|lightning-financial\\.json\\.gz|live\\.json|manifest\\.json)$/);"
+        },
+        {
+          "line": 52,
+          "code": "if (files[url.pathname]) {"
+        },
+        {
+          "line": 54,
+          "code": "const body = await readFile(root + files[url.pathname]);"
+        },
+        {
+          "line": 55,
+          "code": "res.writeHead(200, { ...headers, 'content-type': 'text/csv; charset=utf-8', 'content-disposition': `attachment; filename=\"${files[url.pathname]}\"` });"
+        }
+      ]
+    },
+    {
+      "source": "/home/user/workspace/allemand-en-poche/backend.mjs",
+      "sha256": "9808e0806e43fcb35d91877bac560415057620c6bb61c21fef80fe075836c4e4",
+      "route_conditions": [
+        {
+          "line": 25,
+          "code": "if(url.pathname==='/api/german/start'){"
+        },
+        {
+          "line": 40,
+          "code": "if(url.pathname==='/api/german/answer'){"
+        },
+        {
+          "line": 54,
+          "code": "if(url.pathname==='/api/german/close'){if(s.busy)fail('Attends la correction en cours.',409);sessions.delete(data.id);return respond(res,200,{ok:true});}"
+        }
+      ]
+    }
+  ],
+  "route_method_pairs": [
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "permission": "public",
+      "identity": "public",
+      "effect": "minimal-health-only",
+      "clients": [
+        "monitor"
+      ]
+    },
+    {
+      "path": "/api/jarvis/session",
+      "method": "GET",
+      "permission": "session",
+      "identity": "session-protocol",
+      "effect": "human-session",
+      "clients": [
+        "auth-client"
+      ]
+    },
+    {
+      "path": "/api/jarvis/session",
+      "method": "POST",
+      "permission": "session",
+      "identity": "session-protocol",
+      "effect": "human-session",
+      "clients": [
+        "auth-client"
+      ]
+    },
+    {
+      "path": "/api/jarvis/session",
+      "method": "DELETE",
+      "permission": "session",
+      "identity": "session-protocol",
+      "effect": "human-session",
+      "clients": [
+        "auth-client"
+      ]
+    },
+    {
+      "path": "/api/jarvis/ask",
+      "method": "POST",
+      "permission": "conversation",
+      "identity": "human",
+      "effect": "model/tools/archive",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/capabilities",
+      "method": "GET",
+      "permission": "capabilities.read",
+      "identity": "human",
+      "effect": "configuration",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/capabilities/run",
+      "method": "POST",
+      "permission": "capabilities.execute",
+      "identity": "human",
+      "effect": "external-or-physical",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/evolution/status",
+      "method": "GET",
+      "permission": "development.read",
+      "identity": "human",
+      "effect": "development-results",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/evolution/diff",
+      "method": "GET",
+      "permission": "development.read",
+      "identity": "human",
+      "effect": "file-read",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/conversations/record",
+      "method": "POST",
+      "permission": "memory.write",
+      "identity": "human",
+      "effect": "archive-write",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/memory/map",
+      "method": "GET",
+      "permission": "memory.read",
+      "identity": "human",
+      "effect": "memory-with-common",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/memory/status",
+      "method": "GET",
+      "permission": "memory.read",
+      "identity": "human",
+      "effect": "memory-with-common",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/voice/status",
+      "method": "GET",
+      "permission": "voice",
+      "identity": "human",
+      "effect": "configuration",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/live/status",
+      "method": "GET",
+      "permission": "voice",
+      "identity": "human",
+      "effect": "configuration",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/openai/usage",
+      "method": "GET",
+      "permission": "usage.read",
+      "identity": "human",
+      "effect": "provider-request",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/live/costs",
+      "method": "GET",
+      "permission": "usage.read",
+      "identity": "human",
+      "effect": "usage-read",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/live/usage",
+      "method": "POST",
+      "permission": "usage.write",
+      "identity": "human",
+      "effect": "usage-write",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/live/balance",
+      "method": "POST",
+      "permission": "usage.manage",
+      "identity": "human",
+      "effect": "usage-write",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/live/tool",
+      "method": "POST",
+      "permission": "native.tools",
+      "identity": "human",
+      "effect": "model-selected-tools",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/live/session",
+      "method": "POST",
+      "permission": "native.session",
+      "identity": "human",
+      "effect": "provider-session",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/voice/session",
+      "method": "POST",
+      "permission": "voice",
+      "identity": "human",
+      "effect": "voice-session",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/voice/transcribe",
+      "method": "POST",
+      "permission": "voice",
+      "identity": "human",
+      "effect": "paid-provider",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/voice/speak",
+      "method": "POST",
+      "permission": "voice",
+      "identity": "human",
+      "effect": "paid-provider-stream",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/move",
+      "method": "POST",
+      "permission": "memory.move",
+      "identity": "human",
+      "effect": "cross-space-write",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/docs",
+      "method": "GET",
+      "permission": "memory.read",
+      "identity": "human",
+      "effect": "memory-read",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/doc",
+      "method": "GET",
+      "permission": "memory.read",
+      "identity": "human",
+      "effect": "memory-read",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/sync",
+      "method": "POST",
+      "permission": "memory.sync",
+      "identity": "human",
+      "effect": "global-import",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/notes",
+      "method": "POST",
+      "permission": "memory.write",
+      "identity": "human",
+      "effect": "memory-write",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/import",
+      "method": "POST",
+      "permission": "memory.import",
+      "identity": "human",
+      "effect": "file-import",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/hermes/config",
+      "method": "GET",
+      "permission": "missions.read",
+      "identity": "human",
+      "effect": "feature-state",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/hermes/missions",
+      "method": "GET",
+      "permission": "missions.read",
+      "identity": "human",
+      "effect": "mission-read",
+      "clients": [
+        "jarvis-web",
+        "iphone-web"
+      ],
+      "space": true,
+      "resource": false
+    },
+    {
+      "path": "/api/jarvis/hermes/missions",
+      "method": "POST",
+      "permission": "missions.create",
+      "identity": "human",
+      "effect": "synthetic-admission",
+      "clients": [
+        "missions-panel",
+        "hybrid-facade"
+      ],
+      "space": true
+    },
+    {
+      "path": "/api/jarvis/hermes/missions/:id",
+      "method": "GET",
+      "permission": "missions.read",
+      "identity": "human",
+      "effect": "mission-read",
+      "clients": [
+        "missions-panel"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/hermes/missions/:id/events",
+      "method": "GET",
+      "permission": "missions.read",
+      "identity": "human",
+      "effect": "mission-read",
+      "clients": [
+        "missions-panel"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/hermes/missions/:id/results",
+      "method": "GET",
+      "permission": "missions.read",
+      "identity": "human",
+      "effect": "mission-read",
+      "clients": [
+        "missions-panel"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/hermes/missions/:id/cancel",
+      "method": "POST",
+      "permission": "missions.cancel",
+      "identity": "human",
+      "effect": "cancel-request",
+      "clients": [
+        "missions-panel"
+      ],
+      "space": true,
+      "resource": true
+    },
+    {
+      "path": "/api/jarvis/hermes/missions/:id/approvals",
+      "method": "POST",
+      "permission": "missions.approve",
+      "identity": "human",
+      "effect": "human-approval",
+      "clients": [
+        "missions-panel"
+      ],
+      "space": true,
+      "resource": true,
+      "approval": true
+    },
+    {
+      "path": "/api/projects",
+      "method": "GET",
+      "permission": "projects.read",
+      "identity": "human",
+      "effect": "filesystem-list",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/tree",
+      "method": "GET",
+      "permission": "files.read",
+      "identity": "human",
+      "effect": "filesystem-read-and-mkdir",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/chat",
+      "method": "GET",
+      "permission": "chat.read",
+      "identity": "human",
+      "effect": "conversation-read",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/chat",
+      "method": "DELETE",
+      "permission": "chat.delete",
+      "identity": "human",
+      "effect": "conversation-delete",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/runs",
+      "method": "GET",
+      "permission": "runs.read",
+      "identity": "human",
+      "effect": "run-list",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/runs",
+      "method": "POST",
+      "permission": "runs.create",
+      "identity": "human",
+      "effect": "shell/network/files",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/runs/:id",
+      "method": "GET",
+      "permission": "runs.read",
+      "identity": "human",
+      "effect": "run-output",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/runs/:id/events",
+      "method": "GET",
+      "permission": "runs.read",
+      "identity": "human",
+      "effect": "run-output",
+      "clients": [
+        "gateway-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/s9/control",
+      "method": "GET",
+      "permission": "physical.status",
+      "identity": "human",
+      "effect": "equipment-status",
+      "clients": [
+        "s9-ui"
+      ]
+    },
+    {
+      "path": "/api/s9/power",
+      "method": "POST",
+      "permission": "physical.s9.power",
+      "identity": "human",
+      "effect": "physical-power",
+      "clients": [
+        "s9-ui"
+      ],
+      "physical": true,
+      "resource": true
+    },
+    {
+      "path": "/api/dosing-calibration/run",
+      "method": "POST",
+      "permission": "physical.dosing.calibrate",
+      "identity": "human",
+      "effect": "physical-calibration",
+      "clients": [
+        "calibration-ui"
+      ],
+      "physical": true,
+      "resource": true
+    },
+    {
+      "path": "/api/dosing-calibration/latest",
+      "method": "GET",
+      "permission": "calibration.read",
+      "identity": "human",
+      "effect": "measurement-read",
+      "clients": [
+        "calibration-ui"
+      ]
+    },
+    {
+      "path": "/api/magic-mirror",
+      "method": "GET",
+      "permission": "reports.read",
+      "identity": "human",
+      "effect": "private-telemetry",
+      "clients": [
+        "mirror-ui",
+        "dashboard"
+      ]
+    },
+    {
+      "path": "/api/mining-report",
+      "method": "GET",
+      "permission": "reports.read",
+      "identity": "human",
+      "effect": "private-telemetry",
+      "clients": [
+        "mirror-ui",
+        "dashboard"
+      ]
+    },
+    {
+      "path": "/api/home-report",
+      "method": "GET",
+      "permission": "reports.read",
+      "identity": "human",
+      "effect": "private-telemetry",
+      "clients": [
+        "mirror-ui",
+        "dashboard"
+      ]
+    },
+    {
+      "path": "/api/energy-live",
+      "method": "GET",
+      "permission": "reports.read",
+      "identity": "human",
+      "effect": "private-telemetry",
+      "clients": [
+        "mirror-ui",
+        "dashboard"
+      ]
+    },
+    {
+      "path": "/api/nilm-report",
+      "method": "GET",
+      "permission": "reports.read",
+      "identity": "human",
+      "effect": "private-telemetry",
+      "clients": [
+        "mirror-ui",
+        "dashboard"
+      ]
+    },
+    {
+      "path": "/api/mirror/apple",
+      "method": "GET",
+      "permission": "calendar.read",
+      "identity": "human",
+      "effect": "personal-data",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/mirror/apple",
+      "method": "POST",
+      "permission": "calendar.configure",
+      "identity": "human",
+      "effect": "account-configuration",
+      "clients": [
+        "mirror-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/mirror/tasks",
+      "method": "GET",
+      "permission": "tasks.read",
+      "identity": "human",
+      "effect": "task-read",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/mirror/tasks",
+      "method": "POST",
+      "permission": "tasks.write",
+      "identity": "human",
+      "effect": "task-write",
+      "clients": [
+        "mirror-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/mirror/tasks",
+      "method": "PATCH",
+      "permission": "tasks.write",
+      "identity": "human",
+      "effect": "task-write",
+      "clients": [
+        "mirror-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/mirror/tasks",
+      "method": "DELETE",
+      "permission": "tasks.write",
+      "identity": "human",
+      "effect": "task-write",
+      "clients": [
+        "mirror-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/icloud/status",
+      "method": "GET",
+      "permission": "calendar.read",
+      "identity": "human",
+      "effect": "personal-data",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/icloud/calendars",
+      "method": "GET",
+      "permission": "calendar.read",
+      "identity": "human",
+      "effect": "personal-data",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/icloud/events",
+      "method": "GET",
+      "permission": "calendar.read",
+      "identity": "human",
+      "effect": "personal-data",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/icloud/addressbooks",
+      "method": "GET",
+      "permission": "calendar.read",
+      "identity": "human",
+      "effect": "personal-data",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/icloud/contacts",
+      "method": "GET",
+      "permission": "calendar.read",
+      "identity": "human",
+      "effect": "personal-data",
+      "clients": [
+        "mirror-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/stock",
+      "method": "GET",
+      "permission": "fridge.read",
+      "identity": "human",
+      "effect": "inventory-read",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/product/:id",
+      "method": "GET",
+      "permission": "fridge.read",
+      "identity": "human",
+      "effect": "product-read/network",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/vision",
+      "method": "POST",
+      "permission": "fridge.analyse",
+      "identity": "human",
+      "effect": "paid-vision",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/barcode",
+      "method": "POST",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory/network",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/date",
+      "method": "POST",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory/network",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/name",
+      "method": "POST",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory/network",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/items",
+      "method": "POST",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory/network",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/remove-by-barcode",
+      "method": "POST",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory/network",
+      "clients": [
+        "fridge-ui"
+      ]
+    },
+    {
+      "path": "/api/fridge/items/:id",
+      "method": "PATCH",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory-write",
+      "clients": [
+        "fridge-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/fridge/items/:id",
+      "method": "PUT",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory-write",
+      "clients": [
+        "fridge-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/fridge/items/:id/remove",
+      "method": "POST",
+      "permission": "fridge.write",
+      "identity": "human",
+      "effect": "inventory-write",
+      "clients": [
+        "fridge-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/astro/status",
+      "method": "GET",
+      "permission": "astro.read",
+      "identity": "human",
+      "effect": "private-display",
+      "clients": [
+        "astro-ui"
+      ]
+    },
+    {
+      "path": "/api/astro/image",
+      "method": "GET",
+      "permission": "astro.read",
+      "identity": "human",
+      "effect": "private-display",
+      "clients": [
+        "astro-ui"
+      ]
+    },
+    {
+      "path": "/api/astro/connect",
+      "method": "POST",
+      "permission": "astro.connect",
+      "identity": "human",
+      "effect": "upstream-network/config",
+      "clients": [
+        "astro-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/german/start",
+      "method": "POST",
+      "permission": "german.use",
+      "identity": "human",
+      "effect": "paid-model/session",
+      "clients": [
+        "german-ui"
+      ],
+      "resource": false
+    },
+    {
+      "path": "/api/german/answer",
+      "method": "POST",
+      "permission": "german.use",
+      "identity": "human",
+      "effect": "paid-model/session",
+      "clients": [
+        "german-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/german/close",
+      "method": "POST",
+      "permission": "german.use",
+      "identity": "human",
+      "effect": "session-delete",
+      "clients": [
+        "german-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/solana-paper/report",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/report",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/fast",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/fast",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/lightning",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/lightning",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/trail-lab",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/trail-lab",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/loss-audit",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/loss-audit",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/annual-trades.csv",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/annual-trades.csv",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/dex-trades.csv",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/dex-trades.csv",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/analysis.csv",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/analysis.csv",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "simulation-data-read",
+      "clients": [
+        "solana-ui"
+      ]
+    },
+    {
+      "path": "/api/solana-paper/runs/:epoch/:file",
+      "method": "GET",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "archive-read",
+      "clients": [
+        "solana-ui"
+      ],
+      "resource": true
+    },
+    {
+      "path": "/api/solana-paper/runs/:epoch/:file",
+      "method": "HEAD",
+      "permission": "paper.read",
+      "identity": "human",
+      "effect": "archive-read",
+      "clients": [
+        "solana-ui"
+      ],
+      "resource": true
+    }
+  ],
+  "client_source_references": [
+    {
+      "file": "/home/user/gateway/public/jarvis/app.js",
+      "references": [
+        "/api/jarvis/"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/archive.js",
+      "references": [
+        "/api/jarvis/conversations/record"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/capabilities.js",
+      "references": [
+        "/api/jarvis/",
+        "/api/js"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/codex-voice.js",
+      "references": [
+        "/api/jarvis/voice/session",
+        "/api/jarvis/voice/speak",
+        "/api/jarvis/voice/transcribe"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/live.js",
+      "references": [
+        "/api/jarvis/live/session",
+        "/api/jarvis/live/tool",
+        "/api/jarvis/memory/status"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/memory3d.js",
+      "references": [
+        "/api/jarvis/doc",
+        "/api/jarvis/memory/map"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/usage.js",
+      "references": [
+        "/api/jarvis/live/balance",
+        "/api/jarvis/live/costs",
+        "/api/jarvis/live/usage",
+        "/api/jarvis/openai/usage"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/jarvis/voice-router.js",
+      "references": [
+        "/api/jarvis/voice/status"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/miroir/app.js",
+      "references": [
+        "/api/magic-mirror",
+        "/api/mirror/apple",
+        "/api/mirror/tasks"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/astro/app.js",
+      "references": [
+        "/api/astro"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/solana-paper/app.js",
+      "references": [
+        "/api/solana-paper/",
+        "/api/solana-paper/analysis.csv",
+        "/api/solana-paper/fast",
+        "/api/solana-paper/lightning",
+        "/api/solana-paper/loss-audit",
+        "/api/solana-paper/report",
+        "/api/solana-paper/runs/",
+        "/api/solana-paper/trail-lab"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    },
+    {
+      "file": "/home/user/gateway/public/solana-paper/index.html",
+      "references": [
+        "/api/reference"
+      ],
+      "dynamic_calls_require_adapter_review": true
+    }
+  ],
+  "unknown_api_route_or_method": "deny",
+  "public_api": [
+    "GET /api/health (minimal response)",
+    "GET/POST/DELETE /api/jarvis/session (session protocol, not anonymous application access)"
+  ],
+  "static_public": "explicit candidate enumerated in public-assets-candidate.json; data/export extensions excluded; human review required",
+  "production_writes": 0
+}

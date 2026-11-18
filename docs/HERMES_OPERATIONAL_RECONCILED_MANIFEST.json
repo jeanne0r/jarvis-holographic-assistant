@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "purpose": "Host/Windows bindings reconciliation only; no installed release replacement",
+  "base_manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+  "bindings_file": "docs/HERMES_OPERATIONAL_WINDOWS_BINDINGS.json",
+  "bindings_sha256": "965fd365c1b3fa3c23990fb19ba9af83ca65ed5408f8e0e4873c67078624c831",
+  "supervisor_sources": {
+    "scripts/run_interactive_hermes.py": "aacf6377bb7b0bbaaf9797df86994acb6d05c14d47f2ad51d7a9cc600dd9a273",
+    "scripts/pilot_phase4_windows.py": "0f6ab7e7784280844b86698b1208e6a5c7c015cb91c561c626029979b9f80182",
+    "scripts/pilot_phase5_windows.py": "1a1daf2e9bce83e155e23a146bf012548911c726df751c2001656ba87b10cbf3",
+    "scripts/pilot_phase6b_panel.py": "e7be23099bfd8e485033822b10447b701f39f0eea9ed8c65c932070f235afe3b",
+    "scripts/pilot_existing_ollama.py": "b97f7cc61221ba77cbbee229b84bf407f8632355c5ecbc073138387e54c10c85",
+    "scripts/audit_gpu.py": "e26cda02f597c33365d231b5615df47129b34a2a0d057839e163cb75edb5f730",
+    "memory_manager/phase4/windows.py": "0797d19af9d0134e9dd7239596da7d68b584c01d1b76980161a8dc0f61a6c3a2",
+    "memory_manager/phase4/native_trial.py": "ca62cb0be6c1a7fab29ae355b5960302faf89181b26a70ef6fa94cf3ab153b20",
+    "memory_manager/phase4/allowance.py": "982d7d7e521891324f142960b627c7cba326a37c2dc28b48385504183df754bf",
+    "memory_manager/phase4/job.py": "a183b647b6b7f42f4c7a532bc8d76c3b1085ca69971be2403ce590146a57e172",
+    "memory_manager/phase5/source_attestation.py": "e3be10aa3609be1a9a9ed687045cf46d88029199ae4ba2606ba0b16ff9bb2361",
+    "ops/phase4-run-hermes-windows.py": "bce41292f9458ea297956e50c5bec20704adfcf6dd9459995dba4a9be554749b",
+    "ops/phase4-run-ollama-windows.py": "0825f6326a7e065b172cc266cc18b0e2c6b5f31e28917593ab3cb74945f7256c"
+  },
+  "source_changes": {
+    "scripts/run_interactive_hermes.py": {
+      "before": "8e9e413eda0a7cce1a344a872d77cad5213b8a62afbb671bfc5a83d4383ca1ea",
+      "after": "aacf6377bb7b0bbaaf9797df86994acb6d05c14d47f2ad51d7a9cc600dd9a273"
+    },
+    "scripts/pilot_phase6b_panel.py": {
+      "before": "8c484f5024fecc1faaa44f7f86e4e478b5e5d95759b81b95b2c5ba86234aa4c6",
+      "after": "e7be23099bfd8e485033822b10447b701f39f0eea9ed8c65c932070f235afe3b"
+    }
+  },
+  "installed_release_changed": false,
+  "windows_changed": false
+}

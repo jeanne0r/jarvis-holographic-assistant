@@ -1,0 +1,24 @@
+# Prepared only. Do not install/start without explicit user approval.
+[Unit]
+Description=Jarvis private synthetic Hermes panel (queue only)
+[Service]
+Type=simple
+WorkingDirectory=@ROOT@
+ExecStart=/usr/bin/env -i PATH=/usr/local/bin:/usr/bin:/bin LANG=C.UTF-8 PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m memory_manager.phase6.interactive --config @ROOT@/data/phase6/pilot-interactive/config.json
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=read-only
+ProtectSystem=strict
+ReadWritePaths=@ROOT@/data/phase6/pilot-interactive
+InaccessiblePaths=/home/user/gateway /home/user/.ssh /home/user/.codex /home/user/workspace/jarvis
+RestrictAddressFamilies=AF_INET AF_UNIX
+IPAddressDeny=any
+IPAddressAllow=localhost
+TasksMax=32
+MemoryMax=384M
+TimeoutStopSec=10
+KillMode=control-group
+Restart=no
+# No RuntimeMaxSec, no Windows startup, no timer and no [Install]/autostart.

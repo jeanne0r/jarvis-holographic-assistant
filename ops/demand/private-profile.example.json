@@ -1,0 +1,5 @@
+{
+  "note": "Fragment to merge into the existing private config only after approval; preserve human identity, bridge identity and loopback topology.",
+  "operations": {"admissionEnabled": false,"textEnabled": false,"workerEnabled": false,"voiceEnabled": false},
+  "onDemand": {"accepting": false,"executionEnabled": false,"schedulerToken": "PROVISION_DISTINCT_PRIVATE_SCHEDULER_IDENTITY","runtime": null,"commissioned": false}
+}

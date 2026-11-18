@@ -1,0 +1,197 @@
+{
+  "benchmark_version": "phase3-real-memory-pipeline",
+  "started_at_utc": "2026-11-14T06:35:39Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "hermes_runtime_tested": false,
+  "cases": [],
+  "samples": [
+    {
+      "available": true,
+      "observed_at": 1794638145.9831185,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 94.96,
+      "utilization": 0.0,
+      "temperature_c": 35.5,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794638148.5716693,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 3766.0,
+      "free_mib": 6474.0,
+      "driver": "621.24",
+      "power_w": 97.11,
+      "utilization": 35.0,
+      "temperature_c": 36.34,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794638151.1688178,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 4930.0,
+      "free_mib": 5310.0,
+      "driver": "621.24",
+      "power_w": 202.23,
+      "utilization": 78.0,
+      "temperature_c": 43.22,
+      "miner_running": false
+    }
+  ],
+  "cleanup": {
+    "cleanup_requested": true,
+    "windows_listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794638154.119798,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 99.88,
+      "utilization": 0.0,
+      "temperature_c": 37.47,
+      "miner_running": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794638141.2447097,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1061.0,
+    "free_mib": 9179.0,
+    "driver": "621.24",
+    "power_w": 8.63,
+    "utilization": 0.0,
+    "temperature_c": 31.34,
+    "miner_running": false
+  },
+  "server_identity": {
+    "listening": true,
+    "addresses": [
+      "127.0.0.1"
+    ],
+    "pid": 25064,
+    "started": "2026-11-14T06:35:42.2688710Z",
+    "name": "ollama"
+  },
+  "ollama_version": "0.35.1",
+  "model": {
+    "name": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "size": 3324173934,
+    "details": {
+      "parent_model": "model.gguf",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "4.2B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 2560
+    }
+  },
+  "configuration": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 4096,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "pipeline": {
+    "passed": true,
+    "checks": {
+      "job_completed": true,
+      "resumed_after_reopen": true,
+      "nonempty_candidates": true,
+      "idempotent_replay": true,
+      "only_inferred": true,
+      "old_configuration_superseded": true,
+      "current_configuration_preserved": true,
+      "one_metered_call": true
+    },
+    "job_id": "7607adb9-57d1-4222-bf08-9d2d7ac22c5b",
+    "extraction": {
+      "candidates": [
+        {
+          "content": {
+            "count": 4,
+            "unit": "identical cells of 1 kg"
+          },
+          "event_id": "e1",
+          "evidence": "DoseLab possède quatre cellules identiques de 1 kg.",
+          "predicate": "has",
+          "subject": "DoseLab cells count",
+          "type": "knowledge"
+        }
+      ],
+      "skill_suggestions": [
+        "counting",
+        "unit conversion"
+      ],
+      "summary": "DoseLab has four identical cells of 1 kg each."
+    },
+    "metrics": [
+      {
+        "api_cost_micros": 0,
+        "candidate_comparisons": [],
+        "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+        "fallback": false,
+        "gpu_time_measured": false,
+        "gpu_window_seconds": 4.741092782933265,
+        "input_tokens": 133,
+        "latency_seconds": 4.741092782933265,
+        "model": "qwen3.5:4b",
+        "output_tokens": 99,
+        "tokens_per_second": 66.51071359949263,
+        "vram_after_mib": 1061.0,
+        "vram_before_mib": 1061.0
+      }
+    ],
+    "memory_ids": [
+      "1153729c-815b-43c6-8426-6f9bf0c29b87"
+    ],
+    "provenance": [
+      {
+        "citations": [
+          {
+            "evidence": "DoseLab possède quatre cellules identiques de 1 kg.",
+            "observed_at": 1700000300,
+            "reference": "synthetic://phase3/local-event"
+          }
+        ],
+        "job_fingerprint": "59986ccdaf5c3378fed8ea03b09a44992783b278efdccc8a652c45e9cb4abd3a",
+        "kind": "model",
+        "model": "qwen3.5:4b",
+        "model_digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+        "observed_at": 1700000300.0,
+        "ref": "local-reasoning://7607adb9-57d1-4222-bf08-9d2d7ac22c5b"
+      }
+    ],
+    "hermes_runtime_tested": false
+  },
+  "sampled_peak_vram_mib": 4930.0,
+  "sampled_peak_power_w": 202.23,
+  "sampled_board_energy_wh": 0.17702963345679973,
+  "energy_coverage_seconds": 5.185699224472046,
+  "measurement_note": "Board power samples, not wall-socket energy or CUDA time. Unload after every request; host file cache may stay warm. GPU sampling is not a continuous mining watchdog.",
+  "passed": true,
+  "finished_at_utc": "2026-11-14T06:35:54Z"
+}

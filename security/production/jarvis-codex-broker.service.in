@@ -1,0 +1,19 @@
+[Unit]
+Description=Jarvis private Codex admission ledger
+[Service]
+User=jarvis-broker
+Group=jarvis-broker
+SupplementaryGroups=jarvis-broker-ipc
+WorkingDirectory=/opt/jarvis-2/release
+ExecStart=/usr/bin/python3 -m memory_manager.phase6d.broker.main --config /etc/jarvis-broker/config.json
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateNetwork=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/jarvis-broker /run/jarvis-broker
+RestrictAddressFamilies=AF_UNIX
+TasksMax=16
+MemoryMax=256M
+Restart=no

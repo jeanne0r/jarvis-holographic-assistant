@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "lot": "C1",
+  "backup": "/home/user/gateway/data/backups/hermes-text-C-20261115T213720Z-fb8d684f",
+  "gateway_restarts": 0,
+  "windows_started": false,
+  "missions_created": 0,
+  "paid_api_calls": 0,
+  "private_configuration_read": false,
+  "https_sha256": "bb091f140d7b54ef896fc14057890285e991968d2c2962096c959f012455695d",
+  "backup_restore_verified": true,
+  "anonymous_denied": true,
+  "hybrid_unchanged": true,
+  "protected_files_unchanged": true,
+  "service_pids_unchanged": true,
+  "relay_admission_disabled": true,
+  "model_gate_absent": true,
+  "authentication_unchanged": true,
+  "only_production_asset_changed": true,
+  "authenticated_display": "same_bytes_tested_offline; operator_session_not_read"
+}

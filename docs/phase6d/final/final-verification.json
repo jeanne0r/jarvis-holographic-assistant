@@ -1,0 +1,19 @@
+{
+  "active_code_unchanged": true,
+  "checked_paths": 26,
+  "gateway_service_unchanged": true,
+  "historical_proofs_unchanged": true,
+  "source_package_hashes_current": true,
+  "checks_passed": 9,
+  "production_writes": 0,
+  "gpu_calls": 0,
+  "remote_inference_calls": 0,
+  "private_inventory_executed": true,
+  "service": [
+    "MainPID=2033987",
+    "ExecMainStartTimestamp=Fri 2026-11-13 21:29:24 UTC",
+    "ActiveState=active"
+  ],
+  "private_inventory_scope_validated": true,
+  "private_inventory_content_disclosed": false
+}

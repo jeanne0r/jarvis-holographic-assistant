@@ -1,0 +1,69 @@
+{
+  "observed_at": 1794638022.4984734,
+  "read_only": true,
+  "guests": {
+    "100": {
+      "stats": {
+        "stat-htlb-pgalloc": 0,
+        "stat-swap-out": 0,
+        "stat-alloc-stalls": 15667,
+        "stat-available-memory": 1782218752,
+        "stat-direct-reclaims": 3937816576,
+        "stat-direct-scans": 5561565184,
+        "stat-htlb-pgfail": 0,
+        "stat-free-memory": 134369280,
+        "stat-minor-faults": 1281664387,
+        "stat-major-faults": 268053,
+        "stat-total-memory": 4041261056,
+        "stat-oom-kills": 0,
+        "stat-async-reclaims": 303971586048,
+        "stat-swap-in": 0,
+        "stat-async-scans": 350863634432,
+        "stat-disk-caches": 1660252160
+      },
+      "last-update": 1794638021
+    },
+    "103": {
+      "stats": {
+        "stat-htlb-pgalloc": 0,
+        "stat-swap-out": 836874240,
+        "stat-alloc-stalls": 18446744073709551615,
+        "stat-available-memory": 2712174592,
+        "stat-direct-reclaims": 18446744073709551615,
+        "stat-direct-scans": 18446744073709551615,
+        "stat-htlb-pgfail": 0,
+        "stat-free-memory": 545361920,
+        "stat-minor-faults": 2707573466,
+        "stat-major-faults": 170892,
+        "stat-total-memory": 4106076160,
+        "stat-oom-kills": 18446744073709551615,
+        "stat-async-reclaims": 18446744073709551615,
+        "stat-swap-in": 470089728,
+        "stat-async-scans": 18446744073709551615,
+        "stat-disk-caches": 2006700032
+      },
+      "last-update": 1794638020
+    },
+    "201": {
+      "stats": {
+        "stat-htlb-pgalloc": 0,
+        "stat-swap-out": 114688,
+        "stat-alloc-stalls": 18446744073709551615,
+        "stat-available-memory": 1647149056,
+        "stat-direct-reclaims": 18446744073709551615,
+        "stat-direct-scans": 18446744073709551615,
+        "stat-htlb-pgfail": 0,
+        "stat-free-memory": 391630848,
+        "stat-minor-faults": 13238693,
+        "stat-major-faults": 2207,
+        "stat-total-memory": 2063151104,
+        "stat-oom-kills": 18446744073709551615,
+        "stat-async-reclaims": 18446744073709551615,
+        "stat-swap-in": 0,
+        "stat-async-scans": 18446744073709551615,
+        "stat-disk-caches": 1312124928
+      },
+      "last-update": 1794638020
+    }
+  }
+}

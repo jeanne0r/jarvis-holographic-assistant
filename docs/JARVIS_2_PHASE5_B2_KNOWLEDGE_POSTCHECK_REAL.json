@@ -1,0 +1,26 @@
+{
+  "scope": "Exploratory host postcheck after Hermes stopped; structured knowledge filter excludes new mission episodes",
+  "observed_at": 1794685267.7783823,
+  "query": "masse nominale identique",
+  "memory_type": "knowledge",
+  "fts_count": 0,
+  "expected_memory_id": "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+  "results": [
+    {
+      "memory_id": "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+      "revision": "5f1fb8b3-9f2a-463c-ae52-6d31a73779c2",
+      "content": {
+        "capacities_kg": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "description": "Quatre cellules de pesée identiques, capacité un kilogramme chacune."
+      },
+      "source": "synthetic://doselab/correction",
+      "retrieval_mode": "semantic_and_fts"
+    }
+  ],
+  "passed": true
+}

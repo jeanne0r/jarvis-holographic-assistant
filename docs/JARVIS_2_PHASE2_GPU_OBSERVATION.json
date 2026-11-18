@@ -1,0 +1,25 @@
+{
+  "os": "Microsoft Windows 11 Professionnel",
+  "gpu": [
+    "NVIDIA GeForce RTX 3080, 10240, 1061, 621.24, 8.31, 0, 28.09"
+  ],
+  "process_names": [
+    "Kryptex",
+    "KryptexService"
+  ],
+  "listeners": [],
+  "ollama_binaries": [
+    "C:\\Users\\winuser\\AppData\\Local\\Programs\\Ollama\\ollama.exe"
+  ],
+  "ollama_version": null,
+  "models": [],
+  "observed_at": "2026-11-13T22:11:43.563371+00:00",
+  "host": "gamer.fritz.box",
+  "address": "192.0.2.96",
+  "audit_mode": "read_only",
+  "version": null,
+  "installed_model_manifests": [
+    "registry.ollama.ai\\aiconjured\\Qwen3.5-9B-Uncensored-HauhauCS-Aggressive-MTP-GGUF-NVFP4\\latest"
+  ],
+  "configured_host": null
+}

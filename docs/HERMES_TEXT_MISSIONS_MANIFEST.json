@@ -1,0 +1,30 @@
+{
+  "lot": "C-text-window",
+  "sso_enabled": false,
+  "production_modified": false,
+  "private_code_changes": 0,
+  "installed_release_manifest_sha256": "a330242778228b66340b22cd37ac6ef2f8f24fc0df02382fa87aa3924defd81a",
+  "gateway_assets": {
+    "/home/user/gateway/public/jarvis/hermes-embedded.js": "bb091f140d7b54ef896fc14057890285e991968d2c2962096c959f012455695d",
+    "/home/user/gateway/public/jarvis/hermes-embedded.css": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77"
+  },
+  "frontend": {
+    "target": "/home/user/gateway/public/jarvis/hermes-embedded.js",
+    "before_sha256": "2d2fd69a97449766dc96803d112296957dcf6a151e18b9aa6438e9db359d03e0",
+    "after_sha256": "bb091f140d7b54ef896fc14057890285e991968d2c2962096c959f012455695d",
+    "artifact": "hermes-embedded.js",
+    "backup": "hermes-embedded.js.before"
+  },
+  "frontend_package": "data/lot-c-text/ready",
+  "limits": {
+    "seconds": 300,
+    "mission_seconds": 240,
+    "calls": 6,
+    "local_tokens": 98304,
+    "missions": 1,
+    "remote_cost_chf": 0
+  },
+  "authorization_receipt": "/var/backups/jarvis-hermes/text-operational-window-used.json",
+  "contract_sha256": "9ddbdc612aaf2e750c826ca7890f5a580a3fe78cd77870025d6d0876dd5d48c3",
+  "historical_verdicts_modified": false
+}

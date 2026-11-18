@@ -1,0 +1,53 @@
+#!/bin/bash
+# Root helper of the jarvis-deploy key (sudoers: this file only). Re-validates every argument.
+# Scope agreed with User 18.11.2026: tested, reversible Jarvis/Hermes updates on this host.
+# NOT here (stay with User): install, arm/disarm, real-reset, sources-config/-network, rollback,
+# reconcile --close, Windows, Home Assistant, Proxmox, other VMs, secrets, gateway restart.
+set -uo pipefail
+INBOX=/var/lib/jarvis-deploy/inbox
+SRC=/home/user/deploy/src
+BRANCH=claude/reprise-20261116
+RUN=${JARVIS_DEPLOY_PRODRUN:-$SRC/ops/demand-simple/prod-run.sh}
+[ "$(id -u)" = 0 ] || [ -n "${JARVIS_DEPLOY_TEST:-}" ] || { echo "root required" >&2; exit 2; }
+# phase -> confirmation word that a human would type (fed on stdin; YES=1 is never used)
+declare -A WORD=(
+  [pre]='' [check]='' [reconcile]=''
+  [private-update]=METTRE-A-JOUR [private-revert]=RESTAURER-PRIVE
+  [ui-update]=METTRE-A-JOUR-UI [ui-revert]=RESTAURER-UI
+  [route-backend]=AIGUILLER [route-revert]=RESTAURER-AIGUILLAGE
+  [windows-mcp]=EPINGLER [windows-mcp-revert]=RESTAURER-MCP
+  [activate]=ACTIVER
+)
+declare -A UNITS=([pilot]=jarvis-hermes-pilot-system.service [supervisor]=jarvis-hermes-supervisor.service)
+log() { logger -t jarvis-deploy-root -- "$*" 2>/dev/null || true; }
+CMD=${1:-}; shift || true
+case "$CMD" in
+  pull)
+    NAME=${1:-}; [[ $# -eq 1 && "$NAME" =~ ^jarvis-[0-9a-f]{7}\.bundle$ && -f "$INBOX/$NAME" && ! -L "$INBOX/$NAME" ]] || { echo "pull jarvis-<7hex>.bundle (uploaded first)" >&2; exit 2; }
+    log "pull $NAME"
+    runuser -u user -- git -C "$SRC" bundle verify -q "$INBOX/$NAME" >/dev/null || { echo "bundle verify failed" >&2; exit 2; }
+    runuser -u user -- git -C "$SRC" pull -q --ff-only "$INBOX/$NAME" "$BRANCH" || exit 2
+    runuser -u user -- git -C "$SRC" log -1 --format='%H %s' ;;
+  run)
+    PHASE=${1:-}; [[ -n "$PHASE" && -v "WORD[$PHASE]" && $# -le 1 ]] || { echo "phase refused; allowed: ${!WORD[*]}" >&2; exit 2; }
+    log "run $PHASE"
+    if [ -n "${WORD[$PHASE]}" ]; then printf '%s\n' "${WORD[$PHASE]}" | bash "$RUN" "$PHASE"; else bash "$RUN" "$PHASE" </dev/null; fi ;;
+  status)
+    [ $# -eq 0 ] || exit 2
+    for u in "${UNITS[@]}"; do printf '%s %s\n' "$u" "$(systemctl is-active "$u")"; done
+    runuser -u user -- git -C "$SRC" log -1 --format='src %h %s' ;;
+  journal)
+    U=${1:-}; M=${2:-15}; [[ $# -le 2 && -v "UNITS[$U]" && "$M" =~ ^[0-9]{1,4}$ ]] || { echo "journal pilot|supervisor [minutes<=9999]" >&2; exit 2; }
+    journalctl -u "${UNITS[$U]}" --since "-${M} min" --no-pager -o cat | tail -400 ;;
+  hash)
+    [ $# -ge 1 ] || exit 2
+    for f in "$@"; do
+      case "$f" in
+        /opt/jarvis-hermes-pilot/*|/opt/jarvis-hermes-supervisor/*|/home/user/gateway/public/jarvis/*|/home/user/workspace/jarvis/*.mjs) ;;
+        *) echo "path refused: $f" >&2; exit 2 ;;
+      esac
+      [[ "$f" != *..* && -f "$f" && ! -L "$f" ]] || { echo "not a regular file: $f" >&2; exit 2; }
+      sha256sum "$f"
+    done ;;
+  *) echo "refused" >&2; exit 2 ;;
+esac

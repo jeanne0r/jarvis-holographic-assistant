@@ -1,0 +1,42 @@
+{
+  "mode": "deployed-C1-laboratory-only",
+  "base_commit": "136730f",
+  "windows_root": "C:/JarvisHermesLab/app",
+  "upstream_hermes_unchanged": true,
+  "files": [
+    {
+      "path": "memory_manager/mcp_utf8.py",
+      "base_sha256": null,
+      "new_sha256": "6a1268a189e12125ed334ee1e4f4d74675710c3dbc7a6691fb0e307f835c514e",
+      "new_file": true
+    },
+    {
+      "path": "memory_manager/phase2/mcp.py",
+      "base_sha256": "28d8bc0a78be658a1f75d21193dd68be4ddcda2f7219030b343220385843ab03",
+      "new_sha256": "4768e36167a74c52b70899de8cefeeadc39704a976f0d2189086b9e2c5883252",
+      "new_file": false
+    },
+    {
+      "path": "memory_manager/phase2/memory_tools.py",
+      "base_sha256": "ef9a1cc6867addcc30e58dcc6a72e66cb691d319dbaf9d0fac0c2735c7875988",
+      "new_sha256": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+      "new_file": false,
+      "observed_windows_base_sha256": "4cf7d12201d57637402441c001806945ccdf69f6c8163a733c33c30eb1affe1d",
+      "observed_windows_base_commit": "c79ebd4ff5b76e15a653e5bdc4bbb67fac1e3ef2"
+    },
+    {
+      "path": "memory_manager/phase3/mcp.py",
+      "base_sha256": "50cf681e66471aebd79ee59bf7ed5dd7bc0ef7518a67f7579c2b21c7ec93f7c4",
+      "new_sha256": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+      "new_file": false
+    },
+    {
+      "path": "memory_manager/phase4/windows.py",
+      "base_sha256": "4830ed7698deaaffc4b0d9fc2a805e7ab85e2784890cd1c1b5a042176bc0c14f",
+      "new_sha256": "53df3cbfa2e76b5069204afa1b4e8ba5136bb8e328fb67a01a32da2ef50a652a",
+      "new_file": false
+    }
+  ],
+  "apply_authorized": true,
+  "actual_deployment_receipt": "JARVIS_2_PHASE5C_PATCH_REAL.json"
+}

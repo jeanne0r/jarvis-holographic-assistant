@@ -1,0 +1,137 @@
+{
+  "mode": "synthetic-interactive-queue-only",
+  "audit_base_commit": "61bfd48d2a90d501a5d206d3c82426f2b4f76861",
+  "historical_manifest_sha256": "34bd218c3dc6545b52a2ddb8e6a313a585f045801ae6e45433d9a5a6f4b5ef00",
+  "historical_manifest_modified": false,
+  "differences": [
+    {
+      "file": "jarvis-session-auth.mjs",
+      "historical_sha256": "6e09cdcae6adc8c3bc2f957116edc183ea946ab06925c49a2fcae796a47615c8",
+      "historical_source_commit": "d9e148b1ea72988758056a628c62c240e9819316",
+      "current_sha256": "574feef80fda44f5806770cb8a433b639d7042cc1e48f62c011701f202233edd",
+      "origin": "Session handles, live permission/revocation checks and reviewed /api cookie scope; eefa9a2 + 6bb7c4e.",
+      "commits_since_p6_l2": [
+        "6bb7c4e Prepare central gateway security, scoped voice sessions and phase 6D readiness",
+        "eefa9a2 Prepare phase 6C deployment readiness and harden isolated sessions"
+      ],
+      "decision": "preserve current committed source"
+    },
+    {
+      "file": "hermes-bridge-client.mjs",
+      "historical_sha256": "0fb65d7cfcfd53785741ed633821dfd4cf89dada0235fba46438ba388c3a8c21",
+      "historical_source_commit": "d9e148b1ea72988758056a628c62c240e9819316",
+      "current_sha256": "8190c7412a78b9da5652394bd526d0576927be20b43f191aba89efae353678f6",
+      "origin": "Canonical provenance endpoint and bounded worker heartbeat transport; 520c2b6.",
+      "commits_since_p6_l2": [
+        "520c2b6 Add scoped business adapters, isolated Codex broker and composed Hermes runtime"
+      ],
+      "decision": "preserve current committed source"
+    },
+    {
+      "file": "jarvis-hermes-experimental.mjs",
+      "historical_sha256": "3813153c5d65e26f06c8c9599880ef781cad69f9fd8dac05cb9d93764e5cb9d2",
+      "historical_source_commit": "d9e148b1ea72988758056a628c62c240e9819316",
+      "current_sha256": "4471f9fbd4498d6d10fa3fe7767ebc42687c1e3d30eea48a011168d0c4081380",
+      "origin": "Canonical metadata appended separately to the original model result; 520c2b6.",
+      "commits_since_p6_l2": [
+        "520c2b6 Add scoped business adapters, isolated Codex broker and composed Hermes runtime"
+      ],
+      "decision": "preserve current committed source"
+    },
+    {
+      "file": "phase6-gateway.mjs",
+      "historical_sha256": "ea754afe8787d8720a711cdf82e7cc6d87590f0708a4735a83736d6cb78cdd1b",
+      "historical_source_commit": "ef9930184b2dcb9601371f8d6fec042c66c0c2d0",
+      "current_sha256": "73fa7dbd00b69c7e028f951437efbf1393d81cb83f978adef79de06bfa0753d8",
+      "origin": "History consultation independent of admission; topology pinned while sessions can be revoked; eefa9a2.",
+      "commits_since_p6_l2": [
+        "eefa9a2 Prepare phase 6C deployment readiness and harden isolated sessions"
+      ],
+      "decision": "preserve current committed source"
+    },
+    {
+      "file": "backend.mjs",
+      "historical_sha256": "a67744f1b6af66180410c83477b5097aba03f7b47f075fb405c78fc13b52df92",
+      "historical_source_commit": "ef9930184b2dcb9601371f8d6fec042c66c0c2d0",
+      "current_sha256": "b09c0bdaec0c7480c530499b81ec244aef39fe375e896bb32ac3eb189a001e8b",
+      "origin": "Per-human voice session ownership and trusted private HTTPS origin; 6bb7c4e + 7847655. Not imported by the pilot.",
+      "commits_since_p6_l2": [
+        "7847655 Bind legacy persistence, prepare controlled gateway entry and production decision",
+        "6bb7c4e Prepare central gateway security, scoped voice sessions and phase 6D readiness"
+      ],
+      "decision": "preserve current committed source"
+    },
+    {
+      "file": "public/index.html",
+      "historical_sha256": "16622493087776469d1c15fa1b1d3f63d87995611e6a6b14e78340de8a4df5f3",
+      "historical_source_commit": "d9e148b1ea72988758056a628c62c240e9819316",
+      "current_sha256": "5d0a2f48c5e2bbb1dbd227696e4ad9b1432cad63f13f11713af15f983de340a8",
+      "origin": "Standalone auth client and canonical formatter loaded before the missions panel; 6bb7c4e + 520c2b6. Full Jarvis page not served by this pilot.",
+      "commits_since_p6_l2": [
+        "520c2b6 Add scoped business adapters, isolated Codex broker and composed Hermes runtime",
+        "6bb7c4e Prepare central gateway security, scoped voice sessions and phase 6D readiness"
+      ],
+      "decision": "preserve current committed source"
+    },
+    {
+      "file": "public/hermes-missions.js",
+      "historical_sha256": "658eb0322540f89fc57438426addd520d6ca1ecead6e32d231ab6287eb384965",
+      "historical_source_commit": "ef9930184b2dcb9601371f8d6fec042c66c0c2d0",
+      "current_sha256": "b13d764727e5bf211c5982a5c00e78eb4bf74d4aa89b23e70cb4698343e725b1",
+      "origin": "Auth decoupling, history without admission, canonical metadata, availability and prudent restart states; eefa9a2 + 6bb7c4e + 520c2b6.",
+      "commits_since_p6_l2": [
+        "520c2b6 Add scoped business adapters, isolated Codex broker and composed Hermes runtime",
+        "6bb7c4e Prepare central gateway security, scoped voice sessions and phase 6D readiness",
+        "eefa9a2 Prepare phase 6C deployment readiness and harden isolated sessions"
+      ],
+      "decision": "preserve current committed source"
+    }
+  ],
+  "files": {
+    "ops/jarvis-hermes-pilot.service.in": "e98a517874aea4ea26deb4a6802e514b11bb3b1c34ae93cd9e1bf30fd30d0ee6",
+    "memory_manager/__init__.py": "ad86f65d835176cc2b5685593337c9020705996bc83c14c4af70d484132a95bc",
+    "memory_manager/phase6/__init__.py": "c7a2194489893f96de77adce1d82f2d7d6a4cd5dcebf6707b2ac86476d9534a6",
+    "memory_manager/phase2/__init__.py": "11fc1ff381e2dc98a9954ec44c2a72dc32a625200fbe10bb6eb419970f00324c",
+    "memory_manager/phase3/__init__.py": "cfab1539bb0a8359a01d8bb5bd15a6b9f34047a9273fa426088df968e161039e",
+    "memory_manager/phase2/hermes.py": "6718935b23011b50eb0e70904970e5b315f83fb247c5c0838ea5651ce8dc0038",
+    "ops/pilot-interactive.html": "e7107894d306ee435aa08fa0e5585a0860393738ef7b5b14fd710e4482cc6668",
+    "ops/pilot-interactive.mjs": "48fd853057ed2791ab17e99e38063c76f5d67678508e49dfd86153965df94fc6",
+    "memory_manager/phase6/interactive.py": "ed43d6532c94e92e57d12e8a66e330067e4615d7e7cb63a52e8759dcdb682fe5",
+    "scripts/prepare_interactive_pilot.py": "e2b05dc187b3eec341c3d8c923a94ff682830535686856b9d85e96725419a504",
+    "public/jarvis-auth.js": "3351664201443b49d4c653478da107788f38f0dd989ed31d7524cfbec0658f2e",
+    "public/hermes-missions.js": "b13d764727e5bf211c5982a5c00e78eb4bf74d4aa89b23e70cb4698343e725b1",
+    "public/hermes-missions.css": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273",
+    "public/hermes-canonical.js": "2ac5e7523991a62306e921bd4a256fbac072699837ce582a5e871d2acd72cf32",
+    "gateway-security.mjs": "0633a8e991349bc1b43c27c18191e7361fb8e1a7cb97bc173d1ec9bb801ec90d",
+    "gateway-security-mount.mjs": "d2d500bca556c4159cf38bca84f961fee38b461dbcccd932119f8cf5f538d144",
+    "gateway-route-policy.mjs": "2956806e52187680126df23a2dbd0ac965862f94181f4c4aee7b368b87506c6a",
+    "phase6-gateway.mjs": "73fa7dbd00b69c7e028f951437efbf1393d81cb83f978adef79de06bfa0753d8",
+    "jarvis-session-auth.mjs": "574feef80fda44f5806770cb8a433b639d7042cc1e48f62c011701f202233edd",
+    "hermes-server-auth.mjs": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228",
+    "jarvis-hermes-experimental.mjs": "4471f9fbd4498d6d10fa3fe7767ebc42687c1e3d30eea48a011168d0c4081380",
+    "hermes-bridge-client.mjs": "8190c7412a78b9da5652394bd526d0576927be20b43f191aba89efae353678f6",
+    "hermes-voice-tools.mjs": "79ceaff38551840ff2cc39edbe9f2b6372cb75a08425c17156477738c79bddff",
+    "hybrid-mission-admission.mjs": "270c0b9da48ee6e9b6c20fc36d850bef6dd283b39a841d12de184b94344207df",
+    "memory_manager/api.py": "3e133f9f32ff3085dc6c96bbf9a1aa67eebb6d1291bc33ae19f31470e5f1a754",
+    "memory_manager/store.py": "d03769cbab66ff72b8295c7b2d7f72ad9bf4d4d8c89fc580f73448db53734426",
+    "memory_manager/missions.py": "78afe95552fd2d0fa6ca60b5a41147b9f4acabfed20d847408f19eaaecb0a6ab",
+    "memory_manager/schema.sql": "fecd7eefc42c2b5befe750eb4ad612e765d36a41c0b4d67db827da98256f7028",
+    "memory_manager/phase2/http_bridge.py": "ad45c38624ffb4abcf9d715602692782cad16bc81b46d8574b777e1ad235d065",
+    "memory_manager/phase2/bridge.py": "2b671b7fe909e250a94d5db2f58272c98a4d3ee6992196f20fb0c2d6e164c251",
+    "memory_manager/phase2/schema.sql": "df1b3cbcf704a2b3bc3a5360def7f4253d90e1ad3af75f4bf3a695b3c8bcc21f",
+    "memory_manager/phase2/database.py": "9d40df5af04fb89443ff1fc562597a1595e0c79123978e00ded49a8a0ded88e8",
+    "memory_manager/phase2/memory_tools.py": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+    "memory_manager/phase2/validation.py": "9ec2af958d6aa1b16467f0b827f04f4560662c5ba33d28114540a4f9892353f3",
+    "memory_manager/phase2/local_model.py": "cbb1a08aea6234e9037fab177aa6f44d36f180812d3929371ef988fee2a20246",
+    "memory_manager/phase3/lab.py": "5eff052b85e4245ce8d4664edb72cc53981f3196abbf04d3ead5b81943a42176"
+  },
+  "installation_authorized": false,
+  "dispatch_enabled": false,
+  "limits_per_mission": {
+    "calls": 6,
+    "local_tokens": 98304,
+    "seconds": 240,
+    "attempts": 1,
+    "remote_cost_chf": 0
+  }
+}

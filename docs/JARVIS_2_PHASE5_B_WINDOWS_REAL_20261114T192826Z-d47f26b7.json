@@ -1,0 +1,413 @@
+{
+  "started_at_utc": "2026-11-14T19:28:26Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "samples": [
+    {
+      "available": true,
+      "observed_at": 1794684512.8388355,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 93.96,
+      "utilization": 18.0,
+      "temperature_c": 31.81,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684515.4114962,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 93.73,
+      "utilization": 0.0,
+      "temperature_c": 32.16,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684517.993677,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 10.74,
+      "utilization": 0.0,
+      "temperature_c": 28.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684520.555168,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.37,
+      "utilization": 0.0,
+      "temperature_c": 28.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684523.098509,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.26,
+      "utilization": 0.0,
+      "temperature_c": 28.56,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684525.6638274,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.53,
+      "utilization": 0.0,
+      "temperature_c": 28.5,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684528.2447877,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.72,
+      "utilization": 0.0,
+      "temperature_c": 28.47,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684530.8353946,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.72,
+      "utilization": 0.0,
+      "temperature_c": 28.47,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684533.4071007,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.61,
+      "utilization": 0.0,
+      "temperature_c": 28.5,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684535.9837787,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.64,
+      "utilization": 0.0,
+      "temperature_c": 28.44,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684538.5564525,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.87,
+      "utilization": 0.0,
+      "temperature_c": 28.5,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684541.165209,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.92,
+      "utilization": 0.0,
+      "temperature_c": 28.47,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684543.7117562,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.88,
+      "utilization": 0.0,
+      "temperature_c": 28.44,
+      "miner_running": false
+    }
+  ],
+  "cleanup": {
+    "supervisor": {
+      "pid": 11960,
+      "reason": "operator_stop",
+      "exit_code_before_job_close": 259,
+      "resource_profile": "ollama",
+      "memory_limit_bytes": 12884901888,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 1284100096,
+      "peak_process_memory_bytes": 637673472,
+      "elapsed_seconds": 34.49021129999892,
+      "owned_process_stopped_after_close": true
+    },
+    "listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794684546.636719,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 10.14,
+      "utilization": 0.0,
+      "temperature_c": 28.47,
+      "miner_running": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794684508.569853,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1068.0,
+    "free_mib": 9172.0,
+    "driver": "621.24",
+    "power_w": 8.55,
+    "utilization": 0.0,
+    "temperature_c": 27.91,
+    "miner_running": false
+  },
+  "server_identity": {
+    "listening": true,
+    "addresses": [
+      "127.0.0.1"
+    ],
+    "pid": 9028,
+    "started": "2026-11-14T19:28:29.9029575Z",
+    "name": "ollama"
+  },
+  "configuration": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 64000,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "native_windows": {
+    "attempt_id": "20261114T192843Z",
+    "hermes_runtime_tested": true,
+    "paid_api_calls": 0,
+    "missions": [
+      {
+        "mission_id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+        "admission_seconds": 0.03199095802847296,
+        "number": 1,
+        "skill_mode": false,
+        "bridge_status": {
+          "id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+          "owner": "phase3-synthetic",
+          "scope": "private",
+          "event_key": "native-hermes-20261114T192843Z-1",
+          "state": "failed",
+          "definition": {
+            "allowed_tools": [
+              "memory.search",
+              "report"
+            ],
+            "budget": {
+              "attempts": 1,
+              "cost_micros": 0,
+              "local_tokens": 50000,
+              "seconds": 180,
+              "tokens": 0
+            },
+            "memory_context": [],
+            "objective": "Analyse DoseLab X4 : recherche d’abord « masse nominale identique » via jarvis_memory_search, puis consulte l’historique. Explique la configuration actuelle et les anciennes valeurs remplacées, en citant les références synthetic://doselab/correction et synthetic://doselab/old. Utilise les outils réellement.",
+            "plan": [
+              "Consult controlled memory tools",
+              "Report with provenance"
+            ],
+            "priority": 1,
+            "trigger": "approved-synthetic-pilot"
+          },
+          "created": 1794684535.61279,
+          "updated": 1794684541.9641523,
+          "events": [
+            {
+              "seq": 1,
+              "mission_id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+              "state": "queued",
+              "actor": "phase3-synthetic",
+              "evidence": "{}",
+              "created": 1794684535.61279
+            }
+          ],
+          "dispatch_state": "failed",
+          "upstream_id": "run_22d15e1805c64048bd158e2ebd263ada",
+          "approvals": []
+        },
+        "events": [
+          {
+            "seq": 1,
+            "mission_id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+            "event_key": "admitted",
+            "kind": "queued",
+            "data": "{\"mission_id\":\"814dff07-cf0b-4701-a5ca-ac42d5bac3af\"}",
+            "created": 1794684535.6312888
+          },
+          {
+            "seq": 2,
+            "mission_id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+            "event_key": "submitted",
+            "kind": "running",
+            "data": "{\"run_id\":\"run_22d15e1805c64048bd158e2ebd263ada\"}",
+            "created": 1794684535.7546873
+          },
+          {
+            "seq": 3,
+            "mission_id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+            "event_key": "upstream-running",
+            "kind": "progress",
+            "data": "{\"upstream_state\":\"running\"}",
+            "created": 1794684536.7966056
+          },
+          {
+            "seq": 8,
+            "mission_id": "814dff07-cf0b-4701-a5ca-ac42d5bac3af",
+            "event_key": "terminal",
+            "kind": "failed",
+            "data": "{\"output\":\"Native output withheld by sensitive-content filter.\",\"output_withheld\":true,\"usage\":{\"input_tokens\":0,\"output_tokens\":0,\"total_tokens\":0},\"validation\":\"unreviewed\"}",
+            "created": 1794684541.9642498
+          }
+        ],
+        "native_status": {
+          "object": "hermes.run",
+          "model": "qwen3.5:4b",
+          "created_at": 1794684535.7055404,
+          "pending_controls": [],
+          "run_id": "run_22d15e1805c64048bd158e2ebd263ada",
+          "status": "failed",
+          "session_id": "run_22d15e1805c64048bd158e2ebd263ada",
+          "admission_id": "e26be1eb6bc34629abd49d1c8a7e00e6",
+          "execution_generation": 1,
+          "output": "custom rejected your API key, so the model can't be reached. Update it in Settings → Providers, or run `hermes setup` in a terminal.\n\nProvider said: HTTP 403: {\"error\": \"Pilot quota or mission denied\"}",
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          }
+        },
+        "usage": [],
+        "skills": [],
+        "active_skills": 0,
+        "successful_native_tools": [],
+        "checks": {
+          "native_completed": false,
+          "experience_recorded": false,
+          "no_remote_cost": true,
+          "native_search_called": false,
+          "native_history_called": false,
+          "current_source_cited": false,
+          "old_source_cited": false
+        },
+        "passed": false
+      }
+    ],
+    "model_requests": [
+      {
+        "at": 1794684540.8270538,
+        "bytes": 13868,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "error": "PermissionError: System budget exhausted"
+      }
+    ],
+    "passed": false,
+    "runtime_supervisors": [
+      {
+        "pid": 22432,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 376463360,
+        "peak_process_memory_bytes": 328937472,
+        "elapsed_seconds": 15.56395579999662,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "05835bda219c422eb349af376d51d1a2"
+      }
+    ],
+    "phase5_index_batches": [
+      {
+        "upserted": 5,
+        "skipped": 0,
+        "complete": true,
+        "deleted": 0
+      }
+    ],
+    "real_semantic_queries": [],
+    "shared_token_limit": 50000,
+    "retrieval_trace": [],
+    "persisted_experience_returned": false,
+    "semantic_without_fts_proven": false
+  },
+  "passed": false,
+  "finished_at_utc": "2026-11-14T19:29:06Z"
+}

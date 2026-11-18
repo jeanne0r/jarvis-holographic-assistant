@@ -1,0 +1,115 @@
+{
+  "mode": "review-only",
+  "production_activation": "NO-GO-pending-resource-adapters-and-isolation",
+  "lots": [
+    {
+      "lot": "01-central-security",
+      "sha256": "f93a90affd87831676f864d2a0a0e49a148c9f943815796f5e9902be1e045def",
+      "files": [
+        {
+          "target": "/home/user/workspace/jarvis/jarvis-session-auth.mjs",
+          "before_sha256": null,
+          "after_sha256": "574feef80fda44f5806770cb8a433b639d7042cc1e48f62c011701f202233edd"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/hermes-server-auth.mjs",
+          "before_sha256": null,
+          "after_sha256": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/gateway-route-policy.mjs",
+          "before_sha256": null,
+          "after_sha256": "7de86f557df1c77ea86013ec0a26acc3731c7f925d3044e77dbfd3e09db1e488"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/gateway-security.mjs",
+          "before_sha256": null,
+          "after_sha256": "8cac5b0ddacbbc9693aee883bce5e0c3769d5be0cbe7eefbe3448d71066414f8"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/gateway-security-mount.mjs",
+          "before_sha256": null,
+          "after_sha256": "d2d500bca556c4159cf38bca84f961fee38b461dbcccd932119f8cf5f538d144"
+        },
+        {
+          "target": "/home/user/gateway/server.js",
+          "before_sha256": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+          "after_sha256": "8b2617ddd93280a41fbf1d6f4df04986699723719c6d2bd13d9d64e5398b4cfd"
+        }
+      ]
+    },
+    {
+      "lot": "02-independent-auth-client",
+      "sha256": "dfd8505c413f92c927f5761829279cab04845a72d193ca60de1f415a89a72d30",
+      "files": [
+        {
+          "target": "/home/user/gateway/public/jarvis/jarvis-auth.js",
+          "before_sha256": null,
+          "after_sha256": "4fd4bd54b661879b24c24bf465cb4c51feb3ec0df91d1edc88610a02a2fff5bd"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/voice-router.js",
+          "before_sha256": "b848df088de7a1a614aa8497debed3156aa9f0a3ed809ffdfe2ae213dfc010fb",
+          "after_sha256": "202f0de323ca36b4fc83912f13753da8556449c71b0f39c05d5495c10decaf2d"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/app.js",
+          "before_sha256": "80d5341134f7b2fd6777cdd72dd067ed96f6ffcdb9891f4c460990a114266814",
+          "after_sha256": "0880bec8de5c9ac3175512b2bcda2a94189644bd95d3b2a6919296f0a42263aa"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/index.html",
+          "before_sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d",
+          "after_sha256": "6f34e3b7965e40e6af8e6bf98623ac9320c8b6e34b793dd2cb773c87a4189b04"
+        }
+      ]
+    },
+    {
+      "lot": "03-voice-owner",
+      "sha256": "56c74253557c67a8996b2e9538ec57e178d37e851c15a22df0494ad7d9c8d104",
+      "files": [
+        {
+          "target": "/home/user/workspace/jarvis/voice-session-owner.mjs",
+          "before_sha256": null,
+          "after_sha256": "92889ee40dba97069d10732890beefccd58048bddf651486af6e9501f5714d47"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/backend.mjs",
+          "before_sha256": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+          "after_sha256": "b27e8b75122b8d5d64c8a58377d536173dbd5ec9c3f21b9247986fb173194e94"
+        }
+      ]
+    },
+    {
+      "lot": "04-optional-hermes-panel",
+      "sha256": "b371e2b8842e584ebdd76e2513078f2aec384ef482b5b135d8190b301ab644ae",
+      "files": [
+        {
+          "target": "/home/user/gateway/public/jarvis/hermes-missions.js",
+          "before_sha256": null,
+          "after_sha256": "7eb26b4a0e05045dd574f3654ceb65ae0726d441ec83f144af666feeab6ff64f"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/hermes-missions.css",
+          "before_sha256": null,
+          "after_sha256": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/index.html",
+          "before_sha256": "6f34e3b7965e40e6af8e6bf98623ac9320c8b6e34b793dd2cb773c87a4189b04",
+          "after_sha256": "3037795bf66ef622f1af0e4572d0e988228000a374cb421920b19d21cbee6f43"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "01-central-security": "03 ownership installed before granting voice; object routes default denied",
+    "02-independent-auth-client": "safe inert on old gateway (session 404); global cookie scope migration required on login",
+    "03-voice-owner": "identity from 01; inert under legacy unauthenticated requests",
+    "04-optional-hermes-panel": "02 auth client + existing reviewed 6B Hermes facade, not provided by central security lot"
+  },
+  "forward_and_reverse_byte_verified": true,
+  "production_preimages_unchanged": true,
+  "production_writes": 0,
+  "model_calls": 0
+}

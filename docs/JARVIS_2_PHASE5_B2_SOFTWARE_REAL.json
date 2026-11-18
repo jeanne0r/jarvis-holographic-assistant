@@ -1,0 +1,12 @@
+{
+  "initial_non_pilot_path_probe": {
+    "ollama_product_version": null,
+    "ollama_file_version": null,
+    "version_source": "Executable metadata only; server remains stopped"
+  },
+  "pilot_binary": {
+    "ollama_product_version": null,
+    "ollama_file_version": null,
+    "version_source": "Fixed existing pilot executable metadata; server remains stopped"
+  }
+}

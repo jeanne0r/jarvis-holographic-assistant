@@ -1,0 +1,11 @@
+data/
+__pycache__/
+*.pyc
+.env
+.env.*
+*_secrets*
+node_modules/
+*.sqlite*
+*.log
+gateway-before-jarvis.js
+.DS_Store

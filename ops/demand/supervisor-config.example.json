@@ -1,0 +1,20 @@
+{
+  "enabled": false,
+  "remoteCostChf": 0,
+  "stateDirectory": "/var/lib/jarvis-hermes-supervisor",
+  "identityFile": "/etc/jarvis-hermes-supervisor/identity.json",
+  "diagnosticKey": "/var/lib/jarvis-hermes-supervisor/ssh/diagnostic.key",
+  "diagnosticKnownHosts": "/var/lib/jarvis-hermes-supervisor/ssh/diagnostic.known_hosts",
+  "hermesIdentity": "/var/lib/jarvis-hermes-supervisor/ssh/hermes",
+  "bindingsFile": "/etc/jarvis-hermes-supervisor/windows-bindings.json",
+  "bindingsSha256": "REPLACE_WITH_REVIEWED_PACKAGE_HASH",
+  "confinementReceipt": "/etc/jarvis-hermes-supervisor/confinement.json",
+  "sourceFiles": {
+    "REPLACE_WITH_COMPLETE_REVIEWED_SOURCE_SET": "NO_ACTIVATION_WITH_THIS_TEMPLATE"
+  },
+  "runtimeIdentityHashes": {
+    "hermes.token": "PROVISION_HASH_ONLY",
+    "model.token": "PROVISION_HASH_ONLY",
+    "memory.token": "PROVISION_HASH_ONLY"
+  }
+}

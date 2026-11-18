@@ -1,0 +1,81 @@
+{
+  "observed_at_utc": "2026-11-14T15:52:41.5933979Z",
+  "windows": {
+    "caption": "Microsoft Windows 11 Professionnel",
+    "architecture": "64 bits",
+    "build": "26300",
+    "version": "10.0.26300"
+  },
+  "ram": {
+    "physical_bytes": 34294738944,
+    "available_bytes": 24815464448,
+    "visible_bytes": 34294738944
+  },
+  "disks": [
+    {
+      "free_bytes": 195858464768,
+      "drive": "C:",
+      "size_bytes": 499440939008
+    },
+    {
+      "free_bytes": 59553767424,
+      "drive": "F:",
+      "size_bytes": 480101003264
+    }
+  ],
+  "account": {
+    "elevated_admin": true,
+    "admin_group_in_token": true,
+    "hermeslab_account_exists": false
+  },
+  "openssh": {
+    "status": "Running",
+    "policy_lines": [
+      "Match Group Administrateurs"
+    ],
+    "present": true
+  },
+  "commands": [
+    {
+      "store_alias": false,
+      "path": "C:\\WINDOWS\\py.exe",
+      "name": "py.exe",
+      "version": "probe_failed"
+    },
+    {
+      "store_alias": false,
+      "path": "C:\\WINDOWS\\System32\\OpenSSH\\ssh.exe",
+      "name": "ssh.exe",
+      "version": "probe_failed"
+    }
+  ],
+  "ollama": {
+    "path": "C:\\Users\\winuser\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+    "cli_version": "Warning: could not connect to a running Ollama instance\r\nWarning: client version is 0.35.1",
+    "file_version": null
+  },
+  "model_store": "C:\\Users\\winuser\\.ollama\\models",
+  "models": [
+    {
+      "blob_bytes": 7268435721,
+      "digest": "dfa5921e03beeb18bc456bc35c411b54c92419c63758414f6ecdd8d30e293dd8",
+      "manifest": "registry.ollama.ai\\aiconjured\\Qwen3.5-9B-Uncensored-HauhauCS-Aggressive-MTP-GGUF-NVFP4\\latest",
+      "missing_blobs": 0
+    },
+    {
+      "blob_bytes": 3324173934,
+      "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+      "manifest": "registry.ollama.ai\\library\\qwen3.5\\4b",
+      "missing_blobs": 0
+    }
+  ],
+  "listeners": [],
+  "gpu": [
+    "NVIDIA GeForce RTX 3080, 10240, 1063, 621.24, 8.74, 0, 27.72"
+  ],
+  "kryptex": {
+    "ui_running": true,
+    "miners": [],
+    "installed_path_detected": true
+  }
+}

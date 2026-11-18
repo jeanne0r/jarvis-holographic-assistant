@@ -1,0 +1,22 @@
+# REVIEW ONLY. No provider enabled and no automatic worker loop.
+[Unit]
+Description=Jarvis isolated Codex job executor
+[Service]
+Type=oneshot
+User=jarvis-code-exec
+Group=jarvis-code-exec
+WorkingDirectory=/opt/jarvis-2/release
+ExecStart=/usr/bin/python3 -m memory_manager.phase6d.broker.execute --config /etc/jarvis-code-exec/config.json --job-file /run/jarvis-code-exec/job.json
+UMask=0077
+PrivateTmp=yes
+PrivateNetwork=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/jarvis-code-exec
+RestrictSUIDSGID=yes
+TasksMax=64
+MemoryMax=1536M
+RuntimeMaxSec=310
+Restart=no
+# Bubblewrap user-namespace compatibility must be verified under this UID/unit.
+# A template does not prove separation; no privilege/root fallback is permitted.

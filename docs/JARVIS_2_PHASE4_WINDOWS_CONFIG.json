@@ -1,0 +1,157 @@
+{
+  "read_profile": {
+    "model": {
+      "default": "qwen3.5:4b",
+      "provider": "custom",
+      "context_length": 64000,
+      "base_url": "http://127.0.0.1:11436/v1",
+      "api_key": "${LAB_MODEL_TOKEN}"
+    },
+    "agent": {
+      "max_turns": 6,
+      "api_max_retries": 0,
+      "auto_recovery_cycles": 0
+    },
+    "max_concurrent_sessions": 1,
+    "memory": {
+      "provider": "none",
+      "memory_enabled": false,
+      "user_profile_enabled": false,
+      "nudge_interval": 0
+    },
+    "compression": {
+      "enabled": false
+    },
+    "tools": {
+      "tool_search": {
+        "enabled": "off"
+      }
+    },
+    "auxiliary": {
+      "background_review": {
+        "enabled": false
+      },
+      "title_generation": {
+        "enabled": false,
+        "model_upgrade_enabled": false
+      }
+    },
+    "platform_toolsets": {
+      "cli": [
+        "mcp-jarvis"
+      ],
+      "api_server": [
+        "mcp-jarvis"
+      ]
+    },
+    "platforms": {
+      "api_server": {
+        "enabled": true,
+        "extra": {
+          "host": "127.0.0.1",
+          "port": 8643
+        }
+      }
+    },
+    "mcp_servers": {
+      "jarvis": {
+        "command": "C:\\JarvisHermesLab\\runtime\\Scripts\\python.exe",
+        "args": [
+          "-m",
+          "memory_manager.phase4.mcp",
+          "--token-file",
+          "C:\\JarvisHermesLab\\identity\\memory.token",
+          "--port",
+          "8792"
+        ],
+        "env": {
+          "PYTHONPATH": "C:\\JarvisHermesLab\\app"
+        },
+        "sampling": {
+          "enabled": false
+        }
+      }
+    },
+    "security": {
+      "allow_lazy_installs": false
+    }
+  },
+  "candidate_profile": {
+    "model": {
+      "default": "qwen3.5:4b",
+      "provider": "custom",
+      "context_length": 64000,
+      "base_url": "http://127.0.0.1:11436/v1",
+      "api_key": "${LAB_MODEL_TOKEN}"
+    },
+    "agent": {
+      "max_turns": 6,
+      "api_max_retries": 0,
+      "auto_recovery_cycles": 0
+    },
+    "max_concurrent_sessions": 1,
+    "memory": {
+      "provider": "none",
+      "memory_enabled": false,
+      "user_profile_enabled": false,
+      "nudge_interval": 0
+    },
+    "compression": {
+      "enabled": false
+    },
+    "tools": {
+      "tool_search": {
+        "enabled": "off"
+      }
+    },
+    "auxiliary": {
+      "background_review": {
+        "enabled": false
+      },
+      "title_generation": {
+        "enabled": false,
+        "model_upgrade_enabled": false
+      }
+    },
+    "platform_toolsets": {
+      "cli": [
+        "mcp-jarvis"
+      ],
+      "api_server": [
+        "mcp-jarvis"
+      ]
+    },
+    "platforms": {
+      "api_server": {
+        "enabled": true,
+        "extra": {
+          "host": "127.0.0.1",
+          "port": 8643
+        }
+      }
+    },
+    "mcp_servers": {
+      "jarvis": {
+        "command": "C:\\JarvisHermesLab\\runtime\\Scripts\\python.exe",
+        "args": [
+          "-m",
+          "memory_manager.phase4.mcp",
+          "--token-file",
+          "C:\\JarvisHermesLab\\identity\\memory.token",
+          "--port",
+          "8792",
+          "--skill-candidate"
+        ],
+        "env": {
+          "PYTHONPATH": "C:\\JarvisHermesLab\\app"
+        },
+        "sampling": {
+          "enabled": false
+        }
+      }
+    },
+    "security": {
+      "allow_lazy_installs": false
+    }
+  }
+}

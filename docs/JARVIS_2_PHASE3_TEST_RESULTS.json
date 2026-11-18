@@ -1,0 +1,128 @@
+{
+  "evaluated_at": "2026-11-14T15:49:08.965849+00:00",
+  "data": "synthetic",
+  "real_model_calls": 0,
+  "production_writes": 0,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "memory_manager/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_01_fact_correction_retains_old_configuration (test_memory.MemoryTests.test_01_fact_correction_retains_old_configuration) ... ok\ntest_02_conflicting_sources_remain_unresolved (test_memory.MemoryTests.test_02_conflicting_sources_remain_unresolved) ... ok\ntest_03_project_decision_changes (test_memory.MemoryTests.test_03_project_decision_changes) ... ok\ntest_04_episode_retrieval_is_analogy_not_proof (test_memory.MemoryTests.test_04_episode_retrieval_is_analogy_not_proof) ... ok\ntest_05_skill_improves_after_failure_without_regression (test_memory.MemoryTests.test_05_skill_improves_after_failure_without_regression) ... ok\ntest_06_consolidation_process_death_and_restart_no_duplicates (test_memory.MemoryTests.test_06_consolidation_process_death_and_restart_no_duplicates) ... ok\ntest_07_external_injection_cannot_promote_correct_or_act (test_memory.MemoryTests.test_07_external_injection_cannot_promote_correct_or_act) ... ok\ntest_acl_applies_to_search_history_and_vector_hits (test_memory.MemoryTests.test_acl_applies_to_search_history_and_vector_hits) ... ok\ntest_additive_schema_idempotent_and_foreign_database_refused (test_memory.MemoryTests.test_additive_schema_idempotent_and_foreign_database_refused) ... ok\ntest_compensating_undo_and_stale_write (test_memory.MemoryTests.test_compensating_undo_and_stale_write) ... ok\ntest_consolidation_pause_weekly_and_failure_budget (test_memory.MemoryTests.test_consolidation_pause_weekly_and_failure_budget) ... ok\ntest_full_observe_consolidate_verify_retrieve_apply_improve_cycle (test_memory.MemoryTests.test_full_observe_consolidate_verify_retrieve_apply_improve_cycle) ... ok\ntest_http_auth_proposals_and_mcp_end_to_end (test_memory.MemoryTests.test_http_auth_proposals_and_mcp_end_to_end) ... ok\ntest_idempotency_collision_and_atomic_rollback (test_memory.MemoryTests.test_idempotency_collision_and_atomic_rollback) ... ok\ntest_injected_indexer_idempotent_and_no_production_collection (test_memory.MemoryTests.test_injected_indexer_idempotent_and_no_production_collection) ... ok\ntest_mission_registry_restart_and_approval_boundary (test_memory.MemoryTests.test_mission_registry_restart_and_approval_boundary) ... ok\ntest_secret_ingress_rejected_without_persistence (test_memory.MemoryTests.test_secret_ingress_rejected_without_persistence) ... ok\ntest_validity_and_grounded_verification (test_memory.MemoryTests.test_validity_and_grounded_verification) ... ok\ntest_vector_stale_hits_cannot_resurrect_superseded_facts (test_memory.MemoryTests.test_vector_stale_hits_cannot_resurrect_superseded_facts) ... ok\ntest_wal_backup_is_restorable_and_cannot_overwrite (test_memory.MemoryTests.test_wal_backup_is_restorable_and_cannot_overwrite) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 5.550s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "test_store.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: ZIP numbered JSON, import deduplication, selected branch, search, durable note, validation, invalid import rollback.\n"
+    },
+    {
+      "command": [
+        "python3",
+        "test_spaces.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: separate counts/search/details, notes, move, invalid spaces, scoped imports, deduplication, ownership preserved on refresh.\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "test_conversations",
+        "test_voice_memory"
+      ],
+      "exit_code": 0,
+      "output": ".......\n----------------------------------------------------------------------\nRan 7 tests in 1.667s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "semantic",
+        "-p",
+        "test_search.py"
+      ],
+      "exit_code": 0,
+      "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.259s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_codex_worker.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS: warm process reuse, isolated ephemeral threads, concurrent response routing, final-message parsing, abort propagation without action replay, recovery and sandbox policy.\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_user_corrections.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS: current user evidence only, scoped correction/replacement/provenance, bounded recall, personal priority, no readings or invented HA IDs, truthful persistence receipts and complete correction forgetting.\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_home_assistant.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS: all-domain overview, brightness %, unavailable state, minimal attributes, flattened command fields, exact discovered targets, parameter validation, command readback, no automatic retries.\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_hybrid_brain.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS hybrid: both channels, public bypass, contextual local delegation, whole-batch guard before effects, public travel without HA, metering, cancellation and no silent fallback.\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.phase2.test_integration",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_actor_cannot_approve_own_action_even_with_role (memory_manager.phase2.test_integration.Integration.test_actor_cannot_approve_own_action_even_with_role) ... ok\ntest_additive_migration_verified_backup_and_idempotence (memory_manager.phase2.test_integration.Integration.test_additive_migration_verified_backup_and_idempotence) ... ok\ntest_ambiguous_delivery_not_replayed_without_reconciliation (memory_manager.phase2.test_integration.Integration.test_ambiguous_delivery_not_replayed_without_reconciliation) ... ok\ntest_approval_exact_hash_distinct_actor_and_once_only (memory_manager.phase2.test_integration.Integration.test_approval_exact_hash_distinct_actor_and_once_only) ... ok\ntest_bad_json_and_unknown_privilege_fields_rejected (memory_manager.phase2.test_integration.Integration.test_bad_json_and_unknown_privilege_fields_rejected) ... ok\ntest_bridge_async_native_contract_progress_restart_result (memory_manager.phase2.test_integration.Integration.test_bridge_async_native_contract_progress_restart_result) ... ok\ntest_bridge_deadline_and_unknown_upstream_are_fail_closed (memory_manager.phase2.test_integration.Integration.test_bridge_deadline_and_unknown_upstream_are_fail_closed) ... ok\ntest_context_and_pinned_digest_limits (memory_manager.phase2.test_integration.Integration.test_context_and_pinned_digest_limits) ... ok\ntest_e2e_simulated_hermes_local_reasoning_memory_experience (memory_manager.phase2.test_integration.Integration.test_e2e_simulated_hermes_local_reasoning_memory_experience) ... ok\ntest_embedding_model_identity_and_canonical_revalidation (memory_manager.phase2.test_integration.Integration.test_embedding_model_identity_and_canonical_revalidation) ... ok\ntest_extended_mcp_and_http_admission_sse_no_vocal_wait (memory_manager.phase2.test_integration.Integration.test_extended_mcp_and_http_admission_sse_no_vocal_wait) ... ok\ntest_extraction_exact_dedup_and_contradiction_warning (memory_manager.phase2.test_integration.Integration.test_extraction_exact_dedup_and_contradiction_warning) ... ok\ntest_global_monthly_budget_children_and_zero_remote (memory_manager.phase2.test_integration.Integration.test_global_monthly_budget_children_and_zero_remote) ... ok\ntest_mining_unknown_and_stale_telemetry_suspend (memory_manager.phase2.test_integration.Integration.test_mining_unknown_and_stale_telemetry_suspend) ... ok\ntest_missing_model_and_gpu_timeout_never_fallback (memory_manager.phase2.test_integration.Integration.test_missing_model_and_gpu_timeout_never_fallback) ... ok\ntest_model_native_and_compatible_real_http (memory_manager.phase2.test_integration.Integration.test_model_native_and_compatible_real_http) ... ok\ntest_native_admission_idempotency_header_and_cancel (memory_manager.phase2.test_integration.Integration.test_native_admission_idempotency_header_and_cancel) ... ok\ntest_native_failure_with_sensitive_text_still_closes_mission (memory_manager.phase2.test_integration.Integration.test_native_failure_with_sensitive_text_still_closes_mission) ... ok\ntest_native_thinking_override_is_explicit_and_typed (memory_manager.phase2.test_integration.Integration.test_native_thinking_override_is_explicit_and_typed) ... ok\ntest_pipeline_budget_bad_citation_and_retry (memory_manager.phase2.test_integration.Integration.test_pipeline_budget_bad_citation_and_retry) ... ok\ntest_pipeline_checkpoint_restart_idempotent_and_inferred (memory_manager.phase2.test_integration.Integration.test_pipeline_checkpoint_restart_idempotent_and_inferred) ... ok\ntest_pipeline_gpu_busy_is_resumable_without_attempt_spend (memory_manager.phase2.test_integration.Integration.test_pipeline_gpu_busy_is_resumable_without_attempt_spend) ... ok\ntest_pipeline_shared_budget_is_applied_before_inference (memory_manager.phase2.test_integration.Integration.test_pipeline_shared_budget_is_applied_before_inference) ... ok\ntest_private_transport_rejects_public_credentials_and_redirect (memory_manager.phase2.test_integration.Integration.test_private_transport_rejects_public_credentials_and_redirect) ... ok\ntest_prompt_injection_stays_data_and_not_permission (memory_manager.phase2.test_integration.Integration.test_prompt_injection_stays_data_and_not_permission) ... ok\ntest_real_os_sandbox_no_host_home_or_network (memory_manager.phase2.test_integration.Integration.test_real_os_sandbox_no_host_home_or_network) ... ok\ntest_real_pilot_adversarial_verdict_grants_no_authority (memory_manager.phase2.test_integration.Integration.test_real_pilot_adversarial_verdict_grants_no_authority) ... ok\ntest_reasoning_pause_resume_preserves_limits (memory_manager.phase2.test_integration.Integration.test_reasoning_pause_resume_preserves_limits) ... ok\ntest_skill_candidate_regression_publish_rollback_and_permissions (memory_manager.phase2.test_integration.Integration.test_skill_candidate_regression_publish_rollback_and_permissions) ... ok\ntest_tools_cannot_promote_or_act_physically_or_cross_users (memory_manager.phase2.test_integration.Integration.test_tools_cannot_promote_or_act_physically_or_cross_users) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 23.912s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/benchmark_local_models.py",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "output": "{\"mode\": \"simulated_harness\", \"passed\": true, \"gpu_benchmark_performed\": false}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.phase3.test_preparation",
+        "memory_manager.phase3.test_sizing",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_apply_refuses_expired_guard_before_mutation (memory_manager.phase3.test_preparation.HeldRamPreparation.test_apply_refuses_expired_guard_before_mutation) ... ok\ntest_cleanup_never_stops_unrecognized_guest (memory_manager.phase3.test_preparation.HeldRamPreparation.test_cleanup_never_stops_unrecognized_guest) ... ok\ntest_memory_margins_include_host_and_both_guests (memory_manager.phase3.test_preparation.HeldRamPreparation.test_memory_margins_include_host_and_both_guests) ... ok\ntest_reuse_requires_known_stopped_lab_and_same_resource_limits (memory_manager.phase3.test_preparation.HeldRamPreparation.test_reuse_requires_known_stopped_lab_and_same_resource_limits) ... ok\ntest_watch_restores_if_telemetry_fails (memory_manager.phase3.test_preparation.HeldRamPreparation.test_watch_restores_if_telemetry_fails) ... ok\ntest_64k_context_is_bounded (memory_manager.phase3.test_preparation.NativePreparation.test_64k_context_is_bounded) ... ok\ntest_active_api_listener_is_never_replaced (memory_manager.phase3.test_preparation.NativePreparation.test_active_api_listener_is_never_replaced) ... ok\ntest_native_sse_payload_events_and_named_events (memory_manager.phase3.test_preparation.NativePreparation.test_native_sse_payload_events_and_named_events) ... ok\ntest_advertised_tools_cannot_expand_host_mission_grants (memory_manager.phase3.test_preparation.Preparation.test_advertised_tools_cannot_expand_host_mission_grants) ... ok\ntest_candidate_assessment_and_lookup_survive_reopen_without_publication (memory_manager.phase3.test_preparation.Preparation.test_candidate_assessment_and_lookup_survive_reopen_without_publication) ... ok\ntest_expanded_benchmark_is_oracle_only (memory_manager.phase3.test_preparation.Preparation.test_expanded_benchmark_is_oracle_only) ... ok\ntest_fixture_correction_provenance_restart_idempotent (memory_manager.phase3.test_preparation.Preparation.test_fixture_correction_provenance_restart_idempotent) ... ok\ntest_gate_busy_and_stale_suspend_before_reservation (memory_manager.phase3.test_preparation.Preparation.test_gate_busy_and_stale_suspend_before_reservation) ... ok\ntest_gate_cancel_and_persistent_deadline (memory_manager.phase3.test_preparation.Preparation.test_gate_cancel_and_persistent_deadline) ... ok\ntest_gate_context_model_overrides_and_unknown_fields_denied (memory_manager.phase3.test_preparation.Preparation.test_gate_context_model_overrides_and_unknown_fields_denied) ... ok\ntest_gate_http_auth_and_buffered_sse (memory_manager.phase3.test_preparation.Preparation.test_gate_http_auth_and_buffered_sse) ... ok\ntest_gate_meters_and_normalizes_native_tool_calls (memory_manager.phase3.test_preparation.Preparation.test_gate_meters_and_normalizes_native_tool_calls) ... ok\ntest_gate_quota_survives_recreation (memory_manager.phase3.test_preparation.Preparation.test_gate_quota_survives_recreation) ... ok\ntest_gate_respects_lower_output_request (memory_manager.phase3.test_preparation.Preparation.test_gate_respects_lower_output_request) ... ok\ntest_gate_structured_response_is_validated_independently (memory_manager.phase3.test_preparation.Preparation.test_gate_structured_response_is_validated_independently) ... ok\ntest_gate_unknown_usage_remains_reserved (memory_manager.phase3.test_preparation.Preparation.test_gate_unknown_usage_remains_reserved) ... ok\ntest_gpu_pipeline_trial_replays_checkpoint_without_second_call (memory_manager.phase3.test_preparation.Preparation.test_gpu_pipeline_trial_replays_checkpoint_without_second_call) ... ok\ntest_legacy_zero_token_mission_cannot_silently_gain_local_budget (memory_manager.phase3.test_preparation.Preparation.test_legacy_zero_token_mission_cannot_silently_gain_local_budget) ... ok\ntest_mcp_host_capabilities_cannot_be_changed_in_request (memory_manager.phase3.test_preparation.Preparation.test_mcp_host_capabilities_cannot_be_changed_in_request) ... ok\ntest_mcp_rejections_are_typed_and_do_not_log_arguments (memory_manager.phase3.test_preparation.Preparation.test_mcp_rejections_are_typed_and_do_not_log_arguments) ... ok\ntest_model_tool_arguments_validated_independently_of_advertised_schema (memory_manager.phase3.test_preparation.Preparation.test_model_tool_arguments_validated_independently_of_advertised_schema) ... ok\ntest_native_runtime_creates_distinct_homes_before_launch (memory_manager.phase3.test_preparation.Preparation.test_native_runtime_creates_distinct_homes_before_launch) ... ok\ntest_pilot_model_selection_is_explicit_with_multiple_models (memory_manager.phase3.test_preparation.Preparation.test_pilot_model_selection_is_explicit_with_multiple_models) ... ok\ntest_prepare_rejects_paths_outside_laboratory (memory_manager.phase3.test_preparation.Preparation.test_prepare_rejects_paths_outside_laboratory) ... ok\ntest_profile_disables_competing_memory_and_hidden_calls (memory_manager.phase3.test_preparation.Preparation.test_profile_disables_competing_memory_and_hidden_calls) ... ok\ntest_qdrant_preflight_never_writes_and_checks_embedding_identity (memory_manager.phase3.test_preparation.Preparation.test_qdrant_preflight_never_writes_and_checks_embedding_identity) ... ok\ntest_qdrant_wrong_model_hits_never_reach_canonical_search (memory_manager.phase3.test_preparation.Preparation.test_qdrant_wrong_model_hits_never_reach_canonical_search) ... ok\ntest_skill_is_candidate_without_publication (memory_manager.phase3.test_preparation.Preparation.test_skill_is_candidate_without_publication) ... ok\ntest_skill_schema_rejects_permissions_and_model_added_commands (memory_manager.phase3.test_preparation.Preparation.test_skill_schema_rejects_permissions_and_model_added_commands) ... ok\ntest_tokens_distinct_private_and_low_privilege (memory_manager.phase3.test_preparation.Preparation.test_tokens_distinct_private_and_low_privilege) ... ok\ntest_trial_home_identity_and_invalid_sensor_values_fail_closed (memory_manager.phase3.test_preparation.Preparation.test_trial_home_identity_and_invalid_sensor_values_fail_closed) ... ok\ntest_unadvertised_physical_or_shell_calls_rejected_and_metered (memory_manager.phase3.test_preparation.Preparation.test_unadvertised_physical_or_shell_calls_rejected_and_metered) ... ok\ntest_insufficient_headroom_refuses_before_any_mutation (memory_manager.phase3.test_preparation.RamPreparation.test_insufficient_headroom_refuses_before_any_mutation) ... ok\ntest_read_only_never_changes_allocations (memory_manager.phase3.test_preparation.RamPreparation.test_read_only_never_changes_allocations) ... ok\ntest_unknown_guest_stat_is_not_available_memory (memory_manager.phase3.test_preparation.RamPreparation.test_unknown_guest_stat_is_not_available_memory) ... ok\ntest_absent_cgroup_or_counter_never_claims_zero_oom_or_peak (memory_manager.phase3.test_sizing.Observation.test_absent_cgroup_or_counter_never_claims_zero_oom_or_peak) ... ok\ntest_observer_artifact_is_private_and_never_overwritten (memory_manager.phase3.test_sizing.Observation.test_observer_artifact_is_private_and_never_overwritten) ... ok\ntest_qmp_reader_uses_only_negotiation_and_allocation_queries (memory_manager.phase3.test_sizing.Observation.test_qmp_reader_uses_only_negotiation_and_allocation_queries) ... ok\ntest_records_cgroup_peak_events_rss_and_individual_hwm (memory_manager.phase3.test_sizing.Observation.test_records_cgroup_peak_events_rss_and_individual_hwm) ... ok\ntest_budgets_preserve_host_reserve_and_include_virtualization (memory_manager.phase3.test_sizing.Sizing.test_budgets_preserve_host_reserve_and_include_virtualization) ... ok\ntest_one_low_capacity_sample_or_balloon_growth_blocks_admission (memory_manager.phase3.test_sizing.Sizing.test_one_low_capacity_sample_or_balloon_growth_blocks_admission) ... ok\ntest_only_sustained_fresh_admission_is_accepted (memory_manager.phase3.test_sizing.Sizing.test_only_sustained_fresh_admission_is_accepted) ... ok\ntest_reinflation_is_reserved_without_changing_other_guests (memory_manager.phase3.test_sizing.Sizing.test_reinflation_is_reserved_without_changing_other_guests) ... ok\ntest_swap_pressure_and_unknown_metrics_block_admission (memory_manager.phase3.test_sizing.Sizing.test_swap_pressure_and_unknown_metrics_block_admission) ... ok\n\n----------------------------------------------------------------------\nRan 49 tests in 9.039s\n\nOK\n"
+    }
+  ],
+  "phase": 3,
+  "passed": true
+}

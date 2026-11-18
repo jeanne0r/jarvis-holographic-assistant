@@ -1,0 +1,65 @@
+{
+  "mode": "offline-synthetic",
+  "gpu_calls": 0,
+  "windows_starts": 0,
+  "production_writes": 0,
+  "remote_api_cost_chf": 0,
+  "completed_pilots_replayed": false,
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.phase6c.test_readiness",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 1.146,
+      "stdout": "",
+      "stderr": "test_acl_and_model_permissions (memory_manager.phase6c.test_readiness.ProjectionTests.test_acl_and_model_permissions) ... ok\ntest_bounds_and_invalid_dates (memory_manager.phase6c.test_readiness.ProjectionTests.test_bounds_and_invalid_dates) ... ok\ntest_dates_history_and_no_writes (memory_manager.phase6c.test_readiness.ProjectionTests.test_dates_history_and_no_writes) ... ok\ntest_no_source_uri_or_revision_substitution (memory_manager.phase6c.test_readiness.ProjectionTests.test_no_source_uri_or_revision_substitution) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 1.049s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6c_readiness.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.421,
+      "stdout": "{\"passed\":true,\"session_rotation_logout_revocation\":true,\"hot_policy_fail_closed\":true,\"unchanged_valid_voice_identity\":true,\"canonical_dates_without_silent_rewrite\":true,\"history_only_with_create_and_approve_denied\":true,\"policy_request_average_ms\":4.862,\"production_writes\":0,\"gpu_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6_ui.cjs",
+        "--read-only"
+      ],
+      "exit_code": 0,
+      "seconds": 5.948,
+      "stdout": "PASS history-only panel; UI Chromium desktop/mobile: existing holographic frontend, login, async synthetic mission, source text/XSS rejection, independent approval display, no overflow, microphone remains untouched. All APIs simulated locally.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_speech.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.201,
+      "stdout": "PASS: speech-only requests, exact spoken text, no history/tools/key exposure, WAV bounds, session isolation, separate metering, unknown costs on provider failure.\nPASS: incremental PCM speech, arbitrary SSE boundaries, final usage metering and no WAV wait.\nPASS: interrupted synthesis cancels the provider request and keeps incomplete metering honest.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.78,
+      "stdout": "PASS phase6: real local HTTP/SQLite admission, idempotence, events, controller restart, queued persistence, cancel; server auth/ACL/physical and approval denial; flag rollback and durable notification cursor. No Hermes/GPU/production.\n",
+      "stderr": ""
+    }
+  ]
+}

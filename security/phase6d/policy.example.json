@@ -1,0 +1,6 @@
+{
+  "origin": "https://jarvis.invalid",
+  "credentials": [],
+  "grants": [["human-example", ["user"]]],
+  "roles": [["human-example", ["voice", "memory.read", "usage.read", "missions.read"]]]
+}

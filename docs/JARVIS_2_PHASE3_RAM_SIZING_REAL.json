@@ -1,0 +1,329 @@
+{
+  "kind": "read_only_sizing_observations_not_a_3gib_trial",
+  "observed_at": 1794670846.105564,
+  "vm102": {
+    "name": "jarvis-lab",
+    "memory": "4096",
+    "balloon": 0,
+    "onboot": 0,
+    "tags": "codex-phase3-20261114t074643z",
+    "scsi0": "hdd:102/vm-102-disk-0.qcow2,discard=on,size=24G",
+    "sockets": 1,
+    "cores": 2,
+    "hotplug": null,
+    "machine": null,
+    "hugepages": null,
+    "hostpci0": null,
+    "numa": null
+  },
+  "vm102_status": "stopped",
+  "config_sha256_after": {
+    "102": "43641323c37e8e3c5988c9c5de3a8c5c13a11f01a0596418cd1a4de05f0d2d50",
+    "103": "32e357ccee9cb6815cef5fd68cbc81c20bd780938c0626ac3e43ca2e6516fa1f",
+    "201": "973c988071dd278a2ef72d6bbc510713c3f0cd6aac457cae374ad4447523ff93"
+  },
+  "config_102_unchanged_during_audit": true,
+  "config_103_201_match_verified_restore": true,
+  "rrd_query": {
+    "timeframe": "day",
+    "cf": "MAX",
+    "source": "/nodes/pve/qemu/102/rrddata",
+    "rows_total": 1440,
+    "step_seconds": 60
+  },
+  "rrd_vm102_near_successful_pilot": [
+    {
+      "cpu": 0.136033246593719,
+      "disk": 0,
+      "diskread": 0,
+      "diskwrite": 285108.906666667,
+      "maxcpu": 2,
+      "maxdisk": 25769803776,
+      "maxmem": 4294967296,
+      "mem": 2754862148.26667,
+      "memhost": 2754862148.26667,
+      "netin": 2657.41666666667,
+      "netout": 1031.50666666667,
+      "pressurecpufull": 0,
+      "pressurecpusome": 0,
+      "pressureiofull": 9.29266666666666,
+      "pressureiosome": 9.29266666666666,
+      "pressurememoryfull": 0,
+      "pressurememorysome": 0,
+      "time": 1794643860
+    },
+    {
+      "cpu": 0.00397771535011136,
+      "disk": 0,
+      "diskread": 0,
+      "diskwrite": 36795.7333333333,
+      "maxcpu": 2,
+      "maxdisk": 25769803776,
+      "maxmem": 4294967296,
+      "mem": 2783294668.8,
+      "memhost": 2783294668.8,
+      "netin": 1785.84333333333,
+      "netout": 31.7433333333333,
+      "pressurecpufull": 0,
+      "pressurecpusome": 0,
+      "pressureiofull": 1.35033333333333,
+      "pressureiosome": 1.35033333333333,
+      "pressurememoryfull": 0,
+      "pressurememorysome": 0,
+      "time": 1794643920
+    },
+    {
+      "cpu": 0.137765650541702,
+      "disk": 0,
+      "diskread": 0,
+      "diskwrite": 271892.48,
+      "maxcpu": 2,
+      "maxdisk": 25769803776,
+      "maxmem": 4294967296,
+      "mem": 2719911662.93333,
+      "memhost": 2719911662.93333,
+      "netin": 2255.52666666667,
+      "netout": 1390.56666666667,
+      "pressurecpufull": 0,
+      "pressurecpusome": 0,
+      "pressureiofull": 7.78233333333333,
+      "pressureiosome": 7.80766666666667,
+      "pressurememoryfull": 0,
+      "pressurememorysome": 0,
+      "time": 1794643980
+    },
+    {
+      "cpu": 0.0168960263530037,
+      "disk": 0,
+      "diskread": 477.866666666667,
+      "diskwrite": 78793.3866666667,
+      "maxcpu": 2,
+      "maxdisk": 25769803776,
+      "maxmem": 4294967296,
+      "mem": 2586522419.2,
+      "memhost": 2586522419.2,
+      "netin": 1808.41333333333,
+      "netout": 1171.17,
+      "pressurecpufull": 0,
+      "pressurecpusome": 0,
+      "pressureiofull": 2.58033333333333,
+      "pressureiosome": 2.58333333333333,
+      "pressurememoryfull": 0,
+      "pressurememorysome": 0,
+      "time": 1794644040
+    },
+    {
+      "cpu": 0.00441429983716965,
+      "disk": 0,
+      "diskread": 0,
+      "diskwrite": 26077.8666666667,
+      "maxcpu": 2,
+      "maxdisk": 25769803776,
+      "maxmem": 4294967296,
+      "mem": 2584065501.86667,
+      "memhost": 2584065501.86667,
+      "netin": 1695.67333333333,
+      "netout": 152.346666666667,
+      "pressurecpufull": 0,
+      "pressurecpusome": 0,
+      "pressureiofull": 1.194,
+      "pressureiosome": 1.194,
+      "pressurememoryfull": 0,
+      "pressurememorysome": 0,
+      "time": 1794644100
+    },
+    {
+      "cpu": 0.0102762133741854,
+      "disk": 0,
+      "diskread": 0,
+      "diskwrite": 13967.36,
+      "maxcpu": 2,
+      "maxdisk": 25769803776,
+      "maxmem": 4294967296,
+      "mem": 2584026726.4,
+      "memhost": 2584026726.4,
+      "netin": 1364.71,
+      "netout": 261.976666666667,
+      "pressurecpufull": 0,
+      "pressurecpusome": 0,
+      "pressureiofull": 0.113666666666667,
+      "pressureiosome": 0.113666666666667,
+      "pressurememoryfull": 0,
+      "pressurememorysome": 0,
+      "time": 1794644160
+    }
+  ],
+  "rrd_day_max_memhost_bytes": 2783294668.8,
+  "rrd_near_pilot_max_memhost_bytes": 2783294668.8,
+  "metric_definition": {
+    "pve_version": "9.2.25",
+    "source": "PVE/QemuServer.pm:2603 and PVE/CGroup.pm:get_memory_stat",
+    "formula": "memory.current - memory.stat[file]",
+    "is_hermes_rss": false,
+    "is_instantaneous_peak": false
+  },
+  "hermes_rss_peak_bytes": null,
+  "hermes_cgroup_peak_bytes": null,
+  "hermes_oom_kill_events": null,
+  "guest_kernel_oom_events": null,
+  "host_vm102_cgroup_exists": false,
+  "host_kernel_journal": {
+    "host_kernel_log_read_exit_code": 0,
+    "host_kernel_log_records": 29,
+    "host_kernel_oom_matches": 0
+  },
+  "host_kernel_journal_window_epoch": [
+    1794642300,
+    1794644700
+  ],
+  "guest_journal_inspected": false,
+  "host_memory_sample": {
+    "MemTotal": 16605601792,
+    "MemAvailable": 4535529472,
+    "SwapTotal": 8589930496,
+    "SwapFree": 6115237888
+  },
+  "host_samples": [
+    {
+      "at": 1794671002.1986861,
+      "MemAvailable": 4260745216,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671004.1989424,
+      "MemAvailable": 4291043328,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671006.1992,
+      "MemAvailable": 4315795456,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671008.1994352,
+      "MemAvailable": 4333142016,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671010.1997793,
+      "MemAvailable": 4366131200,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671012.2000756,
+      "MemAvailable": 4388491264,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671014.2002861,
+      "MemAvailable": 4414550016,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671016.200522,
+      "MemAvailable": 4427096064,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671018.200821,
+      "MemAvailable": 4441026560,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671020.2011602,
+      "MemAvailable": 4448739328,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671022.2014256,
+      "MemAvailable": 4459352064,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671024.201725,
+      "MemAvailable": 4468879360,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671026.201984,
+      "MemAvailable": 4471894016,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671028.2021863,
+      "MemAvailable": 4475478016,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    },
+    {
+      "at": 1794671030.202806,
+      "MemAvailable": 4477018112,
+      "SwapTotal": 8589930496,
+      "SwapFree": 6115196928
+    }
+  ],
+  "current_guest_allocations": {
+    "103": {
+      "name": "Codex-cli",
+      "maximum_mib": 4096,
+      "balloon_minimum_mib": null,
+      "available_bytes": 2795900928,
+      "shares": null,
+      "actual_bytes": 4294967296
+    },
+    "201": {
+      "name": "tailscale",
+      "maximum_mib": 2048,
+      "balloon_minimum_mib": 1024,
+      "available_bytes": 1651367936,
+      "shares": null,
+      "actual_bytes": 2147483648
+    }
+  },
+  "possible_balloon_reinflation_bytes": 0,
+  "planning_scenarios": [
+    {
+      "vm_mib": 3072,
+      "runtime_max_mib": 2048,
+      "os_budget_mib": 512,
+      "guest_reserve_mib": 512,
+      "qemu_allowance_mib": 256,
+      "host_reserve_mib": 1024,
+      "balloon_growth_mib": 0,
+      "host_required_bytes": 4563402752,
+      "runtime_limit_previously_exercised": true,
+      "target_vm_size_tested": false
+    },
+    {
+      "vm_mib": 2048,
+      "runtime_max_mib": 1024,
+      "os_budget_mib": 512,
+      "guest_reserve_mib": 512,
+      "qemu_allowance_mib": 256,
+      "host_reserve_mib": 1024,
+      "balloon_growth_mib": 0,
+      "host_required_bytes": 3489660928,
+      "runtime_limit_previously_exercised": false,
+      "target_vm_size_tested": false
+    }
+  ],
+  "minimum_observed_host_available_bytes": 4260745216,
+  "maximum_observed_host_available_bytes": 4477018112,
+  "authorization_to_resize_or_start": false,
+  "vm_boots": 0,
+  "services_changed": 0,
+  "remote_api_cost_chf": 0
+}

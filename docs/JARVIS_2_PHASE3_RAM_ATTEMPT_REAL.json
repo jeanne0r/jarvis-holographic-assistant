@@ -1,0 +1,71 @@
+{
+  "observed_at": 1794639081.0614727,
+  "backup_path": "/mnt/hdd/jarvis-phase3/ram-20261114T064838Z",
+  "backup_and_restore": {
+    "103": {
+      "backup_sha256": "32e357ccee9cb6815cef5fd68cbc81c20bd780938c0626ac3e43ca2e6516fa1f",
+      "backup_verified": true,
+      "current_sha256": "32e357ccee9cb6815cef5fd68cbc81c20bd780938c0626ac3e43ca2e6516fa1f",
+      "configuration_exactly_restored": true
+    },
+    "201": {
+      "backup_sha256": "973c988071dd278a2ef72d6bbc510713c3f0cd6aac457cae374ad4447523ff93",
+      "backup_verified": true,
+      "current_sha256": "973c988071dd278a2ef72d6bbc510713c3f0cd6aac457cae374ad4447523ff93",
+      "configuration_exactly_restored": true
+    }
+  },
+  "ballooning_target_percent": 80,
+  "host_memory_after": {
+    "available": 4869423104,
+    "free": 3810197504,
+    "total": 16605601792,
+    "used": 11736178688
+  },
+  "laboratory_created": false,
+  "initial": {
+    "host_available_bytes": 3404845056,
+    "guests": {
+      "103": {
+        "name": "Codex-cli",
+        "maximum_mib": 4096,
+        "balloon_minimum_mib": null,
+        "available_bytes": 2742706176,
+        "actual_bytes": 4294967296
+      },
+      "201": {
+        "name": "tailscale",
+        "maximum_mib": 2048,
+        "balloon_minimum_mib": 1024,
+        "available_bytes": 1649471488,
+        "actual_bytes": 2147483648
+      }
+    }
+  },
+  "approved": true,
+  "requested_targets_mib": {
+    "103": 2816,
+    "201": 1024
+  },
+  "required_host_available_bytes": 5368709120,
+  "outcome": "capacity_gate_not_reached_automatic_rollback",
+  "observations_during_attempt": [
+    {
+      "host_available_bytes": 4813725696,
+      "103_actual_bytes": 3372220416,
+      "201_actual_bytes": 1283457024
+    },
+    {
+      "host_available_bytes": 4687622144
+    }
+  ],
+  "worker_exit_code": 1,
+  "worker_error": "Host did not reach 5 GiB available; laboratory must not start",
+  "health_after": {
+    "gateway_http_status": 200,
+    "tailscale_guest_ssh_reachable": true,
+    "tailscaled_daemon_independently_verified": false
+  },
+  "no_guest_reboot": true,
+  "hermes_installed": false
+}

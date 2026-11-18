@@ -1,0 +1,50 @@
+{
+  "origin": "user supplied administrator installation output; service state and listeners independently observed",
+  "recorded_at": "2026-11-15T15:49:05.038043+00:00",
+  "passed": true,
+  "unit": "jarvis-hermes-pilot-system.service",
+  "private_url": "http://127.0.0.1:8796",
+  "effective_bpf_hooks": [
+    "cgroup_device",
+    "cgroup_inet_egress",
+    "cgroup_inet_ingress"
+  ],
+  "network": {
+    "loopback": {
+      "connected": true,
+      "local_port": 41127
+    },
+    "non_loopback": {
+      "connected": false,
+      "errno": null,
+      "timed_out": true,
+      "local_port": 38643
+    }
+  },
+  "controls_before": true,
+  "controls_after": true,
+  "receiver_witness": {
+    "loopback_seen": true,
+    "non_loopback_seen": false
+  },
+  "auth_401": true,
+  "history_200": true,
+  "cross_space_403": true,
+  "legacy_route_403": true,
+  "dispatch_enabled": false,
+  "runtime_uid_nonroot": true,
+  "gateway_secrets_hidden": true,
+  "autostart": false,
+  "new_missions": 0,
+  "gateway_pid_unchanged": true,
+  "observed_state": "active/running",
+  "observed_runtime_user": "jarvis-pilot",
+  "observed_main_pid": 2488260,
+  "gateway_main_pid": 2033987,
+  "observed_listeners": [
+    "127.0.0.1:8796",
+    "127.0.0.1:8797"
+  ],
+  "independent_health_status": 200,
+  "independent_anonymous_status": 401
+}

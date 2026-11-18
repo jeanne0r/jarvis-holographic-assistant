@@ -1,0 +1,448 @@
+async function handleApi(req, res, url) {
+  if (req.method === "GET" && url.pathname === "/api/health") {
+    return sendJson(res, 200, { ok: true, codexBin: CODEX_BIN, codexSandbox: CODEX_SANDBOX, workspaceRoot: WORKSPACE_ROOT });
+  }
+
+  if (url.pathname.startsWith("/api/s9/") && !requestIdentity.has(req)) {
+    return sendJson(res, 401, { error: "Unauthorized" });
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/s9/control") {
+    return sendJson(res, 200, {
+      enabled: S9_CONTROL_ENABLED,
+      host: S9_HOST,
+      user: S9_USER,
+      passwordConfigured: Boolean(S9_PASSWORD),
+      targetEntity: S9_POWER_TARGET_ENTITY,
+      min: S9_POWER_MIN,
+      max: S9_POWER_MAX,
+      lastRequestedPower: s9LastRequestedPower,
+      lastAppliedPower: s9LastAppliedPower,
+    });
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/s9/power") {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      return sendJson(res, 200, await setS9PowerTarget(body.power));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (url.pathname.startsWith("/api/icloud/") && !requestIdentity.has(req)) {
+    return sendJson(res, 401, { error: "Unauthorized" });
+  }
+
+
+  if (req.method === "GET" && url.pathname === "/api/magic-mirror") {
+    try {
+      return sendJson(res, 200, await buildMagicMirrorReport());
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (url.pathname === "/api/mirror/apple") {
+    if (req.method === "GET") {
+      const data = await readMirrorApple();
+      return sendJson(res, 200, data ? { ready: true, ...data } : { ready: false });
+    }
+    if (req.method === "POST") {
+      if (!["127.0.0.1", "::1", "::ffff:127.0.0.1"].includes(req.socket.remoteAddress)) {
+        return sendJson(res, 401, { error: "Synchronisation refusée" });
+      }
+      try {
+        const result = await writeMirrorApple(JSON.parse(await readBody(req, 2_000_000) || "{}"));
+        return sendJson(res, 200, result);
+      } catch (error) {
+        console.warn(`Mirror Apple sync rejected: ${error.message}`);
+        return sendJson(res, 400, { error: error.message });
+      }
+    }
+    return sendJson(res, 405, { error: "Méthode refusée" });
+  }
+
+  if (url.pathname === "/api/mirror/tasks") {
+    try {
+      if (req.method === "GET") return sendJson(res, 200, { tasks: await readMirrorTasks() });
+      const origin = req.headers.origin;
+      if (origin && new URL(origin).host !== req.headers.host) return sendJson(res, 403, { error: "Origine refusée" });
+      if (req.method === "POST") {
+        const body = JSON.parse(await readBody(req, 8192) || "{}");
+        const title = String(body.title || "").trim();
+        const person = String(body.person || "commun");
+        const due = String(body.due || "");
+        if (!title || title.length > 180 || !["commun", "user", "amelie", "malik", "theo"].includes(person) || (due && !/^\d{4}-\d{2}-\d{2}$/.test(due))) {
+          return sendJson(res, 400, { error: "Rappel invalide" });
+        }
+        const task = await changeMirrorTasks((tasks) => {
+          const item = { id: crypto.randomUUID(), title, person, due: due || null, done: false, createdAt: new Date().toISOString() };
+          tasks.push(item);
+          return item;
+        });
+        return sendJson(res, 201, { task });
+      }
+      if (req.method === "PATCH" || req.method === "DELETE") {
+        const body = JSON.parse(await readBody(req, 8192) || "{}");
+        const id = String(body.id || "");
+        const task = await changeMirrorTasks((tasks) => {
+          const index = tasks.findIndex((item) => item.id === id);
+          if (index < 0) throw new Error("Rappel introuvable");
+          if (req.method === "DELETE") return tasks.splice(index, 1)[0];
+          if (typeof body.done !== "boolean") throw new Error("État invalide");
+          tasks[index].done = body.done;
+          tasks[index].completedAt = body.done ? new Date().toISOString() : null;
+          return tasks[index];
+        });
+        return sendJson(res, 200, { task });
+      }
+      return sendJson(res, 405, { error: "Méthode refusée" });
+    } catch (error) {
+      return sendJson(res, /invalide|introuvable/i.test(error.message) ? 400 : 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/mining-report") {
+    try {
+      return sendJson(res, 200, await buildMiningReport());
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/home-report") {
+    try {
+      const days = Math.max(1, Math.min(31, Number(url.searchParams.get("days") || 7)));
+      return sendJson(res, 200, await buildHomeReport({ days }));
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/fridge/stock") {
+    try {
+      const store = await readFridgeStore();
+      const location = normalizeFridgeLocation(url.searchParams.get("location") || "frigo_cuisine");
+      const active = fridgeActiveItems(store, location)
+        .sort((a, b) => String(a.expiresAt || "9999-12-31").localeCompare(String(b.expiresAt || "9999-12-31")));
+      return sendJson(res, 200, {
+        items: active,
+        summary: fridgeSummary(store, location),
+        location: FRIDGE_LOCATIONS[location],
+        locations: Object.values(FRIDGE_LOCATIONS),
+        recentEvents: store.events.filter((event) => normalizeFridgeLocation(event.location || "frigo_cuisine") === location).slice(-20).reverse(),
+      });
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  const productMatch = url.pathname.match(/^\/api\/fridge\/product\/([^/]+)$/);
+  if (req.method === "GET" && productMatch) {
+    try {
+      return sendJson(res, 200, { product: await lookupFridgeProduct(decodeURIComponent(productMatch[1])) });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/fridge/vision") {
+    try {
+      const body = JSON.parse(await readBody(req, 8_000_000) || "{}");
+      return sendJson(res, 200, { label: await analyzeFridgeLabelWithGemini(body.image || "") });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/fridge/barcode") {
+    try {
+      const body = JSON.parse(await readBody(req, 8_000_000) || "{}");
+      return sendJson(res, 200, await decodeFridgeBarcodeServer(body.image || ""));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/fridge/date") {
+    try {
+      const body = JSON.parse(await readBody(req, 8_000_000) || "{}");
+      return sendJson(res, 200, await decodeFridgeDateServer(body.image || ""));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/fridge/name") {
+    try {
+      const body = JSON.parse(await readBody(req, 8_000_000) || "{}");
+      return sendJson(res, 200, await decodeFridgeProductNameServer(body.image || ""));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/fridge/items") {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      return sendJson(res, 201, await addFridgeItem(body));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  const fridgeUpdateMatch = url.pathname.match(/^\/api\/fridge\/items\/([^/]+)$/);
+  if ((req.method === "PATCH" || req.method === "PUT") && fridgeUpdateMatch) {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      return sendJson(res, 200, await updateFridgeItem(decodeURIComponent(fridgeUpdateMatch[1]), body));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  const fridgeRemoveMatch = url.pathname.match(/^\/api\/fridge\/items\/([^/]+)\/remove$/);
+  if (req.method === "POST" && fridgeRemoveMatch) {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      return sendJson(res, 200, await removeFridgeItem(decodeURIComponent(fridgeRemoveMatch[1]), body));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/fridge/remove-by-barcode") {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      return sendJson(res, 200, await removeFridgeItem("", body));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/dosing-calibration/run") {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      return sendJson(res, 200, await triggerEspDosingCalibration(body));
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/dosing-calibration/latest") {
+    try {
+      const entries = await readDosingCalibrations();
+      return sendJson(res, 200, { calibrations: entries.slice(-12).reverse() });
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/energy-live") {
+    try {
+      return sendJson(res, 200, await buildEnergyLive());
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/nilm-report") {
+    try {
+      const days = Math.max(1, Math.min(60, Number(url.searchParams.get("days") || 30)));
+      const period = url.searchParams.get("period") || "rolling";
+      return sendJson(res, 200, await buildNilmReport({ days, period }));
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/icloud/status") {
+    return sendJson(res, 200, iCloudStatus());
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/icloud/calendars") {
+    try {
+      return sendJson(res, 200, { calendars: await listICloudCalendars() });
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/icloud/events") {
+    try {
+      return sendJson(res, 200, await listICloudEvents({
+        days: url.searchParams.get("days") || 30,
+        calendar: url.searchParams.get("calendar"),
+        calendarName: url.searchParams.get("calendarName"),
+      }));
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/icloud/addressbooks") {
+    try {
+      return sendJson(res, 200, { addressBooks: await listICloudAddressBooks() });
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/icloud/contacts") {
+    try {
+      return sendJson(res, 200, await listICloudContacts({
+        addressBook: url.searchParams.get("addressBook"),
+        addressBookName: url.searchParams.get("addressBookName"),
+        q: url.searchParams.get("q"),
+        limit: url.searchParams.get("limit") || 100,
+      }));
+    } catch (error) {
+      return sendJson(res, 500, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/projects") {
+    return sendJson(res, 200, { projects: await listProjects() });
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/tree") {
+    try {
+      const { name, dir } = safeProjectDir(url.searchParams.get("project") || "default");
+      await mkdir(dir, { recursive: true });
+      return sendJson(res, 200, { project: name, tree: await readTree(dir) });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/chat") {
+    try {
+      const project = url.searchParams.get("project") || "default";
+      return sendJson(res, 200, { project: safeProjectDir(project).name, messages: await loadChat(project) });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "DELETE" && url.pathname === "/api/chat") {
+    try {
+      const project = url.searchParams.get("project") || "default";
+      const { name } = safeProjectDir(project);
+      chats.set(name, []);
+      await saveChat(name);
+      return sendJson(res, 200, { project: name, messages: [] });
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/runs") {
+    const values = [...runs.values()].map(({ events, ...run }) => run);
+    values.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return sendJson(res, 200, { runs: values });
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/runs") {
+    try {
+      const body = JSON.parse(await readBody(req) || "{}");
+      const run = await startRun(body);
+      const { events, ...summary } = run;
+      return sendJson(res, 201, summary);
+    } catch (error) {
+      return sendJson(res, 400, { error: error.message });
+    }
+  }
+
+  const runMatch = url.pathname.match(/^\/api\/runs\/([^/]+)$/);
+  if (req.method === "GET" && runMatch) {
+    const run = runs.get(runMatch[1]);
+    if (!run) return sendJson(res, 404, { error: "Run not found" });
+    return sendJson(res, 200, run);
+  }
+
+  const eventsMatch = url.pathname.match(/^\/api\/runs\/([^/]+)\/events$/);
+  if (req.method === "GET" && eventsMatch) {
+    const runId = eventsMatch[1];
+    const run = runs.get(runId);
+    if (!run) return sendJson(res, 404, { error: "Run not found" });
+
+    res.writeHead(200, {
+      "content-type": "text/event-stream; charset=utf-8",
+      "cache-control": "no-store",
+      connection: "keep-alive",
+    });
+    for (const payload of run.events) {
+      res.write(`data: ${JSON.stringify(payload)}\n\n`);
+    }
+    if (run.status !== "running") return res.end();
+
+    const set = clients.get(runId) || new Set();
+    set.add(res);
+    clients.set(runId, set);
+    req.on("close", () => set.delete(res));
+    return;
+  }
+
+  sendJson(res, 404, { error: "Not found" });
+}
+
+async function serveStatic(res, file) {
+  const resolved = path.resolve("/home/user/gateway/public", file);
+  if (!resolved.startsWith("/home/user/gateway/public")) {
+    res.writeHead(403);
+    return res.end("Forbidden");
+  }
+  if (!existsSync(resolved)) {
+    res.writeHead(404);
+    return res.end("Not found");
+  }
+  const body = await readFile(resolved);
+  const type = resolved.endsWith(".wasm")
+    ? "application/wasm"
+    : resolved.endsWith(".tflite")
+      ? "application/octet-stream"
+      : resolved.endsWith(".css")
+    ? "text/css"
+    : resolved.endsWith(".js")
+      ? "text/javascript"
+      : resolved.endsWith(".png")
+        ? "image/png"
+        : resolved.endsWith(".zip")
+          ? "application/zip"
+          : resolved.endsWith(".pdf")
+            ? "application/pdf"
+            : "text/html";
+  res.writeHead(200, {
+    "content-type": type.startsWith("text/") ? `${type}; charset=utf-8` : type,
+    ...(resolved.endsWith(".zip") ? {"content-disposition": `attachment; filename="${path.basename(resolved)}"`} : {}),
+    "cache-control": "no-store, max-age=0",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "GET, OPTIONS",
+    "access-control-allow-headers": "content-type, authorization",
+  });
+  res.end(body);
+}
+
+async function dispatchRequest(req, res, protocol = "http") {
+  try {
+    const url = new URL(req.url, `${protocol}://${req.headers.host}`);
+    if (url.pathname.startsWith('/api/solana-paper/')) return handlePaper(req, res, url);
+    if (url.pathname === '/solana-paper') { res.writeHead(302, { location: '/solana-paper/' }); return res.end(); }
+    if (url.pathname === '/solana-paper/') return serveStatic(res, 'solana-paper/index.html');
+    if (url.pathname.startsWith("/api/jarvis/")) return handleJarvis(req, res, url);
+    if (url.pathname === "/miroir") { res.writeHead(302, { location: "/miroir/" }); return res.end(); }
+    if (url.pathname === "/miroir/") return serveStatic(res, "miroir/index.html");
+    if (url.pathname === "/jarvis") { res.writeHead(302, { location: "/jarvis/" }); return res.end(); }
+    if (url.pathname === "/jarvis/") return serveStatic(res, "jarvis/index.html");
+    if (url.pathname.startsWith("/api/astro/")) return handleAstro(req, res, url);
+    if (url.pathname === "/astro") { res.writeHead(302, { location: "/astro/" }); return res.end(); }
+    if (url.pathname === "/astro/") return serveStatic(res, "astro/index.html");
+    if (url.pathname.startsWith("/api/german/")) return handleGerman(req, res, url);
+    if (url.pathname.startsWith("/api/")) return handleApi(req, res, url);
+    if (url.pathname === "/") return serveStatic(res, "index.html");
+    return serveStatic(res, url.pathname.slice(1));
+  } catch (error) {
+    sendJson(res, 500, { error: error.message });
+  }
+}

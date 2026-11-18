@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "scope": "isolated-only",
+  "python_regressions": {
+    "count": 38,
+    "modules": [
+      "memory_manager.tests.test_memory",
+      "memory_manager.phase4.test_windows",
+      "memory_manager.phase6.test_interactive"
+    ]
+  },
+  "python_new": {
+    "count": 13,
+    "modules": [
+      "memory_manager.phase6.test_operational",
+      "memory_manager.phase6.test_operational_package",
+      "memory_manager.phase6.test_operational_runtime"
+    ]
+  },
+  "node_http_assertions": {
+    "existing": 42,
+    "new": 32
+  },
+  "browser": {
+    "desktop_and_mobile": [
+      1440,
+      390
+    ],
+    "synthetic_admissions": 4,
+    "synthetic_cancellations": 4,
+    "packaged_runtime_http_simulator": {
+      "one_mission": true,
+      "memory_mcp_http": true,
+      "model_gate": true,
+      "persistent_result": true,
+      "canonical_provenance_rendered": true
+    }
+  },
+  "candidate": {
+    "path": "data/operational/final",
+    "manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+    "files": 67,
+    "node18_syntax_verified": true
+  },
+  "limitations": [
+    "Hermes and Ollama HTTP providers simulated; no new native Windows or RTX run",
+    "Actual audio and physical mobile device not tested",
+    "Legacy global gateway authorization remains outside this patch"
+  ],
+  "production_modified": false,
+  "production_pids": {
+    "gateway": 2516015,
+    "pilot": 2513403
+  },
+  "windows_started": false,
+  "real_gpu_calls": 0,
+  "new_paid_api_calls": 0
+}

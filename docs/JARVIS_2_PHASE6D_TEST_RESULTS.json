@@ -1,0 +1,143 @@
+{
+  "rechecked_failed_commands": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.phase6d.test_security",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 2.502,
+      "stdout": "",
+      "stderr": "test_authenticated_http_evidence_and_heartbeat (memory_manager.phase6d.test_security.SecurityTests.test_authenticated_http_evidence_and_heartbeat) ... ok\ntest_forged_receipt_wrong_mission_and_model_authority_denied (memory_manager.phase6d.test_security.SecurityTests.test_forged_receipt_wrong_mission_and_model_authority_denied) ... ok\ntest_heartbeat_expiry_replay_busy_and_restart (memory_manager.phase6d.test_security.SecurityTests.test_heartbeat_expiry_replay_busy_and_restart) ... ok\ntest_real_authorized_history_receipt_and_restart (memory_manager.phase6d.test_security.SecurityTests.test_real_authorized_history_receipt_and_restart) ... ok\ntest_search_receipt_revision_binding (memory_manager.phase6d.test_security.SecurityTests.test_search_receipt_revision_binding) ... ok\ntest_verified_backup_restore_and_idempotence (memory_manager.phase6d.test_security.SecurityTests.test_verified_backup_restore_and_idempotence) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 2.406s\n\nOK\n"
+    }
+  ],
+  "mode": "offline-synthetic-and-source-copy",
+  "passed": true,
+  "production_writes": 0,
+  "physical_actions": 0,
+  "real_shell_handlers_executed": 0,
+  "gpu_calls": 0,
+  "remote_api_cost_chf": 0,
+  "historical_pilots_replayed": false,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/prepare_phase6d.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.422,
+      "stdout": "{\"route_method_pairs\": 100, \"lots\": 4, \"forward_reverse\": true, \"production_writes\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_inventory.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.142,
+      "stdout": "{\"passed\":true,\"source_hashes_verified\":5,\"literal_route_conditions_classified\":60,\"dynamic_route_families_explicit\":true,\"unclassified_routes_default_denied\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_security.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.339,
+      "stdout": "{\"passed\":true,\"route_method_pairs\":100,\"protected_pairs_exercised\":96,\"physical_and_shell_handlers_called\":0,\"real_provider_calls\":0,\"voice_cross_subject_denied\":true,\"open_stream_revoked\":true,\"cookie_scope_migration\":true,\"private_mount_revocation_fail_closed\":true,\"static_symlink_and_prefix_denied\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_gateway_copy.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.185,
+      "stdout": "{\"passed\":true,\"actual_candidate_gateway_dispatch\":true,\"shell_calls_real\":0,\"physical_calls_real\":0,\"stub_shell_calls\":1,\"stub_physical_calls\":2,\"ordinary_hybrid_dispatch_preserved\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_backend.mjs",
+        "--minimal"
+      ],
+      "exit_code": 0,
+      "seconds": 0.149,
+      "stdout": "{\"passed\":true,\"actual_prepared_handler_body\":true,\"production_module_imported\":false,\"providers_simulated\":true,\"same_space_voice_theft_denied\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_auth_ui.cjs"
+      ],
+      "exit_code": 0,
+      "seconds": 1.671,
+      "stdout": "{\"passed\":true,\"standalone_auth_without_hermes\":true,\"desktop_mobile\":true,\"secret_not_persisted\":true,\"real_provider_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6_ui.cjs",
+        "--read-only",
+        "--phase6d"
+      ],
+      "exit_code": 0,
+      "seconds": 6.187,
+      "stdout": "PASS history-only panel; UI Chromium desktop/mobile: existing holographic frontend, login, async synthetic mission, source text/XSS rejection, independent approval display, no overflow, microphone remains untouched. All APIs simulated locally.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.phase6d.test_security",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 2.759,
+      "stdout": "",
+      "stderr": "test_authenticated_http_evidence_and_heartbeat (memory_manager.phase6d.test_security.SecurityTests.test_authenticated_http_evidence_and_heartbeat) ... ok\ntest_forged_receipt_wrong_mission_and_model_authority_denied (memory_manager.phase6d.test_security.SecurityTests.test_forged_receipt_wrong_mission_and_model_authority_denied) ... ok\ntest_heartbeat_expiry_replay_busy_and_restart (memory_manager.phase6d.test_security.SecurityTests.test_heartbeat_expiry_replay_busy_and_restart) ... ok\ntest_real_authorized_history_receipt_and_restart (memory_manager.phase6d.test_security.SecurityTests.test_real_authorized_history_receipt_and_restart) ... ok\ntest_search_receipt_revision_binding (memory_manager.phase6d.test_security.SecurityTests.test_search_receipt_revision_binding) ... ok\ntest_verified_backup_restore_and_idempotence (memory_manager.phase6d.test_security.SecurityTests.test_verified_backup_restore_and_idempotence) ... ok\ntest_worker_stale_busy_and_unknown_never_dispatch (memory_manager.phase6d.test_security.SecurityTests.test_worker_stale_busy_and_unknown_never_dispatch) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 2.652s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6c_readiness.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.412,
+      "stdout": "{\"passed\":true,\"session_rotation_logout_revocation\":true,\"hot_policy_fail_closed\":true,\"unchanged_valid_voice_identity\":true,\"canonical_dates_without_silent_rewrite\":true,\"history_only_with_create_and_approve_denied\":true,\"policy_request_average_ms\":5.045,\"production_writes\":0,\"gpu_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_speech.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.223,
+      "stdout": "PASS: speech-only requests, exact spoken text, no history/tools/key exposure, WAV bounds, session isolation, separate metering, unknown costs on provider failure.\nPASS: incremental PCM speech, arbitrary SSE boundaries, final usage metering and no WAV wait.\nPASS: interrupted synthesis cancels the provider request and keeps incomplete metering honest.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.737,
+      "stdout": "PASS phase6: real local HTTP/SQLite admission, idempotence, events, controller restart, queued persistence, cancel; server auth/ACL/physical and approval denial; flag rollback and durable notification cursor. No Hermes/GPU/production.\n",
+      "stderr": ""
+    }
+  ]
+}

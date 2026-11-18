@@ -1,0 +1,33 @@
+{
+  "configs": {
+    "102": {
+      "balloon": "0",
+      "memory": "4096",
+      "name": "jarvis-lab",
+      "onboot": "0",
+      "scsi0": "hdd:102/vm-102-disk-0.qcow2,discard=on,size=24G",
+      "tags": "codex-phase3-20261114t074643z"
+    },
+    "103": {
+      "memory": "4096",
+      "name": "Codex-cli",
+      "onboot": "1",
+      "scsi0": "local-lvm:vm-103-disk-0,discard=on,iothread=1,size=32G"
+    },
+    "201": {
+      "balloon": "1024",
+      "memory": "2048",
+      "name": "tailscale",
+      "onboot": "1",
+      "scsi0": "local-lvm:vm-201-disk-0,discard=on,iothread=1,size=32G"
+    }
+  },
+  "sha256": {
+    "102": "43641323c37e8e3c5988c9c5de3a8c5c13a11f01a0596418cd1a4de05f0d2d50",
+    "103": "32e357ccee9cb6815cef5fd68cbc81c20bd780938c0626ac3e43ca2e6516fa1f",
+    "201": "973c988071dd278a2ef72d6bbc510713c3f0cd6aac457cae374ad4447523ff93"
+  },
+  "vm102_status": "status: stopped",
+  "guardians": "",
+  "allocations_103_201_match_verified_restore": true
+}

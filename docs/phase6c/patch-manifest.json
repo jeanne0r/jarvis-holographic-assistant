@@ -1,0 +1,110 @@
+{
+  "mode": "review-only-not-deployed",
+  "production_activation": "NO-GO",
+  "reason": "global gateway routes, legacy compatibility and executor isolation incomplete",
+  "production_writes": 0,
+  "production_preimages_unchanged": true,
+  "unique_targets": 15,
+  "stages": [
+    {
+      "name": "01-inert-libraries",
+      "sha256": "dc4fc85ff13c0ab39118b7ac61ca862223bdb28f2c063560dcbfe1946b623dc9",
+      "files": [
+        {
+          "target": "/home/user/workspace/jarvis/jarvis-session-auth.mjs",
+          "before_sha256": null,
+          "after_sha256": "3cde03029fc65c383130b2e0a9b229c642c6a068d46a9ae236fa06fa161d3e07"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/hermes-server-auth.mjs",
+          "before_sha256": null,
+          "after_sha256": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/hermes-voice-tools.mjs",
+          "before_sha256": null,
+          "after_sha256": "79ceaff38551840ff2cc39edbe9f2b6372cb75a08425c17156477738c79bddff"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/hermes-bridge-client.mjs",
+          "before_sha256": null,
+          "after_sha256": "0fb65d7cfcfd53785741ed633821dfd4cf89dada0235fba46438ba388c3a8c21"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/jarvis-hermes-experimental.mjs",
+          "before_sha256": null,
+          "after_sha256": "3813153c5d65e26f06c8c9599880ef781cad69f9fd8dac05cb9d93764e5cb9d2"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/hybrid-mission-admission.mjs",
+          "before_sha256": null,
+          "after_sha256": "270c0b9da48ee6e9b6c20fc36d850bef6dd283b39a841d12de184b94344207df"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/phase6-gateway.mjs",
+          "before_sha256": null,
+          "after_sha256": "73fa7dbd00b69c7e028f951437efbf1393d81cb83f978adef79de06bfa0753d8"
+        }
+      ],
+      "forward_reverse_byte_verified": true
+    },
+    {
+      "name": "02-incomplete-activation-review-NO-GO",
+      "sha256": "06f8dccf838f32cb200c17e4c43facd48fba8657aefc4f3cc71b237f06e624f6",
+      "files": [
+        {
+          "target": "/home/user/workspace/jarvis/backend.mjs",
+          "before_sha256": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+          "after_sha256": "a67744f1b6af66180410c83477b5097aba03f7b47f075fb405c78fc13b52df92"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/voice-memory.py",
+          "before_sha256": "68ae9c1e3ae0241038ee1598a1df654e65c547121a41eb1f6e3be881d58b3718",
+          "after_sha256": "fd15eecaa94d646642eb1bda419bb8f43b111bd033485df8ee3b368e9fdb0de3"
+        },
+        {
+          "target": "/home/user/workspace/jarvis/store.py",
+          "before_sha256": "3feca4e8ceeccfa6c106d0a9e8acc01116735ec0a5141c8b753881b0ae382c2c",
+          "after_sha256": "b5ae430808df57561d8f17d26a6aa9c25ea64f78140ab558ca198985d89af687"
+        },
+        {
+          "target": "/home/user/gateway/server.js",
+          "before_sha256": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+          "after_sha256": "d5c6558f793236438b63f11a5706cc36ee37b2d287aa09f60612c4f4e98cbf8e"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/index.html",
+          "before_sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d",
+          "after_sha256": "16622493087776469d1c15fa1b1d3f63d87995611e6a6b14e78340de8a4df5f3"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/hermes-missions.js",
+          "before_sha256": null,
+          "after_sha256": "29e54541b6c598e37a0b77f2ea6f98cc9b03f6f4ae523cab844b6657b6642d8e"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/hermes-missions.css",
+          "before_sha256": null,
+          "after_sha256": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273"
+        },
+        {
+          "target": "/home/user/gateway/public/jarvis/voice-router.js",
+          "before_sha256": "b848df088de7a1a614aa8497debed3156aa9f0a3ed809ffdfe2ae213dfc010fb",
+          "after_sha256": "202f0de323ca36b4fc83912f13753da8556449c71b0f39c05d5495c10decaf2d"
+        }
+      ],
+      "forward_reverse_byte_verified": true
+    }
+  ],
+  "defaults": {
+    "JARVIS_SERVER_AUTH": "0",
+    "JARVIS_HERMES_ENABLED": "0",
+    "JARVIS_HERMES_HISTORY": "0",
+    "JARVIS_HERMES_HYBRID": "0",
+    "JARVIS_HERMES_NATIVE_LIVE": "0"
+  },
+  "inert_prototypes": {
+    "public/hermes-canonical.js": "2ac5e7523991a62306e921bd4a256fbac072699837ce582a5e871d2acd72cf32",
+    "memory_manager/phase6c/canonical_metadata.py": "d679209a4d725bb9ccf090703717921936a06833610318853ec5123a1e7707ad"
+  }
+}

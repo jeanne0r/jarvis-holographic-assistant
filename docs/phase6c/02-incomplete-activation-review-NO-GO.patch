@@ -1,0 +1,261 @@
+--- a/home/user/workspace/jarvis/backend.mjs
++++ b/home/user/workspace/jarvis/backend.mjs
+@@ -1,4 +1,8 @@
++import {legacyToolPermission} from './hermes-voice-tools.mjs';
++import {handleHybridAdmission} from './hybrid-mission-admission.mjs';
+ import {coreInfo} from './core-settings.mjs';
++import {trustedRequests} from './jarvis-session-auth.mjs';
++import {fileURLToPath} from 'node:url';
+ import {spawn} from 'node:child_process';
+ import {answer} from './ai.mjs';
+ import {validateAction} from './actions.mjs';
+@@ -19,7 +23,7 @@
+ import {capabilityTools,capabilityHandler} from './capabilities.mjs';
+ import {evolutionStatus} from './evolution.mjs';
+ import {mapsConfig,youtubeKey} from './maps-config.mjs';
+-const ROOT='/home/user/workspace/jarvis';
++const ROOT=fileURLToPath(new URL('.',import.meta.url)).replace(/\/$/,'');
+ const MAX_IMPORT_BYTES=3*1024*1024*1024;
+ let syncing=null,asking=0;
+ export function store(action,data={},space='user'){
+@@ -30,7 +34,7 @@
+  });
+ }
+ function sync(){if(!syncing)syncing=store('sync').finally(()=>syncing=null);return syncing}
+-setTimeout(()=>sync().catch(()=>{}),2000).unref();setInterval(()=>sync().catch(()=>{}),5*60*1000).unref();
++if(process.env.JARVIS_BACKGROUND_SYNC!=='0'){setTimeout(()=>sync().catch(()=>{}),2000).unref();setInterval(()=>sync().catch(()=>{}),5*60*1000).unref();}
+ function json(res,status,data,headers={}){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store',...headers});res.end(JSON.stringify(data))}
+ async function body(req,limit=50000){let size=0;const out=[];for await(const chunk of req){size+=chunk.length;if(size>limit)throw Error('Requête trop volumineuse.');out.push(chunk)}return Buffer.concat(out)}
+ async function saveImport(req){const dir=ROOT+'/data/import-staging';await mkdir(dir,{recursive:true,mode:0o700});const path=dir+'/'+randomUUID()+'.upload';let size=0;const meter=new Transform({transform(chunk,_encoding,done){size+=chunk.length;done(size>MAX_IMPORT_BYTES?Error('La sauvegarde dépasse la limite de 3 Go.'):null,chunk)}});try{await pipeline(req,meter,createWriteStream(path,{flags:'wx',mode:0o600}));return path}catch(e){await unlink(path).catch(()=>{});throw e}}
+@@ -38,12 +42,18 @@
+  try{
+  if(req.method!=='GET'&&req.headers.origin&&req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
+  const action=url.pathname.slice('/api/jarvis/'.length);
++ const identity=trustedRequests.get(req);
+  const space=url.searchParams.get('space')||'user';
+  if(!['user','amelie','malik','theo','commun'].includes(space))return json(res,400,{error:'Espace inconnu.'});
+  if(action==='capabilities'&&req.method==='GET')return json(res,200,{radioDiscovery:true,maps:await mapsConfig(),youtubeSearchConfigured:Boolean(await youtubeKey())});
+  if(action==='capabilities/run'&&req.method==='POST'){
+   if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,6000)).toString());if(!capabilityTools.some(t=>t.name===data.name))throw Error('Capacité inconnue.');
++  if(identity){
++   const permission=legacyToolPermission(data.name);
++   if(!identity.roles.includes(permission))return json(res,403,{error:'Capacité non autorisée.'});
++   if(data.name==='trajet_jarvis'||(data.name==='medias_jarvis'&&data.args?.target&&data.args.target!=='ici'))return json(res,403,{error:'Cible physique ou lieu personnel non ouvert par cette façade.'});
++  }
+   return json(res,200,await capabilityHandler(data.name,data.args||{},{space,entities:new Set(),services:new Map(),memories:[],economy:true}));
+  }
+  if(action==='evolution/status'&&req.method==='GET')return json(res,200,await evolutionStatus(url.searchParams.get('id'),space));
+@@ -54,11 +64,11 @@
+  if(action==='conversations/record'&&req.method==='POST'){
+   if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,180000)).toString());
+-  return json(res,200,await archive('record',{...data,space}));
++  return json(res,200,await archive('record',{...data,space,...(identity?{expected_space:space}:{})}));
+  }
+  if(action==='memory/map'&&req.method==='GET'){try{return json(res,200,await memoryMap(space,url.searchParams.get('offset')))}catch(e){return json(res,503,{error:e.message})}}
+  if(action==='memory/status'&&req.method==='GET'){
+-  const memories=await memoryStore('list',{space});
++  const memories=await memoryStore('list',{space,include_common:!identity||identity.spaces.includes('commun')});
+   let index={state:'pending'};try{index=JSON.parse(await readFile(ROOT+'/data/semantic-index-status.json','utf8'))}catch{}
+   return json(res,200,{persistent:true,savedFacts:memories.length,index:{state:index.state,done:index.done||0,total:index.total||0}});
+  }
+@@ -76,7 +86,7 @@
+   if(!req.socket.encrypted&&!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(req.socket.remoteAddress))return json(res,400,{error:'Ouvre Jarvis en HTTPS pour utiliser le micro.'});
+   const data=JSON.parse((await body(req,16000)).toString());
+   if(['codex','hybrid'].includes(coreInfo().engine))return json(res,409,{error:'Utilise la voix de Jarvis pour conserver l’aiguillage des demandes.'});
+-  try{return json(res,200,action==='live/session'?await createLiveSession(space):await liveTool({...data,space}));}
++  try{return json(res,200,action==='live/session'?await createLiveSession(space,identity):await liveTool(identity?data:{...data,space},identity));}
+   catch(e){return json(res,e.status||400,{error:e.message});}
+  }
+  if(['voice/session','voice/transcribe','voice/speak'].includes(action)&&req.method==='POST'){
+@@ -100,7 +110,11 @@
+    res.writeHead(200,{'content-type':'audio/wav','cache-control':'no-store','content-length':audio.length});return res.end(audio);
+   }catch(e){if(!res.destroyed)return json(res,e.status||400,{error:e.message});return;}
+  }
+- if(action==='move'&&req.method==='POST')return json(res,200,await store('move',{...JSON.parse((await body(req)).toString()),space}));
++ if(action==='move'&&req.method==='POST'){
++  const data=JSON.parse((await body(req)).toString());
++  if(identity&&!identity.spaces.includes(data.target))return json(res,403,{error:'Espace cible non autorisé.'});
++  return json(res,200,await store('move',{...data,space}));
++ }
+  if(action==='docs'&&req.method==='GET')return json(res,200,await store('list',{q:url.searchParams.get('q')||'',space}));
+  if(action==='doc'&&req.method==='GET'){let d=await store('get',{id:url.searchParams.get('id'),space});return json(res,d?200:404,d||{error:'Souvenir introuvable.'})}
+  if(action==='sync'&&req.method==='POST')return json(res,200,await sync());
+@@ -109,7 +123,8 @@
+  if(action==='ask'&&req.method==='POST'){
+ 
+  const data=JSON.parse((await body(req)).toString());if(typeof data.question!=='string'||data.question.length>2000||!data.question.trim())return json(res,400,{error:'Écris une question de moins de 2 000 caractères.'});
+- const journal={id:typeof data.archive?.id==='string'?data.archive.id:randomUUID(),turn:Number.isInteger(data.archive?.turn)?data.archive.turn:0,space,channel:data.channel==='voice'?'voice':'written',user:data.question,assistant:'',status:'partial'};
++ const admission=await handleHybridAdmission(req,data);if(admission)return json(res,admission.status,admission.body);
++ const journal={id:typeof data.archive?.id==='string'?data.archive.id:randomUUID(),turn:Number.isInteger(data.archive?.turn)?data.archive.turn:0,space,channel:data.channel==='voice'?'voice':'written',user:data.question,assistant:'',status:'partial',...(identity?{expected_space:space}:{})};
+  const saveAnswer=async response=>{try{await archive('record',{...journal,revision:2,assistant:response.answer,status:'complete'})}catch{}return response;};
+  try{await archive('record',{...journal,revision:1})}catch{}
+  const fast=['codex','hybrid'].includes(coreInfo().engine)?null:quickReply(data.question);if(fast)return json(res,200,await saveAnswer(fast));
+--- a/home/user/workspace/jarvis/voice-memory.py
++++ b/home/user/workspace/jarvis/voice-memory.py
+@@ -22,7 +22,7 @@
+     current=db.execute('SELECT updated FROM facts WHERE space=? AND key=?',(old['space'],canonical)).fetchone()
+     if not current or current[0]<=old['updated']:db.execute('INSERT OR REPLACE INTO facts VALUES(?,?,?,?,?,?,?)',(old['space'],canonical,old['label'],old['fact'],old['entity_id'],old['area'],old['updated']))
+  if action=='list':
+-  rows=db.execute('SELECT * FROM facts WHERE space IN (?,?) ORDER BY updated DESC',(space,'commun')).fetchall()
++  rows=db.execute('SELECT * FROM facts WHERE space IN (?,?) ORDER BY updated DESC',(space,'commun' if data.get('include_common',True) else space)).fetchall()
+   out=[]
+   for r in rows:
+    item=dict(r);event=db.execute('SELECT kind FROM correction_events WHERE space=? AND key=? ORDER BY id DESC LIMIT 1',(r['space'],r['key'])).fetchone()
+--- a/home/user/workspace/jarvis/store.py
++++ b/home/user/workspace/jarvis/store.py
+@@ -187,6 +187,7 @@
+  sid=a.get('id');channel=a.get('channel');space=space_id(a.get('space','user'))
+  if not isinstance(sid,str) or not re.fullmatch(r'[0-9a-fA-F-]{36}',sid) or channel not in ('written','voice'):raise ValueError('Conversation invalide.')
+  session=DB.execute('SELECT * FROM conversation_sessions WHERE id=?',(sid,)).fetchone()
++ if a.get('expected_space') is not None and session and session['space']!=a['expected_space']:raise ValueError('Session hors de l’espace autorisé.')
+  if channel=='voice':
+   if not session or session['channel']!='voice':raise ValueError('Session vocale inconnue.')
+   space=session['space']
+--- a/home/user/gateway/server.js
++++ b/home/user/gateway/server.js
+@@ -1,4 +1,5 @@
+ import { handleJarvis } from '/home/user/workspace/jarvis/backend.mjs';
++import { mountJarvisPhase6 } from '/home/user/workspace/jarvis/phase6-gateway.mjs';
+ import { handlePaper } from '/home/user/workspace/solana-paper/gateway.mjs';
+ import { handleAstro } from '/home/user/workspace/astro-degustation/gateway.mjs';
+ import { handleGerman } from '/home/user/workspace/allemand-en-poche/backend.mjs';
+@@ -30,6 +31,8 @@
+ } from "./lib/icloud.js";
+ import { buildNilmReport } from "./lib/nilm-report.js";
+ import { buildEnergyLive } from "./lib/energy-live.js";
++
++const handleSecureJarvis = await mountJarvisPhase6(handleJarvis);
+ 
+ const HOST = process.env.HOST || "0.0.0.0";
+ const PORT = Number(process.env.PORT || 8787);
+@@ -1998,7 +2001,7 @@
+     if (url.pathname.startsWith('/api/solana-paper/')) return handlePaper(req, res, url);
+     if (url.pathname === '/solana-paper') { res.writeHead(302, { location: '/solana-paper/' }); return res.end(); }
+     if (url.pathname === '/solana-paper/') return serveStatic(res, 'solana-paper/index.html');
+-    if (url.pathname.startsWith("/api/jarvis/")) return handleJarvis(req, res, url);
++    if (url.pathname.startsWith("/api/jarvis/")) return handleSecureJarvis(req, res, url);
+     if (url.pathname === "/miroir") { res.writeHead(302, { location: "/miroir/" }); return res.end(); }
+     if (url.pathname === "/miroir/") return serveStatic(res, "miroir/index.html");
+     if (url.pathname === "/jarvis") { res.writeHead(302, { location: "/jarvis/" }); return res.end(); }
+--- a/home/user/gateway/public/jarvis/index.html
++++ b/home/user/gateway/public/jarvis/index.html
+@@ -1,4 +1,4 @@
+-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>J.A.R.V.I.S. — Assistant personnel</title><meta name="description" content="Votre assistant personnel. Voix, maison et mémoire."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23081019'/%3E%3Ccircle cx='20' cy='20' r='12' fill='none' stroke='%2366e8df' stroke-width='2'/%3E%3Cpath d='M24 12v12q0 6-8 3' fill='none' stroke='%2366e8df' stroke-width='3'/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css?v=20261113-blue-gateway1"><script src="archive.js?v=20261112-common1" defer></script><script src="app.js?v=20261113-console-all2" defer></script><script src="capabilities.js?v=20261113-console-all2" defer></script><link rel="stylesheet" href="capabilities.css?v=20261112-web1"><script src="usage.js?v=20261113-openai1" defer></script><script src="voice-gate.js?v=20261113-modes2" defer></script><script src="live-state.js?v=20261113-mute1" defer></script><script src="voice-router.js?v=20261113-mute1" defer></script><script src="hud.js?v=20261113-console-all2" defer></script><link rel="stylesheet" href="memory3d.css?v=20261113-console-all2"><script src="memory3d.js?v=20261113-console-all2" defer></script><link rel="stylesheet" href="hologram.css?v=20261113-projection1"><script src="camera.js?v=20261112-mobile2" defer></script><script type="module" src="hologram.js?v=20261113-console-all2"></script><script src="workspace.js?v=20261113-resize1" defer></script><link rel="stylesheet" href="workspace.css?v=20261113-resize1"></head><body data-screen="chat" data-voice="idle">
++<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>J.A.R.V.I.S. — Assistant personnel</title><meta name="description" content="Votre assistant personnel. Voix, maison et mémoire."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23081019'/%3E%3Ccircle cx='20' cy='20' r='12' fill='none' stroke='%2366e8df' stroke-width='2'/%3E%3Cpath d='M24 12v12q0 6-8 3' fill='none' stroke='%2366e8df' stroke-width='3'/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css?v=20261113-blue-gateway1"><script src="archive.js?v=20261112-common1" defer></script><script src="app.js?v=20261113-console-all2" defer></script><script src="capabilities.js?v=20261113-console-all2" defer></script><link rel="stylesheet" href="capabilities.css?v=20261112-web1"><script src="usage.js?v=20261113-openai1" defer></script><script src="voice-gate.js?v=20261113-modes2" defer></script><script src="live-state.js?v=20261113-mute1" defer></script><script src="voice-router.js?v=20261113-mute1" defer></script><script src="hud.js?v=20261113-console-all2" defer></script><link rel="stylesheet" href="memory3d.css?v=20261113-console-all2"><script src="memory3d.js?v=20261113-console-all2" defer></script><link rel="stylesheet" href="hologram.css?v=20261113-projection1"><script src="camera.js?v=20261112-mobile2" defer></script><script type="module" src="hologram.js?v=20261113-console-all2"></script><script src="workspace.js?v=20261113-resize1" defer></script><link rel="stylesheet" href="workspace.css?v=20261113-resize1"><link rel="stylesheet" href="hermes-missions.css?v=phase6"><script src="hermes-missions.js?v=phase6" defer></script></head><body data-screen="chat" data-voice="idle">
+ <div class="shell"><aside class="rail"><a class="brand" href="./" aria-label="Jarvis accueil"><span class="brandmark">J</span><span>JARVIS<small>ASSISTANT PERSONNEL</small></span></a><div class="rail-label">IDENTITÉ ACTIVE</div><nav aria-label="Navigation"><button class="nav active" data-view="chat"><span>◉</span> Console</button><button class="nav" data-view="library"><span>▤</span> Mémoire <b id="navCount">0</b></button><button class="nav" data-view="memory3d"><span>◇</span> Mémoire 3D</button><button class="nav" data-view="atelier"><span>＋</span> Idées</button></nav><div class="rail-label universe-label">MÉMOIRE PAR THÈME</div><div id="topics"></div><div class="rail-bottom"><div class="private"><span>◇</span> Mémoire locale<small>Conservée chez vous</small></div><button id="sourcesBtn" class="quiet">Sources & synchronisation <span>⚙</span></button><div class="profile"><span class="avatar">R</span><div><span id="profileName">User</span><small>À votre service.</small></div></div></div></aside>
+ <main><header><a class="stark-brand" href="./" aria-label="Jarvis accueil"><span>JARVIS<small>PERSONAL INTELLIGENCE</small></span><svg viewBox="0 0 50 35" aria-hidden="true"><path d="M1 3h43L22 27l8-17H1M36 3h11L23 31"/></svg></a><div class="breadcrumb"><label for="spaceSelect">IDENTITÉ ACTIVE</label><select id="spaceSelect" aria-label="Choisir une personne"><option value="user">User</option><option value="amelie">Amélie</option><option value="malik">Malik</option><option value="theo">Théo</option><option value="commun">Commun</option></select><span>/</span> <b id="crumb">CONSOLE</b></div><div class="header-actions"><button id="immersionButton" class="immersion-button" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5"/></svg><span id="immersionLabel">Immersion</span></button><button id="hudMicShortcut" type="button" hidden>Couper le micro</button><a class="mirror-link" href="/solana-paper/">◈ Simulation crypto</a><a class="mirror-link" href="/miroir/">✦ Le Miroir</a><button class="primary" id="newNote">+ Une idée</button></div></header><section class="heading"><div><div class="eyebrow"><i class="signal-dot"></i> INTERFACE PERSONNELLE / J.A.R.V.I.S.</div><h1 id="title">À votre service.</h1><p id="subtitle">Votre voix. Votre maison. Votre mémoire.</p></div><div class="memory-stats"><strong id="count">—</strong><span>souvenirs accessibles<br><small id="syncLabel">Chargement de la mémoire</small></span></div></section>
+ <section class="memory-state" aria-label="Mémoire de Jarvis"><div><strong>Mémoire de Jarvis</strong><p id="voiceMemoryStatus" role="status">Chargement de la mémoire…</p><p id="archiveStatus">Enregistrement automatique des échanges activé.</p></div><progress id="memoryProgress" aria-label="Conversations préparées pour la recherche" hidden></progress></section>
+--- /dev/null
++++ b/home/user/gateway/public/jarvis/hermes-missions.js
+@@ -0,0 +1,84 @@
++// Optional panel on the existing holographic UI. No microphone/audio changes.
++(() => {
++ const make=(tag,text,parent)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(parent)parent.append(e);return e};
++ const button=make('button','Connexion Jarvis');button.id='hermesMissionsButton';button.type='button';button.hidden=true;
++ document.body.append(button);
++ const dialog=make('dialog',null,document.body);dialog.id='hermesMissionsDialog';
++ const close=make('button','Fermer',dialog);close.type='button';close.onclick=()=>dialog.close();
++ make('h2','Missions Hermes',dialog);
++ const status=make('p','',dialog);status.setAttribute('role','status');status.setAttribute('aria-live','polite');
++ const login=make('form',null,dialog);make('label','Code personnel',login);
++ const input=make('input',null,login);input.type='password';input.autocomplete='one-time-code';input.required=true;input.setAttribute('aria-label','Code personnel');
++ const connect=make('button','Se connecter',login);connect.type='submit';
++ const content=make('section',null,dialog);content.hidden=true;
++ make('p','Laboratoire synthétique · aucun équipement ni import personnel.',content);
++ const create=make('button','Retrouver les cellules DoseLab X4',content);create.type='button';
++ const refresh=make('button','Actualiser',content);refresh.type='button';
++ const list=make('div',null,content);list.id='hermesMissionList';
++ const detail=make('pre','',content);detail.id='hermesMissionResult';
++ const approvals=make('div',null,content);
++ const logout=make('button','Déconnexion',dialog);logout.type='button';logout.hidden=true;
++ let identity=null,selected=null,timer=null,key=null,featureActive=false,admissionsEnabled=false;const seen=new Map();
++ const states={queued:'En attente',running:'En cours',planning:'Planification',testing:'Évaluation',paused:'Suspendue',awaiting_approval:'Approbation requise',completed:'Terminée',failed:'Échec',cancelled:'Annulée',unknown:'Vérification nécessaire'};
++ function space(){return document.querySelector('#spaceSelect')?.value||identity?.spaces?.[0]}
++ async function request(path,options={}){
++  const res=await fetch('/api/jarvis/'+path,options);let body;try{body=await res.json()}catch{throw Error('Réponse indisponible')}
++  if(res.status===401){identity=null;login.hidden=false;content.hidden=true;logout.hidden=true;list.replaceChildren();detail.textContent='';approvals.replaceChildren();button.textContent='Connexion Jarvis'}
++  if(!res.ok)throw Error(res.status===401?'Session expirée : reconnecte-toi.':body.error||'Service indisponible');return body;
++ }
++ const endpoint=path=>'hermes/'+path+'?space='+encodeURIComponent(space());
++ async function inspect(id){
++  selected=id;const m=await request(endpoint('missions/'+id));
++  detail.textContent=(states[m.state]||m.state)+'\n'+(m.definition?.objective||'');approvals.replaceChildren();
++  const result=await request(endpoint('missions/'+id+'/results'));
++  for(const e of result.events||[]){if(['completed','failed','cancelled','deferred','reconciliation_required'].includes(e.kind)){
++   let data;try{data=JSON.parse(e.data)}catch{continue}
++   detail.textContent+='\n'+(data.output||data.reason||(e.kind==='reconciliation_required'?'Reprise à vérifier, aucun rejeu automatique.':''));
++  }}
++  if(!['completed','failed','cancelled'].includes(m.state)){
++   const cancel=make('button','Annuler cette mission',approvals);cancel.type='button';cancel.onclick=async()=>{try{await request(endpoint('missions/'+id+'/cancel'),{method:'POST',headers:{'content-type':'application/json'},body:'{}'});await refreshList()}catch(e){status.textContent=e.message}};
++  }
++  for(const a of m.approvals||[]){if(a.state!=='pending')continue;
++   let action;try{action=JSON.parse(a.action)}catch{action={description:'Demande à vérifier'}}
++   make('p',action.description||'Demande à vérifier',approvals);
++   if(!identity.roles.includes('missions.approve')){make('p','Un compte approbateur distinct est requis.',approvals);continue}
++   for(const [choice,label] of [['once','Autoriser cette action une fois'],['deny','Refuser']]){
++    const b=make('button',label,approvals);b.type='button';b.onclick=async()=>{if(!confirm('Confirmer cette décision pour cette action précise ?'))return;
++     try{await request(endpoint('missions/'+id+'/approvals'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({approval_id:a.id,fingerprint:a.fingerprint,choice})});await inspect(id)}catch(e){status.textContent=e.message}
++    };
++   }
++  }
++ }
++ async function refreshList(){
++  if(!identity||!featureActive||document.hidden)return;
++  try{
++   const data=await request(endpoint('missions'));list.replaceChildren();
++   for(const m of data.items||[]){if(['completed','failed','awaiting_approval'].includes(m.state)&&seen.get(m.id)!==m.state)button.textContent='Missions · '+(states[m.state]||m.state);seen.set(m.id,m.state)}
++   for(const m of data.items||[]){const row=make('button',(states[m.state]||m.state)+' · '+m.objective,list);row.type='button';row.onclick=()=>inspect(m.id).catch(e=>status.textContent=e.message)}
++   if(!data.items?.length)make('p','Aucune mission.',list);
++   status.textContent=admissionsEnabled?'Historique conservé sur Proxmox. Un PC indisponible laisse les missions en attente.':'Consultation et annulation disponibles. Nouvelles missions désactivées.';
++   if(selected&&dialog.open)await inspect(selected);
++  }catch(e){status.textContent=e.message}
++ }
++ async function bootstrap(){
++  try{identity=await request('session')}catch(e){identity=null;button.textContent='Connexion Jarvis';button.hidden=false;return}
++  const selector=document.querySelector('#spaceSelect');
++  if(selector){for(const option of selector.options)option.disabled=!identity.spaces.includes(option.value);if(!identity.spaces.includes(selector.value)){selector.value=identity.spaces[0]}selector.dispatchEvent(new Event('change'))}
++  document.dispatchEvent(new Event('jarvis:session-ready'));
++  try{const config=await request(endpoint('config'));admissionsEnabled=config.enabled===true;featureActive=admissionsEnabled||config.readEnabled===true;if(!featureActive){login.hidden=true;content.hidden=true;logout.hidden=false;button.hidden=false;button.textContent='Compte Jarvis';status.textContent='Connecté. Missions Hermes désactivées.';return}}catch{button.hidden=true;return}
++  login.hidden=true;content.hidden=false;logout.hidden=false;button.hidden=false;button.textContent='Missions Hermes';
++  create.disabled=!admissionsEnabled||!identity.roles.includes('missions.create');clearInterval(timer);timer=setInterval(()=>void refreshList(),5000);
++ }
++ button.onclick=()=>{dialog.showModal();void refreshList()};
++ dialog.addEventListener('close',()=>{detail.textContent='';approvals.replaceChildren()});
++ login.onsubmit=async e=>{e.preventDefault();connect.disabled=true;try{await request('session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({token:input.value})});input.value='';await bootstrap();await refreshList()}catch(err){status.textContent=err.message}finally{connect.disabled=false}};
++ create.onclick=async()=>{if(!admissionsEnabled)return;create.disabled=true;key??=crypto.randomUUID();try{
++  const result=await request(endpoint('missions'),{method:'POST',headers:{'content-type':'application/json','idempotency-key':key},body:JSON.stringify({template:'doselab-current'})});
++  key=null;selected=result.mission_id;await refreshList();
++ }catch(e){status.textContent=e.message+' La même clé sera conservée en cas de nouvel envoi.'}finally{create.disabled=!admissionsEnabled||!identity?.roles.includes('missions.create')}};
++ refresh.onclick=()=>void refreshList();
++ logout.onclick=async()=>{try{await request('session',{method:'DELETE'});location.reload()}catch(e){status.textContent=e.message}};
++ document.addEventListener('jarvis:spacechange',()=>{selected=null;key=null;list.replaceChildren();detail.textContent='';approvals.replaceChildren();void refreshList()});
++ // Disabled installations expose no session endpoint and leave the UI unchanged.
++ fetch('/api/jarvis/session').then(r=>{if(r.status===404)return;if(r.ok||r.status===401)return bootstrap()}).catch(()=>{});
++})();
+--- /dev/null
++++ b/home/user/gateway/public/jarvis/hermes-missions.css
+@@ -0,0 +1 @@
++#hermesMissionsButton{position:fixed;bottom:18px;left:12px;z-index:40;margin:0;max-width:10rem;font-size:12px;background:#081825;color:#e6f5ff;border:1px solid #36778e}#hermesMissionsDialog{width:min(760px,94vw);max-height:85vh;overflow:auto;background:#081825;color:#e6f5ff;border:1px solid #36778e;border-radius:18px;padding:1.2rem}#hermesMissionsDialog button{margin:.3rem;padding:.6rem;border-radius:8px;cursor:pointer}#hermesMissionsDialog input{display:block;width:min(30rem,90%);padding:.6rem;color:inherit;background:#142f40}#hermesMissionList{display:grid;gap:.4rem}#hermesMissionList button{text-align:left;overflow-wrap:anywhere}#hermesMissionResult{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;font:inherit}#hermesMissionsDialog::backdrop{background:#0009}#hermesMissionsDialog [hidden]{display:none!important}
+--- a/home/user/gateway/public/jarvis/voice-router.js
++++ b/home/user/gateway/public/jarvis/voice-router.js
+@@ -1,2 +1,16 @@
+-// Speech always uses /ask for server-side routing unless native Live is explicitly selected.
+-(async()=>{try{const response=await fetch('/api/jarvis/voice/status');if(!response.ok)throw Error();const info=await response.json();const script=document.createElement('script');script.src=info.engine==='gemini-live'?'live.js?v=20261113-mute1':'codex-voice.js?v=20261113-mute1';script.onerror=()=>{document.querySelector('#liveStatus').textContent='La voix n’a pas pu être chargée. Recharge la page.';};document.head.append(script);}catch{document.querySelector('#liveStatus').textContent='Connexion à Jarvis indisponible. Recharge la page.';}})();
++// Speech uses /ask; authentication retry changes only script loading, never audio.
++(()=>{
++ let loaded=false,loading=false,retry=false;
++ async function load(){
++  if(loaded){return}if(loading){retry=true;return}loading=true;
++  try{
++   const response=await fetch('/api/jarvis/voice/status');if(!response.ok)throw Error();
++   const info=await response.json(),script=document.createElement('script');
++   script.src=info.engine==='gemini-live'?'live.js?v=20261113-mute1':'codex-voice.js?v=20261113-mute1';
++   script.onerror=()=>{document.querySelector('#liveStatus').textContent='La voix n’a pas pu être chargée. Recharge la page.';};
++   loaded=true;document.head.append(script);
++  }catch{document.querySelector('#liveStatus').textContent='Connexion à Jarvis indisponible. Connecte-toi ou recharge la page.';}
++  finally{loading=false;if(retry){retry=false;void load()}}
++ }
++ document.addEventListener('jarvis:session-ready',()=>void load());void load();
++})();

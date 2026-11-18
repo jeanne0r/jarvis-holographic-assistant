@@ -1,0 +1,42 @@
+{
+  "pilot": "P6-L1",
+  "integration_passed": true,
+  "content_fully_verified": false,
+  "issue": {
+    "kind": "incorrect_model_date",
+    "source_ref": "synthetic://doselab/correction",
+    "model_claim": "2023-11-15",
+    "canonical_date_utc": "2023-11-14",
+    "automatic_correction_applied": false
+  },
+  "canonical_knowledge_sources": [
+    {
+      "memory_id": "2699d523-4376-47e1-a8c8-89d59ffc87f2",
+      "source_ref": "synthetic://doselab/old",
+      "observed_utc": "2023-11-14T22:13:20+00:00",
+      "capacities_kg": [
+        1,
+        2,
+        5,
+        10
+      ]
+    },
+    {
+      "memory_id": "2699d523-4376-47e1-a8c8-89d59ffc87f2",
+      "source_ref": "synthetic://doselab/correction",
+      "observed_utc": "2023-11-14T22:15:00+00:00",
+      "capacities_kg": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "reported_experience_validation": "inferred/unreviewed_report_not_verified_fact",
+  "knowledge_revision_count": 2,
+  "inferred_episode_count": 1,
+  "published_skills": 0,
+  "screenshot_sha256": "9d65249b11a6a580e7913fb04ae92d9eb6b91c5f1a1615cda62bce8cbaa4263b",
+  "raw_trial_unchanged": true
+}

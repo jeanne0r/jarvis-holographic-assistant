@@ -1,0 +1,92 @@
+--- /dev/null
++++ b/s9-power-service.mjs
+@@ -0,0 +1,48 @@
++// Separate responsibility for the EXISTING S9 power bridge, not a new S19 controller.
++// Import has no timers, I/O or equipment effects. Transport and durable state injected.
++export function powerBridge({enabled,readTarget,applyTarget,load,save,audit=async()=>{},pollMs=10000}){
++ if(!Number.isInteger(pollMs)||pollMs<1000||pollMs>300000)throw Error('Poll interval');
++ let state={lastRequestedPower:null,lastAppliedPower:null,pending:null},busy=false,timer,stopped=true,active,freshStart=true;
++ function drive(){if(busy)return active;active=poll();return active}
++ async function init(){freshStart=true;state={...state,...await load()};if(state.pending)state.uncertain=true;return {...state}}
++ async function poll(){
++  if(stopped||!enabled||busy||state.uncertain)return;
++  busy=true;
++  try{
++   const target=Math.round(Number(await readTarget()));if(!Number.isFinite(target)||stopped)return;
++   if(freshStart||state.lastRequestedPower===null){freshStart=false;state.lastRequestedPower=target;await save(state);return}
++   if(target===state.lastRequestedPower)return;
++   // Preserve legacy latch-before-apply, but persist intent to prevent blind replay.
++   state.lastRequestedPower=target;state.pending={target,at:new Date().toISOString()};await save(state);
++   try{const result=await applyTarget(target);state.lastAppliedPower=result.power;state.pending=null;await save(state);await audit({event:'power-applied',power:result.power})}
++   catch{state.uncertain=true;await save(state);await audit({event:'power-uncertain'});}
++  }catch{await audit({event:'poll-unavailable'})}finally{busy=false}
++ }
++ return {init,status:()=>({...state,busy,enabled,stopped}),async start(){if(!stopped)throw Error('Already running');await init();stopped=false;await drive();timer=setInterval(drive,pollMs);timer.unref()},async stop(){stopped=true;clearInterval(timer);await active},
++  // Reconciliation requires an independent human decision; never inferred/model-driven.
++  async reconcile({approved,requested,applied}){if(approved!==true||busy||!stopped||!Number.isFinite(requested)||!Number.isFinite(applied))throw Error('Stopped human reconciliation required');state={lastRequestedPower:requested,lastAppliedPower:applied,pending:null};await save(state)},
++  manual(power,approval){
++   if(stopped||busy||state.uncertain)throw Error('Service unavailable');busy=true;
++   active=(async()=>{let intent=false;try{await approval();if(stopped)throw Error('Stopped before intent');state.pending={target:power,manual:true,at:new Date().toISOString()};intent=true;await save(state);const result=await applyTarget(power);state.lastAppliedPower=result.power;state.pending=null;await save(state);return result}catch(e){if(intent){state.uncertain=true;await save(state)}throw e}finally{busy=false}})();
++   return active;
++  },
++  tick:drive,
++ };
++}
++export function fixedPowerTransport({haURL,minerURL,haToken,username,password,min,max,entity,fetchImpl=fetch}){
++ const ha=new URL(haURL),miner=new URL(minerURL);
++ for(const u of [ha,miner])if(!['http:','https:'].includes(u.protocol)||u.username||u.password||u.search||u.hash)throw Error('Fixed local endpoint');
++ if(fetchImpl===globalThis.fetch&&[ha,miner].some(u=>! /^(?:127\.|10\.|192\.168\.|172\.(?:1[6-9]|2[0-9]|3[01])\.)/.test(u.hostname)))throw Error('Private literal equipment endpoint required');
++ if(!/^[a-z_]+\.[a-z0-9_]+$/.test(entity)||!Number.isFinite(min)||!Number.isFinite(max)||min>max)throw Error('Power contract');
++ const graphql=async(query,variables,cookie)=>{
++  const r=await fetchImpl(new URL('/graphql',miner),{method:'POST',redirect:'error',signal:AbortSignal.timeout(5000),headers:{'content-type':'application/json',...(cookie?{cookie}:{})},body:JSON.stringify({query,variables})});
++  const data=await r.json();if(!r.ok||data.errors?.length)throw Error('Miner request failed');return {data:data.data,cookie:r.headers.get('set-cookie')?.split(';')[0]};
++ };
++ return {async readTarget(){const r=await fetchImpl(new URL('/api/states/'+entity,ha),{headers:{authorization:'Bearer '+haToken},redirect:'error',signal:AbortSignal.timeout(5000)});if(!r.ok)throw Error('HA unavailable');return (await r.json()).state},async applyTarget(power){
++  const target=Math.round(Math.max(min,Math.min(max,Number(power))));if(!Number.isFinite(target))throw Error('Power invalid');
++  const login=await graphql('mutation Login($u:String!,$p:String!){ auth { login(username:$u,password:$p) { __typename ... on AuthError { message } } } }',{u:username,p:password});
++  if(login.data?.auth?.login?.__typename==='AuthError'||!login.cookie)throw Error('Miner authentication failed');
++  const r=await graphql('mutation SetPower($input: AutotuningIn!, $apply: Boolean!) { bosminer { config { updateAutotuning(input: $input, apply: $apply) { __typename ... on AutotuningError { message } ... on AttributeError { message } } } } }',{input:{mode:'POWER_TARGET',powerTarget:target},apply:true},login.cookie);
++  const type=r.data?.bosminer?.config?.updateAutotuning?.__typename;if(type&&type!=='AutotuningOut')throw Error('Miner rejected power');return {power:target,resultType:type||null};
++ }};
++}
+--- /dev/null
++++ b/s9-power-main.mjs
+@@ -0,0 +1,38 @@
++// Explicit commissioning entry. No start/import by gateway; no equipment call on import.
++import {readFile,writeFile,rename,open} from 'node:fs/promises';
++import {createHash,randomUUID,timingSafeEqual} from 'node:crypto';
++import {createServer} from 'node:http';
++import {ownedJSON} from './gateway-security-mount.mjs';
++import {powerBridge,fixedPowerTransport} from './s9-power-service.mjs';
++import {privateBackend} from './gateway-service-transport.mjs';
++export async function main(configFile){
++ const cfg=await ownedJSON(configFile);
++ if(cfg.commissioned!==true||cfg.enabled!==true||!cfg.networkAllowlistReviewed||!cfg.singleWriterLeaseConfirmed)throw Error('Separate physical commissioning required');
++ const secrets=await ownedJSON(cfg.credentialsFile),transport=fixedPowerTransport({...cfg,...secrets});
++ const store=async state=>{const temp=cfg.stateFile+'.'+randomUUID();try{await writeFile(temp,JSON.stringify(state),{flag:'wx',mode:0o600});const f=await open(temp,'r');try{await f.sync()}finally{await f.close()}await rename(temp,cfg.stateFile);const dir=await open(new URL('.', 'file://'+cfg.stateFile).pathname,'r');try{await dir.sync()}finally{await dir.close()}}finally{await import('node:fs/promises').then(fs=>fs.unlink(temp).catch(()=>{}))}};
++ const bridge=powerBridge({...transport,enabled:true,pollMs:cfg.pollMs,load:()=>ownedJSON(cfg.stateFile),save:store});
++ const approvals=privateBackend({socketPath:cfg.approvalSocket,credential:secrets.approvalService});
++ const server=createServer(async(req,res)=>{
++  const send=(status,data)=>{res.writeHead(status,{'content-type':'application/json'});res.end(JSON.stringify(data))};
++  try{
++   const given=Buffer.from(req.headers.authorization||''),expected=Buffer.from('Bearer '+secrets.gatewayTransport);
++   if(given.length!==expected.length||!timingSafeEqual(given,expected))return send(401,{error:'Denied'});
++   if(req.method==='GET'&&req.url==='/status')return send(200,bridge.status());
++   if(req.method!=='POST'||req.url!=='/power')return send(403,{error:'Denied'});
++   let raw='';for await(const b of req){raw+=b;if(Buffer.byteLength(raw)>2048)throw Error('Bound')}
++   const data=JSON.parse(raw);if(Object.keys(data).sort().join()!=='power,receipt,subject'||typeof data.subject!=='string'||!Number.isFinite(data.power))throw Error('Power schema');
++   const fingerprint=createHash('sha256').update(JSON.stringify(['/api/s9/power',data.subject,{power:data.power}])).digest('hex');
++   const result=await bridge.manual(data.power,async()=>{
++    const reply=await approvals({identity:{subject:data.subject,kind:'human'},method:'POST',path:'/api/physical/consume',data:{receipt:data.receipt,fingerprint,permission:'physical.s9.power'},resource:{space:'physical'}});
++    if(reply.status!==200||JSON.parse(reply.bytes).consumed!==true)throw Error('Independent approval required');
++   });return send(200,result);
++  }catch{return send(503,{error:'Power service unavailable; no retry'})}
++ });
++ // Existing socket is not silently deleted; operator must verify stopped instance.
++ await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(cfg.socket,resolve)});
++ await import('node:fs/promises').then(fs=>fs.chmod(cfg.socket,0o600));
++ await bridge.start();
++ let stopping=false;const stop=async()=>{if(stopping)return;stopping=true;await new Promise(r=>server.close(r));await bridge.stop()};
++ process.once('SIGTERM',()=>void stop());process.once('SIGINT',()=>void stop());return {server,bridge,stop};
++}
++if(process.argv[1]===new URL(import.meta.url).pathname){if(process.argv.length!==3)throw Error('Explicit private config required');await main(process.argv[2])}

@@ -1,0 +1,13 @@
+{
+  "kind": "limited_temporary_existing_python_probe",
+  "hermes_started": false,
+  "ollama_started": false,
+  "native_job_api_validated": false,
+  "outcomes": [
+    "non_json_stdout",
+    "ssh_timeout_15s"
+  ],
+  "owned_python_probes_remaining_at_check": 0,
+  "installed_or_written_on_windows": false,
+  "next_requirement": "Validate supervisor from installed local file under dedicated non-admin identity; mock tests are insufficient."
+}

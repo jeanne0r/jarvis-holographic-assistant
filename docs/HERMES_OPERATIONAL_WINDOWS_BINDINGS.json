@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "profile": "operational-8797",
+  "base_manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+  "host_files": {
+    "memory_manager/mcp_utf8.py": "6a1268a189e12125ed334ee1e4f4d74675710c3dbc7a6691fb0e307f835c514e",
+    "memory_manager/phase2/mcp.py": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef",
+    "memory_manager/phase2/memory_tools.py": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+    "memory_manager/phase3/mcp.py": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+    "memory_manager/phase4/windows.py": "0797d19af9d0134e9dd7239596da7d68b584c01d1b76980161a8dc0f61a6c3a2",
+    "ops/phase4-run-hermes-windows.py": "bce41292f9458ea297956e50c5bec20704adfcf6dd9459995dba4a9be554749b",
+    "ops/phase4-run-ollama-windows.py": "0825f6326a7e065b172cc266cc18b0e2c6b5f31e28917593ab3cb74945f7256c",
+    "memory_manager/phase4/job.py": "a183b647b6b7f42f4c7a532bc8d76c3b1085ca69971be2403ce590146a57e172"
+  },
+  "windows_files": {
+    "memory_manager/mcp_utf8.py": "6a1268a189e12125ed334ee1e4f4d74675710c3dbc7a6691fb0e307f835c514e",
+    "memory_manager/phase2/mcp.py": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef",
+    "memory_manager/phase2/memory_tools.py": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+    "memory_manager/phase3/mcp.py": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+    "memory_manager/phase4/windows.py": "53df3cbfa2e76b5069204afa1b4e8ba5136bb8e328fb67a01a32da2ef50a652a",
+    "ops/phase4-run-hermes-windows.py": "bce41292f9458ea297956e50c5bec20704adfcf6dd9459995dba4a9be554749b",
+    "ops/phase4-run-ollama-windows.py": "0825f6326a7e065b172cc266cc18b0e2c6b5f31e28917593ab3cb74945f7256c",
+    "memory_manager/phase4/job.py": "a183b647b6b7f42f4c7a532bc8d76c3b1085ca69971be2403ce590146a57e172"
+  },
+  "windows_git_commit": "5e9469d2be9e922a60eccdf2e227534e540a4359",
+  "host_git_commit": "10bf3b43097cef5b59d55febfe74df595489a295",
+  "historical_evidence": {
+    "docs/JARVIS_2_PHASE5C_PATCH_REAL.json": "5b0dc844766753e55ca7db4895a40923fac1fb0da9c806a559b365933d3a4565",
+    "docs/JARVIS_2_PHASE5C_PATCH_MANIFEST.json": "54d58f95af77bd82194ccfa9c8d0d5ba9e03ae1a6b480a5676530685693da090"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "prepared_not_installed": true,
+  "authorization": "User approved dedicated system account, verified copies, system unit and conditional start; sudo authentication unavailable to agent",
+  "checks": [
+    "relocated 36-file release verifies its original manifest",
+    "non-root installer refuses before effects",
+    "unsupervised startup gate refuses",
+    "Python syntax passes",
+    "systemd unit syntax passes"
+  ],
+  "installation_command": "sudo python3 /home/user/workspace/jarvis-2-memory/ops/pilot-network/install-system-pilot.py --install-approved",
+  "files": {
+    "ops/pilot-network/check-system-filter.py": "d9e3fae0333f2ce0d2aae1af477aff0b7be2a67f66450a054d6c5aedcd8c63a4",
+    "ops/pilot-network/startup-guard.py": "aeeecd87016da9d7ea89a3d147738f74f33c6582dbc5818a92b5d326788af86e",
+    "ops/pilot-network/jarvis-hermes-pilot-system.service": "51cb6ef4965292630989916280134f41e79bd1bc122f942eb616bccb826f1e7e",
+    "ops/pilot-network/install-system-pilot.py": "dfb3a9e45734c8714837472274d9e3f19fe57e069a2f36529e8db2cbc8e7faa6",
+    "docs/pilot-interactive/system-installation-files.json": "536bc7cbcc947e1ab0c390f404e10ffe70610bad52829e7c08e452a28e427509"
+  }
+}

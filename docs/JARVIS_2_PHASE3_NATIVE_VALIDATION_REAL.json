@@ -1,0 +1,51 @@
+{
+  "evaluation": "offline analysis of actual native SSE, GPU, ledger and SQLite evidence",
+  "sources_sha256": {
+    "JARVIS_2_PHASE3_NATIVE_HERMES_REAL_4.json": "f91747b8ad20c1a32aea298c25c65655d245b8f2f592f64e1de1ca2e22ff139c",
+    "JARVIS_2_PHASE3_NATIVE_SKILL_REAL_2.json": "90580e77423e0cf998c268a32041d22fe298591579e8d7c0b48027c94922d4c9",
+    "JARVIS_2_PHASE3_MEMORY_NATIVE_SNAPSHOT_REAL.json": "2619d3314b671897bc640d55ccc618bf59768b8a6bce4f8291b49a231416c5c1",
+    "JARVIS_2_PHASE3_HELD_RAM_REAL.json": "aabc0422ef2fc30709ee0e6b4a818be17abe1c521423eb5f8b6237d96273c105",
+    "JARVIS_2_PHASE3_NETWORK_REAL.json": "875e8a35f5e18fa90bc5f09590ba2b79c9d89644a6fbaea807b592d7d32511f0",
+    "JARVIS_2_PHASE3_HERMES_INSTALL_REAL.json": "67c79ee6f223a6aafb75644ed1a47ea3d3d47f03d98570e9074c7dd5908279d0"
+  },
+  "native_memory_cycle_passed": true,
+  "checks": {
+    "official_pinned_runtime": true,
+    "fast_asynchronous_admission": true,
+    "bridge_and_native_completed": true,
+    "native_search_and_history": true,
+    "both_sources_cited": true,
+    "current_configuration": true,
+    "old_configuration_preserved": true,
+    "experience_persisted_inferred": true,
+    "three_real_metered_local_calls": true,
+    "actual_64k_ollama_context": true,
+    "network_denials_observed": true,
+    "ram_and_shares_restored": true,
+    "lab_stopped_without_autostart": true,
+    "no_skill_published": true
+  },
+  "native_tools": [
+    "mcp__jarvis__jarvis_memory_search",
+    "mcp__jarvis__jarvis_memory_history",
+    "mcp__jarvis__jarvis_memory_history"
+  ],
+  "mission_id": "05397fc0-24c9-4023-88e5-d9d5b2663134",
+  "native_input_tokens": 11204,
+  "native_output_tokens": 371,
+  "sampled_peak_total_vram_mib": 6862.0,
+  "sampled_peak_power_w": 302.72,
+  "sampled_board_energy_wh": 1.2309594378454818,
+  "native_skill_passed": false,
+  "candidate_count": 0,
+  "native_skill_attempt_error": "Private endpoint unavailable",
+  "phase3_complete": false,
+  "paid_api_calls": 0,
+  "limits": [
+    "Skill mission interrupted by resource-window shutdown; no candidate exists.",
+    "Raw aggregate reports retain failed results, including the former SSE parser false negative.",
+    "Real Qdrant/embeddings integration remains deferred; lookup here is canonical SQLite.",
+    "GPU energy uses sparse board-power samples, not wall-socket consumption.",
+    "No production gateway integration or physical command."
+  ]
+}

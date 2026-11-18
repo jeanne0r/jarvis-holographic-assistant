@@ -1,0 +1,12 @@
+# Root-reviewed @SUPERVISOR_UID@ mandatory, never infer a shared existing UID.
+# Prepare only. Enforce and test before authorizing the permanent supervisor.
+table inet jarvis_hermes_supervisor {
+ chain output {
+  type filter hook output priority 10; policy accept;
+  meta skuid @SUPERVISOR_UID@ ct state established,related accept
+  # Queue, owned Ollama-forward telemetry, and SSH reverse model-gate traffic.
+  meta skuid @SUPERVISOR_UID@ ip daddr 127.0.0.1 tcp dport { 8797, 11435, 11436 } accept
+  meta skuid @SUPERVISOR_UID@ ip daddr 192.0.2.96 tcp dport 22 accept
+  meta skuid @SUPERVISOR_UID@ reject
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "scope_compliant": false,
+  "reason": "Reader counted documents, including multi-turn conversations; the approved turn-level bound was not enforced",
+  "examined_documents": 18,
+  "conversation_documents": 17,
+  "non_conversation_documents": 1,
+  "role_markers_in_retained_excerpts": 50,
+  "exact_examined_turn_count": "not established",
+  "blocked_for_import_and_transmission": true,
+  "further_private_source_reads": 0,
+  "content_sent_to_models": false,
+  "initial_document_summary": {
+    "examined_sources": 18,
+    "candidate_sources": 17,
+    "sources_flagged_for_exclusion": 1,
+    "sources_with_correction_signals": 8,
+    "measurement_statement_count": 106,
+    "unit_groups_requiring_review": 4,
+    "source_database_writes": 0,
+    "private_report": "/home/user/workspace/jarvis-2-memory/data/phase5c/c2-20261114T201530Z-de75ffbe/import-review.json",
+    "content_sent_to_models": false,
+    "index_writes": 0
+  }
+}

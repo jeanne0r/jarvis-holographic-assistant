@@ -1,0 +1,14 @@
+{
+  "package_hashes_current": true,
+  "copy_rollback_verified": true,
+  "historical_docs_unchanged": true,
+  "checks": 13,
+  "all_checks_passed": true,
+  "python_tests": 39,
+  "source_syntax_checked": true,
+  "new_private_data_reads": 0,
+  "remote_api_calls": 0,
+  "gpu_calls": 0,
+  "production_writes": 0,
+  "activation_ready": false
+}

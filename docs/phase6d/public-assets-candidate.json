@@ -1,0 +1,404 @@
+[
+  {
+    "path": "/allemand/app.js",
+    "file": "allemand/app.js",
+    "type": "text/javascript",
+    "sha256": "16ca205fb804b8485c74c28f02830813658fa764b6b66e92698e62271d671d44"
+  },
+  {
+    "path": "/allemand/style.css",
+    "file": "allemand/style.css",
+    "type": "text/css",
+    "sha256": "6ad731e1da2079e5704a1f8321323fbb5345efaff2cec727aa6473eefb61465b"
+  },
+  {
+    "path": "/astro/app.js",
+    "file": "astro/app.js",
+    "type": "text/javascript",
+    "sha256": "7296de786511fd515477cd937f75a8a69dfea3cbeaa6ba0f55d4dcd6223c0e10"
+  },
+  {
+    "path": "/downloads/nfc/apercu-18-tags.png",
+    "file": "downloads/nfc/apercu-18-tags.png",
+    "type": "image/png",
+    "sha256": "ca4e0f8171fe9ff94770818af6d59e1fc2d035ed90ed1084551d243038dd650c"
+  },
+  {
+    "path": "/energy-breakdown-card.js",
+    "file": "energy-breakdown-card.js",
+    "type": "text/javascript",
+    "sha256": "cf59ed42d8b5524bae59dc31ec32f14da85129d2eae33cbf5cd087e296ef61a1"
+  },
+  {
+    "path": "/energy-flow-card-plus.js",
+    "file": "energy-flow-card-plus.js",
+    "type": "text/javascript",
+    "sha256": "10ffb8db8f51b6d55d9d9150a0719ba492c25fa450dfefe627d342fd3dc9f595"
+  },
+  {
+    "path": "/frigo.css",
+    "file": "frigo.css",
+    "type": "text/css",
+    "sha256": "ff6eee4ac51adacee0f8d83092242e390d46230fd8360bdaf179d587d7f90534"
+  },
+  {
+    "path": "/frigo.js",
+    "file": "frigo.js",
+    "type": "text/javascript",
+    "sha256": "f132ff5faf618a4e63d96f5c95459b017a00a224b0235b38e14415957de08982"
+  },
+  {
+    "path": "/jarvis/app.js",
+    "file": "jarvis/app.js",
+    "type": "text/javascript",
+    "sha256": "80d5341134f7b2fd6777cdd72dd067ed96f6ffcdb9891f4c460990a114266814"
+  },
+  {
+    "path": "/jarvis/archive.js",
+    "file": "jarvis/archive.js",
+    "type": "text/javascript",
+    "sha256": "91c4bdeef401c6f626019fddde215a18193d13900a37d6efd760ff0ee6739cd6"
+  },
+  {
+    "path": "/jarvis/camera-worker.js",
+    "file": "jarvis/camera-worker.js",
+    "type": "text/javascript",
+    "sha256": "4ce8659fbd76bec1e33ea3f29d039437aebe7e2bed019c6180a4c84e74113152"
+  },
+  {
+    "path": "/jarvis/camera.js",
+    "file": "jarvis/camera.js",
+    "type": "text/javascript",
+    "sha256": "439fb23acd4dfefe766cab7c51d4d92a665d328a0ce5f0db7d1b81f9d7522a5f"
+  },
+  {
+    "path": "/jarvis/capabilities.css",
+    "file": "jarvis/capabilities.css",
+    "type": "text/css",
+    "sha256": "37bfecaf536afcd8691634bb22ac09dfd193eed7c5efdd8af6d1330232bd0323"
+  },
+  {
+    "path": "/jarvis/capabilities.js",
+    "file": "jarvis/capabilities.js",
+    "type": "text/javascript",
+    "sha256": "62f0a2cc1f4c4c86fca798d527164e54c521ce5ad0baf75edb86edb6eadb6294"
+  },
+  {
+    "path": "/jarvis/cinema.css",
+    "file": "jarvis/cinema.css",
+    "type": "text/css",
+    "sha256": "e14d4845663b4d175912d40e274b03947552224471550b63f439d48880bcd4a9"
+  },
+  {
+    "path": "/jarvis/cockpit.css",
+    "file": "jarvis/cockpit.css",
+    "type": "text/css",
+    "sha256": "8734221f643bce912c0b0df40438174a05298cf0304f9fc655c376e686b98cba"
+  },
+  {
+    "path": "/jarvis/codex-voice.js",
+    "file": "jarvis/codex-voice.js",
+    "type": "text/javascript",
+    "sha256": "1d87f1da88313e123b05e6a539d4f8f3ee90d82e08894965ac9cdde268e2a31b"
+  },
+  {
+    "path": "/jarvis/hologram.css",
+    "file": "jarvis/hologram.css",
+    "type": "text/css",
+    "sha256": "a1504488d1760f9038d5641dc376e51e62bcc8acfbf6a86fcaf4617511738ff6"
+  },
+  {
+    "path": "/jarvis/hologram.js",
+    "file": "jarvis/hologram.js",
+    "type": "text/javascript",
+    "sha256": "96f97a89fddac6ada02faad89edd2fe4651b6c67c011a6c6342ad8e95ce80ae0"
+  },
+  {
+    "path": "/jarvis/hud.js",
+    "file": "jarvis/hud.js",
+    "type": "text/javascript",
+    "sha256": "78632204c7b59b2782b8dc23312804adfe329e89f9538aac5461cd7b0838831d"
+  },
+  {
+    "path": "/jarvis/live-diagnostics.js",
+    "file": "jarvis/live-diagnostics.js",
+    "type": "text/javascript",
+    "sha256": "522f75b279350e298429f6ad53c5ebce93e8ce5c608f71bc4f2c18d04afcc449"
+  },
+  {
+    "path": "/jarvis/live-pcm.js",
+    "file": "jarvis/live-pcm.js",
+    "type": "text/javascript",
+    "sha256": "1b04c7b5fe12dd9510515ad8b844cb74076441304ef3d364800a06f413d8fbb9"
+  },
+  {
+    "path": "/jarvis/live-state.js",
+    "file": "jarvis/live-state.js",
+    "type": "text/javascript",
+    "sha256": "3ebc5523a9bda904bdbb8f840247f548fc1fc7d999486f2ba3bbc4c935c1ec76"
+  },
+  {
+    "path": "/jarvis/live.js",
+    "file": "jarvis/live.js",
+    "type": "text/javascript",
+    "sha256": "0067033521d6a15f69f235cf31c64cb43468f37d6ca11517b4b868e4e5eaccef"
+  },
+  {
+    "path": "/jarvis/memory3d-gpu.js",
+    "file": "jarvis/memory3d-gpu.js",
+    "type": "text/javascript",
+    "sha256": "82fc4b9e4cf585431e2270fb613783f4cb90af07ccb02e8eb131eef3102298fb"
+  },
+  {
+    "path": "/jarvis/memory3d.css",
+    "file": "jarvis/memory3d.css",
+    "type": "text/css",
+    "sha256": "c771cbbddcd1ab27c68a12546528ee184080dc88e5d31ecf32695f097ddd5e56"
+  },
+  {
+    "path": "/jarvis/memory3d.js",
+    "file": "jarvis/memory3d.js",
+    "type": "text/javascript",
+    "sha256": "8a0c93e83483f02aab925600cc3c4810322835feab57408dde11752005535b25"
+  },
+  {
+    "path": "/jarvis/plasma.js",
+    "file": "jarvis/plasma.js",
+    "type": "text/javascript",
+    "sha256": "e595c8840f711a43e7d922b36dc300c2fb39eb341ca2d1db2b3f02beb332edad"
+  },
+  {
+    "path": "/jarvis/reference.css",
+    "file": "jarvis/reference.css",
+    "type": "text/css",
+    "sha256": "6c1ff9de7c7d8cbe1872721bf418f2608eaabb37cbe561d514cb1cca967ecde7"
+  },
+  {
+    "path": "/jarvis/style.css",
+    "file": "jarvis/style.css",
+    "type": "text/css",
+    "sha256": "903ccc8b392996ee4bc7b81577804748c2085023cd802b89f9ab88dfa0f051d0"
+  },
+  {
+    "path": "/jarvis/usage.js",
+    "file": "jarvis/usage.js",
+    "type": "text/javascript",
+    "sha256": "8b435cb32547040b3292c532d7f1dc0a06728c260f4c97b76a8fc03e5a815ace"
+  },
+  {
+    "path": "/jarvis/vendor/three.module.min.js",
+    "file": "jarvis/vendor/three.module.min.js",
+    "type": "text/javascript",
+    "sha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
+  },
+  {
+    "path": "/jarvis/vendor/vision/face_detector.tflite",
+    "file": "jarvis/vendor/vision/face_detector.tflite",
+    "type": "application/octet-stream",
+    "sha256": "b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f"
+  },
+  {
+    "path": "/jarvis/vendor/vision/vision.module.js",
+    "file": "jarvis/vendor/vision/vision.module.js",
+    "type": "text/javascript",
+    "sha256": "de83c48ff329717a27aeb528d5ef5f47f077c628a5302dc483aca5b513e7464b"
+  },
+  {
+    "path": "/jarvis/vendor/vision/vision_bundle.js",
+    "file": "jarvis/vendor/vision/vision_bundle.js",
+    "type": "text/javascript",
+    "sha256": "43c65a77825c5d5af7456d4781a64cd15cb3e53f479ff1f923c12b5adecf2b44"
+  },
+  {
+    "path": "/jarvis/vendor/vision/wasm/vision_wasm_internal.js",
+    "file": "jarvis/vendor/vision/wasm/vision_wasm_internal.js",
+    "type": "text/javascript",
+    "sha256": "6f6b86509cf9e163ea1cfec7edc8cf53732699c04781e4c21c557c1ba402310e"
+  },
+  {
+    "path": "/jarvis/vendor/vision/wasm/vision_wasm_internal.wasm",
+    "file": "jarvis/vendor/vision/wasm/vision_wasm_internal.wasm",
+    "type": "application/wasm",
+    "sha256": "cb3ec20026a9aecc2a81a93c25630ceb5389297ddb7a5f0bd61dd09cde606b9b"
+  },
+  {
+    "path": "/jarvis/vendor/vision/wasm/vision_wasm_nosimd_internal.js",
+    "file": "jarvis/vendor/vision/wasm/vision_wasm_nosimd_internal.js",
+    "type": "text/javascript",
+    "sha256": "9f8fc960e363f0fb2f42f7937b97ae9cf9a5630490f71031fa90caa9bb121938"
+  },
+  {
+    "path": "/jarvis/vendor/vision/wasm/vision_wasm_nosimd_internal.wasm",
+    "file": "jarvis/vendor/vision/wasm/vision_wasm_nosimd_internal.wasm",
+    "type": "application/wasm",
+    "sha256": "924274fcd5ac8985f6570a8573e7971b7bd2d580ba1b8f3beb0ba8f95db6347c"
+  },
+  {
+    "path": "/jarvis/voice-gate.js",
+    "file": "jarvis/voice-gate.js",
+    "type": "text/javascript",
+    "sha256": "e9a71b2a85bbbe662008f89f1e5fe7bee36be146a61068e736a6e41d9aa5fe45"
+  },
+  {
+    "path": "/jarvis/voice-router.js",
+    "file": "jarvis/voice-router.js",
+    "type": "text/javascript",
+    "sha256": "b848df088de7a1a614aa8497debed3156aa9f0a3ed809ffdfe2ae213dfc010fb"
+  },
+  {
+    "path": "/jarvis/workspace.css",
+    "file": "jarvis/workspace.css",
+    "type": "text/css",
+    "sha256": "ac0ab85ab66e88ebe1cb359fe31653d0baaf89e1844004928e2b31a580dd8284"
+  },
+  {
+    "path": "/jarvis/workspace.js",
+    "file": "jarvis/workspace.js",
+    "type": "text/javascript",
+    "sha256": "a9776d94c0b81c6e1c22a0a216c34be11171e68a4829605a6f33cd7add94fd60"
+  },
+  {
+    "path": "/miroir/app.js",
+    "file": "miroir/app.js",
+    "type": "text/javascript",
+    "sha256": "2b66b83e87dbae494ad690725b39cca64df24ef912a61ed39ce8771df318d671"
+  },
+  {
+    "path": "/miroir/style.css",
+    "file": "miroir/style.css",
+    "type": "text/css",
+    "sha256": "9cc2159273d79f65c475eb32b919c4c9244bc5a5e824141e4d69606bf2f1aaee"
+  },
+  {
+    "path": "/power-flow-card-plus.js",
+    "file": "power-flow-card-plus.js",
+    "type": "text/javascript",
+    "sha256": "2bed371f3352923c929cc49f57f8023be41df57e54921bc186e7e93f273b78ad"
+  },
+  {
+    "path": "/solana-paper/app.js",
+    "file": "solana-paper/app.js",
+    "type": "text/javascript",
+    "sha256": "3622fda32ba73aaa47caafd93906efe2e87940b1adbcce768aa8b7c23cf3ad5e"
+  },
+  {
+    "path": "/solana-paper/style.css",
+    "file": "solana-paper/style.css",
+    "type": "text/css",
+    "sha256": "80834d886e01dbb0f1372cdcf0fd36e789829e3de554466f7ab6a3eb7f232e7e"
+  },
+  {
+    "path": "/verbes/app.js",
+    "file": "verbes/app.js",
+    "type": "text/javascript",
+    "sha256": "8cd41ca1dde61a7019bba66690d63597f47450260a7793e537634d350a5218ca"
+  },
+  {
+    "path": "/verbes/style.css",
+    "file": "verbes/style.css",
+    "type": "text/css",
+    "sha256": "5efaf704e34f379b09d598bb68c5783b1d0c38d4aa5481241f42cd37dd390758"
+  },
+  {
+    "path": "/verbes/verbs.js",
+    "file": "verbes/verbs.js",
+    "type": "text/javascript",
+    "sha256": "1f13bc60d75bc934e6e11048443f80ba46808bc02d986ada0c8d817cad3c1703"
+  },
+  {
+    "path": "/waf-daily-energy-flow-card.js",
+    "file": "waf-daily-energy-flow-card.js",
+    "type": "text/javascript",
+    "sha256": "df924d2cb70fddb500852dd28bd356f0f5be3e6aa51267560a0a021492eab8f9"
+  },
+  {
+    "path": "/waf-energy-balance-card.js",
+    "file": "waf-energy-balance-card.js",
+    "type": "text/javascript",
+    "sha256": "923d3f4a8c8c173ada8fec252c21f1e66ab9864cc2ca46fdb6d9de5186d51cc7"
+  },
+  {
+    "path": "/waf-energy-dashboard-card.js",
+    "file": "waf-energy-dashboard-card.js",
+    "type": "text/javascript",
+    "sha256": "6ed5b6953d0c3165085dc4a8bd2b6f3f0cf602be5d7880a880abc7ede2c1f8cf"
+  },
+  {
+    "path": "/waf-energy-map-card.js",
+    "file": "waf-energy-map-card.js",
+    "type": "text/javascript",
+    "sha256": "4c85f0421a5cc8c6d8bdf8d0b8d47f31e414c89a765be71c9b2f8b5e75ad967b"
+  },
+  {
+    "path": "/jarvis",
+    "file": "jarvis/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d"
+  },
+  {
+    "path": "/jarvis/",
+    "file": "jarvis/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d"
+  },
+  {
+    "path": "/jarvis/index.html",
+    "file": "jarvis/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d"
+  },
+  {
+    "path": "/miroir",
+    "file": "miroir/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "b777c7df18ad7df63c4c0576a88f19ab6cdba7ac567ffd02362925d99120ae5d"
+  },
+  {
+    "path": "/miroir/",
+    "file": "miroir/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "b777c7df18ad7df63c4c0576a88f19ab6cdba7ac567ffd02362925d99120ae5d"
+  },
+  {
+    "path": "/miroir/index.html",
+    "file": "miroir/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "b777c7df18ad7df63c4c0576a88f19ab6cdba7ac567ffd02362925d99120ae5d"
+  },
+  {
+    "path": "/astro",
+    "file": "astro/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "73a54bd143d8ba69bcadb7dbbbef279fbc0b7d194ab44761b127e3b0cc7c0b30"
+  },
+  {
+    "path": "/astro/",
+    "file": "astro/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "73a54bd143d8ba69bcadb7dbbbef279fbc0b7d194ab44761b127e3b0cc7c0b30"
+  },
+  {
+    "path": "/astro/index.html",
+    "file": "astro/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "73a54bd143d8ba69bcadb7dbbbef279fbc0b7d194ab44761b127e3b0cc7c0b30"
+  },
+  {
+    "path": "/solana-paper",
+    "file": "solana-paper/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "b481abf819547eb63f1673c5828ddae8065eefa13cdf5580f7fe49cb14fa22de"
+  },
+  {
+    "path": "/solana-paper/",
+    "file": "solana-paper/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "b481abf819547eb63f1673c5828ddae8065eefa13cdf5580f7fe49cb14fa22de"
+  },
+  {
+    "path": "/solana-paper/index.html",
+    "file": "solana-paper/index.html",
+    "type": "text/html; charset=utf-8",
+    "sha256": "b481abf819547eb63f1673c5828ddae8065eefa13cdf5580f7fe49cb14fa22de"
+  }
+]

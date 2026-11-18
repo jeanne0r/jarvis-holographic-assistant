@@ -1,0 +1,24 @@
+# REVIEW ONLY; all identities, paths, migration and IPC grants need approval.
+[Unit]
+Description=Jarvis canonical legacy storage with enforced resource ACL
+[Service]
+User=jarvis-storage
+Group=jarvis-storage
+SupplementaryGroups=jarvis-storage-ipc
+WorkingDirectory=/opt/jarvis-2/release
+ExecStart=/usr/bin/python3 -m memory_manager.production.storage_main --config /etc/jarvis-storage/config.json
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateNetwork=no
+IPAddressDeny=any
+IPAddressAllow=localhost
+# Add only the approved CT205 address for the optional read-only index connector.
+ProtectHome=yes
+ProtectSystem=strict
+# Approved canonical files must be bound here; no copying to a shadow knowledge DB.
+ReadWritePaths=/var/lib/jarvis-storage /run/jarvis-storage
+RestrictAddressFamilies=AF_UNIX AF_INET
+TasksMax=16
+MemoryMax=768M
+Restart=no

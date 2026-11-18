@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "host": "192.0.2.215",
+      "port": 8123,
+      "blocked": true
+    },
+    {
+      "host": "192.0.2.238",
+      "port": 6333,
+      "blocked": true
+    },
+    {
+      "host": "192.0.2.96",
+      "port": 11434,
+      "blocked": true
+    },
+    {
+      "host": "1.1.1.1",
+      "port": 443,
+      "blocked": true
+    }
+  ],
+  "passed": true,
+  "uid": 1001,
+  "boot_id": "f94ad219-eccb-480e-8e22-c24c922da9ea",
+  "nft_sha256": "8e8d0c21e9b39d841ce17e52b6585b43d086cc643073339e6d0173459e6e316d",
+  "test_note": "TCP attempts from hermeslab after firewall confirmed active; no application action."
+}

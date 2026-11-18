@@ -1,0 +1,49 @@
+{
+  "fastembed": "0.9.1",
+  "onnxruntime": "1.31.1",
+  "tokenizers": "0.23.3",
+  "fastembed/text/onnx_embedding.py": [
+    {
+      "line": 231,
+      "code": "        specific_model_path: str | None = None,"
+    },
+    {
+      "line": 251,
+      "code": "            specific_model_path (Optional[str], optional): The specific path to the onnx model dir if it should be imported from somewhere else"
+    },
+    {
+      "line": 273,
+      "code": "        self._specific_model_path = specific_model_path"
+    },
+    {
+      "line": 278,
+      "code": "            specific_model_path=self._specific_model_path,"
+    },
+    {
+      "line": 316,
+      "code": "            specific_model_path=self._specific_model_path,"
+    }
+  ],
+  "fastembed/text/text_embedding.py": [
+    {
+      "line": 118,
+      "code": "                specific_model_path (str): A local directory with the model files to load"
+    },
+    {
+      "line": 210,
+      "code": "    def query_embed(self, query: str | Iterable[str], **kwargs: Any) -> Iterable[NumpyArray]:"
+    },
+    {
+      "line": 221,
+      "code": "        yield from self.model.query_embed(query, **kwargs)"
+    },
+    {
+      "line": 223,
+      "code": "    def passage_embed(self, texts: Iterable[str], **kwargs: Any) -> Iterable[NumpyArray]:"
+    },
+    {
+      "line": 235,
+      "code": "        yield from self.model.passage_embed(texts, **kwargs)"
+    }
+  ]
+}

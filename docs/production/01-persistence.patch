@@ -1,0 +1,642 @@
+--- /dev/null
++++ b/ops/production-storage-migrate.py
+@@ -0,0 +1,60 @@
++"""Prepared migration command. Default only describes requirements, no data access.
++Execution is forbidden until this exact patch, backup location, outage and owner map
++are approved. Never use a visual profile as an owner mapping.
++"""
++import argparse,json,os,pathlib,stat,sys
++sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]))
++from memory_manager.production.persistence import Persistence
++from memory_manager.store import snapshot
++
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--execute-approved',action='store_true');p.add_argument('--approval-file');a=p.parse_args()
++ if not a.execute_approved:
++  print('PREPARED ONLY: approved private mapping, consistent backups, stopped writers and separate production permission required. No database opened.');return
++ if not a.approval_file:raise PermissionError('Explicit private approval file required')
++ fd=os.open(a.approval_file,os.O_RDONLY|os.O_NOFOLLOW)
++ try:
++  st=os.fstat(fd)
++  if not stat.S_ISREG(st.st_mode) or st.st_uid not in (0,os.getuid()) or st.st_mode&0o077 or st.st_size>1024**2:raise PermissionError('Private approved manifest')
++  cfg=json.loads(os.read(fd,1024**2+1))
++ finally:os.close(fd)
++ if cfg.get('approved') is not True or cfg.get('writers_stopped') is not True:raise PermissionError('Approved mapping and exclusive write window required')
++ for mapping in cfg.get('mapping',[]):
++  if set(mapping)-{'kind','id','owner','space','project'} or mapping.get('kind') not in ('document','conversation','memory') or mapping.get('owner') not in cfg['approved_subjects'] or not mapping.get('owner') or mapping.get('space') not in cfg['approved_spaces']:raise PermissionError('Complete explicit mapping required before mutation')
++ brain=pathlib.Path(cfg['brain']).resolve(strict=True);voice=pathlib.Path(cfg['voice']).resolve(strict=True);backup=pathlib.Path(cfg['backup_directory']).resolve(strict=True)
++ if backup.stat().st_mode&0o077:raise PermissionError('Private approved backup directory')
++ os.umask(0o077)
++ # SQLite backup API includes committed WAL data. Each backup has integrity/hash checks.
++ import uuid
++ for db in (brain,voice):snapshot(db,backup/(db.name+'.'+uuid.uuid4().hex+'.sqlite'))
++ repo=Persistence(brain,voice)
++ try:
++  repo.migrate()
++  for mapping in cfg.get('mapping',[]):
++   if set(mapping)-{'kind','id','owner','space','project'} or mapping['owner'] not in cfg['approved_subjects'] or not mapping['owner'] or mapping['space'] not in cfg['approved_spaces']:raise PermissionError('Explicit subject/scope required')
++   kind=mapping['kind'];key=mapping['id']
++   if kind!='memory':
++    previous=repo.metadata(kind,key)
++    if previous:
++     if previous['owner']!=mapping['owner'] or previous['space']!=mapping['space'] or previous.get('project')!=mapping.get('project'):raise PermissionError('Ownership conflict')
++     continue
++   else:
++    previous=repo.voice.execute('SELECT * FROM g_fact_acl WHERE space=? AND key=?',(mapping['space'],key)).fetchone()
++    if previous:
++     if previous['owner']!=mapping['owner']:raise PermissionError('Fact owner conflict')
++     continue
++   if kind=='document':repo.claim(kind,key,mapping['owner'],mapping['space'],mapping.get('project'),approved=True)
++   elif kind=='conversation':
++    row=repo.db.execute('SELECT space FROM conversation_sessions WHERE id=?',(key,)).fetchone()
++    if not row or row['space']!=mapping['space']:raise PermissionError('Conversation source mismatch')
++    repo.claim(kind,key,mapping['owner'],mapping['space'],mapping.get('project'),approved=True)
++   elif kind=='memory':
++    row=repo.voice.execute('SELECT 1 FROM facts WHERE space=? AND key=?',(mapping['space'],key)).fetchone()
++    if not row:raise PermissionError('Fact source mismatch')
++    with repo.voice:repo.voice.execute('INSERT INTO g_fact_acl VALUES(?,?,?,?,?,0)',(mapping['space'],key,mapping['owner'],1,'observed'))
++   else:raise PermissionError('Auxiliary account mapping requires its verified file/resource manifest; not inferred here')
++ finally:repo.close()
++ print('Approved additive migration completed; no source contents printed. Auxiliary ownership not inferred.')
++if __name__=='__main__':
++ try:main()
++ except Exception:print('Migration stopped. Inspect private state and backups before retry; no automatic restore.',file=sys.stderr);raise SystemExit(1)
+--- /dev/null
++++ b/gateway-persistent-client.mjs
+@@ -0,0 +1,61 @@
++// Private storage transport only. No process creation and no direct database access.
++import net from 'node:net';
++import {randomUUID} from 'node:crypto';
++export function storageClient({socketPath,credential,identity,timeoutMs=30000}){
++ if(!socketPath?.startsWith('/')||typeof credential!=='string'||credential.length<32||identity?.kind!=='human'||!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>30000)throw Error('Storage binding');
++ return (method,args={})=>new Promise((resolve,reject)=>{
++  const raw=Buffer.from(JSON.stringify({credential,method,args:{...args,subject:identity.subject}}));
++  if(raw.length>4*1024**2)return reject(Error('Storage frame bound'));
++  const socket=net.createConnection(socketPath);let received=Buffer.alloc(0),size,done=false;
++  const timer=setTimeout(()=>socket.destroy(Error('Storage deadline; do not replay writes')),timeoutMs);
++  socket.on('connect',()=>{const h=Buffer.alloc(4);h.writeUInt32BE(raw.length);socket.write(Buffer.concat([h,raw]))});
++  socket.on('data',part=>{received=Buffer.concat([received,part]);if(received.length>4*1024**2+4)return socket.destroy(Error('Storage response bound'));if(size===undefined&&received.length>=4){size=received.readUInt32BE();if(size<1||size>4*1024**2)return socket.destroy(Error('Storage frame'))}if(size!==undefined&&received.length>=size+4){try{const r=JSON.parse(received.subarray(4,size+4));if(!r.ok)throw Error('Storage operation denied');done=true;resolve(r.value);socket.end()}catch(e){socket.destroy(e)}}});
++  socket.on('error',reject);socket.on('close',()=>{clearTimeout(timer);if(!done)reject(Error('Storage interrupted; no automatic replay'))});
++ });
++}
++export function persistentBindings({identity,rpc,broker,hybrid,tools,files,accountServices={},physical}){
++ const common={space:identity.space||identity.defaultSpace};
++ const call=(name,args={})=>rpc(name,{...common,...args});
++ const runRow=r=>{const payload=typeof r.payload==='string'?JSON.parse(r.payload):r.payload;if(payload?.context?.space!==common.space)throw Error('Run space denied');return {...r,space:payload.context.space,version:1,status:r.state}};
++ const run=async key=>runRow(await broker.call(identity,'get',{job:key,space:common.space}));
++ const repo={
++  list:(kind,query)=>kind==='run'?broker.call(identity,'list',{space:common.space}).then(rows=>rows.flatMap(r=>{try{return [runRow(r)]}catch{return []}})):call('list',{kind,space:query.space||common.space,query}),
++  metadata:async(kind,id)=>kind==='run'?run(id):kind==='memory'?call('fact.metadata',{data:{key:id}}):call('metadata',{kind,id}),
++  get:(kind,id)=>kind==='run'?run(id):call('get',{kind,id}),
++  create:(kind,data)=>call('create',{kind,data}),
++  mutate:async(kind,id,data,guard)=>{
++   if(kind==='memory')id=JSON.stringify([common.space,id]);
++   return call('mutate',{kind,id,data,guard});
++  },
++ };
++ const memory=async(action,data)=>{
++  const space=data.space||common.space;
++  if(action==='list')return call('facts',{space});
++  if(!['save','forget','save_correction'].includes(action))throw Error('Fact action');
++  // No automatic promotion of a model correction; sidecar status remains inferred.
++  return call(action==='forget'?'fact.forget':'fact.save',{space,data});
++ };
++ memory.metadata=(key,space)=>call('fact.metadata',{space,data:{key}});
++ const services={
++  'projects.list':()=>call('projects.list'),
++  'files.tree':({project})=>files.tree({project}),
++  'chat.read':({project})=>call('chat.read',{project}),
++  'chat.clear':({project})=>call('chat.clear',{project}),
++  'conversation.record':({space,data})=>call('conversation.record',{space,data}),
++  'codex.submit':({project,prompt})=>broker.call(identity,'submit',{project,key:randomUUID(),payload:{question:prompt,context:{space:common.space}},space:common.space}),
++  'memory/status':async({space})=>({persistent:true,savedFacts:(await call('facts',{space})).length,index:{state:'unknown'}}),
++  'memory/map':({space,offset})=>call('map',{space,offset}),
++  'memory.sync':({space})=>call('sync',{space}),
++  'memory.import':async({space,stream,maxBytes})=>{
++   const size=Number(stream.headers['content-length']);if(size>maxBytes)throw Error('Import bound');
++   const u=await call('upload.begin',{space,size});let offset=0;
++   try{for await(const part of stream){for(let i=0;i<part.length;i+=32768){const chunk=part.subarray(i,i+32768);await call('upload.chunk',{space,upload:u.upload,offset,chunk:chunk.toString('base64')});offset+=chunk.length}}
++    if(offset!==size)throw Error('Incomplete import');return await call('upload.finish',{space,upload:u.upload});
++   }catch(e){await call('upload.abort',{space,upload:u.upload}).catch(()=>{});throw e}
++  },
++  'hybrid.answer':hybrid,'tools.call':({space,name,args})=>tools(identity,space,name,args),
++  'physical.execute':physical||(()=>{throw Error('Physical service not commissioned')}),
++  ...accountServices,
++ };
++ return {repo,services,memory};
++}
+--- /dev/null
++++ b/gateway-account-bindings.mjs
+@@ -0,0 +1,15 @@
++import {fridgeView} from './gateway-fridge-format.mjs';
++// Known native JSON formats are served by the storage identity, not legacy globals.
++export function accountBindings({rpcFor,accountIds,upstreams={}}){
++ return {
++  ...upstreams,
++  '/api/mirror/tasks':({identity,method,data})=>{
++   const id=accountIds[identity.subject]?.tasks;if(!id)throw Error('Task account not bound');
++   const rpc=rpcFor(identity);return rpc(method==='GET'?'tasks.list':'tasks.change',{subject:identity.subject,space:identity.space||identity.defaultSpace,id,action:method,data});
++  },
++  '/api/fridge/stock':async({identity,parameters})=>{
++   const id=accountIds[identity.subject]?.fridge;if(!id)throw Error('Fridge account not bound');
++   return fridgeView(await rpcFor(identity)('fridge.list',{space:identity.space||identity.defaultSpace,id}),parameters);
++  },
++ };
++}
+--- /dev/null
++++ b/gateway-fridge-format.mjs
+@@ -0,0 +1,60 @@
++// Pure legacy display functions; no storage, network or equipment effects.
++const FRIDGE_LOCATIONS = {
++  frigo_cuisine: {
++    id: "frigo_cuisine",
++    name: "Frigo cuisine",
++    sensor: "sensor.frigo_cuisine_stock",
++    icon: "mdi:fridge",
++    sourceUrl: "https://192.0.2.16:8788/frigo.html?location=frigo_cuisine",
++  },
++  frigo_dehors: {
++    id: "frigo_dehors",
++    name: "Frigo dehors",
++    sensor: "sensor.frigo_dehors_stock",
++    icon: "mdi:fridge-outline",
++    sourceUrl: "https://192.0.2.16:8788/frigo.html?location=frigo_dehors",
++  },
++};
++
++function normalizeFridgeLocation(value) {
++  return FRIDGE_LOCATIONS[value] ? value : "frigo_cuisine";
++}
++
++function fridgeActiveItems(store, location = "") {
++  const normalized = location ? normalizeFridgeLocation(location) : "";
++  return store.items.filter((item) => {
++    if (item.status !== "in_fridge") return false;
++    const itemLocation = normalizeFridgeLocation(item.location || "frigo_cuisine");
++    return !normalized || itemLocation === normalized;
++  });
++}
++
++function fridgeSummary(store, location = "") {
++  const active = fridgeActiveItems(store, location);
++  const today = new Date();
++  today.setHours(0, 0, 0, 0);
++  const soonLimit = new Date(today);
++  soonLimit.setDate(today.getDate() + 3);
++  const soon = active
++    .filter((item) => item.expiresAt)
++    .filter((item) => {
++      const date = new Date(`${item.expiresAt}T12:00:00`);
++      return !Number.isNaN(date.getTime()) && date <= soonLimit;
++    })
++    .sort((a, b) => String(a.expiresAt).localeCompare(String(b.expiresAt)));
++
++  return {
++    activeCount: active.length,
++    soonCount: soon.length,
++    expiredCount: soon.filter((item) => new Date(`${item.expiresAt}T12:00:00`) < today).length,
++    soon: soon.slice(0, 8),
++    location: location ? normalizeFridgeLocation(location) : "",
++    updatedAt: new Date().toISOString(),
++  };
++}
++
++
++export function fridgeView(store,parameters={}){
++ const location=normalizeFridgeLocation(parameters.location||'frigo_cuisine');
++ return {items:fridgeActiveItems(store,location).sort((a,b)=>String(a.expiresAt||'9999-12-31').localeCompare(String(b.expiresAt||'9999-12-31'))),summary:fridgeSummary(store,location),location:FRIDGE_LOCATIONS[location],locations:Object.values(FRIDGE_LOCATIONS),recentEvents:store.events.filter(e=>normalizeFridgeLocation(e.location||'frigo_cuisine')===location).slice(-20).reverse()};
++}
+--- /dev/null
++++ b/memory_manager/production/__init__.py
+@@ -0,0 +1 @@
++"""Review-only production bindings. No service or database opened on import."""
+--- /dev/null
++++ b/memory_manager/production/persistence.py
+@@ -0,0 +1,138 @@
++"""Bindings over existing formats, with ownership metadata in the same SQLite files.
++Only explicitly configured copies are used by tests. Never infer historical owners.
++Legacy parsers are compiled from named functions, without executing module startup.
++"""
++import ast,hashlib,io,json,os,pathlib,re,sqlite3,time,uuid,zipfile
++from datetime import datetime
++from zoneinfo import ZoneInfo
++from ..phase6d.legacy_repository import LegacyRepository
++from ..store import snapshot
++
++ROOT=pathlib.Path(__file__).resolve().parents[2]
++def functions(path,names,environment):
++ tree=ast.parse(pathlib.Path(path).read_text())
++ nodes=[n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.Assign)) and (getattr(n,'name',None) in names or isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='TOPICS' for t in n.targets))]
++ if {n.name for n in nodes if isinstance(n,ast.FunctionDef)}!=set(names):raise ValueError('Legacy source contract changed')
++ exec(compile(ast.Module(body=nodes,type_ignores=[]),str(path),'exec'),environment)
++ return environment
++
++class TransactionDB:
++ """Legacy helpers cannot commit or begin outside the host-owned transaction."""
++ def __init__(self,db):self.db=db
++ def execute(self,sql,params=()):
++  if sql.strip().upper()=='BEGIN IMMEDIATE':return None
++  return self.db.execute(sql,params)
++ def commit(self):pass
++
++class Persistence(LegacyRepository):
++ def __init__(self,brain,voice):
++  super().__init__(pathlib.Path(brain).resolve(strict=True))
++  self.voice_path=pathlib.Path(voice).resolve(strict=True)
++  self.voice=sqlite3.connect(self.voice_path);self.voice.row_factory=sqlite3.Row
++  env=dict(json=json,pathlib=pathlib,hashlib=hashlib,re=re,time=time,os=os,datetime=datetime,ZoneInfo=ZoneInfo,zipfile=zipfile,io=io,DB=TransactionDB(self.db),SPACES={s:s for s in ['user','amelie','malik','theo','commun']})
++  self.legacy=functions(ROOT/'store.py',{'clean','topic','put','messages','space_id','conversation_session','conversation_record','import_one','import_iter','iter_json_array','import_stream','import_zip_file','import_export_file'},env)
++  # Enforce document ownership before the old upsert, and claim only newly created rows.
++  self.raw_put=env['put'];env['put']=self._put
++  import unicodedata
++  self.norm=functions(ROOT/'voice-memory.py',{'norm'},dict(re=re,unicodedata=unicodedata))['norm']
++  self.actor=None;self.space=None
++ def migrate(self):
++  result=super().migrate()
++  if not self.db.execute("SELECT 1 FROM sqlite_master WHERE name='g_document_revisions'").fetchone():
++   snapshot(self.path,str(self.path)+'.before-production-history-'+uuid.uuid4().hex)
++   with self.db:
++    self.db.execute('CREATE TABLE g_document_revisions(id INTEGER PRIMARY KEY,resource TEXT,owner TEXT,version INTEGER,previous TEXT,updated REAL)')
++    self.db.execute('CREATE TABLE g_conversation_revisions(id INTEGER PRIMARY KEY,session_id TEXT,turn INTEGER,owner TEXT,revision INTEGER,previous TEXT,updated REAL)')
++  if not self.voice.execute("SELECT 1 FROM sqlite_master WHERE name='g_fact_acl'").fetchone():
++   snapshot(self.voice_path,str(self.voice_path)+'.before-fact-acl-'+uuid.uuid4().hex)
++   with self.voice:
++    self.voice.execute('CREATE TABLE g_fact_acl(space TEXT,key TEXT,owner TEXT NOT NULL,version INTEGER NOT NULL,status TEXT NOT NULL,deleted INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(space,key))')
++    self.voice.execute('CREATE TABLE g_fact_revisions(id INTEGER PRIMARY KEY,space TEXT,key TEXT,owner TEXT,version INTEGER,action TEXT,previous TEXT,updated REAL)')
++  return result
++ def metadata(self,kind,key):
++  if kind=='memory':
++   space,key=json.loads(key)
++   row=self.voice.execute('SELECT owner,space,version,status,deleted FROM g_fact_acl WHERE space=? AND key=?',(space,key)).fetchone()
++   return dict(row) if row else None
++  return super().metadata(kind,key)
++ def _put(self,document):
++  key=document['id'];old=self.db.execute('SELECT space FROM docs WHERE id=?',(key,)).fetchone();acl=super().metadata('document',key)
++  if old and (not acl or acl['owner']!=self.actor or acl['space']!=self.space):raise PermissionError('Existing source not owned')
++  document['space']=self.space
++  if old and (not document.get('fingerprint') or self.db.execute('SELECT fingerprint FROM docs WHERE id=?',(key,)).fetchone()[0]!=document.get('fingerprint')):
++   previous=self.db.execute('SELECT * FROM docs WHERE id=?',(key,)).fetchone()
++   self.db.execute('INSERT INTO g_document_revisions(resource,owner,version,previous,updated) VALUES(?,?,?,?,?)',(key,self.actor,acl['version'],json.dumps(dict(previous),ensure_ascii=False),time.time()))
++  changed=self.raw_put(document)
++  if not old:self.db.execute('INSERT INTO g_resource_acl VALUES(?,?,?,?,?,1)',('document',key,self.actor,self.space,None))
++  elif changed:self.db.execute("UPDATE g_resource_acl SET version=version+1 WHERE kind='document' AND id=?",(key,))
++  return changed
++ def record(self,subject,space,data):
++  if data.get('space',space)!=space:raise PermissionError('Conversation space')
++  sid=data.get('id');old=self.db.execute('SELECT space,channel FROM conversation_sessions WHERE id=?',(sid,)).fetchone()
++  acl=super().metadata('conversation',sid)
++  if old and (not acl or acl['owner']!=subject or old['space']!=space):raise PermissionError('Conversation owner')
++  if not isinstance(sid,str) or not re.fullmatch('[a-fA-F0-9-]{36}',sid):raise ValueError('Session id')
++  self.actor,self.space=subject,space
++  try:
++   self.db.execute('BEGIN IMMEDIATE')
++   if not old:
++    self.legacy['conversation_session']({**data,'space':space})
++    self.db.execute('INSERT INTO g_resource_acl VALUES(?,?,?,?,?,1)',('conversation',sid,subject,space,None))
++   previous=self.db.execute('SELECT * FROM conversation_turns WHERE session_id=? AND turn=?',(sid,data.get('turn'))).fetchone()
++   if previous and type(data.get('revision'))==int and data['revision']>previous['revision']:
++    self.db.execute('INSERT INTO g_conversation_revisions(session_id,turn,owner,revision,previous,updated) VALUES(?,?,?,?,?,?)',(sid,data['turn'],subject,previous['revision'],json.dumps(dict(previous),ensure_ascii=False),time.time()))
++   result=self.legacy['conversation_record']({**data,'space':space,'expected_space':space})
++   self.db.commit();return result
++  except BaseException:self.db.rollback();raise
++  finally:self.actor=self.space=None
++ def ingest(self,subject,space,path,*,sync=False):
++  self.actor,self.space=subject,space
++  try:
++   self.db.execute('BEGIN IMMEDIATE')
++   if sync:
++    path=pathlib.Path(path)
++    if path.suffix=='.jsonl':
++     sid,msg=self.legacy['messages'](path)
++     count=self._put(dict(id='codex:'+sid,title=next((text[:120] for role,text in msg if role=='Toi'),'Conversation Codex'),body='\n\n'.join(w+': '+text for w,text in msg),kind='Codex',source='Codex local · '+sid,status='Conversation',updated=path.stat().st_mtime,fingerprint=hashlib.sha256(path.read_bytes()).hexdigest())) if msg else 0
++    elif path.suffix=='.md':
++     raw=path.read_text();count=0
++     for i,part in enumerate(re.split(r'(?m)(?=^## )',raw)):
++      if len(part.strip())>=50:count+=self._put(dict(id='memory:'+path.stem+':'+str(i),title=part.splitlines()[0].lstrip('# ').strip(),body=part,kind='Mémoire',status='Note de référence',source='_memory/'+path.name,updated=path.stat().st_mtime,fingerprint=hashlib.sha256(raw.encode()).hexdigest()+':'+str(i)))
++    else:raise ValueError('Approved source format')
++    result={'changed':int(count)}
++   else:result=self.legacy['import_export_file'](path,space)
++   self.db.commit();return result
++  except BaseException:self.db.rollback();raise
++  finally:self.actor=self.space=None
++ def facts(self,subject,spaces,*,include_common=False):
++  out=[]
++  for space in spaces:
++   for r in self.voice.execute("SELECT f.*,a.owner,a.version,a.status FROM facts f JOIN g_fact_acl a USING(space,key) WHERE f.space=? AND a.deleted=0 AND (a.owner=? OR f.space='commun') ORDER BY updated DESC",(space,subject)):
++    item=dict(r);item['id']=json.dumps([space,item['key']],ensure_ascii=False);out.append(item)
++  return out
++ def fact_write(self,subject,space,data,*,forget=False):
++  label=data.get('key','');fact=data.get('fact','')
++  if not isinstance(label,str):raise ValueError('Fact label')
++  key=self.norm(label)
++  if not key or not isinstance(label,str) or len(label)>120 or not forget and (not isinstance(fact,str) or not 1<=len(fact.strip())<=800):raise ValueError('Fact schema')
++  clean=self.legacy['clean']
++  if clean(label)!=label.strip() or not forget and clean(fact)!=fact.strip():raise ValueError('Secret rejected')
++  with self.voice:
++   old=self.voice.execute('SELECT * FROM facts WHERE space=? AND key=?',(space,key)).fetchone()
++   acl=self.voice.execute('SELECT * FROM g_fact_acl WHERE space=? AND key=?',(space,key)).fetchone()
++   if old and (not acl or acl['owner']!=subject):raise PermissionError('Fact ownership')
++   if forget and not old:raise PermissionError('Unknown fact')
++   version=(acl['version'] if acl else 0)+1
++   self.voice.execute('INSERT INTO g_fact_revisions(space,key,owner,version,action,previous,updated) VALUES(?,?,?,?,?,?,?)',(space,key,subject,version,'forget' if forget else 'proposal',json.dumps(dict(old),ensure_ascii=False) if old else None,time.time()))
++   self.voice.execute('INSERT OR REPLACE INTO g_fact_acl VALUES(?,?,?,?,?,?)',(space,key,subject,version,'inferred',int(forget)))
++   if not forget:
++    entity=data.get('entity_id');area=data.get('area')
++    if entity is not None and (not isinstance(entity,str) or not re.fullmatch(r'[a-z_]+\.[a-z0-9_]+',entity)):raise ValueError('Entity format')
++    if area is not None and (not isinstance(area,str) or len(area)>100):raise ValueError('Area format')
++    self.voice.execute('INSERT OR REPLACE INTO facts VALUES(?,?,?,?,?,?,?)',(space,key,label.strip(),fact.strip(),entity,area,time.time()))
++    if data.get('evidence') is not None:
++     evidence=data['evidence'];kind=data.get('kind')
++     if kind not in ('identity','preference','rule') or not isinstance(evidence,str) or not 8<=len(evidence)<=400 or clean(evidence)!=evidence.strip():raise ValueError('Correction evidence')
++     self.voice.execute('INSERT INTO correction_events(space,key,kind,previous_fact,new_fact,evidence,updated) VALUES(?,?,?,?,?,?,?)',(space,key,kind,old['fact'] if old else None,fact.strip(),evidence,time.time()))
++  return {'forgotten':True,'key':key,'space':space} if forget else {'saved':True,'key':key,'fact':fact.strip(),'space':space,'owner':subject,'status':'inferred','version':version}
++ def close(self):self.voice.close();super().close()
+--- /dev/null
++++ b/memory_manager/production/projection.py
+@@ -0,0 +1,66 @@
++"""Legacy 384-D map contract, with owner/space/version checks before text access."""
++import hashlib,math,time,uuid
++
++def memory_map(storage,subject,space,offset,reader):
++ if reader is None:raise RuntimeError('Projection service not configured')
++ if offset is not None:
++  if isinstance(offset,str) and offset.isdigit():offset=int(offset)
++  elif isinstance(offset,str):offset=str(uuid.UUID(offset))
++  elif type(offset)!=int or offset<0:raise ValueError('Map cursor')
++ grant=storage.grant(subject,'storage.read',space);spaces=sorted({space}|({'commun'} if 'commun' in grant.get('common_read',[]) else set()))
++ page=reader(spaces,750,offset);points=page['points'];valid=[]
++ if not isinstance(points,list) or len(points)>750:raise ValueError('Map bound')
++ axes=[]
++ for k in range(3):
++  axis=[math.sin((j+1)*(k+1)*1.61803398875) for j in range(384)]
++  for previous in axes:
++   dot=sum(a*b for a,b in zip(axis,previous));axis=[a-dot*b for a,b in zip(axis,previous)]
++  norm=math.sqrt(sum(a*a for a in axis));axes.append([a/norm for a in axis])
++ for point in points:
++  p=point.get('payload',{});id=p.get('doc_id','');vector=point.get('vector');doc=None
++  if not isinstance(vector,list) or len(vector)!=384 or any(type(x) not in (float,int) or not math.isfinite(x) for x in vector):continue
++  try:
++   if id.startswith('brain:'):
++    key=id[6:];meta=storage.owned(subject,'document',key)
++    if meta['space'] not in spaces:continue
++    row=storage.repo.get('document',key)
++    if not row or row['space']!=meta['space']:continue
++    doc={'docId':id,'title':row['title'][:200],'text':row['body'],'source':row['source'][:300],'space':row['space'],'topic':row['topic']}
++   elif id.startswith('voice:'):
++    _,target,key=id.split(':',2)
++    import json
++    meta=storage.owned(subject,'memory',json.dumps([target,key],ensure_ascii=False))
++    if target not in spaces:continue
++    row=storage.repo.voice.execute('SELECT * FROM facts WHERE space=? AND key=?',(target,key)).fetchone()
++    text=row['fact']+(' Entité : '+row['entity_id'] if row['entity_id'] else '')+(' Pièce : '+row['area'] if row['area'] else '')
++    doc={'docId':id,'title':row['label'],'text':text,'source':'Souvenir vocal explicite','space':target,'topic':'Souvenirs'}
++  except (PermissionError,TypeError,ValueError):continue
++  if not doc or p.get('space')!=doc['space'] or p.get('version')!=hashlib.sha256((doc['title']+'\n'+doc['text']).encode()).hexdigest():continue
++  start=p.get('offset',0)
++  if type(start)!=int or not 0<=start<=len(doc['text']):continue
++  text=doc.pop('text');valid.append({'id':str(point['id']),**doc,'excerpt':text[start:start+480],'position':[round(sum(x*a for x,a in zip(vector,axis)),7) for axis in axes]})
++ return {'points':valid,'sampled':len(valid),'scanned':len(points),'nextOffset':page.get('next_offset'),'indexedPoints':None,'documents':len({p['docId'] for p in valid}),'spaces':spaces,'projection':'Projection orthogonale 3D stable','checkedAt':time.time(),'note':'Références, propriétaires, espaces et versions revérifiés dans SQLite.'}
++
++def qdrant_reader(base,key,collection,*,transport=None):
++ """Read-only scroll endpoint. No create/delete/prune/index operations exist here."""
++ import ipaddress,json,urllib.parse,urllib.request
++ url=urllib.parse.urlsplit(base)
++ if url.scheme not in ('http','https') or url.path not in ('','/') or url.query or url.fragment or url.username or url.password or not ipaddress.ip_address(url.hostname).is_private:raise ValueError('Pinned private literal Qdrant origin')
++ if collection not in ('jarvis_memory_v1','jarvis_knowledge_experimental_v1') or not isinstance(key,str) or not key:raise ValueError('Reviewed Qdrant collection/credential')
++ endpoint=base.rstrip('/')+'/collections/'+collection+'/points/scroll'
++ def reader(spaces,limit,offset):
++  if limit!=750:raise ValueError('Bounded legacy page')
++  body={'filter':{'must':[{'key':'space','match':{'any':spaces}}]},'limit':limit,'with_payload':True,'with_vector':True,**({'offset':offset} if offset is not None else {})}
++  if transport is not None:result=transport(endpoint,body)
++  else:
++   # Ignore ambient proxy settings; redirects cannot change the credential target.
++   class NoRedirect(urllib.request.HTTPRedirectHandler):
++    def redirect_request(self,*args):return None
++   opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),NoRedirect())
++   req=urllib.request.Request(endpoint,method='POST',headers={'api-key':key,'content-type':'application/json'},data=json.dumps(body).encode())
++   with opener.open(req,timeout=10) as r:
++    raw=r.read(16*1024**2+1)
++    if len(raw)>16*1024**2:raise ValueError('Index response bound')
++    result=json.loads(raw)['result']
++  return {'points':result['points'],'next_offset':result.get('next_page_offset')}
++ return reader
+--- /dev/null
++++ b/memory_manager/production/storage_main.py
+@@ -0,0 +1,58 @@
++"""Explicit storage daemon entry. Provisioning/migration never occurs at import/start."""
++import argparse,hashlib,hmac,json,os,socketserver,stat,struct
++from .persistence import Persistence
++from .storage_service import Storage
++MAX=4*1024**2
++class Server(socketserver.UnixStreamServer):
++ def __init__(self,path,storage,credentials,*,ipc_gid=None):
++  self.storage,self.credentials=storage,credentials
++  super().__init__(str(path),Handler)
++  if ipc_gid is not None:
++   if ipc_gid not in os.getgroups()+[os.getgid()]:raise PermissionError('Approved IPC membership')
++   os.chown(path,-1,ipc_gid)
++  os.chmod(path,0o660 if ipc_gid is not None else 0o600)
++class Handler(socketserver.BaseRequestHandler):
++ def handle(self):
++  self.request.settimeout(30)
++  def exact(n):
++   data=b''
++   while len(data)<n:
++    part=self.request.recv(n-len(data))
++    if not part:raise ValueError('Short frame')
++    data+=part
++   return data
++  try:
++   size=struct.unpack('!I',exact(4))[0]
++   if not 1<=size<=MAX:raise ValueError('Bound')
++   m=json.loads(exact(size))
++   if set(m)!={'credential','method','args'}:raise ValueError('Envelope')
++   digest=hashlib.sha256(m['credential'].encode()).hexdigest()
++   id=next((v for k,v in self.server.credentials.items() if hmac.compare_digest(k,digest)),None)
++   if not id or m['args'].get('subject') not in id['subjects']:raise PermissionError('Service credential')
++   out={'ok':True,'value':self.server.storage.call(id['service'],m['method'],m['args'])}
++  except Exception:out={'ok':False,'error':'Storage denied'}
++  raw=json.dumps(out,ensure_ascii=False,allow_nan=False).encode()
++  if len(raw)>MAX:raw=b'{"ok":false,"error":"Response bound"}'
++  self.request.sendall(struct.pack('!I',len(raw))+raw)
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--config',required=True);a=p.parse_args()
++ fd=os.open(a.config,os.O_RDONLY|os.O_NOFOLLOW)
++ try:
++  st=os.fstat(fd)
++  if not stat.S_ISREG(st.st_mode) or st.st_uid!=os.getuid() or st.st_mode&0o077 or st.st_size>131072:raise PermissionError('Private config')
++  cfg=json.loads(os.read(fd,131073))
++ finally:os.close(fd)
++ if os.getuid() in (0,cfg['gateway_uid']) or os.getuid()!=cfg['storage_uid']:raise PermissionError('Distinct storage identity')
++ os.umask(0o077);repo=Persistence(cfg['brain'],cfg['voice'])
++ # Explicit migration/backup is a separate approval. Missing schema fails startup.
++ for db,table in [(repo.db,'g_resource_acl'),(repo.voice,'g_fact_acl')]:
++  if not db.execute('SELECT 1 FROM sqlite_master WHERE name=?',(table,)).fetchone():raise PermissionError('Approved migration required')
++ index_reader=None
++ if cfg.get('index'):
++  from .projection import qdrant_reader
++  index_reader=qdrant_reader(**cfg['index'])
++ service=Storage(repo,cfg['policy'],staging=cfg['staging'],json_files=cfg.get('json_files'),sync_sources=cfg.get('sync_sources'),index_reader=index_reader)
++ server=Server(cfg['socket'],service,cfg['credentials'],ipc_gid=cfg.get('ipc_gid'))
++ try:server.serve_forever()
++ finally:server.server_close();repo.close()
++if __name__=='__main__':main()
+--- /dev/null
++++ b/memory_manager/production/storage_service.py
+@@ -0,0 +1,156 @@
++"""Private storage RPC. Caller credentials bind subject; policy rechecked per action.
++No imports of the live backend, shell, network client, scheduler or production data.
++"""
++import hashlib,json,os,pathlib,secrets,sqlite3,time,uuid
++from .persistence import Persistence
++
++class Storage:
++ def __init__(self,repository,policy,*,staging,json_files=None,project_roots=None,sync_sources=None,index_reader=None):
++  self.repo,self.policy=repository,policy;self.index_reader=index_reader
++  self.staging=pathlib.Path(staging).resolve(strict=True)
++  self.json_files=json_files or {};self.project_roots=project_roots or {};self.sync_sources=sync_sources or {};self.uploads={}
++ def grant(self,subject,permission,space=None):
++  g=self.policy.get(subject,{})
++  if permission not in g.get('permissions',[]) or space is not None and space not in g.get('spaces',[]):raise PermissionError('Storage authority')
++  if permission=='storage.write' and space is not None and space not in g.get('write_spaces',[]):raise PermissionError('Storage write space')
++  return g
++ def owned(self,subject,kind,key,write=False):
++  row=self.repo.metadata(kind,key)
++  g=self.grant(subject,'storage.write' if write else 'storage.read',row['space'] if row else '')
++  if not row or row.get('deleted') or row['owner']!=subject and row['space'] not in g.get('common_write' if write else 'common_read',[]):raise PermissionError('Storage resource')
++  if row.get('project') and row['project'] not in g.get('project_write' if write else 'project_read',[]):raise PermissionError('Storage project')
++  return row
++ def file(self,key):
++  p=pathlib.Path(self.json_files[key])
++  if not p.is_absolute() or any(x.is_symlink() for x in [p,*p.parents]):raise PermissionError('JSON symlink')
++  return p
++ def read_json(self,key):
++  p=self.file(key)
++  if p.stat().st_size>8*1024**2:raise ValueError('JSON bound')
++  return json.loads(p.read_text())
++ def write_json(self,key,value):
++  p=self.file(key);tmp=p.with_name(p.name+'.'+secrets.token_hex(12)+'.tmp')
++  # Keep recoverable original bytes; no overwrite of old backups.
++  backup=p.with_name(p.name+'.before-'+uuid.uuid4().hex)
++  raw=p.read_bytes();fd=os.open(backup,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
++  with os.fdopen(fd,'wb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++  if hashlib.sha256(backup.read_bytes()).digest()!=hashlib.sha256(raw).digest():raise IOError('JSON backup verification')
++  try:
++   with tmp.open('x',encoding='utf8') as f:os.chmod(tmp,0o600);json.dump(value,f,ensure_ascii=False);f.flush();os.fsync(f.fileno())
++   os.replace(tmp,p)
++   fd=os.open(p.parent,os.O_DIRECTORY);os.fsync(fd);os.close(fd)
++  finally:tmp.unlink(missing_ok=True)
++ def call(self,service,method,a):
++  if service!='gateway-storage' or set(a)-{'subject','space','kind','id','query','data','guard','action','project','upload','chunk','offset','size'}:raise PermissionError('Storage protocol')
++  subject=a['subject'];space=a.get('space');g=self.grant(subject,'storage.read' if method in ('metadata','list','get','facts','chat.read','projects.list','json.read','fact.metadata','tasks.list','fridge.list','map') else 'storage.write',space)
++  kind=a.get('kind');key=a.get('id')
++  if method=='metadata':
++   try:return self.owned(subject,kind,key)
++   except PermissionError:return None
++  if method=='list':
++   query=a.get('query',{});spaces=[space] if space else g['spaces'];rows=[]
++   if kind=='memory':return [r for r in self.repo.facts(subject,spaces) if r['owner']==subject or r['space'] in g.get('common_read',[])]
++   if kind!='document':raise ValueError('Native kind')
++   for target in spaces:rows.extend(self.repo.list(kind,{'spaces':[target],'owner':subject,'projects':g.get('project_read',[]),'q':query.get('q','')}))
++   return [r for r in rows if r['owner']==subject or r['space'] in g.get('common_read',[])]
++  if method=='get':self.owned(subject,kind,key);return self.repo.get(kind,key)
++  if method=='create':
++   d=a['data'];self.grant(subject,'storage.write',d['space'])
++   if d.get('project') and d['project'] not in g.get('project_write',[]):raise PermissionError('Project write')
++   if kind=='memory':return self.repo.fact_write(subject,d['space'],d)
++   return self.repo.create(kind,{**d,'owner':subject})
++  if method=='mutate':
++   meta=self.owned(subject,kind,key,True);d=a['data']
++   if kind=='memory':
++    target,label=json.loads(key);return self.repo.fact_write(subject,target,{'key':label},forget=True)
++   self.grant(subject,'storage.write',d.get('target'))
++   guard=a['guard']
++   if guard.get('expectedOwner')!=meta['owner'] or guard.get('expectedVersion')!=meta['version']:raise PermissionError('Version changed')
++   return self.repo.mutate(kind,key,d,guard)
++  if method=='facts':return [r for r in self.repo.facts(subject,[space]+(['commun'] if space!='commun' and 'commun' in g.get('common_read',[]) else [])) if r['owner']==subject or r['space'] in g.get('common_read',[])]
++  if method=='fact.metadata':
++   key=json.dumps([space,self.repo.norm(a['data']['key'])],ensure_ascii=False)
++   try:return self.owned(subject,'memory',key)
++   except PermissionError:return None
++  if method in ('fact.save','fact.forget'):return self.repo.fact_write(subject,space,a['data'],forget=method.endswith('forget'))
++  if method=='conversation.record':return self.repo.record(subject,space,a['data'])
++  if method=='map':
++   from .projection import memory_map
++   return memory_map(self,subject,space,a.get('offset'),self.index_reader)
++  if method=='projects.list':return sorted(g.get('project_read',[]))
++  if method.startswith('chat.'):
++   project=a['project'];write=method=='chat.clear'
++   if project not in g.get('project_write' if write else 'project_read',[]):raise PermissionError('Chat project')
++   # Original gateway chats/<project>.json remains canonical. No shadow history.
++   account='chat:'+project;self.owned(subject,'service-account',account,write)
++   rows=self.read_json(account)
++   if not isinstance(rows,list):raise ValueError('Historical chat format')
++   if write:self.write_json(account,[]);return []
++   return rows
++  if method=='json.read':
++   self.owned(subject,'service-account',key);value=self.read_json(key)
++   if isinstance(value,list):
++    # Resource lists are scoped before return, unknown item owners never adopted.
++    selected=[]
++    for item in value:
++     try:self.owned(subject,kind,str(item['id']));selected.append(item)
++     except (PermissionError,KeyError,TypeError):continue
++    return selected
++   return value
++  if method in ('tasks.list','fridge.list','map'):
++   account=a['id'];self.owned(subject,'service-account',account);value=self.read_json(account)
++   rows=value if method=='tasks.list' else value['items'];kind='task' if method=='tasks.list' else 'fridge-item'
++   visible=[]
++   for item in rows:
++    try:self.owned(subject,kind,str(item['id']));visible.append(item)
++    except (PermissionError,KeyError,TypeError):continue
++   if kind=='task':return {'tasks':visible}
++   ids={str(item['id']) for item in visible};barcodes={item.get('barcode') for item in visible}
++   return {'items':visible,'events':[e for e in value.get('events',[]) if str(e.get('itemId')) in ids], 'products':{k:v for k,v in value.get('products',{}).items() if k in barcodes}}
++  if method=='tasks.change':
++   account=a['id'];self.owned(subject,'service-account',account,True);rows=self.read_json(account);d=a['data'];action=a['action']
++   if not isinstance(rows,list):raise ValueError('Tasks format')
++   if action=='POST':
++    title=d.get('title','').strip();person=d.get('person','commun');due=d.get('due')
++    if not title or len(title)>180 or person not in ('user','amelie','malik','theo','commun') or due and not __import__('re').fullmatch(r'\d{4}-\d{2}-\d{2}',due):raise ValueError('Task format')
++    # Person is a display/assignment field, never an owner or a grant.
++    item={'id':str(uuid.uuid4()),'title':title,'person':person,'due':due or None,'done':False,'createdAt':__import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat()}
++    self.repo.claim('task',item['id'],subject,space,approved=True);rows.append(item)
++   elif action in ('PATCH','DELETE'):
++    self.owned(subject,'task',d.get('id'),True);index=next(i for i,item in enumerate(rows) if item['id']==d['id']);item=rows[index]
++    if action=='DELETE':rows.pop(index)
++    else:
++     if type(d.get('done'))!=bool:raise ValueError('Task state')
++     item['done']=d['done'];item['completedAt']=__import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat() if d['done'] else None
++   else:raise ValueError('Task action')
++   self.write_json(account,rows);return {'task':item}
++  if method=='upload.begin':
++   size=a['size']
++   if type(size)!=int or not 1<=size<=3*1024**3 or len(self.uploads)>=4:raise ValueError('Upload bound')
++   token=uuid.uuid4().hex;p=self.staging/(token+'.upload');fd=os.open(p,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600);os.close(fd)
++   self.uploads[token]={'subject':subject,'space':space,'size':size,'offset':0,'created':time.monotonic()};return {'upload':token}
++  if method.startswith('upload.'):
++   token=a['upload'];u=self.uploads.get(token)
++   if not u or u['subject']!=subject or u['space']!=space:raise PermissionError('Upload owner')
++   p=self.staging/(token+'.upload')
++   if method=='upload.abort':p.unlink(missing_ok=True);del self.uploads[token];return {'aborted':True}
++   if time.monotonic()-u['created']>900:raise TimeoutError('Upload expired; abort required')
++   if method=='upload.chunk':
++    import base64
++    chunk=base64.b64decode(a['chunk'],validate=True)
++    if len(chunk)>32768 or a['offset']!=u['offset'] or u['offset']+len(chunk)>u['size']:raise ValueError('Upload sequence')
++    with p.open('ab') as f:f.write(chunk)
++    u['offset']+=len(chunk);return {'offset':u['offset']}
++   if method=='upload.finish':
++    if u['offset']!=u['size']:raise ValueError('Incomplete upload')
++    try:return self.repo.ingest(subject,space,p)
++    finally:p.unlink(missing_ok=True);del self.uploads[token]
++   raise ValueError('Upload action')
++  if method=='sync':
++   results=[]
++   for path in self.sync_sources.get(subject,{}).get(space,[]):
++    p=pathlib.Path(path)
++    if any(x.is_symlink() for x in [p,*p.parents]) or not p.is_file() or p.stat().st_size>64*1024**2:raise PermissionError('Sync source boundary')
++    results.append(self.repo.ingest(subject,space,p,sync=True))
++   return {'changed':sum(r['changed'] for r in results),'failed':0}
++  raise PermissionError('Unknown storage operation')

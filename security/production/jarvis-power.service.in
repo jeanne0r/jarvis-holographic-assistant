@@ -1,0 +1,19 @@
+# REVIEW ONLY: entry/config/network and independent physical approvals required.
+[Unit]
+Description=Existing S9 power bridge, separated from the web gateway
+[Service]
+User=jarvis-power
+Group=jarvis-power
+WorkingDirectory=/opt/jarvis-2/release
+ExecStart=/usr/bin/node /opt/jarvis-2/release/s9-power-main.mjs /etc/jarvis-power/config.json
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/jarvis-power
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+TasksMax=16
+MemoryMax=128M
+Restart=no
+# IPAddressDeny/Allow must name only the verified HA/miner addresses. Not applied.

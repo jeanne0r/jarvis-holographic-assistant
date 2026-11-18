@@ -1,0 +1,108 @@
+{
+  "firewall_rules_scoped": true,
+  "profiles_enabled": true,
+  "physical_adapter_count": 1,
+  "physical_ipv6_disabled": true,
+  "source_attestation": [
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 0,
+      "seconds": 0.768
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 2500,
+      "seconds": 0.684
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 5000,
+      "seconds": 0.672
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 7500,
+      "seconds": 6.347
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 10000,
+      "seconds": 13.983
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 12500,
+      "seconds": 12.029
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 15000,
+      "seconds": 15.865
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 17500,
+      "seconds": 15.775
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 20000,
+      "seconds": 16.5
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 2500,
+      "total_files": 25615,
+      "start": 22500,
+      "seconds": 14.097
+    },
+    {
+      "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+      "manifest_sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d",
+      "source_files_verified": 615,
+      "total_files": 25615,
+      "start": 25000,
+      "seconds": 3.36
+    }
+  ],
+  "listeners_after": {
+    "hermes_listener": false,
+    "ollama_listener": false
+  },
+  "experimental_points_after": 11,
+  "experimental_status_after": "green",
+  "controller_listeners_after": {
+    "8792": false,
+    "11436": false,
+    "8643": false,
+    "11435": false
+  }
+}

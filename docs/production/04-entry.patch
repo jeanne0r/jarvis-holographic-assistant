@@ -1,0 +1,308 @@
+--- /dev/null
++++ b/gateway-production-entry.mjs
+@@ -0,0 +1,33 @@
++// Reviewed entry factory: imports no legacy server, backend, worker or physical loop.
++// All effects require private service transports; unclassified paths never fall through.
++import {businessACL,businessAdapters,authorizedRepository} from './gateway-business.mjs';
++import {composeGateway,syntheticAdmission} from './gateway-final-compose.mjs';
++import {sessionRegistry} from './jarvis-session-auth.mjs';
++import {requestIdentity,classify} from './gateway-route-policy.mjs';
++import {persistentBindings} from './gateway-persistent-client.mjs';
++import {toolAuthority} from './gateway-tool-authority.mjs';
++import {authorizedHybrid} from './gateway-hybrid-authorized.mjs';
++const legacyVoice=new Set(['voice/status','live/status','voice/session','voice/transcribe','voice/speak','capabilities','openai/usage','live/costs','live/usage','live/balance']);
++export function productionEntry({policy,refreshPolicy,assets,staticRoot,flags={history:false,admission:false,hybrid:false},clients=new Map(),approvalClients=new Map(),storageFor,broker,files,compatibility,accountServices,physicalApprovals,toolHandlers={},toolDeclarations=[],audit,hybridDependencies={},serviceBindings={},syncSources={}}){
++ for(const [key,value]of Object.entries({storageFor,compatibility,audit,refreshPolicy}))if(typeof value!=='function')throw Error('Required binding '+key);
++ if(!broker||!files||!accountServices)throw Error('Required production services');
++ const sessions=sessionRegistry({...policy,grants:new Map(policy.grants),roles:new Map(policy.roles),cookiePath:'/api'});
++ const acl=businessACL(policy.business),admitSynthetic=syntheticAdmission({clients,flags,audit});
++ // Business topology is pinned for the lifetime of this release. Role/space revocations hot reload.
++ const topology=JSON.stringify(policy.business);
++ const refresh=async()=>{const p=await refreshPolicy();if(p.origin!==policy.origin||JSON.stringify(p.business)!==topology)throw Error('Topology changed; reviewed restart needed');sessions.updatePolicy({...p,grants:new Map(p.grants),roles:new Map(p.roles)})};
++ const binding=(identity)=>{
++  const rpc=storageFor(identity);
++  const base=persistentBindings({identity,rpc,broker,files,accountServices});
++  const tools=toolAuthority({sessions,acl,memory:authorizedRepository(acl,base.repo),handlers:toolHandlers,physicalApprovals});
++  const hybrid=authorizedHybrid({acl,sessions,tools,toolDeclarations,memoryStore:base.memory,broker,dependencies:hybridDependencies});
++  return businessAdapters({acl,repo:base.repo,services:{...base.services,'hybrid.answer':hybrid,'tools.call':({space,name,args})=>tools(identity,space,name,args)},physicalApprovals,syncSources,serviceBindings,admitSynthetic});
++ };
++ const business={resource:ctx=>binding(ctx.identity).resource(ctx),physicalApproval:async()=>true,dispatch:(req,res,url,next)=>binding(requestIdentity.get(req)).dispatch(req,res,url,next)};
++ const legacy=async(req,res,url)=>{
++  const row=classify(req.method,url.pathname),action=url.pathname.slice('/api/jarvis/'.length);
++  if(!row||!url.pathname.startsWith('/api/jarvis/')||!legacyVoice.has(action))throw Error('No legacy bypass');
++  return compatibility({identity:requestIdentity.get(req),req,res,url});
++ };
++ return {sessions,handle:composeGateway({sessions,business,legacy,clients,approvalClients,audit,flags,refresh,publicAssets:new Map(assets.map(a=>[a.path,a])),staticRoot})};
++}
+--- /dev/null
++++ b/gateway-production-main.mjs
+@@ -0,0 +1,51 @@
++// Standalone replacement entry, never imported into the live server during preparation.
++import {createServer} from 'node:https';
++import {readFile} from 'node:fs/promises';
++import {ownedJSON} from './gateway-security-mount.mjs';
++import {productionEntry} from './gateway-production-entry.mjs';
++import {accountBindings} from './gateway-account-bindings.mjs';
++import {storageClient} from './gateway-persistent-client.mjs';
++import {codexBrokerClient} from './codex-broker-client.mjs';
++import {forwardPrivate,privateBackend} from './gateway-service-transport.mjs';
++import {projectFiles} from './gateway-project-files.mjs';
++import {bridgeClient} from './hermes-bridge-client.mjs';
++import {open} from 'node:fs/promises';
++export async function buildFromConfig(configFile){
++ const cfg=await ownedJSON(configFile),policy=await ownedJSON(cfg.policyFile);
++ if(cfg.engine!=='hybrid'||cfg.remoteBudgetChf!==0||cfg.commissioned!==true)throw Error('Reviewed commissioning prerequisites required');
++ const secret=await ownedJSON(cfg.credentialsFile),assets=await ownedJSON(cfg.assetFile);
++ let runtime;
++ const broker=codexBrokerClient({socketPath:cfg.brokerSocket,credential:secret.broker,sessions:{isActive:(...a)=>runtime.sessions.isActive(...a)},projects:cfg.codexProjects});
++ const clients=async rows=>{const map=new Map();for(const r of rows||[]){const key=await ownedJSON(r.credentialFile);if(!map.has(r.subject))map.set(r.subject,new Map());map.get(r.subject).set(r.space,bridgeClient({...r,token:key.token}))}return map};
++ const upstreams={};
++ for(const [route,endpoint]of Object.entries(cfg.accountRoutes||{})){
++  const proxy=privateBackend({socketPath:endpoint.socket,credential:secret.accounts[endpoint.name]});
++  upstreams[route]=async({identity,data,resource,key,parameters,path,method})=>{
++   if(!endpoint.methods.includes(method))throw Error('Application method denied');
++   const result=await proxy({identity,method,path:(path||route)+(parameters?'?'+new URLSearchParams(parameters):''),data:['GET','HEAD'].includes(method)?undefined:data,resource});
++   if(result.status>=400)throw Error('Application service unavailable');
++   return {[Symbol.for('jarvis.private.response')]:true,...result};
++  };
++ }
++ const {lstat}=await import('node:fs/promises');const ast=await lstat(cfg.auditFile);if(!ast.isFile()||ast.isSymbolicLink()||ast.uid!==process.getuid()||(ast.mode&0o077))throw Error('Private existing audit file required');
++ const audit=async event=>{const f=await open(cfg.auditFile,'a');try{await f.write(JSON.stringify({...event,at:new Date().toISOString()})+'\n');await f.sync()}finally{await f.close()}};
++ const storageFor=identity=>storageClient({socketPath:cfg.storageSocket,credential:secret.storage,identity});
++ const voiceApi=privateBackend({socketPath:cfg.voiceSocket,credential:secret.voice});
++ const declarations=await ownedJSON(cfg.toolsFile);
++ const toolHandlers=Object.fromEntries(declarations.map(d=>[d.name,async(args,{identity,space})=>{const result=await voiceApi({identity,method:'POST',path:'/api/internal/tools',data:{name:d.name,args,space}});if(result.status!==200)throw Error('Tool service denied');return JSON.parse(result.bytes)}]));
++ const hybridDependencies=identity=>({meter:async(action,data)=>{if(!['session','report'].includes(action))throw Error('Meter action');const result=await voiceApi({identity,method:'POST',path:'/api/internal/usage',data:{action,data}});if(result.status!==200)throw Error('Meter service unavailable');return JSON.parse(result.bytes)}});
++ const accountServices=accountBindings({rpcFor:storageFor,accountIds:cfg.accountIds,upstreams});
++ runtime=productionEntry({policy,refreshPolicy:()=>ownedJSON(cfg.policyFile),assets,staticRoot:cfg.staticRoot,flags:cfg.flags,
++  storageFor,broker,files:projectFiles(cfg.projectRoots),accountServices,
++  hybridDependencies,toolHandlers,toolDeclarations:declarations,serviceBindings:cfg.serviceBindings,syncSources:cfg.syncSources,clients:await clients(cfg.clients),approvalClients:await clients(cfg.approvalClients),audit,
++  compatibility:p=>forwardPrivate({...p,socketPath:cfg.voiceSocket,credential:secret.voice}),
++ });
++ return {runtime,cfg};
++}
++export async function main(configFile){
++ const {runtime,cfg}=await buildFromConfig(configFile);
++ const server=createServer({key:await readFile(cfg.tlsKey),cert:await readFile(cfg.tlsCert)},(req,res)=>{
++  const url=new URL(req.url,cfg.origin);void runtime.handle(req,res,url).catch(()=>{if(res.headersSent)res.destroy();else{res.writeHead(503);res.end()}});
++ });server.listen(cfg.port,cfg.bind);return server;
++}
++if(process.argv[1]===new URL(import.meta.url).pathname){if(process.argv.length!==3)throw Error('Explicit private configuration required');await main(process.argv[2])}
+--- /dev/null
++++ b/gateway-service-transport.mjs
+@@ -0,0 +1,25 @@
++// Fixed private upstreams only; never client-selected URLs, hosts or paths.
++import http from 'node:http';
++export function privateBackend({socketPath,credential,timeoutMs=12000}){
++ if(!socketPath?.startsWith('/')||typeof credential!=='string'||credential.length<32)throw Error('Private upstream');
++ return async({identity,method,path,data,resource,headers={}})=>new Promise((resolve,reject)=>{
++  if(identity?.kind!=='human'||!path.startsWith('/api/')||/[\r\n#]/.test(path))return reject(Error('Upstream request'));
++  const bytes=data===undefined?null:Buffer.from(JSON.stringify(data));
++  const req=http.request({socketPath,path,method,headers:{...headers,authorization:'Bearer '+credential,'x-jarvis-subject':identity.subject,'x-jarvis-session-handle':identity.sessionHandle||'','x-jarvis-space':resource?.space||identity.space||identity.defaultSpace,'x-jarvis-resource':resource?.id||'',...(bytes?{'content-type':'application/json','content-length':bytes.length}:{})}},res=>{
++   const chunks=[];let n=0;res.on('data',b=>{n+=b.length;if(n>16*1024**2)res.destroy(Error('Backend bound'));else chunks.push(b)});res.on('error',reject);res.on('end',()=>resolve({status:res.statusCode,headers:{'content-type':res.headers['content-type']||'application/json','cache-control':'no-store'},bytes:Buffer.concat(chunks)}));
++  });req.setTimeout(timeoutMs,()=>req.destroy(Error('Backend deadline')));req.on('error',reject);req.end(bytes);
++ });
++}
++// PCM and microphone bytes remain streaming. No decoding/re-encoding in gateway.
++export function forwardPrivate({socketPath,credential,identity,req,res,url}){
++ return new Promise((resolve,reject)=>{
++  const headers={...req.headers,authorization:'Bearer '+credential,'x-jarvis-subject':identity.subject,'x-jarvis-session-handle':identity.sessionHandle,'x-jarvis-space':identity.space||identity.defaultSpace};
++  for(const k of ['connection','upgrade','proxy-authorization','cookie','x-jarvis-resource'])delete headers[k];
++  const upstream=http.request({socketPath,path:url.pathname+url.search,method:req.method,headers},reply=>{
++   const out={};for(const k of ['content-type','content-length','cache-control','x-jarvis-audio-format','x-jarvis-sample-rate'])if(reply.headers[k])out[k]=reply.headers[k];
++   res.writeHead(reply.statusCode,out);reply.on('error',reject);reply.pipe(res);reply.on('end',resolve);
++  });
++  upstream.setTimeout(45000,()=>upstream.destroy(Error('Private stream deadline')));upstream.on('error',reject);
++  res.once('close',()=>{if(!res.writableEnded)upstream.destroy()});req.pipe(upstream);
++ });
++}
+--- /dev/null
++++ b/gateway-compatibility-service.mjs
+@@ -0,0 +1,37 @@
++// Private endpoint wrapper for unchanged legacy voice/app implementations.
++// Does not import a backend or listen on import. No /ask, runs, memory, shell route.
++import {timingSafeEqual} from 'node:crypto';
++import {trustedRequests} from './jarvis-session-auth.mjs';
++const voiceRoutes=new Set(['voice/status','live/status','voice/session','voice/transcribe','voice/speak','capabilities','openai/usage','live/costs','live/usage','live/balance']);
++export function compatibilityService({credential,policyFor,resourceFor,handlers,recordCreated=async()=>{},validateSession,origin}){
++ if(typeof credential!=='string'||credential.length<32||typeof validateSession!=='function')throw Error('Distinct service credential');
++ return async(req,res)=>{
++  const send=s=>{res.writeHead(s,{'content-type':'application/json'});res.end(JSON.stringify({error:'Service denied'}))};
++  try{
++   const presented=Buffer.from(req.headers.authorization||''),expected=Buffer.from('Bearer '+credential);
++   if(presented.length!==expected.length||!timingSafeEqual(presented,expected))return send(401);
++   const subject=req.headers['x-jarvis-subject'],space=req.headers['x-jarvis-space'],handle=req.headers['x-jarvis-session-handle'];
++   const policy=await policyFor(subject);
++   if(!policy||!policy.spaces.includes(space))return send(403);
++   const id={subject,kind:'human',spaces:policy.spaces,roles:policy.roles,sessionHandle:handle,space,proxyOrigin:origin};
++   const url=new URL(req.url,origin),action=url.pathname.slice('/api/jarvis/'.length);
++   const route=handlers.get(req.method+' '+url.pathname);
++   if(!route)return send(403);
++   if(!policy.roles.includes(route.permission)||!await validateSession(id,route.permission,space))return send(403);
++   if(url.pathname.startsWith('/api/jarvis/')){
++    if(!voiceRoutes.has(action)||typeof handle!=='string'||!/^((session|credential):[a-f0-9]{64})$/.test(handle))return send(403);
++    trustedRequests.set(req,id);url.searchParams.set('space',space);
++   }else{
++    // Resource checked under the service's own storage identity, not trusted merely
++    // because the gateway supplied an ID. No arbitrary backend host or account.
++    const resource=await resourceFor(id,req.headers['x-jarvis-resource'],route);
++    if(!resource||resource.space!==space||resource.owner!==subject&&!policy.commonRead?.includes(space))return send(403);
++   }
++   // Legacy origin checks use the pinned origin; client headers cannot choose it.
++   req.headers.origin=origin;req.headers.host=new URL(origin).host;
++   // Creator resources are registered by a host callback before delivering JSON.
++   if(route.creates){const end=res.end.bind(res);res.end=(bytes)=>{let result;try{result=JSON.parse(bytes)}catch{return send(503)};void recordCreated(id,route,result).then(()=>end(bytes)).catch(()=>res.destroy())}}
++   await route.handler(req,res,url);
++  }catch{if(res.headersSent)res.destroy();else send(503)}
++ };
++}
+--- a/gateway-business.mjs
++++ b/gateway-business.mjs
+@@ -43,7 +43,7 @@
+  for(const row of routeMatrix)if(!row.path.startsWith('/api/jarvis/')&&row.path!=='/api/health')supported.add(row.path);
+  for(const p of ['/api/dosing-calibration/run','/api/s9/power'])supported.add(p);
+  const keyFor=(url,body)=>body.id||url.searchParams.get('id')||url.pathname.split('/').filter(Boolean).at(-1);
+- const send=(res,status,data)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(data))};
++ const send=(res,status,data)=>{if(data?.[Symbol.for('jarvis.private.response')]){res.writeHead(data.status,data.headers);return res.end(data.bytes)}res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(data))};
+  const service=async(name,id,params)=>{if(typeof services[name]!=='function')throw Object.assign(Error('Service unavailable'),{status:503});return services[name]({identity:id,...params})};
+  return Object.freeze({
+   resource:async({row})=>supported.has(row.path), // Enforcement lives in dispatch below, never legacy fall-through.
+@@ -83,7 +83,7 @@
+     if(action==='notes')return send(res,201,await store.create(id,'document',{...data,space}));
+     if(action==='move')return send(res,200,await store.mutate(id,'document',data.id,{target:data.target}));
+     if(action==='memory/map'||action==='memory/status'){
+-     const items=await store.list(id,'memory',{space});return send(res,200,await service(action,id,{space,items,allowedSpaces:acl.spaces(id)}));
++     const items=await store.list(id,'memory',{space});return send(res,200,await service(action,id,{space,items,offset:url.searchParams.get('offset'),allowedSpaces:acl.spaces(id)}));
+     }
+     if(action==='sync'||action==='import'){
+      if(!acl.spaces(id,true).includes(space))throw deny();
+@@ -118,18 +118,19 @@
+      return send(res,200,await service('physical.execute',id,{route:row.path,data,fingerprint}));
+     }
+     const kind=auxiliary[row.path];
++    if(row.path==='/api/mirror/tasks'&&['GET','POST'].includes(req.method)){const binding=serviceBindings[id.subject]?.[row.path];if(!binding)throw deny();const resource=await repo.metadata('service-account',binding);if(!acl.resource(id,resource,req.method!=='GET'))throw deny();return send(res,200,await service(row.path,id,{data,resource,method:req.method,path:url.pathname,parameters:Object.fromEntries(url.searchParams)}))}
+     if(kind){
+      const index=row.path.split('/').indexOf(':id');
+      const key=index>=0?url.pathname.split('/')[index]:(data.id||url.searchParams.get('id')||serviceBindings[id.subject]?.[row.path]);
+      if(index>=0&&data.id&&data.id!==key)throw deny();
+      const metadata=await repo.metadata(kind,key);
+      if(!acl.resource(id,metadata,req.method!=='GET'))throw deny();
+-     return send(res,200,await service(row.path,id,{data,key,resource:metadata}));
++     return send(res,200,await service(row.path,id,{data,key,resource:metadata,method:req.method,path:url.pathname,parameters:Object.fromEntries(url.searchParams)}));
+     }
+     if(!row.path.startsWith('/api/jarvis/')){
+      const binding=serviceBindings[id.subject]?.[row.path];if(!binding)throw deny();
+      const account=await repo.metadata('service-account',binding);if(!acl.resource(id,account,!['GET','HEAD'].includes(req.method)))throw deny();
+-     return send(res,200,await service(row.path,id,{resource:account,data,parameters:Object.fromEntries(url.searchParams),path:url.pathname}));
++     return send(res,200,await service(row.path,id,{resource:account,data,parameters:Object.fromEntries(url.searchParams),path:url.pathname,method:req.method}));
+     }
+     throw deny();
+    }catch(error){return send(res,error.status||400,{error:error.status===403?'Resource denied':'Operation unavailable'})}
+--- a/gateway-hybrid-authorized.mjs
++++ b/gateway-hybrid-authorized.mjs
+@@ -4,8 +4,9 @@
+ export function authorizedHybrid({acl,sessions,tools,toolDeclarations,memoryStore,broker,dependencies={}}){
+  return async({identity,question,context,signal})=>{
+   if(!sessions.isActive(identity,'conversation',context.space))throw Error('Conversation denied');
++  const configured=typeof dependencies==='function'?dependencies(identity):dependencies;
+   return hybridAnswer(question,[],context,signal,{
+-   ...dependencies,memoryStore:scopedMemoryStore(identity,context.space,acl,memoryStore,sessions),
++   ...configured,memoryStore:scopedMemoryStore(identity,context.space,acl,memoryStore,sessions),
+    tools:async()=>({tools:toolDeclarations,call:(name,args)=>tools(identity,context.space,name,args)}),
+    codex:(q,s,c,abort)=>broker.answer({question:q,sources:s,context:c,identity,signal:abort}),
+   });
+--- a/gateway-tool-authority.mjs
++++ b/gateway-tool-authority.mjs
+@@ -27,7 +27,7 @@
+  return async(action,data={})=>{
+   const write=action!=='list';const target=data.shared?'commun':data.space||space;
+   if(!sessions.isActive(identity,write?'memory.write':'memory.read',target)||!acl.spaces(identity,write).includes(target))throw Error('Memory denied');
+-  if(!['list','save','forget'].includes(action))throw Error('Memory operation denied');
++  if(!['list','save','save_correction','forget'].includes(action))throw Error('Memory operation denied');
+   if(write){
+    if(typeof store.metadata!=='function')throw Error('Legacy fact ownership adapter required');
+    const prior=await store.metadata(data.key,target);if(prior&&!acl.resource(identity,prior,true))throw Error('Fact owner denied');
+--- a/gateway-security.mjs
++++ b/gateway-security.mjs
+@@ -35,7 +35,13 @@
+     if(!['GET','HEAD'].includes(req.method)||!publicAssets.has(url.pathname))return send(res,404,{error:'Static route denied'});
+     const asset=publicAssets.get(url.pathname),bytes=await staticBytes(staticRoot,asset.file);
+     if(!/^[a-f0-9]{64}$/.test(asset.sha256||'')||createHash('sha256').update(bytes).digest('hex')!==asset.sha256)throw Error('Unreviewed static bytes');
+-    res.writeHead(200,{'content-type':asset.type,'cache-control':'no-store','x-content-type-options':'nosniff'});return res.end(req.method==='HEAD'?undefined:bytes);
++    let output=bytes;
++    if(asset.bootstrapAuth===true){
++     if(!asset.type.startsWith('text/html')||!publicAssets.has('/jarvis/jarvis-auth.js'))throw Error('Reviewed standalone auth asset required');
++     const html=bytes.toString('utf8');
++     if(!/src=["'](?:\/jarvis\/)?jarvis-auth\.js["']/.test(html)){const script='<script defer src="/jarvis/jarvis-auth.js"></script>';output=Buffer.from(html.includes('</head>')?html.replace('</head>',script+'</head>'):script+html)}
++    }
++    res.writeHead(200,{'content-type':asset.type,'cache-control':'no-store','x-content-type-options':'nosniff'});return res.end(req.method==='HEAD'?undefined:output);
+    }
+    const row=classify(req.method,url.pathname);if(!row)return send(res,403,{error:'Unclassified route'});
+    if(row.permission==='public')return send(res,200,{ok:true});
+--- a/backend.mjs
++++ b/backend.mjs
+@@ -43,14 +43,16 @@
+ async function saveImport(req){const dir=ROOT+'/data/import-staging';await mkdir(dir,{recursive:true,mode:0o700});const path=dir+'/'+randomUUID()+'.upload';let size=0;const meter=new Transform({transform(chunk,_encoding,done){size+=chunk.length;done(size>MAX_IMPORT_BYTES?Error('La sauvegarde dépasse la limite de 3 Go.'):null,chunk)}});try{await pipeline(req,meter,createWriteStream(path,{flags:'wx',mode:0o600}));return path}catch(e){await unlink(path).catch(()=>{});throw e}}
+ export async function handleJarvis(req,res,url){
+  try{
+- if(req.method!=='GET'&&req.headers.origin&&req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
++ const transportIdentity=trustedRequests.get(req)||requestIdentity.get(req);
++ const requestOrigin=transportIdentity?.proxyOrigin||`${req.socket.encrypted?'https':'http'}://${req.headers.host}`;
++ if(req.method!=='GET'&&req.headers.origin&&req.headers.origin!==requestOrigin)return json(res,403,{error:'Origine non autorisée.'});
+  const action=url.pathname.slice('/api/jarvis/'.length);
+  const identity=trustedRequests.get(req)||requestIdentity.get(req);
+  const space=url.searchParams.get('space')||'user';
+  if(!['user','amelie','malik','theo','commun'].includes(space))return json(res,400,{error:'Espace inconnu.'});
+  if(action==='capabilities'&&req.method==='GET')return json(res,200,{radioDiscovery:true,maps:await mapsConfig(),youtubeSearchConfigured:Boolean(await youtubeKey())});
+  if(action==='capabilities/run'&&req.method==='POST'){
+-  if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
++  if(req.headers.origin!==requestOrigin)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,6000)).toString());if(!capabilityTools.some(t=>t.name===data.name))throw Error('Capacité inconnue.');
+   if(identity){
+    const permission=legacyToolPermission(data.name);
+@@ -65,7 +67,7 @@
+   return json(res,200,{patch:await readFile(ROOT+'/data/evolutions/'+job.id+'/changes.patch','utf8')});
+  }
+  if(action==='conversations/record'&&req.method==='POST'){
+-  if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
++  if(req.headers.origin!==requestOrigin)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,180000)).toString());
+   return json(res,200,await archive('record',{...data,space,...(identity?{expected_space:space}:{})}));
+  }
+@@ -80,12 +82,12 @@
+  if(action==='openai/usage'&&req.method==='GET')return json(res,200,await openaiUsage());
+  if(action==='live/costs'&&req.method==='GET')return json(res,200,await usage('summary'));
+  if(['live/usage','live/balance'].includes(action)&&req.method==='POST'){
+-  if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
++  if(req.headers.origin!==requestOrigin)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,16000)).toString());
+   return json(res,200,await usage(action==='live/usage'?'report':'balance',data));
+  }
+  if(['live/tool','live/session'].includes(action)&&req.method==='POST'){
+-  if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Ouvre la voix depuis Jarvis.'});
++  if(req.headers.origin!==requestOrigin)return json(res,403,{error:'Ouvre la voix depuis Jarvis.'});
+   if(!req.socket.encrypted&&!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(req.socket.remoteAddress))return json(res,400,{error:'Ouvre Jarvis en HTTPS pour utiliser le micro.'});
+   const data=JSON.parse((await body(req,16000)).toString());
+   if(['codex','hybrid'].includes(coreInfo().engine))return json(res,409,{error:'Utilise la voix de Jarvis pour conserver l’aiguillage des demandes.'});
+@@ -93,10 +95,10 @@
+   catch(e){return json(res,e.status||400,{error:e.message});}
+  }
+  if(['voice/session','voice/transcribe','voice/speak'].includes(action)&&req.method==='POST'){
+-  const origin=`${req.socket.encrypted?'https':'http'}://${req.headers.host}`;
++  const origin=requestOrigin;
+   if(req.headers.origin!==origin)return json(res,403,{error:'Ouvre la voix depuis Jarvis.'});
+   const loopback=['127.0.0.1','::1','::ffff:127.0.0.1'].includes(req.socket.remoteAddress);
+-  if(!req.socket.encrypted&&!loopback)return json(res,400,{error:'Ouvre Jarvis en HTTPS pour utiliser le micro.'});
++  if(!req.socket.encrypted&&!transportIdentity?.proxyOrigin&&!loopback)return json(res,400,{error:'Ouvre Jarvis en HTTPS pour utiliser le micro.'});
+   try{
+    if(action==='voice/session'){await body(req,2000);const session=speechSession(space);return json(res,200,identity?voiceOwnership.bind(session,identity,space):session);}
+    if(action==='voice/transcribe'&&identity)voiceOwnership.check(req.headers['x-jarvis-voice-session'],identity,space);
+--- a/core-settings.mjs
++++ b/core-settings.mjs
+@@ -1,5 +1,5 @@
+ import {readFileSync} from 'node:fs';
+ let settings={engine:'codex'};
+-try{settings=JSON.parse(readFileSync(new URL('./data/core-engine.json',import.meta.url),'utf8'));}catch{}
++try{settings=JSON.parse(readFileSync(process.env.JARVIS_CORE_SETTINGS_FILE||new URL('./data/core-engine.json',import.meta.url),'utf8'));}catch{}
+ if(!['codex','gemini-fast','gemini-live','hybrid'].includes(settings.engine))throw Error('Moteur Jarvis inconnu.');
+ export function coreInfo(){return settings.engine==='hybrid'?{engine:'hybrid',provider:'google+openai',model:'gemini-3.5-flash-lite',localModel:process.env.JARVIS_CORE_MODEL||'default',routing:'Gemini : général et Internet ; Codex : HA, machines et LAN'}:settings.engine==='gemini-live'?{engine:'gemini-live',provider:'google',model:process.env.JARVIS_GEMINI_LIVE_MODEL||'gemini-3.8-live'}:settings.engine==='gemini-fast'?{engine:'gemini-fast',provider:'google',model:'gemini-3.5-flash-lite'}:{engine:'codex',provider:'openai',model:process.env.JARVIS_CORE_MODEL||'default'};}

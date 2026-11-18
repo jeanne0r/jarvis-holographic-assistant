@@ -1,0 +1,6 @@
+# Prepared only; user confirmed HTTPS origin. No installation authorized.
+# Armed transport only: effective panel switch must remain false.
+[Service]
+Environment=JARVIS_HERMES_PANEL=1
+Environment=JARVIS_HERMES_PANEL_ORIGIN=https://192.0.2.16:8788
+Environment=JARVIS_HERMES_PANEL_SWITCH=/home/user/gateway/data/hermes-panel-switch.json

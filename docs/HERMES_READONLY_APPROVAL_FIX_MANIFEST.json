@@ -1,0 +1,10 @@
+{
+  "purpose": "Complete umask 0077 compatibility: atomic readable root approval; BPF policy unchanged",
+  "previous_manifest_sha256": "4af0d3800492790df0eb0be95236a9783f9eda39e913307ac18142986ac158ce",
+  "files": {
+    "ops/pilot-network/install-system-pilot.py": "3a33093c734a194aa12e63667a0f8640a7c944107738ba03bc902b51d1df9997",
+    "ops/pilot-network/run-worker-window.py": "8384dd435a5d75111509988c81279250140fbaeb74434ab79712567c6cc508a9",
+    "ops/pilot-network/restore-readonly-pilot.py": "3f6b85099fa8d54d73f3ca17221c2668cc21605b56144ace95587382481397ef",
+    "memory_manager/phase6/test_worker_window_admin.py": "8cac615fa025909755684c8d8cb9ecfd35dc2675a4540dcc6126da4b8e33641e"
+  }
+}

@@ -1,0 +1,7 @@
+[Unit]
+Description=Independent actual-cgroup network enforcement probe (no agent)
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -B /opt/jarvis-hermes-supervisor/ops/demand/attest-confinement.py --approved-root-confinement-probe
+TimeoutStartSec=30
+UMask=0077

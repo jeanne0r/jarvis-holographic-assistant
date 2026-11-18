@@ -1,0 +1,13 @@
+{
+  "windows_listeners_after": {
+    "hermes": false,
+    "ollama": false
+  },
+  "controller_listeners_after": {
+    "8792": false,
+    "11436": false,
+    "8643": false,
+    "11435": false
+  },
+  "passed": true
+}

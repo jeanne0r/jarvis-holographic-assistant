@@ -1,0 +1,11 @@
+--- a/home/user/workspace/jarvis/phase6-gateway.mjs
++++ b/home/user/workspace/jarvis/phase6-gateway.mjs
+@@ -96,7 +96,7 @@
+  const auditPath=env.JARVIS_PHASE6_AUDIT;
+  const st=await lstat(auditPath);if(!st.isFile()||st.isSymbolicLink()||(st.mode&0o077)||st.uid!==process.getuid())throw Error('Private existing audit file required');
+  const audit=async event=>{const f=await open(auditPath,'a');try{await f.write(JSON.stringify({...event,at:new Date().toISOString()})+'\n');await f.sync()}finally{await f.close()}};
+- const integration=gatewayIntegration({legacy,sessions,clients:await make(cfg.clients),approvalClients:await make(cfg.approvalClients),audit,enabled:false,hybridEnabled:false,nativeLiveEnabled:false});
++ const integration=gatewayIntegration({legacy,sessions,clients:await make(cfg.clients),approvalClients:await make(cfg.approvalClients),audit,enabled:false,hybridEnabled:env.JARVIS_HERMES_HYBRID==='1',nativeLiveEnabled:false});
+  const armed=env.JARVIS_HERMES_ENABLED==='1';
+  if(armed&&!env.JARVIS_PHASE6_SWITCH)throw Error('Private feature switch file required');
+  return async(req,res,url)=>{

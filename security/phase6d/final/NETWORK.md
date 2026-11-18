@@ -1,0 +1,13 @@
+# Réseau Codex — contrat de mise en service, aucune règle appliquée
+
+Le CLI installé est conservé. Sa copie de runtime en lecture seule doit être épinglée par SHA-256. Aucun HOME existant, auth OAuth personnel, clé gateway/HA/Hermes ou configuration utilisateur n'est monté dans l'exécutant.
+
+L'exécutant `bwrap --unshare-all` n'a aucun réseau hôte. Les commandes de développement conservent le shell et les fichiers du worktree exporté, mais ne peuvent pas joindre Proxmox, Home Assistant, Windows, Internet ou les autres processus. Les accès Git/npm supplémentaires restent refusés tant qu'une destination par projet n'est pas explicitement approuvée.
+
+Pour l'inférence Codex actuelle, un profil fournisseur **distinct et explicitement autorisé** est nécessaire : proxy de service hors sandbox, destination fixe `api.openai.com:443`, TLS vérifié, POST `/v1/responses` seulement, modèles approuvés, aucun outil hébergé payant supplémentaire ni redirection. Le proxy doit avoir sa propre identité et injecter le justificatif fournisseur hors du sandbox. La politique et le registre de réservations conservatrices sont implémentés dans `broker/provider.py`. Le plafond mensuel est partagé par toutes les missions utilisant le même registre. Un appel incertain reste réservé ; pas de repli ou réessai payant automatique.
+
+Le relais HTTP→Unix et le profil Responses sont désormais codés (`relay.py`, `provider_socket.py`, `https_provider.py`) et testés avec un fournisseur simulé. Le relais monte dans le namespace sans exposer le justificatif OpenAI. Les réponses SSE sont bornées et tamponnées : ce n'est pas une validation du streaming progressif du fournisseur réel. Le raccordement complet CLI→fournisseur réel et l'authentification dédiée **ne sont pas validés**. Le plan ne peut donc pas activer le broker réel avec le fournisseur actuel. La politique est testée avec un transport simulé ; le budget par défaut 0 CHF bloque avant ce transport. Les sorties nécessaires au CLI actuel sous son authentification historique ne sont pas supposées identiques à cette proposition API.
+
+Pour conserver l'authentification actuelle au lieu de ce profil API, il faut une identité Codex dédiée et un transport compatible vérifié, sans copier les secrets du compte gateway dans le sandbox. Ce choix doit être approuvé avant tout essai réel ; les tests locaux ne consomment aucun crédit.
+
+Les tests de namespace n'utilisent que des sentinelles synthétiques. Ils démontrent réellement l'inaccessibilité du réseau hôte et des fichiers non montés, et le lancement de `codex exec --help` hors réseau. Ils ne démontrent ni un nouveau compte OS distinct, ni l'accès fournisseur, ni une inférence Codex réelle.

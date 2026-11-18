@@ -1,0 +1,797 @@
+{
+  "started_at_utc": "2026-11-15T05:58:44Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "samples": [
+    {
+      "available": true,
+      "observed_at": 1794722331.1680984,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 41.85,
+      "utilization": 0.0,
+      "temperature_c": 30.09,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722335.7383585,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 93.71,
+      "utilization": 0.0,
+      "temperature_c": 31.53,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722338.315735,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 79.76,
+      "utilization": 0.0,
+      "temperature_c": 28.75,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722340.886956,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 9.27,
+      "utilization": 0.0,
+      "temperature_c": 28.59,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722343.461674,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 9.04,
+      "utilization": 0.0,
+      "temperature_c": 28.28,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722346.0237892,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 9.15,
+      "utilization": 0.0,
+      "temperature_c": 28.19,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722348.581824,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.9,
+      "utilization": 0.0,
+      "temperature_c": 28.16,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722351.1612737,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.81,
+      "utilization": 0.0,
+      "temperature_c": 28.16,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722353.725319,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.75,
+      "utilization": 0.0,
+      "temperature_c": 28.09,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722356.2932217,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.67,
+      "utilization": 0.0,
+      "temperature_c": 28.09,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722358.871424,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.67,
+      "utilization": 0.0,
+      "temperature_c": 28.12,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722361.4389231,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.69,
+      "utilization": 0.0,
+      "temperature_c": 28.06,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722364.0230792,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 8.86,
+      "utilization": 0.0,
+      "temperature_c": 28.03,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722366.5933576,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1261.0,
+      "free_mib": 8979.0,
+      "driver": "621.24",
+      "power_w": 93.22,
+      "utilization": 0.0,
+      "temperature_c": 31.69,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722369.1726458,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 3777.0,
+      "free_mib": 6463.0,
+      "driver": "621.24",
+      "power_w": 92.79,
+      "utilization": 7.0,
+      "temperature_c": 32.28,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722371.7485826,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6631.0,
+      "free_mib": 3609.0,
+      "driver": "621.24",
+      "power_w": 94.89,
+      "utilization": 5.0,
+      "temperature_c": 32.62,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722374.341481,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 124.21,
+      "utilization": 0.0,
+      "temperature_c": 34.97,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722376.9404693,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6631.0,
+      "free_mib": 3609.0,
+      "driver": "621.24",
+      "power_w": 99.64,
+      "utilization": 21.0,
+      "temperature_c": 34.31,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722379.5205073,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 288.3,
+      "utilization": 2.0,
+      "temperature_c": 43.22,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722382.097556,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 3777.0,
+      "free_mib": 6463.0,
+      "driver": "621.24",
+      "power_w": 98.16,
+      "utilization": 39.0,
+      "temperature_c": 36.25,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722384.666417,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6873.0,
+      "free_mib": 3367.0,
+      "driver": "621.24",
+      "power_w": 328.13,
+      "utilization": 77.0,
+      "temperature_c": 47.16,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722387.2385259,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 107.03,
+      "utilization": 0.0,
+      "temperature_c": 38.47,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794722389.813569,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 92.5,
+      "utilization": 0.0,
+      "temperature_c": 36.62,
+      "miner_running": false
+    }
+  ],
+  "cleanup": {
+    "supervisor": {
+      "pid": 15172,
+      "reason": "operator_stop",
+      "exit_code_before_job_close": 259,
+      "resource_profile": "ollama",
+      "memory_limit_bytes": 12884901888,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 8245731328,
+      "peak_process_memory_bytes": 8151101440,
+      "elapsed_seconds": 62.1648053000099,
+      "owned_process_stopped_after_close": true
+    },
+    "listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794722392.8754601,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1072.0,
+      "free_mib": 9168.0,
+      "driver": "621.24",
+      "power_w": 11.82,
+      "utilization": 0.0,
+      "temperature_c": 33.81,
+      "miner_running": false
+    },
+    "windows_lab_listeners_after": {
+      "11434": false,
+      "8792": false,
+      "11436": false,
+      "8643": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794722326.794972,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1072.0,
+    "free_mib": 9168.0,
+    "driver": "621.24",
+    "power_w": 8.89,
+    "utilization": 0.0,
+    "temperature_c": 27.31,
+    "miner_running": false
+  },
+  "server_identity": {
+    "listening": true,
+    "addresses": [
+      "127.0.0.1"
+    ],
+    "pid": 18728,
+    "started": "2026-11-15T05:58:48.2144571Z",
+    "name": "ollama"
+  },
+  "configuration": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 64000,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "residency_samples": [
+    {
+      "observed_at": 1794722384.6686082,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    }
+  ],
+  "native_windows": {
+    "pilot": "P6-L1",
+    "synthetic_only": true,
+    "provider": "real-ollama-rtx",
+    "runtime": "real-windows-hermes",
+    "model_requests": [
+      {
+        "at": 1794722363.6511722,
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_knowledge",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 3350,
+          "completion_tokens": 43,
+          "total_tokens": 3393
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794722373.3773506,
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_knowledge",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 4253,
+          "completion_tokens": 132,
+          "total_tokens": 4385
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794722379.0880725,
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_knowledge",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 5511,
+          "completion_tokens": 164,
+          "total_tokens": 5675
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "memory_reads": [
+      {
+        "path": "/v1/search",
+        "memory_id": null,
+        "query": "configuration cellules pesée DoseLab X4 synthétique",
+        "actor": "p6-l1-runtime"
+      },
+      {
+        "path": "/v1/history",
+        "memory_id": "2699d523-4376-47e1-a8c8-89d59ffc87f2",
+        "query": null,
+        "actor": "p6-l1-runtime"
+      },
+      {
+        "path": "/v1/history",
+        "memory_id": "cc8c8ec1-7103-4e3c-a42a-785a1ffe0c70",
+        "query": null,
+        "actor": "p6-l1-runtime"
+      }
+    ],
+    "production_writes": 0,
+    "remote_cost_chf": 0,
+    "ask_calls": 0,
+    "installed_model_verified": true,
+    "panel_admission": {
+      "event": "panel-admitted",
+      "status": 202,
+      "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+      "state": "queued"
+    },
+    "mission": {
+      "id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+      "owner": "phase3-synthetic",
+      "scope": "private",
+      "event_key": "49744bdc-af98-4f1a-9a3e-a003f612bfcd",
+      "state": "completed",
+      "definition": {
+        "allowed_tools": [
+          "memory.search",
+          "memory.propose",
+          "report"
+        ],
+        "budget": {
+          "attempts": 1,
+          "cost_micros": 0,
+          "local_tokens": 98304,
+          "seconds": 240,
+          "tokens": 0
+        },
+        "memory_context": [],
+        "objective": "DoseLab X4 synthétique : retrouve la configuration actuelle des quatre cellules de pesée et explique les modifications historiques avec leurs sources exactes.",
+        "plan": [
+          "retrieve",
+          "report"
+        ],
+        "priority": 1,
+        "trigger": "jarvis-experimental"
+      },
+      "created": 1794722352.5736368,
+      "updated": 1794722385.6499155,
+      "events": [
+        {
+          "seq": 1,
+          "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+          "state": "queued",
+          "actor": "phase3-synthetic",
+          "evidence": "{}",
+          "created": 1794722352.5736368
+        }
+      ],
+      "dispatch_state": "completed",
+      "upstream_id": "run_02781063f96d428db74e2f6c22d83314",
+      "approvals": []
+    },
+    "events": [
+      {
+        "seq": 1,
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "event_key": "admitted",
+        "kind": "queued",
+        "data": "{\"mission_id\":\"6a85d22c-f52a-426a-baba-c68188b40aeb\"}",
+        "created": 1794722352.5919368
+      },
+      {
+        "seq": 2,
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "event_key": "phase4-execution-started",
+        "kind": "execution_started",
+        "data": "{}",
+        "created": 1794722353.355277
+      },
+      {
+        "seq": 3,
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "event_key": "submitted",
+        "kind": "running",
+        "data": "{\"run_id\":\"run_02781063f96d428db74e2f6c22d83314\"}",
+        "created": 1794722353.448092
+      },
+      {
+        "seq": 4,
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "event_key": "upstream-running",
+        "kind": "progress",
+        "data": "{\"upstream_state\":\"running\"}",
+        "created": 1794722353.8242586
+      },
+      {
+        "seq": 120,
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "event_key": "terminal",
+        "kind": "completed",
+        "data": "{\"output\":\"**Configuration actuelle DoseLab X4 :** 4 cellules de pesée à 1 kg chacune ([1, 1, 1, 1] kg)\\n\\n**Évolution historique :**\\n- **État initial (2023-11-14)** : [1, 2, 5, 10] kg — source `synthetic://doselab/old`\\n- **Modification (2023-11-15)** : standardisation à [1, 1, 1, 1] kg — source `synthetic://doselab/correction`\\n\\n**Leçon identifiée :** Une procédure a échoué faute de contrôle de fraîcheur des mesures (source `synthetic://doselab/experience`).\",\"output_withheld\":false,\"usage\":{\"input_tokens\":13114,\"output_tokens\":339,\"total_tokens\":13453},\"validation\":\"unreviewed\"}",
+        "created": 1794722385.6501544
+      }
+    ],
+    "native_status": {
+      "object": "hermes.run",
+      "model": "qwen3.5:4b",
+      "runtime": {
+        "provider": "",
+        "model": "",
+        "route_source": "raw_request",
+        "requested": {
+          "provider": "",
+          "model": "qwen3.5:4b"
+        }
+      },
+      "created_at": 1794722353.4389908,
+      "pending_controls": [],
+      "run_id": "run_02781063f96d428db74e2f6c22d83314",
+      "status": "completed",
+      "session_id": "run_02781063f96d428db74e2f6c22d83314",
+      "admission_id": "0fcf8efb41a84aab812d3cdc2e192fc2",
+      "execution_generation": 1,
+      "output": "**Configuration actuelle DoseLab X4 :** 4 cellules de pesée à 1 kg chacune ([1, 1, 1, 1] kg)\n\n**Évolution historique :**\n- **État initial (2023-11-14)** : [1, 2, 5, 10] kg — source `synthetic://doselab/old`\n- **Modification (2023-11-15)** : standardisation à [1, 1, 1, 1] kg — source `synthetic://doselab/correction`\n\n**Leçon identifiée :** Une procédure a échoué faute de contrôle de fraîcheur des mesures (source `synthetic://doselab/experience`).",
+      "usage": {
+        "input_tokens": 13114,
+        "output_tokens": 339,
+        "total_tokens": 13453
+      }
+    },
+    "native_events": [
+      {
+        "event": "tool.started",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722373.3243394,
+        "tool": "mcp__jarvis__jarvis_memory_search",
+        "preview": "",
+        "tool_call_id": "pilot-c4762b2e-7e08-4c90-bd12-4472bd89a4dc-0",
+        "seq": 0
+      },
+      {
+        "event": "tool.completed",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722373.3801405,
+        "tool": "mcp__jarvis__jarvis_memory_search",
+        "duration": 0,
+        "error": false,
+        "tool_call_id": "pilot-c4762b2e-7e08-4c90-bd12-4472bd89a4dc-0",
+        "preview": "",
+        "seq": 1
+      },
+      {
+        "event": "tool.started",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722379.0952852,
+        "tool": "mcp__jarvis__jarvis_memory_history",
+        "preview": "",
+        "tool_call_id": "pilot-a2c026c2-327e-4dae-8fb3-a3f5dd6ee457-0",
+        "seq": 2
+      },
+      {
+        "event": "tool.completed",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722379.1048937,
+        "tool": "mcp__jarvis__jarvis_memory_history",
+        "duration": 0,
+        "error": false,
+        "tool_call_id": "pilot-a2c026c2-327e-4dae-8fb3-a3f5dd6ee457-0",
+        "preview": "",
+        "seq": 3
+      },
+      {
+        "event": "tool.started",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722379.107378,
+        "tool": "mcp__jarvis__jarvis_memory_history",
+        "preview": "",
+        "tool_call_id": "pilot-a2c026c2-327e-4dae-8fb3-a3f5dd6ee457-1",
+        "seq": 4
+      },
+      {
+        "event": "tool.completed",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722379.11641,
+        "tool": "mcp__jarvis__jarvis_memory_history",
+        "duration": 0,
+        "error": false,
+        "tool_call_id": "pilot-a2c026c2-327e-4dae-8fb3-a3f5dd6ee457-1",
+        "preview": "",
+        "seq": 5
+      },
+      {
+        "event": "message.delta",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722385.4755888,
+        "delta": "\n\n**Configuration actuelle DoseLab X4 :** 4 cellules de pesée à 1 kg chacune ([1, 1, 1, 1] kg)\n\n**Évolution historique :**\n- **État initial (2023-11-14)** : [1, 2, 5, 10] kg — source `synthetic://doselab/old`\n- **Modification (2023-11-15)** : standardisation à [1, 1, 1, 1] kg — source `synthetic://doselab/correction`\n\n**Leçon identifiée :** Une procédure a échoué faute de contrôle de fraîcheur des mesures (source `synthetic://doselab/experience`).",
+        "seq": 6
+      },
+      {
+        "event": "run.completed",
+        "run_id": "run_02781063f96d428db74e2f6c22d83314",
+        "timestamp": 1794722385.5768175,
+        "output": "**Configuration actuelle DoseLab X4 :** 4 cellules de pesée à 1 kg chacune ([1, 1, 1, 1] kg)\n\n**Évolution historique :**\n- **État initial (2023-11-14)** : [1, 2, 5, 10] kg — source `synthetic://doselab/old`\n- **Modification (2023-11-15)** : standardisation à [1, 1, 1, 1] kg — source `synthetic://doselab/correction`\n\n**Leçon identifiée :** Une procédure a échoué faute de contrôle de fraîcheur des mesures (source `synthetic://doselab/experience`).",
+        "usage": {
+          "input_tokens": 13114,
+          "output_tokens": 339,
+          "total_tokens": 13453
+        },
+        "runtime": {
+          "provider": "",
+          "model": "",
+          "route_source": "raw_request",
+          "requested": {
+            "provider": "",
+            "model": "qwen3.5:4b"
+          }
+        },
+        "completed": true,
+        "partial": false,
+        "interrupted": false,
+        "seq": 7
+      }
+    ],
+    "usage": [
+      {
+        "id": "c4762b2e-7e08-4c90-bd12-4472bd89a4dc",
+        "budget_id": "380fa3a8-a0b7-4164-83d1-ba09835e7354",
+        "month": "2026-11",
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "parent_call": null,
+        "model": "qwen3.5:4b",
+        "reserved_tokens": 64000,
+        "used_tokens": 3393,
+        "reserved_remote_micros": 0,
+        "actual_remote_micros": 0,
+        "latency": 8.85888775694184,
+        "state": "settled",
+        "created": 1794722364.2716088
+      },
+      {
+        "id": "a2c026c2-327e-4dae-8fb3-a3f5dd6ee457",
+        "budget_id": "380fa3a8-a0b7-4164-83d1-ba09835e7354",
+        "month": "2026-11",
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "parent_call": null,
+        "model": "qwen3.5:4b",
+        "reserved_tokens": 64000,
+        "used_tokens": 4385,
+        "reserved_remote_micros": 0,
+        "actual_remote_micros": 0,
+        "latency": 5.065971127944067,
+        "state": "settled",
+        "created": 1794722373.9590902
+      },
+      {
+        "id": "aaa94455-0de2-4275-933a-f3fcb7c9064e",
+        "budget_id": "380fa3a8-a0b7-4164-83d1-ba09835e7354",
+        "month": "2026-11",
+        "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+        "parent_call": null,
+        "model": "qwen3.5:4b",
+        "reserved_tokens": 64000,
+        "used_tokens": 5675,
+        "reserved_remote_micros": 0,
+        "actual_remote_micros": 0,
+        "latency": 5.736404309980571,
+        "state": "settled",
+        "created": 1794722379.6740618
+      }
+    ],
+    "experiences": [
+      "29ffaff8-5c05-4d94-95f8-24c8df3452d0"
+    ],
+    "panel": {
+      "event": "panel-result",
+      "admissions": [
+        {
+          "status": 202,
+          "mission_id": "6a85d22c-f52a-426a-baba-c68188b40aeb",
+          "state": "queued"
+        }
+      ],
+      "ask_requests": 0,
+      "source_current_visible": true,
+      "source_old_visible": true,
+      "completed_visible": true,
+      "no_model_approval_button": true,
+      "output": "Terminée\nDoseLab X4 synthétique : retrouve la configuration actuelle des quatre cellules de pesée et explique les modifications historiques avec leurs sources exactes.\n**Configuration actuelle DoseLab X4 :** 4 cellules de pesée à 1 kg chacune ([1, 1, 1, 1] kg)\n\n**Évolution historique :**\n- **État initial (2023-11-14)** : [1, 2, 5, 10] kg — source `synthetic://doselab/old`\n- **Modification (2023-11-15)** : standardisation à [1, 1, 1, 1] kg — source `synthetic://doselab/correction`\n\n**Leçon identifiée :** Une procédure a échoué faute de contrôle de fraîcheur des mesures (source `synthetic://doselab/experience`)."
+    },
+    "checks": {
+      "no_ask_delegation": true,
+      "one_panel_admission": true,
+      "runtime_completed": true,
+      "current_source_visible": true,
+      "old_source_visible": true,
+      "result_matches_runtime": true,
+      "experience_persisted": true,
+      "no_automatic_approval": true,
+      "model_actually_called": true,
+      "quota_respected": true
+    },
+    "passed": true,
+    "runtime_supervisors": [
+      {
+        "pid": 24640,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 368947200,
+        "peak_process_memory_bytes": 331431936,
+        "elapsed_seconds": 51.75647680001566,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "4d6419cea38a4cf587738a60a2cd1d64"
+      }
+    ],
+    "panel_stopped": true,
+    "tunnel_stopped": true
+  },
+  "passed": true,
+  "finished_at_utc": "2026-11-15T05:59:52Z",
+  "pilot": "P6-L1",
+  "private_lab_path": "data/phase6/p6-l1-20261115T055844Z-b5242289",
+  "allowance": {
+    "calls": 3,
+    "missions": 1,
+    "closed": true,
+    "limits": {
+      "calls": 6,
+      "missions": 1
+    }
+  },
+  "additional_remote_budget_chf": 0,
+  "p6_l2_authorized": false,
+  "production_preimages_unchanged_after": true
+}

@@ -1,0 +1,23 @@
+{
+  "database_reopened_after_lab_shutdown": true,
+  "mission_id": "bbda2068-ab44-4dbe-a85d-2a61938a4238",
+  "state": "completed",
+  "terminal_output_matches_native": true,
+  "output_sha256": "8686c89e8c9f072855c1292a628859ab0999caad2643ae3387a7d95fa6a69288",
+  "experience_ids": [
+    "747475aa-bbf5-4771-80f8-6d2ad7453d8f"
+  ],
+  "all_experiences_present": true,
+  "active_skills": 0,
+  "sqlite_quick_check": "ok",
+  "approval_window": {
+    "closed": true,
+    "calls": 3,
+    "missions": 1,
+    "limits": {
+      "calls": 6,
+      "missions": 1
+    },
+    "local_token_limit": 98304
+  }
+}

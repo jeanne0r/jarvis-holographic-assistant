@@ -1,0 +1,23 @@
+--- a/server.js
++++ b/server.js
+@@ -1,3 +1,4 @@
++import {embeddedRelay} from './hermes-embedded-relay.mjs';
+ import { handleJarvis } from '/home/user/workspace/jarvis/backend.mjs';
+ import { handlePaper } from '/home/user/workspace/solana-paper/gateway.mjs';
+ import { handleAstro } from '/home/user/workspace/astro-degustation/gateway.mjs';
+@@ -31,6 +32,7 @@
+ import { buildNilmReport } from "./lib/nilm-report.js";
+ import { buildEnergyLive } from "./lib/energy-live.js";
+ 
++const handleHermesPanel = embeddedRelay({enabled:process.env.JARVIS_HERMES_PANEL==='1',origin:process.env.JARVIS_HERMES_PANEL_ORIGIN,switchFile:process.env.JARVIS_HERMES_PANEL_SWITCH||''});
+ const HOST = process.env.HOST || "0.0.0.0";
+ const PORT = Number(process.env.PORT || 8787);
+ const HTTPS_PORT = Number(process.env.HTTPS_PORT || 8788);
+@@ -1998,6 +2000,7 @@
+     if (url.pathname.startsWith('/api/solana-paper/')) return handlePaper(req, res, url);
+     if (url.pathname === '/solana-paper') { res.writeHead(302, { location: '/solana-paper/' }); return res.end(); }
+     if (url.pathname === '/solana-paper/') return serveStatic(res, 'solana-paper/index.html');
++    if (await handleHermesPanel(req,res,url)) return;
+     if (url.pathname.startsWith("/api/jarvis/")) return handleJarvis(req, res, url);
+     if (url.pathname === "/miroir") { res.writeHead(302, { location: "/miroir/" }); return res.end(); }
+     if (url.pathname === "/miroir/") return serveStatic(res, "miroir/index.html");

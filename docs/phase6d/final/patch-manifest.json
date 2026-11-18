@@ -1,0 +1,302 @@
+{
+  "mode": "review-only-source-packages-not-activation",
+  "active_entry_patch_ready": false,
+  "reason": "real service bindings, historical ownership and distinct OS identities not provisioned/validated",
+  "route_method_pairs": 101,
+  "unchanged_baseline_files": 75,
+  "lots": [
+    {
+      "lot": "01-policy",
+      "patch_sha256": "96f1ca8e19632cf41f7b1e285982c6d86ea0fa5242f820b1b210b9eb536c92f3",
+      "files": [
+        {
+          "source": "hermes-server-auth.mjs",
+          "target": "/home/user/workspace/jarvis/hermes-server-auth.mjs",
+          "before_sha256": null,
+          "after_sha256": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228"
+        },
+        {
+          "source": "jarvis-session-auth.mjs",
+          "target": "/home/user/workspace/jarvis/jarvis-session-auth.mjs",
+          "before_sha256": null,
+          "after_sha256": "574feef80fda44f5806770cb8a433b639d7042cc1e48f62c011701f202233edd"
+        },
+        {
+          "source": "gateway-route-policy.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-route-policy.mjs",
+          "before_sha256": null,
+          "after_sha256": "2956806e52187680126df23a2dbd0ac965862f94181f4c4aee7b368b87506c6a"
+        },
+        {
+          "source": "gateway-security.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-security.mjs",
+          "before_sha256": null,
+          "after_sha256": "8cac5b0ddacbbc9693aee883bce5e0c3769d5be0cbe7eefbe3448d71066414f8"
+        },
+        {
+          "source": "gateway-security-mount.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-security-mount.mjs",
+          "before_sha256": null,
+          "after_sha256": "d2d500bca556c4159cf38bca84f961fee38b461dbcccd932119f8cf5f538d144"
+        },
+        {
+          "source": "voice-session-owner.mjs",
+          "target": "/home/user/workspace/jarvis/voice-session-owner.mjs",
+          "before_sha256": null,
+          "after_sha256": "92889ee40dba97069d10732890beefccd58048bddf651486af6e9501f5714d47"
+        }
+      ],
+      "forward_reverse_copy_verified": true
+    },
+    {
+      "lot": "02-business",
+      "patch_sha256": "39c1b2a5a6f711fac51d2463f0e5bf845be222d78f73077b0cfe5fc40d6a46b6",
+      "files": [
+        {
+          "source": "gateway-business.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-business.mjs",
+          "before_sha256": null,
+          "after_sha256": "c317b48e70153e12b9c07105258e9aec01c9f093f96346ea626e76e83f051478"
+        },
+        {
+          "source": "gateway-project-files.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-project-files.mjs",
+          "before_sha256": null,
+          "after_sha256": "3d452c04dfc3d8290822913c6cab3d4491b7dac80b87dd58b98d2e127e71d206"
+        },
+        {
+          "source": "gateway-tool-authority.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-tool-authority.mjs",
+          "before_sha256": null,
+          "after_sha256": "65f55bfcf3a2c4554bb5727283dc16a6236d0ca1faf4dceed1459e559ff28de7"
+        },
+        {
+          "source": "gateway-hybrid-authorized.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-hybrid-authorized.mjs",
+          "before_sha256": null,
+          "after_sha256": "38d0dd3ccc245f11d793d26ebee8006bf09132f3f33ebc0c5977a5715cf13f8d"
+        }
+      ],
+      "forward_reverse_copy_verified": true
+    },
+    {
+      "lot": "03-codex-transport",
+      "patch_sha256": "9be3240ee2897d9a5ae1bfd92ce1d90f996d25f72e19d963c8e5a51596baf770",
+      "files": [
+        {
+          "source": "codex-broker-client.mjs",
+          "target": "/home/user/workspace/jarvis/codex-broker-client.mjs",
+          "before_sha256": null,
+          "after_sha256": "7728edcf1a806f19bf91171d4b0b55676b5d84815add2c16de89057a901436da"
+        },
+        {
+          "source": "codex-tool-proxy.mjs",
+          "target": "/home/user/workspace/jarvis/codex-tool-proxy.mjs",
+          "before_sha256": null,
+          "after_sha256": "9afb253fa9f26585f2efa270eda0809b2b0a698f97cc03fb74314e8521282d71"
+        },
+        {
+          "source": "codex-tools-broker.mjs",
+          "target": "/home/user/workspace/jarvis/codex-tools-broker.mjs",
+          "before_sha256": null,
+          "after_sha256": "d7289fe2823f9630b3b066d3055f8877e6393dd51f9b16b5ac935852ecb3606d"
+        }
+      ],
+      "forward_reverse_copy_verified": true
+    },
+    {
+      "lot": "04-runtime",
+      "patch_sha256": "6fa1f464309e877ccc77e96c08dd6de3c6fb53fc66070d7ed14591348b92d5f1",
+      "files": [
+        {
+          "source": "memory_manager/phase6d/broker/__init__.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/__init__.py",
+          "before_sha256": null,
+          "after_sha256": "dd18de3a48ff3fff831954f805d4f50979ef773c032e1c9e61fc8cbe9beda74b"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/execute.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/execute.py",
+          "before_sha256": null,
+          "after_sha256": "528fcf8bdac48ff47f395d7a31abace044b707197c4f465cf0f74c094dffc5bc"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/executor.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/executor.py",
+          "before_sha256": null,
+          "after_sha256": "d4634292644dd7e4eb105e36ee1f484780defa2689a6a8cfd949e9251adfeb2d"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/https_provider.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/https_provider.py",
+          "before_sha256": null,
+          "after_sha256": "2c9a9d1f7a8e1006055626cad7df1af7ea225754c0a6f8e08430beb420adfc48"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/isolation.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/isolation.py",
+          "before_sha256": null,
+          "after_sha256": "f263489602f4ae87aa2ea5623aea3707899fc686aca9fea03d0603303a3d7fd4"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/main.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/main.py",
+          "before_sha256": null,
+          "after_sha256": "6431d03f98599aa0e5a85f6feb21a026258cad68e5e04d36bf1f4a002018e2c8"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/provider.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/provider.py",
+          "before_sha256": null,
+          "after_sha256": "0dcb812ed79b8bb8ca448b1108438c42fa8eab81ab1e54345929486109b4d131"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/provider_socket.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/provider_socket.py",
+          "before_sha256": null,
+          "after_sha256": "591ad374302eb0cc2659bdacc30d1774c88390346fc06c2fd5e4abdb04e10228"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/relay.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/relay.py",
+          "before_sha256": null,
+          "after_sha256": "e0a99dd2fbd629107119ac7dceff0767237bd696d291ba7ee89b8d0ec3c1b3e6"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/service.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/service.py",
+          "before_sha256": null,
+          "after_sha256": "4f90f16eeaed1a2d0a3df77ee1eba35e1230540c4331cbc013bdf88109f11e42"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/store.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/store.py",
+          "before_sha256": null,
+          "after_sha256": "f73c21003a7743987e50343efb2045a774a28f663cfd892723ef953d5d257e31"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/transport.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/broker/transport.py",
+          "before_sha256": null,
+          "after_sha256": "b7b2eb74816df076f2e8ed9efd3f3cb6ce008db4255d52e5b918c6e410e55cca"
+        },
+        {
+          "source": "memory_manager/phase6d/legacy_repository.py",
+          "target": "/opt/jarvis-2/review/memory_manager/phase6d/legacy_repository.py",
+          "before_sha256": null,
+          "after_sha256": "76b2aee75d652dc7e8f4dd499913170c910e1a896c511f3e70d572aa55ee291d"
+        }
+      ],
+      "forward_reverse_copy_verified": true
+    },
+    {
+      "lot": "05-hermes-composition",
+      "patch_sha256": "4a589049792f1a06c27ca9b88e104dee585b1b42350dbf7f3dfbc27e279e891d",
+      "files": [
+        {
+          "source": "gateway-final-compose.mjs",
+          "target": "/home/user/workspace/jarvis/gateway-final-compose.mjs",
+          "before_sha256": null,
+          "after_sha256": "1ff7c3436f2d485f49ec18ae8d72112c741380d95a6b99ddb6f7ff2a5d1f19a7"
+        },
+        {
+          "source": "phase6-gateway.mjs",
+          "target": "/home/user/workspace/jarvis/phase6-gateway.mjs",
+          "before_sha256": null,
+          "after_sha256": "73fa7dbd00b69c7e028f951437efbf1393d81cb83f978adef79de06bfa0753d8"
+        },
+        {
+          "source": "hybrid-mission-admission.mjs",
+          "target": "/home/user/workspace/jarvis/hybrid-mission-admission.mjs",
+          "before_sha256": null,
+          "after_sha256": "270c0b9da48ee6e9b6c20fc36d850bef6dd283b39a841d12de184b94344207df"
+        },
+        {
+          "source": "hermes-voice-tools.mjs",
+          "target": "/home/user/workspace/jarvis/hermes-voice-tools.mjs",
+          "before_sha256": null,
+          "after_sha256": "79ceaff38551840ff2cc39edbe9f2b6372cb75a08425c17156477738c79bddff"
+        },
+        {
+          "source": "hermes-bridge-client.mjs",
+          "target": "/home/user/workspace/jarvis/hermes-bridge-client.mjs",
+          "before_sha256": null,
+          "after_sha256": "8190c7412a78b9da5652394bd526d0576927be20b43f191aba89efae353678f6"
+        },
+        {
+          "source": "jarvis-hermes-experimental.mjs",
+          "target": "/home/user/workspace/jarvis/jarvis-hermes-experimental.mjs",
+          "before_sha256": null,
+          "after_sha256": "4471f9fbd4498d6d10fa3fe7767ebc42687c1e3d30eea48a011168d0c4081380"
+        }
+      ],
+      "forward_reverse_copy_verified": true
+    },
+    {
+      "lot": "06-ui-assets",
+      "patch_sha256": "aa0dbbfeefe305167ef010c8d696efa38f599d03c14edd785418b80ffd49b6f0",
+      "files": [
+        {
+          "source": "public/jarvis-auth.js",
+          "target": "/home/user/gateway/public/jarvis/jarvis-auth.js",
+          "before_sha256": null,
+          "after_sha256": "3351664201443b49d4c653478da107788f38f0dd989ed31d7524cfbec0658f2e"
+        },
+        {
+          "source": "public/hermes-missions.js",
+          "target": "/home/user/gateway/public/jarvis/hermes-missions.js",
+          "before_sha256": null,
+          "after_sha256": "b13d764727e5bf211c5982a5c00e78eb4bf74d4aa89b23e70cb4698343e725b1"
+        },
+        {
+          "source": "public/hermes-missions.css",
+          "target": "/home/user/gateway/public/jarvis/hermes-missions.css",
+          "before_sha256": null,
+          "after_sha256": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273"
+        },
+        {
+          "source": "public/hermes-canonical.js",
+          "target": "/home/user/gateway/public/jarvis/hermes-canonical.js",
+          "before_sha256": null,
+          "after_sha256": "2ac5e7523991a62306e921bd4a256fbac072699837ce582a5e871d2acd72cf32"
+        },
+        {
+          "source": "public/voice-router.js",
+          "target": "/home/user/gateway/public/jarvis/voice-router.js",
+          "before_sha256": "b848df088de7a1a614aa8497debed3156aa9f0a3ed809ffdfe2ae213dfc010fb",
+          "after_sha256": "202f0de323ca36b4fc83912f13753da8556449c71b0f39c05d5495c10decaf2d"
+        }
+      ],
+      "forward_reverse_copy_verified": true
+    }
+  ],
+  "production_writes": 0,
+  "preimages_unchanged": true,
+  "dependencies": {
+    "02-business": [
+      "01-policy"
+    ],
+    "03-codex-transport": [
+      "01-policy"
+    ],
+    "04-runtime": [
+      "distinct approved service identities and storage paths"
+    ],
+    "05-hermes-composition": [
+      "01-policy",
+      "02-business",
+      "03-codex-transport",
+      "04-runtime"
+    ],
+    "06-ui-assets": [
+      "01-policy",
+      "05-hermes-composition for Hermes panel"
+    ]
+  },
+  "default_flags": {
+    "history": false,
+    "admission": false,
+    "hybrid": false,
+    "remote_budget_chf": 0
+  }
+}

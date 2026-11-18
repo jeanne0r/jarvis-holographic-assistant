@@ -1,0 +1,21 @@
+# REVIEW ONLY. Replace existing launch only after all acceptance gates pass.
+[Unit]
+Description=Jarvis hybrid gateway with private service bindings
+[Service]
+User=jarvis-gateway
+Group=jarvis-gateway
+SupplementaryGroups=jarvis-storage-ipc jarvis-broker-ipc jarvis-voice-ipc jarvis-apps-ipc
+WorkingDirectory=/opt/jarvis-2/release
+ExecStart=/usr/bin/node /opt/jarvis-2/release/gateway-production-main.mjs /etc/jarvis-gateway/config.json
+Environment=JARVIS_CORE_SETTINGS_FILE=/etc/jarvis-gateway/core-engine.json
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/jarvis-gateway
+# Only UNIX services plus listener and approved Gemini public-answer endpoint.
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+TasksMax=32
+MemoryMax=768M
+Restart=no

@@ -1,0 +1,9 @@
+{
+  "purpose": "Explicit permissions on non-secret root-owned BPF rendezvous under umask 0077; no network policy changes",
+  "previous_manifest_sha256": "564b0c31801d50726ee3f3aa14de2c86621adb546da975e73b19d467705fef0e",
+  "files": {
+    "ops/pilot-network/install-system-pilot.py": "11d11ef5779649ae6edb91ff2756a5c0c8ed022da1e385d11427e28f240c73d3",
+    "ops/pilot-network/run-worker-window.py": "2569467c41c165db12511c9b5ba5ed99f58d3648d96d2836047bd089439599d7",
+    "memory_manager/phase6/test_worker_window_admin.py": "8b8cff24dde41e0df3088575e7bccc47ac5b1a0eae9c65a22d82eb7aa33471a3"
+  }
+}

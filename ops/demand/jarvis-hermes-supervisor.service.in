@@ -1,0 +1,52 @@
+[Unit]
+Description=Jarvis on-demand synthetic mission supervisor
+After=network-online.target jarvis-hermes-private-boot.service
+Requires=jarvis-hermes-private-boot.service
+Wants=network-online.target
+[Service]
+Type=simple
+User=jarvis-hermes-supervisor
+Group=jarvis-hermes-supervisor
+WorkingDirectory=/opt/jarvis-hermes-supervisor
+ExecStart=/usr/bin/python3 -B -m scripts.demand_supervisor --config /etc/jarvis-hermes-supervisor/config.json
+ExecStartPost=+/usr/bin/systemctl start jarvis-hermes-confinement.service
+Environment=HOME=/var/lib/jarvis-hermes-supervisor
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+StateDirectory=jarvis-hermes-supervisor
+StateDirectoryMode=0700
+ReadOnlyPaths=/etc/jarvis-hermes-supervisor /opt/jarvis-hermes-supervisor
+# Existing lifecycle writes its evidence only under these dedicated bind mounts.
+BindPaths=/var/lib/jarvis-hermes-supervisor/docs:/opt/jarvis-hermes-supervisor/docs
+BindPaths=/var/lib/jarvis-hermes-supervisor/data:/opt/jarvis-hermes-supervisor/data
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+NoNewPrivileges=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectProc=invisible
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET
+IPAddressDeny=any
+IPAddressAllow=127.0.0.0/8 192.0.2.96/32
+SocketBindDeny=any
+SocketBindAllow=ipv4:tcp:8643
+SocketBindAllow=ipv4:tcp:11435
+# Existing read-only preflight binds this unused loopback port as a guard.
+SocketBindAllow=ipv4:tcp:8792
+MemoryMax=768M
+CPUQuota=50%
+TasksMax=64
+KillMode=control-group
+TimeoutStopSec=350
+Restart=no
+[Install]
+WantedBy=multi-user.target

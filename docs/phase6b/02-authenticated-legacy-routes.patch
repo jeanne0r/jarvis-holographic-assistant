@@ -1,0 +1,141 @@
+--- a/home/user/workspace/jarvis/backend.mjs
++++ b/home/user/workspace/jarvis/backend.mjs
+@@ -1,4 +1,8 @@
++import {legacyToolPermission} from './hermes-voice-tools.mjs';
++import {handleHybridAdmission} from './hybrid-mission-admission.mjs';
+ import {coreInfo} from './core-settings.mjs';
++import {trustedRequests} from './jarvis-session-auth.mjs';
++import {fileURLToPath} from 'node:url';
+ import {spawn} from 'node:child_process';
+ import {answer} from './ai.mjs';
+ import {validateAction} from './actions.mjs';
+@@ -19,7 +23,7 @@
+ import {capabilityTools,capabilityHandler} from './capabilities.mjs';
+ import {evolutionStatus} from './evolution.mjs';
+ import {mapsConfig,youtubeKey} from './maps-config.mjs';
+-const ROOT='/home/user/workspace/jarvis';
++const ROOT=fileURLToPath(new URL('.',import.meta.url)).replace(/\/$/,'');
+ const MAX_IMPORT_BYTES=3*1024*1024*1024;
+ let syncing=null,asking=0;
+ export function store(action,data={},space='user'){
+@@ -30,7 +34,7 @@
+  });
+ }
+ function sync(){if(!syncing)syncing=store('sync').finally(()=>syncing=null);return syncing}
+-setTimeout(()=>sync().catch(()=>{}),2000).unref();setInterval(()=>sync().catch(()=>{}),5*60*1000).unref();
++if(process.env.JARVIS_BACKGROUND_SYNC!=='0'){setTimeout(()=>sync().catch(()=>{}),2000).unref();setInterval(()=>sync().catch(()=>{}),5*60*1000).unref();}
+ function json(res,status,data,headers={}){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store',...headers});res.end(JSON.stringify(data))}
+ async function body(req,limit=50000){let size=0;const out=[];for await(const chunk of req){size+=chunk.length;if(size>limit)throw Error('Requête trop volumineuse.');out.push(chunk)}return Buffer.concat(out)}
+ async function saveImport(req){const dir=ROOT+'/data/import-staging';await mkdir(dir,{recursive:true,mode:0o700});const path=dir+'/'+randomUUID()+'.upload';let size=0;const meter=new Transform({transform(chunk,_encoding,done){size+=chunk.length;done(size>MAX_IMPORT_BYTES?Error('La sauvegarde dépasse la limite de 3 Go.'):null,chunk)}});try{await pipeline(req,meter,createWriteStream(path,{flags:'wx',mode:0o600}));return path}catch(e){await unlink(path).catch(()=>{});throw e}}
+@@ -38,12 +42,18 @@
+  try{
+  if(req.method!=='GET'&&req.headers.origin&&req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
+  const action=url.pathname.slice('/api/jarvis/'.length);
++ const identity=trustedRequests.get(req);
+  const space=url.searchParams.get('space')||'user';
+  if(!['user','amelie','malik','theo','commun'].includes(space))return json(res,400,{error:'Espace inconnu.'});
+  if(action==='capabilities'&&req.method==='GET')return json(res,200,{radioDiscovery:true,maps:await mapsConfig(),youtubeSearchConfigured:Boolean(await youtubeKey())});
+  if(action==='capabilities/run'&&req.method==='POST'){
+   if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,6000)).toString());if(!capabilityTools.some(t=>t.name===data.name))throw Error('Capacité inconnue.');
++  if(identity){
++   const permission=legacyToolPermission(data.name);
++   if(!identity.roles.includes(permission))return json(res,403,{error:'Capacité non autorisée.'});
++   if(data.name==='trajet_jarvis'||(data.name==='medias_jarvis'&&data.args?.target&&data.args.target!=='ici'))return json(res,403,{error:'Cible physique ou lieu personnel non ouvert par cette façade.'});
++  }
+   return json(res,200,await capabilityHandler(data.name,data.args||{},{space,entities:new Set(),services:new Map(),memories:[],economy:true}));
+  }
+  if(action==='evolution/status'&&req.method==='GET')return json(res,200,await evolutionStatus(url.searchParams.get('id'),space));
+@@ -54,11 +64,11 @@
+  if(action==='conversations/record'&&req.method==='POST'){
+   if(req.headers.origin!==`${req.socket.encrypted?'https':'http'}://${req.headers.host}`)return json(res,403,{error:'Origine non autorisée.'});
+   const data=JSON.parse((await body(req,180000)).toString());
+-  return json(res,200,await archive('record',{...data,space}));
++  return json(res,200,await archive('record',{...data,space,...(identity?{expected_space:space}:{})}));
+  }
+  if(action==='memory/map'&&req.method==='GET'){try{return json(res,200,await memoryMap(space,url.searchParams.get('offset')))}catch(e){return json(res,503,{error:e.message})}}
+  if(action==='memory/status'&&req.method==='GET'){
+-  const memories=await memoryStore('list',{space});
++  const memories=await memoryStore('list',{space,include_common:!identity||identity.spaces.includes('commun')});
+   let index={state:'pending'};try{index=JSON.parse(await readFile(ROOT+'/data/semantic-index-status.json','utf8'))}catch{}
+   return json(res,200,{persistent:true,savedFacts:memories.length,index:{state:index.state,done:index.done||0,total:index.total||0}});
+  }
+@@ -76,7 +86,7 @@
+   if(!req.socket.encrypted&&!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(req.socket.remoteAddress))return json(res,400,{error:'Ouvre Jarvis en HTTPS pour utiliser le micro.'});
+   const data=JSON.parse((await body(req,16000)).toString());
+   if(['codex','hybrid'].includes(coreInfo().engine))return json(res,409,{error:'Utilise la voix de Jarvis pour conserver l’aiguillage des demandes.'});
+-  try{return json(res,200,action==='live/session'?await createLiveSession(space):await liveTool({...data,space}));}
++  try{return json(res,200,action==='live/session'?await createLiveSession(space,identity):await liveTool(identity?data:{...data,space},identity));}
+   catch(e){return json(res,e.status||400,{error:e.message});}
+  }
+  if(['voice/session','voice/transcribe','voice/speak'].includes(action)&&req.method==='POST'){
+@@ -100,7 +110,11 @@
+    res.writeHead(200,{'content-type':'audio/wav','cache-control':'no-store','content-length':audio.length});return res.end(audio);
+   }catch(e){if(!res.destroyed)return json(res,e.status||400,{error:e.message});return;}
+  }
+- if(action==='move'&&req.method==='POST')return json(res,200,await store('move',{...JSON.parse((await body(req)).toString()),space}));
++ if(action==='move'&&req.method==='POST'){
++  const data=JSON.parse((await body(req)).toString());
++  if(identity&&!identity.spaces.includes(data.target))return json(res,403,{error:'Espace cible non autorisé.'});
++  return json(res,200,await store('move',{...data,space}));
++ }
+  if(action==='docs'&&req.method==='GET')return json(res,200,await store('list',{q:url.searchParams.get('q')||'',space}));
+  if(action==='doc'&&req.method==='GET'){let d=await store('get',{id:url.searchParams.get('id'),space});return json(res,d?200:404,d||{error:'Souvenir introuvable.'})}
+  if(action==='sync'&&req.method==='POST')return json(res,200,await sync());
+@@ -109,7 +123,8 @@
+  if(action==='ask'&&req.method==='POST'){
+ 
+  const data=JSON.parse((await body(req)).toString());if(typeof data.question!=='string'||data.question.length>2000||!data.question.trim())return json(res,400,{error:'Écris une question de moins de 2 000 caractères.'});
+- const journal={id:typeof data.archive?.id==='string'?data.archive.id:randomUUID(),turn:Number.isInteger(data.archive?.turn)?data.archive.turn:0,space,channel:data.channel==='voice'?'voice':'written',user:data.question,assistant:'',status:'partial'};
++ const admission=await handleHybridAdmission(req,data);if(admission)return json(res,admission.status,admission.body);
++ const journal={id:typeof data.archive?.id==='string'?data.archive.id:randomUUID(),turn:Number.isInteger(data.archive?.turn)?data.archive.turn:0,space,channel:data.channel==='voice'?'voice':'written',user:data.question,assistant:'',status:'partial',...(identity?{expected_space:space}:{})};
+  const saveAnswer=async response=>{try{await archive('record',{...journal,revision:2,assistant:response.answer,status:'complete'})}catch{}return response;};
+  try{await archive('record',{...journal,revision:1})}catch{}
+  const fast=['codex','hybrid'].includes(coreInfo().engine)?null:quickReply(data.question);if(fast)return json(res,200,await saveAnswer(fast));
+--- a/home/user/workspace/jarvis/voice-memory.py
++++ b/home/user/workspace/jarvis/voice-memory.py
+@@ -22,7 +22,7 @@
+     current=db.execute('SELECT updated FROM facts WHERE space=? AND key=?',(old['space'],canonical)).fetchone()
+     if not current or current[0]<=old['updated']:db.execute('INSERT OR REPLACE INTO facts VALUES(?,?,?,?,?,?,?)',(old['space'],canonical,old['label'],old['fact'],old['entity_id'],old['area'],old['updated']))
+  if action=='list':
+-  rows=db.execute('SELECT * FROM facts WHERE space IN (?,?) ORDER BY updated DESC',(space,'commun')).fetchall()
++  rows=db.execute('SELECT * FROM facts WHERE space IN (?,?) ORDER BY updated DESC',(space,'commun' if data.get('include_common',True) else space)).fetchall()
+   out=[]
+   for r in rows:
+    item=dict(r);event=db.execute('SELECT kind FROM correction_events WHERE space=? AND key=? ORDER BY id DESC LIMIT 1',(r['space'],r['key'])).fetchone()
+--- a/home/user/workspace/jarvis/store.py
++++ b/home/user/workspace/jarvis/store.py
+@@ -187,6 +187,7 @@
+  sid=a.get('id');channel=a.get('channel');space=space_id(a.get('space','user'))
+  if not isinstance(sid,str) or not re.fullmatch(r'[0-9a-fA-F-]{36}',sid) or channel not in ('written','voice'):raise ValueError('Conversation invalide.')
+  session=DB.execute('SELECT * FROM conversation_sessions WHERE id=?',(sid,)).fetchone()
++ if a.get('expected_space') is not None and session and session['space']!=a['expected_space']:raise ValueError('Session hors de l’espace autorisé.')
+  if channel=='voice':
+   if not session or session['channel']!='voice':raise ValueError('Session vocale inconnue.')
+   space=session['space']
+--- a/home/user/gateway/server.js
++++ b/home/user/gateway/server.js
+@@ -1,4 +1,5 @@
+ import { handleJarvis } from '/home/user/workspace/jarvis/backend.mjs';
++import { mountJarvisPhase6 } from '/home/user/workspace/jarvis/phase6-gateway.mjs';
+ import { handlePaper } from '/home/user/workspace/solana-paper/gateway.mjs';
+ import { handleAstro } from '/home/user/workspace/astro-degustation/gateway.mjs';
+ import { handleGerman } from '/home/user/workspace/allemand-en-poche/backend.mjs';
+@@ -30,6 +31,8 @@
+ } from "./lib/icloud.js";
+ import { buildNilmReport } from "./lib/nilm-report.js";
+ import { buildEnergyLive } from "./lib/energy-live.js";
++
++const handleSecureJarvis = await mountJarvisPhase6(handleJarvis);
+ 
+ const HOST = process.env.HOST || "0.0.0.0";
+ const PORT = Number(process.env.PORT || 8787);
+@@ -1998,7 +2001,7 @@
+     if (url.pathname.startsWith('/api/solana-paper/')) return handlePaper(req, res, url);
+     if (url.pathname === '/solana-paper') { res.writeHead(302, { location: '/solana-paper/' }); return res.end(); }
+     if (url.pathname === '/solana-paper/') return serveStatic(res, 'solana-paper/index.html');
+-    if (url.pathname.startsWith("/api/jarvis/")) return handleJarvis(req, res, url);
++    if (url.pathname.startsWith("/api/jarvis/")) return handleSecureJarvis(req, res, url);
+     if (url.pathname === "/miroir") { res.writeHead(302, { location: "/miroir/" }); return res.end(); }
+     if (url.pathname === "/miroir/") return serveStatic(res, "miroir/index.html");
+     if (url.pathname === "/jarvis") { res.writeHead(302, { location: "/jarvis/" }); return res.end(); }

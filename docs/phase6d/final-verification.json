@@ -1,0 +1,13 @@
+{
+  "active_code_unchanged": true,
+  "service_identity_unchanged": true,
+  "production_writes": 0,
+  "historical_proofs_unchanged": true,
+  "service": [
+    "MainPID=2033987",
+    "ExecMainStartTimestamp=Fri 2026-11-13 21:29:24 UTC",
+    "ActiveState=active"
+  ],
+  "checked_code_paths": 26,
+  "offline_checks_passed": 11
+}

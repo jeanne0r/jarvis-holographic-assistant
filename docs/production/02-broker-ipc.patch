@@ -1,0 +1,30 @@
+--- a/memory_manager/phase6d/broker/main.py
++++ b/memory_manager/phase6d/broker/main.py
+@@ -19,7 +19,7 @@
+  os.umask(0o077);jobs=Jobs(state/'jobs.sqlite');broker=Broker(jobs,cfg['project_grants'])
+  # Admission/reconciliation service only. No worker/remote budget can be enabled
+  # by an incoming RPC. Supervisor execution is a separate approved operation.
+- server=Server(cfg['socket'],broker,cfg['credentials'])
++ server=Server(cfg['socket'],broker,cfg['credentials'],ipc_gid=cfg.get('ipc_gid'))
+  try:server.serve_forever()
+  finally:server.server_close();jobs.close()
+ if __name__=='__main__':main()
+--- a/memory_manager/phase6d/broker/transport.py
++++ b/memory_manager/phase6d/broker/transport.py
+@@ -2,10 +2,14 @@
+ import hashlib,hmac,json,os,socketserver,struct
+ MAX=65536
+ class Server(socketserver.UnixStreamServer):
+- def __init__(self,path,broker,credentials):
++ def __init__(self,path,broker,credentials,*,ipc_gid=None):
+     # Never unlink or adopt an existing socket/path silently.
+     self.broker,self.credentials=broker,credentials
+-    super().__init__(str(path),Handler);os.chmod(path,0o600)
++    super().__init__(str(path),Handler)
++    if ipc_gid is not None:
++        if ipc_gid not in os.getgroups()+[os.getgid()]:raise PermissionError('Approved IPC membership required')
++        os.chown(path,-1,ipc_gid)
++    os.chmod(path,0o660 if ipc_gid is not None else 0o600)
+ class Handler(socketserver.BaseRequestHandler):
+  def handle(self):
+     self.request.settimeout(2)

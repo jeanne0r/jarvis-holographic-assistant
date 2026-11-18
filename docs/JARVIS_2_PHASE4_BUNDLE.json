@@ -1,0 +1,23 @@
+{
+  "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+  "application_commit": "8d0cbb164fb882b3bbc52e25ba8a20495168ba83",
+  "source_files": 25615,
+  "maximum_windows_source_path_characters": 186,
+  "files": {
+    "hermes-source.tar.gz": {
+      "bytes": 93552158,
+      "sha256": "bb98e08b0945fc57e62ff2a4226f059df7d8f989a241650f85e9fe9602fec7c4"
+    },
+    "source-manifest.json": {
+      "bytes": 4066681,
+      "sha256": "5938500e2801bb2157ec04cc14da0fd2fee7d8b693cccdeca94ec4f257ecec0d"
+    },
+    "jarvis-adapter.tar.gz": {
+      "bytes": 88313,
+      "sha256": "37eec829f5739c19b5543e149fd1a93782244b4522599cc1b862564671134808"
+    }
+  },
+  "windows_modified": false,
+  "local_directory": "data/phase4/windows-ready-20261114",
+  "transferred_to_windows": false
+}

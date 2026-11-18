@@ -1,0 +1,6 @@
+[
+ [
+  " async function utterance(s,parts){",
+  " // 18.11 route 3: read the Hermes result aloud once, only when the voice session is idle (it stays in the conversation anyway).\n document.addEventListener('jarvis:hermes-result',e=>{\n  const text=String(e.detail?.speech||'').slice(0,1500);let tries=0;if(!text)return;\n  const attempt=()=>{const s=active;if(!s)return;if(s.busy||s.turn||s.speaking){if(++tries<30)setTimeout(attempt,2000);return}\n   const sequence=s.sequence,controller=new AbortController();s.turn=controller;s.turnStarted=performance.now();lastTiming={};s.outputPending=true;s.outputEnded=false;syncMic(s);paint('Résultat de Hermes.');\n   speak(s,text,controller,sequence).catch(()=>{}).finally(()=>{if(active===s&&sequence===s.sequence){s.turn=null;syncMic(s);paint(readyText())}});\n  };attempt();\n });\n async function utterance(s,parts){"
+ ]
+]

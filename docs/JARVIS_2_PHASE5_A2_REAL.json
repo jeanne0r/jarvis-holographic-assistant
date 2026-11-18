@@ -1,0 +1,526 @@
+{
+  "authorization": "User explicitly approved A2 after successful A1",
+  "scope": "CT205 embeddings extension + experimental collection and synthetic validation; B NOT executed",
+  "passed": true,
+  "deployment": {
+    "id": "20261114T184704Z-65701471",
+    "scope": "A2 only",
+    "passed": true,
+    "release": "/opt/jarvis-memory/phase5/releases/20261114T184704Z-65701471",
+    "private_state": "/var/lib/jarvis-memory/phase5-a2/20261114T184704Z-65701471",
+    "started_at": 1794682024.5519047,
+    "a1_backup_verified": true,
+    "no_model_download": true,
+    "historical_point_writes": 0,
+    "windows_started": false,
+    "historical_before": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "indexed_vectors_count": 41428,
+      "points_count": 41428,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 384,
+            "distance": "Cosine",
+            "on_disk": true
+          },
+          "shard_number": 1,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "on_disk_payload": true
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": true
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 2,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null
+      },
+      "payload_schema": {
+        "version": {
+          "data_type": "keyword",
+          "points": 41428
+        },
+        "space": {
+          "data_type": "keyword",
+          "points": 41428
+        },
+        "doc_id": {
+          "data_type": "keyword",
+          "points": 41428
+        }
+      },
+      "update_queue": {
+        "length": 0
+      },
+      "created_at": "2026-11-11T21:53:11.986Z"
+    },
+    "qdrant_pid_before": 11122,
+    "embedding_pid_before": 9998,
+    "pipeline_manifest_sha256": "06b237c33b5ff8824befda657bc3c210751771a4138c3af54b12367ae8ba4c7f",
+    "model_files_verified": 5,
+    "asgi_preflight": {
+      "passed": true,
+      "no_model_instance_created": true,
+      "unauthenticated": 403,
+      "authenticated": 200,
+      "malformed": 422,
+      "concurrent": [
+        200,
+        429
+      ]
+    },
+    "embedding_probe": {
+      "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "artifact_sha256": "06b237c33b5ff8824befda657bc3c210751771a4138c3af54b12367ae8ba4c7f",
+      "dimensions": 384,
+      "kind": "query",
+      "input_tokens": 11
+    },
+    "restart_policy_restored": true,
+    "embedding_pid_after": 112398,
+    "collection_created": true,
+    "experimental_metadata": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "indexed_vectors_count": 0,
+      "points_count": 0,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 384,
+            "distance": "Cosine",
+            "on_disk": true
+          },
+          "shard_number": 1,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "on_disk_payload": true
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": true
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 2,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null
+      },
+      "payload_schema": {},
+      "update_queue": {
+        "length": 0
+      },
+      "created_at": "2026-11-14T18:47:10.902Z"
+    },
+    "historical_after": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "indexed_vectors_count": 41428,
+      "points_count": 41428,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 384,
+            "distance": "Cosine",
+            "on_disk": true
+          },
+          "shard_number": 1,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "on_disk_payload": true
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": true
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 2,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null
+      },
+      "payload_schema": {
+        "version": {
+          "data_type": "keyword",
+          "points": 41428
+        },
+        "space": {
+          "data_type": "keyword",
+          "points": 41428
+        },
+        "doc_id": {
+          "data_type": "keyword",
+          "points": 41428
+        }
+      },
+      "update_queue": {
+        "length": 0
+      },
+      "created_at": "2026-11-11T21:53:11.986Z"
+    },
+    "qdrant_pid_after": 11122,
+    "available_after": 647672832,
+    "finished_at": 1794682031.023202,
+    "source_sha256_after": "25244dc0ff24d9f61357fa8620d721d4ff9df4709272e0164be6def72fdfcf87"
+  },
+  "synthetic_validation": {
+    "mode": "real embeddings and Qdrant; synthetic canonical data; no Hermes/generative-model/Windows calls",
+    "folder": "/home/user/workspace/jarvis-2-memory/data/phase5/a2/validation-20261114T185019Z-601ae421",
+    "checks": {
+      "bounded_batch": true,
+      "resume_idempotent": true,
+      "history_preserved": true,
+      "stale_vector_rejected": true,
+      "real_semantic_without_fts": true,
+      "current_correction": true,
+      "cross_user_denied": true,
+      "controlled_tool_same_result": true,
+      "logical_delete": true,
+      "logical_restore": true,
+      "rebuild_same_ids": true,
+      "fresh_sqlite_connection": true
+    },
+    "events": [
+      {
+        "upserted": 1,
+        "skipped": 0,
+        "complete": false,
+        "deleted": 0
+      },
+      {
+        "upserted": 1,
+        "skipped": 1,
+        "complete": true,
+        "deleted": 0
+      },
+      {
+        "upserted": 0,
+        "skipped": 2,
+        "complete": true,
+        "deleted": 0
+      },
+      {
+        "upserted": 4,
+        "skipped": 0,
+        "complete": true,
+        "deleted": 0
+      }
+    ],
+    "started_at": 1794682219.7405229,
+    "retrieval": {
+      "query": "masse nominale identique",
+      "fts_count": 0,
+      "returned": [
+        {
+          "memory_id": "c6d95d57-99a5-45af-a115-6debc1a370d6",
+          "revision": "3035068a-c9bb-4af6-ae8a-39a5d4197895",
+          "content": {
+            "capacities_kg": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "description": "Les quatre cellules de pesée sont identiques et supportent un kilogramme chacune."
+          },
+          "source": {
+            "kind": "user",
+            "observed_at": 1794682232.732659,
+            "ref": "synthetic://a2/correction"
+          },
+          "effective_status": "user_confirmed",
+          "retrieval_mode": "semantic_and_fts"
+        },
+        {
+          "memory_id": "85ab7454-7249-4d50-b31d-0520e1857705",
+          "revision": "3d1bd0d0-9b91-44ce-a7cd-0d454583f61d",
+          "content": {
+            "texte": "Copie de fichiers avec vérification des empreintes."
+          },
+          "source": {
+            "kind": "user",
+            "observed_at": 1794682234.649075,
+            "ref": "synthetic://a2/backup"
+          },
+          "effective_status": "user_confirmed",
+          "retrieval_mode": "semantic_and_fts"
+        },
+        {
+          "memory_id": "6797aaa6-28e6-4378-991e-89a333202b97",
+          "revision": "17b4ad03-783b-4069-8c2b-2a98670b4723",
+          "content": {
+            "texte": "Connexion réseau privée par tunnel chiffré."
+          },
+          "source": {
+            "kind": "user",
+            "observed_at": 1794682234.6389587,
+            "ref": "synthetic://a2/network"
+          },
+          "effective_status": "user_confirmed",
+          "retrieval_mode": "semantic_and_fts"
+        }
+      ]
+    },
+    "qdrant_points_final": 6,
+    "old_point_count_after_interruption": 2,
+    "passed": true,
+    "finished_at": 1794682265.036679
+  },
+  "security_probe": {
+    "mode": "real service; synthetic inputs; no generative model",
+    "checks": {
+      "no_token_denied": true,
+      "legacy_credential_not_raw_identity": true,
+      "new_identity_cannot_access_legacy": true,
+      "legacy_health_preserved": true,
+      "wrong_model_rejected": true,
+      "context_over128_rejected": true,
+      "permission_field_rejected": true,
+      "malformed_json_rejected": true,
+      "query_document_384": true,
+      "repeat_deterministic": true,
+      "artifact_consistent": true
+    },
+    "passed": true,
+    "http_local_latency_ms": {
+      "wrong_model": 1.714,
+      "context_over128": 1.594,
+      "permission_field": 1.072,
+      "query": 8.683,
+      "repeated_query": 9.201,
+      "document": 9.155
+    },
+    "vector_norm": 3.902575276093342,
+    "input_tokens": 11,
+    "artifact_sha256": "06b237c33b5ff8824befda657bc3c210751771a4138c3af54b12367ae8ba4c7f",
+    "service": {
+      "Restart": "on-failure",
+      "MainPID": "112398",
+      "MemoryCurrent": "980877312",
+      "CPUUsageNSec": "4994466000",
+      "ActiveState": "active"
+    },
+    "service_rss_bytes": 929918976,
+    "available_bytes": 646436864,
+    "rollback_guard_active": []
+  },
+  "final_state": {
+    "scope": "A2 private-state permission hardening only",
+    "private_parent": {
+      "uid": 0,
+      "gid": 996,
+      "mode": "0o710"
+    },
+    "private_state": {
+      "uid": 0,
+      "gid": 996,
+      "mode": "0o710"
+    },
+    "legacy_health": {
+      "ready": true,
+      "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "collection": "jarvis_memory_v1",
+      "points": 41428
+    },
+    "historical": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "indexed_vectors_count": 41428,
+      "points_count": 41428,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 384,
+            "distance": "Cosine",
+            "on_disk": true
+          },
+          "shard_number": 1,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "on_disk_payload": true
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": true
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 2,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null
+      },
+      "payload_schema": {
+        "version": {
+          "data_type": "keyword",
+          "points": 41428
+        },
+        "doc_id": {
+          "data_type": "keyword",
+          "points": 41428
+        },
+        "space": {
+          "data_type": "keyword",
+          "points": 41428
+        }
+      },
+      "update_queue": {
+        "length": 0
+      },
+      "created_at": "2026-11-11T21:53:11.986Z"
+    },
+    "experimental": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "indexed_vectors_count": 0,
+      "points_count": 6,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 384,
+            "distance": "Cosine",
+            "on_disk": true
+          },
+          "shard_number": 1,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "on_disk_payload": true
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": true
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 2,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null
+      },
+      "payload_schema": {},
+      "update_queue": {
+        "length": 0
+      },
+      "created_at": "2026-11-14T18:47:10.902Z"
+    },
+    "service_sha256": "25244dc0ff24d9f61357fa8620d721d4ff9df4709272e0164be6def72fdfcf87",
+    "active_a2_guard_units": [],
+    "root_control_files": {
+      "watchdog.py": {
+        "uid": 0,
+        "mode": "0o600"
+      },
+      "watchdog-state.json": {
+        "uid": 0,
+        "mode": "0o600"
+      },
+      "fallback-service.py": {
+        "uid": 0,
+        "mode": "0o600"
+      },
+      "original-service.py": {
+        "uid": 0,
+        "mode": "0o600"
+      }
+    },
+    "service_can_traverse_cannot_write": true
+  },
+  "implementation_notes": {
+    "deployed_source_matches_worktree": true,
+    "root_control_directory_hardened_after_activation": true,
+    "controller_search_deduplicates_chunk_contributions": true,
+    "automatic_failure_rollback_executed": false,
+    "stopped_guard_without_failure": true
+  },
+  "limitations": [
+    "Tiny synthetic corpus only: 3 current memories, 6 vector points including old revision",
+    "No Windows/Hermes/RTX run in A2",
+    "No personal import",
+    "No off-host backup copy",
+    "Rollback fallback prepared but not deliberately invoked against the live service",
+    "Service RSS measured after activation only; no before/after RSS comparison"
+  ]
+}

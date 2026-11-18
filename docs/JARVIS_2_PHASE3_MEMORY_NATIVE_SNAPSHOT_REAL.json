@@ -1,0 +1,229 @@
+{
+  "synthetic_only": true,
+  "configuration_history": [
+    {
+      "id": "84fd6392-d8c4-4f34-b7a9-ef8ecd4b0e7f",
+      "memory_id": "b358d43e-aafe-483f-b210-6e1d517449c6",
+      "parent": null,
+      "event_id": "9beb1fe8-179a-48d8-a0cf-2dfcd0ac5932",
+      "type": "knowledge",
+      "subject": "DoseLab X4",
+      "predicate": "load_cells",
+      "content": {
+        "capacities_kg": [
+          1,
+          2,
+          5,
+          10
+        ]
+      },
+      "observed": 1700000000.0,
+      "valid_from": 1700000000.0,
+      "valid_to": null,
+      "confidence": 0.5,
+      "status": "user_confirmed",
+      "created": 1794612130.9117265,
+      "source": {
+        "kind": "user",
+        "observed_at": 1700000000,
+        "ref": "synthetic://doselab/old"
+      },
+      "effective_status": "superseded"
+    },
+    {
+      "id": "a97daf51-21b9-4e11-a6eb-660ab41429da",
+      "memory_id": "b358d43e-aafe-483f-b210-6e1d517449c6",
+      "parent": "84fd6392-d8c4-4f34-b7a9-ef8ecd4b0e7f",
+      "event_id": "65dcce9d-1247-410e-a16f-27427b5f58f8",
+      "type": "knowledge",
+      "subject": "DoseLab X4",
+      "predicate": "load_cells",
+      "content": {
+        "capacities_kg": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "observed": 1700000100.0,
+      "valid_from": 1700000100.0,
+      "valid_to": null,
+      "confidence": 0.5,
+      "status": "user_confirmed",
+      "created": 1794612130.917382,
+      "source": {
+        "kind": "user",
+        "observed_at": 1700000100,
+        "ref": "synthetic://doselab/correction"
+      },
+      "effective_status": "user_confirmed"
+    }
+  ],
+  "mission_experiences": {
+    "31cea9d7-ea32-447c-a246-8213d90df7bb": [
+      {
+        "id": "12f10c44-d604-4203-95ee-629b224cab76",
+        "memory_id": "31cea9d7-ea32-447c-a246-8213d90df7bb",
+        "parent": null,
+        "event_id": "f3984fe2-48d8-414a-adf2-e32b7239c53a",
+        "type": "episode",
+        "subject": "Analyse DoseLab X4 : retrouve les cellules actuelles, les anciennes valeurs remplacées et cite les sources de chaque révision. Consulte réellement les outils mémoire.",
+        "predicate": "reported_outcome",
+        "content": {
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "model": "qwen3.5:4b",
+          "native_run_id": "run_1c8c1807f25f4292ac2def8a6d0d92e9",
+          "result": "**DoseLab X4 - Cellules et révisions**\n\n**Cellules actuelles:** [1, 1, 1, 1] kg (source: `synthetic://doselab/correction`, timestamp 1700000100)\n\n**Valeur précédente remplacée:** [1, 2, 5, 10] kg (source: `synthetic://doselab/old`, timestamp 1700000000, statut: *superseded*)\n\n**Source de révision:** La correction a été apportée le 1700000100 pour remplacer les capacités initiales.\n\n**Diagnostic associé:** Une procédure précédente a échoué faute de contrôle de fraîcheur des mesures (source: `synthetic://doselab/experience`, timestamp 1700000200)."
+        },
+        "observed": 1794643991.6102998,
+        "valid_from": 1794643991.6102998,
+        "valid_to": null,
+        "confidence": 0.5,
+        "status": "inferred",
+        "created": 1794643991.6107943,
+        "source": {
+          "kind": "external",
+          "observed_at": 1794643991.6102998,
+          "ref": "mission://05397fc0-24c9-4023-88e5-d9d5b2663134"
+        },
+        "effective_status": "inferred"
+      }
+    ]
+  },
+  "skills": [],
+  "active_skills": 0,
+  "missions": [
+    {
+      "id": "63531d2d-4def-4298-8224-4fbac826a9cf",
+      "state": "failed",
+      "dispatch_state": "failed",
+      "upstream_id": "run_3efb1c43698c4af6b1e1e36bc409f666"
+    },
+    {
+      "id": "c93e47de-ed44-4e92-8574-f58dd883c4f0",
+      "state": "paused",
+      "dispatch_state": "cancel_requested",
+      "upstream_id": "run_f43a18c70a4c42b0b138dcfd3a4235a1"
+    },
+    {
+      "id": "05397fc0-24c9-4023-88e5-d9d5b2663134",
+      "state": "completed",
+      "dispatch_state": "completed",
+      "upstream_id": "run_1c8c1807f25f4292ac2def8a6d0d92e9"
+    },
+    {
+      "id": "a1f8092b-f067-44a7-b499-f9f4fb167a5b",
+      "state": "paused",
+      "dispatch_state": "cancel_requested",
+      "upstream_id": "run_8a90b1e88cfc41fa8cce2771814e8253"
+    }
+  ],
+  "usage": [
+    {
+      "id": "873b111d-9a50-4cc4-bda0-02bfc2dc4409",
+      "budget_id": "232728c6-db8d-42a9-b3ad-9c3f102a9d5b",
+      "month": "2026-11",
+      "mission_id": "05397fc0-24c9-4023-88e5-d9d5b2663134",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 2747,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 4.33899028704036,
+      "state": "settled",
+      "created": 1794643970.3616693
+    },
+    {
+      "id": "1ffd92fd-52f9-4481-9ac9-e256fd20ab52",
+      "budget_id": "232728c6-db8d-42a9-b3ad-9c3f102a9d5b",
+      "month": "2026-11",
+      "mission_id": "05397fc0-24c9-4023-88e5-d9d5b2663134",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 3750,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 5.170973540050909,
+      "state": "settled",
+      "created": 1794643976.5467646
+    },
+    {
+      "id": "ac5ebda9-adf9-4348-96e2-fb30f51d6da1",
+      "budget_id": "232728c6-db8d-42a9-b3ad-9c3f102a9d5b",
+      "month": "2026-11",
+      "mission_id": "05397fc0-24c9-4023-88e5-d9d5b2663134",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 5078,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 5.647520589991473,
+      "state": "settled",
+      "created": 1794643984.556805
+    },
+    {
+      "id": "83f2b300-18ca-4208-9f80-d966536a3ca1",
+      "budget_id": "11545e93-81b3-44fb-87e0-046002502770",
+      "month": "2026-11",
+      "mission_id": "a1f8092b-f067-44a7-b499-f9f4fb167a5b",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 2925,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 4.11738987301942,
+      "state": "settled",
+      "created": 1794644196.0118175
+    },
+    {
+      "id": "99eae235-2317-4c13-a2bf-70f78a25f683",
+      "budget_id": "11545e93-81b3-44fb-87e0-046002502770",
+      "month": "2026-11",
+      "mission_id": "a1f8092b-f067-44a7-b499-f9f4fb167a5b",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 4669,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 5.156577319023199,
+      "state": "settled",
+      "created": 1794644201.3126748
+    },
+    {
+      "id": "3bc8a70b-a243-4e46-a839-147a3f6874c2",
+      "budget_id": "11545e93-81b3-44fb-87e0-046002502770",
+      "month": "2026-11",
+      "mission_id": "a1f8092b-f067-44a7-b499-f9f4fb167a5b",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 4907,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 5.186346963979304,
+      "state": "settled",
+      "created": 1794644209.283304
+    },
+    {
+      "id": "5a514f2c-402f-4831-a5a1-b07a76de3e99",
+      "budget_id": "11545e93-81b3-44fb-87e0-046002502770",
+      "month": "2026-11",
+      "mission_id": "a1f8092b-f067-44a7-b499-f9f4fb167a5b",
+      "parent_call": null,
+      "model": "qwen3.5:4b",
+      "reserved_tokens": 64000,
+      "used_tokens": 5102,
+      "reserved_remote_micros": 0,
+      "actual_remote_micros": 0,
+      "latency": 4.509674121043645,
+      "state": "settled",
+      "created": 1794644215.513681
+    }
+  ]
+}

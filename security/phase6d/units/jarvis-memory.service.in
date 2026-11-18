@@ -1,0 +1,20 @@
+# REVIEW ONLY: no installation or activation authorized.
+[Unit]
+Description=Jarvis isolated memory API (review template)
+[Service]
+User=jarvis-memory
+Group=jarvis-memory
+WorkingDirectory=/opt/jarvis-memory/release
+ExecStart=/usr/bin/python3 -m memory_manager.api --database /var/lib/jarvis-memory/lab.sqlite --clients-file /etc/jarvis-memory/clients.json --phase2 --port 8792
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/jarvis-memory
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+IPAddressDeny=any
+IPAddressAllow=localhost
+MemoryMax=256M
+TasksMax=32
+Restart=no

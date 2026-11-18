@@ -1,0 +1,21 @@
+{
+  "mode": "review-only",
+  "commissioned": false,
+  "engine": "hybrid",
+  "flags": {"history": false, "admission": false, "hybrid": false},
+  "remote_api_budget_chf": 0,
+  "real_owner_mapping": null,
+  "codex_authentication_choice": null,
+  "services": {
+    "gateway": {"user": "jarvis-gateway", "entry": "gateway-production-main.mjs", "network": "approved HTTPS listener and existing Gemini only"},
+    "storage": {"user": "jarvis-storage", "entry": "memory_manager.production.storage_main", "data": "bind existing canonical files; no shadow facts database", "ipc_mode": "0660, dedicated group"},
+    "broker": {"user": "jarvis-broker", "entry": "memory_manager.phase6d.broker.main", "network": "AF_UNIX only", "ipc_mode": "0660, dedicated group"},
+    "executor": {"user": "jarvis-code-exec", "entry": "memory_manager.phase6d.broker.execute", "network": "isolated namespace; explicit per-job provider socket only"},
+    "power": {"user": "jarvis-power", "entry": "s9-power-main.mjs", "network": "verified HA and miner literal addresses only", "commissioning": "independent approval and one-writer handover required"},
+    "voice": {"user": "jarvis-voice", "entry": null, "status": "private adapter prepared; full host composition and authority/meter/tools bindings unresolved"},
+    "auxiliary": {"user": "jarvis-apps", "entry": null, "status": "scoped JSON connectors prepared; complete historical handler composition/image Codex adapter unresolved"}
+  },
+  "forbidden": ["existing personal HOME mount", "production gateway secret in executor", "automatic replay of uncertain jobs", "physical tool in Hermes", "paid fallback", "implicit historical ownership", "automatic skill publication"],
+  "external_approvals": ["real owner/space/project/account mapping", "OS users and per-service IPC groups", "private credential provisioning", "consistent backups and additive ACL migration", "network restrictions", "single-writer power-loop handover", "service installation and scoped restart", "separate voice test"],
+  "software_blockers": ["complete private voice host composition with session revocation", "auxiliary hosts and image-based German inference adapter", "independent physical approval transport wiring", "dedicated Codex authentication/provider compatibility"]
+}

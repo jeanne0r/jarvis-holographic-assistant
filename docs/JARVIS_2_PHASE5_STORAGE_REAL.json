@@ -1,0 +1,10 @@
+{
+  "mode": "read-only size metadata",
+  "largest_directories": {
+    "models": 756415839,
+    "hf": 53074,
+    "snapshots": 0,
+    "qdrant": 307330079,
+    ".cache": 102660
+  }
+}

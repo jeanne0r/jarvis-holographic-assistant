@@ -1,0 +1,33 @@
+{
+  "sha256": "dda58341374366ea36a9f10cce9fa25f1fe263acda999644ed7d0db1772966c4",
+  "integrity_check": "ok",
+  "skills": [
+    {
+      "name": "doselab_freshness",
+      "version": 1,
+      "state": "candidate",
+      "fingerprint": "40286db0d673703ad9ccb9b857801bad7c143f8512c303bfa3da942fe2348273",
+      "sources": "[{\"memory_id\":\"3c5878bc-96dd-4567-af3e-9bfe7cd77e0e\",\"revision\":\"6aa8bff4-f2da-4b35-a8e0-898cda00da7f\"}]",
+      "evaluation": "{\"passed\":true,\"passed_count\":3,\"results\":[true,true,true],\"spec_hash\":\"40286db0d673703ad9ccb9b857801bad7c143f8512c303bfa3da942fe2348273\",\"suite_hash\":\"2db1e25f9b8e48bac2e2d2d778816a324961adb1380e852260ee28a5185ef933\",\"total\":3}"
+    }
+  ],
+  "active_skills": 0,
+  "mission_states": [
+    {
+      "id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+      "state": "failed"
+    },
+    {
+      "id": "05877b20-3488-4f2f-a159-866f47bdf56a",
+      "state": "completed"
+    },
+    {
+      "id": "0f3eda97-9e7b-4e1c-8fce-47656874190a",
+      "state": "completed"
+    },
+    {
+      "id": "3d6a98bd-6fa1-4d3c-baf4-ea868ca5d136",
+      "state": "completed"
+    }
+  ]
+}

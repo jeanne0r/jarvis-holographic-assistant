@@ -1,0 +1,16 @@
+# Rendered by ops/demand-simple/install.py. Loaded by the unit itself
+# (ExecStartPre=+nft -f) at every start; proved by scripts/egress_selftest.py.
+# The empty declaration + delete makes `nft -f` an atomic, idempotent replace.
+table inet jarvis_hermes_supervisor
+delete table inet jarvis_hermes_supervisor
+table inet jarvis_hermes_supervisor {
+ chain output {
+  type filter hook output priority 10; policy accept;
+  meta skuid @SUPERVISOR_UID@ ct state established,related accept
+  # Private queue, owned Ollama forward, SSH reverse model gate. Nothing else on
+  # loopback: the gateway (8787/8788) and every actuator path stay unreachable.
+  meta skuid @SUPERVISOR_UID@ ip daddr 127.0.0.1 tcp dport { 8797, 11435, 11436 } accept
+  meta skuid @SUPERVISOR_UID@ ip daddr @WINDOWS_HOST@ tcp dport 22 accept
+  meta skuid @SUPERVISOR_UID@ reject
+ }
+}

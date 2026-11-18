@@ -1,0 +1,34 @@
+{
+  "gpu": {
+    "available": true,
+    "observed_at": 1794611539.583652,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1061.0,
+    "free_mib": 9179.0,
+    "driver": "621.24",
+    "power_w": 8.24,
+    "utilization": 0.0,
+    "temperature_c": 35.44,
+    "miner_running": false
+  },
+  "listener": {
+    "listening": false
+  },
+  "software": {
+    "ollama_binary": true,
+    "model_directory": true,
+    "model_manifests": [
+      "registry.ollama.ai\\aiconjured\\Qwen3.5-9B-Uncensored-HauhauCS-Aggressive-MTP-GGUF-NVFP4\\latest"
+    ],
+    "kryptex_present": true,
+    "free_model_disk_bytes": 192412921856
+  },
+  "vm": {
+    "python": "3.12.3",
+    "cpu_count": 2,
+    "free_workspace_bytes": 1733980160,
+    "uv_present": false,
+    "bwrap_present": true
+  }
+}

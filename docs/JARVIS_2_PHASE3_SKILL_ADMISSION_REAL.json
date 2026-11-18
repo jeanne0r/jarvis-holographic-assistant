@@ -1,0 +1,302 @@
+{
+  "before": {
+    "host_available_bytes": 4401504256,
+    "guests": {
+      "103": {
+        "name": "Codex-cli",
+        "maximum_mib": 4096,
+        "balloon_minimum_mib": null,
+        "available_bytes": 2802749440,
+        "shares": null,
+        "actual_bytes": 4294967296
+      },
+      "201": {
+        "name": "tailscale",
+        "maximum_mib": 2048,
+        "balloon_minimum_mib": 1024,
+        "available_bytes": 1667104768,
+        "shares": null,
+        "actual_bytes": 2147483648
+      }
+    }
+  },
+  "watch": {
+    "deadline": 1794672108.4272494
+  },
+  "restored": {
+    "at": 1794670376.9722073,
+    "configuration_exact": {
+      "103": true,
+      "201": true
+    }
+  },
+  "observations": [
+    {
+      "at": 1794670310.9754539,
+      "host_available_bytes": 4429611008,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": null,
+          "available_bytes": 2718023680,
+          "shares": null,
+          "actual_bytes": 4294967296
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 1667104768,
+          "shares": null,
+          "actual_bytes": 2147483648
+        }
+      }
+    },
+    {
+      "at": 1794670318.6442132,
+      "host_available_bytes": 4451713024,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1474998272,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670326.2567637,
+      "host_available_bytes": 4208119808,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1445736448,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670333.866286,
+      "host_available_bytes": 3997888512,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1449254912,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670341.4541328,
+      "host_available_bytes": 3971149824,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1435185152,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670349.0354261,
+      "host_available_bytes": 4158021632,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1433747456,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670356.6462326,
+      "host_available_bytes": 4116590592,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1428168704,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670364.222265,
+      "host_available_bytes": 4129361920,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1442975744,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670371.858163,
+      "host_available_bytes": 4600365056,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": 2816,
+          "available_bytes": 1429729280,
+          "shares": 0,
+          "actual_bytes": 2952790016
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 627429376,
+          "shares": 0,
+          "actual_bytes": 1073741824
+        }
+      }
+    },
+    {
+      "at": 1794670379.5093658,
+      "host_available_bytes": 3834318848,
+      "guests": {
+        "103": {
+          "name": "Codex-cli",
+          "maximum_mib": 4096,
+          "balloon_minimum_mib": null,
+          "available_bytes": 2686844928,
+          "shares": null,
+          "actual_bytes": 4294967296
+        },
+        "201": {
+          "name": "tailscale",
+          "maximum_mib": 2048,
+          "balloon_minimum_mib": 1024,
+          "available_bytes": 1651363840,
+          "shares": null,
+          "actual_bytes": 2147483648
+        }
+      }
+    }
+  ],
+  "configuration_sha256": {
+    "103": "32e357ccee9cb6815cef5fd68cbc81c20bd780938c0626ac3e43ca2e6516fa1f",
+    "201": "973c988071dd278a2ef72d6bbc510713c3f0cd6aac457cae374ad4447523ff93"
+  },
+  "backup_sha256": {
+    "103": "32e357ccee9cb6815cef5fd68cbc81c20bd780938c0626ac3e43ca2e6516fa1f",
+    "201": "973c988071dd278a2ef72d6bbc510713c3f0cd6aac457cae374ad4447523ff93"
+  },
+  "vm102_status": "status: stopped",
+  "guardian_active": false,
+  "trial": "phase3-skill-retry-admission",
+  "observed_at_utc": "2026-11-14T15:34:34Z",
+  "guard_folder": "/mnt/hdd/jarvis-phase3/ram-held-20261114T153144Z",
+  "approved_window_seconds": 1800,
+  "required_host_available_bytes": 5368709120,
+  "vm_started": false,
+  "ollama_started": false,
+  "hermes_started": false,
+  "inferences": 0,
+  "remote_cost_chf": 0,
+  "production_gateway_changed": false,
+  "ct205_accessed": false,
+  "outcome": "admission_denied_capacity",
+  "controller_error": "SSH apply timeout after 60s; independent apply cleanup and guardian restoration subsequently verified",
+  "admission_samples": 8,
+  "max_host_available_during_adjustment_bytes": 4600365056,
+  "gateway_http_status": 200,
+  "tailscale_vm_ssh_reachable": true,
+  "windows_listener_after": {
+    "listening": false
+  },
+  "gpu_after": {
+    "available": true,
+    "observed_at": 1794670475.9732654,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1063.0,
+    "free_mib": 9177.0,
+    "driver": "621.24",
+    "power_w": 8.48,
+    "utilization": 0.0,
+    "temperature_c": 27.78,
+    "miner_running": false
+  },
+  "rollback_verified": true,
+  "ready_marker_exists": false,
+  "apply_process_still_running": false
+}

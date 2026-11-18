@@ -1,0 +1,18 @@
+{
+  "status": "system_probe_observed_hooks_but_original_verdict_false; corrected_measurement_pending_root_run",
+  "sudo_noninteractive": "password required",
+  "pilot_state": "inactive",
+  "systemd_version": "255.4-1ubuntu8.18",
+  "warning_is_not_proof_of_absent_filter": true,
+  "checks_executed": [
+    "Python syntax",
+    "systemd-analyze verify: passed",
+    "unapproved probe refuses before side effects",
+    "8 offline verdict checks: timeout alone rejected without effective BPF, healthy controls and receiver witnesses"
+  ],
+  "network_probes_executed": false,
+  "files": {
+    "ops/pilot-network/check-system-filter.py": "d9e3fae0333f2ce0d2aae1af477aff0b7be2a67f66450a054d6c5aedcd8c63a4",
+    "ops/pilot-network/jarvis-hermes-pilot-system.service": "97c11eb2a11ac2ebfb910b02669c218f3718c2ebe101dc6281095360cb02b30a"
+  }
+}

@@ -1,0 +1,381 @@
+{
+  "commit": "6bb7c4e",
+  "files": [
+    {
+      "source": "memory_manager/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/__init__.py",
+      "sha256": "ad86f65d835176cc2b5685593337c9020705996bc83c14c4af70d484132a95bc"
+    },
+    {
+      "source": "memory_manager/__main__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/__main__.py",
+      "sha256": "f7ee313dcb1e34252729061a4dcf46fa3ec5bb643a618d7f1d25f04cbee399b2"
+    },
+    {
+      "source": "memory_manager/api.py",
+      "target": "/opt/jarvis-2/review/memory_manager/api.py",
+      "sha256": "3e133f9f32ff3085dc6c96bbf9a1aa67eebb6d1291bc33ae19f31470e5f1a754"
+    },
+    {
+      "source": "memory_manager/consolidate.py",
+      "target": "/opt/jarvis-2/review/memory_manager/consolidate.py",
+      "sha256": "9a5b57ace258644e4e19bde2fb963483b3fea40211ec43598f3d854d9ae879e4"
+    },
+    {
+      "source": "memory_manager/hermes_mcp.py",
+      "target": "/opt/jarvis-2/review/memory_manager/hermes_mcp.py",
+      "sha256": "4fd5bff522fccd19aa32ce1b04f325e097256a27928a52ca524dd4260596cb9d"
+    },
+    {
+      "source": "memory_manager/indexer.py",
+      "target": "/opt/jarvis-2/review/memory_manager/indexer.py",
+      "sha256": "433e71c77af3586968bb9fb26861fa605f50c9d288dceea8e4bf7f37879407f0"
+    },
+    {
+      "source": "memory_manager/mcp_utf8.py",
+      "target": "/opt/jarvis-2/review/memory_manager/mcp_utf8.py",
+      "sha256": "6a1268a189e12125ed334ee1e4f4d74675710c3dbc7a6691fb0e307f835c514e"
+    },
+    {
+      "source": "memory_manager/missions.py",
+      "target": "/opt/jarvis-2/review/memory_manager/missions.py",
+      "sha256": "78afe95552fd2d0fa6ca60b5a41147b9f4acabfed20d847408f19eaaecb0a6ab"
+    },
+    {
+      "source": "memory_manager/phase2/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/__init__.py",
+      "sha256": "11fc1ff381e2dc98a9954ec44c2a72dc32a625200fbe10bb6eb419970f00324c"
+    },
+    {
+      "source": "memory_manager/phase2/benchmark.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/benchmark.py",
+      "sha256": "4c1dd32ca90c09a0756612d21e2ce8a8bdde6270166662ce201e4bd1ac39c815"
+    },
+    {
+      "source": "memory_manager/phase2/bridge.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/bridge.py",
+      "sha256": "2b671b7fe909e250a94d5db2f58272c98a4d3ee6992196f20fb0c2d6e164c251"
+    },
+    {
+      "source": "memory_manager/phase2/budgets.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/budgets.py",
+      "sha256": "3b1443bed9679421ea3b6deaeb19fe447b6554b63fe6301f51c77da6ca349d29"
+    },
+    {
+      "source": "memory_manager/phase2/database.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/database.py",
+      "sha256": "9d40df5af04fb89443ff1fc562597a1595e0c79123978e00ded49a8a0ded88e8"
+    },
+    {
+      "source": "memory_manager/phase2/hermes.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/hermes.py",
+      "sha256": "6718935b23011b50eb0e70904970e5b315f83fb247c5c0838ea5651ce8dc0038"
+    },
+    {
+      "source": "memory_manager/phase2/http_bridge.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/http_bridge.py",
+      "sha256": "ad45c38624ffb4abcf9d715602692782cad16bc81b46d8574b777e1ad235d065"
+    },
+    {
+      "source": "memory_manager/phase2/local_model.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/local_model.py",
+      "sha256": "cbb1a08aea6234e9037fab177aa6f44d36f180812d3929371ef988fee2a20246"
+    },
+    {
+      "source": "memory_manager/phase2/mcp.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/mcp.py",
+      "sha256": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef"
+    },
+    {
+      "source": "memory_manager/phase2/memory_tools.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/memory_tools.py",
+      "sha256": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2"
+    },
+    {
+      "source": "memory_manager/phase2/pipeline.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/pipeline.py",
+      "sha256": "7992de80c250713f2a14a22a9467f8a3de722a2527f53338c9cd3996d0d0013a"
+    },
+    {
+      "source": "memory_manager/phase2/sandbox.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/sandbox.py",
+      "sha256": "a9c55c2fd4fc872555610ca50c1e53917ee2bc0466f2c78915615ae643c6ddf8"
+    },
+    {
+      "source": "memory_manager/phase2/schema.sql",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/schema.sql",
+      "sha256": "df1b3cbcf704a2b3bc3a5360def7f4253d90e1ad3af75f4bf3a695b3c8bcc21f"
+    },
+    {
+      "source": "memory_manager/phase2/skill_registry.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/skill_registry.py",
+      "sha256": "9e4382af4ac33653319c15e11e7355c355727ded68531997117bda847ad74ec4"
+    },
+    {
+      "source": "memory_manager/phase2/validation.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/validation.py",
+      "sha256": "9ec2af958d6aa1b16467f0b827f04f4560662c5ba33d28114540a4f9892353f3"
+    },
+    {
+      "source": "memory_manager/phase2/vector.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/vector.py",
+      "sha256": "b29b121c601dcb41d48e672e9379ae62a6538a86ac15bd05a5ec96230e33f5dd"
+    },
+    {
+      "source": "memory_manager/phase2/worker.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase2/worker.py",
+      "sha256": "f8086fc36cc90ff02cb88affd26c229565dd2fc527383a5119171e2d142397f8"
+    },
+    {
+      "source": "memory_manager/phase3/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/__init__.py",
+      "sha256": "cfab1539bb0a8359a01d8bb5bd15a6b9f34047a9273fa426088df968e161039e"
+    },
+    {
+      "source": "memory_manager/phase3/benchmark.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/benchmark.py",
+      "sha256": "d5f8b52c61c713af3ca4c4089007635a5b8bdac799497f1f1657e13c2a35668b"
+    },
+    {
+      "source": "memory_manager/phase3/gpu_pipeline.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/gpu_pipeline.py",
+      "sha256": "d589bf0e5556ec65c3729688bc9ba283a80959075125e8a8f5f1094d16e1c863"
+    },
+    {
+      "source": "memory_manager/phase3/lab.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/lab.py",
+      "sha256": "5eff052b85e4245ce8d4664edb72cc53981f3196abbf04d3ead5b81943a42176"
+    },
+    {
+      "source": "memory_manager/phase3/mcp.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/mcp.py",
+      "sha256": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69"
+    },
+    {
+      "source": "memory_manager/phase3/model_gate.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/model_gate.py",
+      "sha256": "6a0d114bd029102a3762a12ea210eb95cb686ee3226e1d8c6739d033b4c05fd4"
+    },
+    {
+      "source": "memory_manager/phase3/native_trial.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/native_trial.py",
+      "sha256": "22b0c4b4c605beed323ef904f2b3921f4a6e4136657d8abe53e8867510bd7031"
+    },
+    {
+      "source": "memory_manager/phase3/sizing.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase3/sizing.py",
+      "sha256": "9d4fd045e3645e2dbf8dc93d68b046b12bdde5abd58276527e32e682add04f1a"
+    },
+    {
+      "source": "memory_manager/phase4/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/__init__.py",
+      "sha256": "0c1882c084de5a1fb728dde1c37f479b5014621a8cf02da9798f9a44210a83df"
+    },
+    {
+      "source": "memory_manager/phase4/allowance.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/allowance.py",
+      "sha256": "982d7d7e521891324f142960b627c7cba326a37c2dc28b48385504183df754bf"
+    },
+    {
+      "source": "memory_manager/phase4/credentials.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/credentials.py",
+      "sha256": "56a87075e51c7aa2074c4c70ba7367dca33bbdee5639e55a72dc9d333584c684"
+    },
+    {
+      "source": "memory_manager/phase4/job.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/job.py",
+      "sha256": "a183b647b6b7f42f4c7a532bc8d76c3b1085ca69971be2403ce590146a57e172"
+    },
+    {
+      "source": "memory_manager/phase4/mcp.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/mcp.py",
+      "sha256": "2da033919d17d48840e535d4abc24c664a8f8ce01b294b40c88c29e9a62ba473"
+    },
+    {
+      "source": "memory_manager/phase4/native_trial.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/native_trial.py",
+      "sha256": "ca62cb0be6c1a7fab29ae355b5960302faf89181b26a70ef6fa94cf3ab153b20"
+    },
+    {
+      "source": "memory_manager/phase4/windows.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/windows.py",
+      "sha256": "53df3cbfa2e76b5069204afa1b4e8ba5136bb8e328fb67a01a32da2ef50a652a"
+    },
+    {
+      "source": "memory_manager/phase4/worker.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase4/worker.py",
+      "sha256": "2dfd4cfa71a3716faf1a28e26ecf50a1320bf27ef7c663624bca9d6e8c66769b"
+    },
+    {
+      "source": "memory_manager/phase5/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/__init__.py",
+      "sha256": "e51f6a42cc369a09e9737358b58b87f2024ed60066619364e5d9c816138bde57"
+    },
+    {
+      "source": "memory_manager/phase5/api.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/api.py",
+      "sha256": "32e89697a71a5ddb9e78d94d791dd017d4b2a27b146c638c218ca61c5f79a151"
+    },
+    {
+      "source": "memory_manager/phase5/database.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/database.py",
+      "sha256": "494d8774e06e9cbc46c16769401e2880b4f499d1a3fefe10e6a5d9593079c285"
+    },
+    {
+      "source": "memory_manager/phase5/embedding_endpoint.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/embedding_endpoint.py",
+      "sha256": "fce958c294f8578eb0c50673907d9ab522292df6a4ff18121c9d2684f2888a5e"
+    },
+    {
+      "source": "memory_manager/phase5/import_plan.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/import_plan.py",
+      "sha256": "3e26fc27ffbcd9f1dbe9fa27340440a16f83dc07377e98573c887401f4d87e8d"
+    },
+    {
+      "source": "memory_manager/phase5/lab.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/lab.py",
+      "sha256": "2a19a88c962b902416aeb07855ecc621924d7bf4d65f63c9e3a934fcf95743d1"
+    },
+    {
+      "source": "memory_manager/phase5/native_lab.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/native_lab.py",
+      "sha256": "a77658b1d59aecb8f2eff7d2e2c9361bfbcf07eb1b417f271dee3dd8860acfd5"
+    },
+    {
+      "source": "memory_manager/phase5/skills.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/skills.py",
+      "sha256": "bbb389a4da5cb2ea3c9b4a84f7eeb52fa30c4e7bfb648b8fd94f96bfa6009a07"
+    },
+    {
+      "source": "memory_manager/phase5/source_attestation.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/source_attestation.py",
+      "sha256": "e3be10aa3609be1a9a9ed687045cf46d88029199ae4ba2606ba0b16ff9bb2361"
+    },
+    {
+      "source": "memory_manager/phase5/ssh_transport.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/ssh_transport.py",
+      "sha256": "764cc2cb9552e7b16b13e456a4a088bb5b58c2eeb47789138a555818b1ceeef8"
+    },
+    {
+      "source": "memory_manager/phase5/vector.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5/vector.py",
+      "sha256": "af92d6f1cf7055c385f2ad3b1c2c64aa1a7cd820934453230dace1eeada6464a"
+    },
+    {
+      "source": "memory_manager/phase5c/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5c/__init__.py",
+      "sha256": "b22dfef95c43d57975a2285daae9e02d38c8c3c81b306b8078f4a029a7dad430"
+    },
+    {
+      "source": "memory_manager/phase5c/backup.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5c/backup.py",
+      "sha256": "4c23fd53cae55d0fb47ec152306c763be09fbde1b1d39fe019db3a9761032061"
+    },
+    {
+      "source": "memory_manager/phase5c/local_review.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5c/local_review.py",
+      "sha256": "33f73d2e0257475493009d7fea0af318d6c2ee3c62c023c75b36cf7db8a0bf01"
+    },
+    {
+      "source": "memory_manager/phase5c/metadata_inventory.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5c/metadata_inventory.py",
+      "sha256": "9315a171324c3b3518a28aab3ca41c72ba94b485ac1f067e6d89be42ca2e3e2b"
+    },
+    {
+      "source": "memory_manager/phase5c/personal.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5c/personal.py",
+      "sha256": "76f2e823723d78fffc80ebe8b90fdd0b4b803c50443dbce2819d9122828c1967"
+    },
+    {
+      "source": "memory_manager/phase5c/semantic.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase5c/semantic.py",
+      "sha256": "273022369975b909f6a1a039ae3c39ee48d5963dd54e2ed954bcabb2859b47f5"
+    },
+    {
+      "source": "memory_manager/phase6/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6/__init__.py",
+      "sha256": "c7a2194489893f96de77adce1d82f2d7d6a4cd5dcebf6707b2ac86476d9534a6"
+    },
+    {
+      "source": "memory_manager/phase6/lab_fixture.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6/lab_fixture.py",
+      "sha256": "9d3ddfc3aabfa7ff55e23e520b0e9b7a545b272d625ade65778f68db94ad9b19"
+    },
+    {
+      "source": "memory_manager/phase6/panel_pilot.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6/panel_pilot.py",
+      "sha256": "5ca7bbe53dfb0b8760b64c6731760a68a35404fa5cbe752ee27b985304f9f2ea"
+    },
+    {
+      "source": "memory_manager/phase6/turn_plan.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6/turn_plan.py",
+      "sha256": "a4c4bd97e7c7c1b73f0ddf14809102bec93ef3434bc887cfc417d23e9320716f"
+    },
+    {
+      "source": "memory_manager/phase6/worker.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6/worker.py",
+      "sha256": "b5ac0d51c7e47fe73191b32d94c6a46580da588f97aeeee92512a5ef014e0284"
+    },
+    {
+      "source": "memory_manager/phase6c/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6c/__init__.py",
+      "sha256": "1884d5f677d1dbd7838f62c02b970a9b76d9c4e3c914ebcc0a0d28abeeba1faa"
+    },
+    {
+      "source": "memory_manager/phase6c/canonical_metadata.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6c/canonical_metadata.py",
+      "sha256": "d679209a4d725bb9ccf090703717921936a06833610318853ec5123a1e7707ad"
+    },
+    {
+      "source": "memory_manager/phase6d/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6d/__init__.py",
+      "sha256": "2c7591ca4999e8c188786f57cfabe6e86e8e43d43ea9fd92fb779ad17cbe81ec"
+    },
+    {
+      "source": "memory_manager/phase6d/api.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6d/api.py",
+      "sha256": "19c5934f1725768cd1231695d3c00db6e1e72ba14f9f82d611e9f5cac433a253"
+    },
+    {
+      "source": "memory_manager/phase6d/database.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6d/database.py",
+      "sha256": "a5337cac63b29abe4ac3c4ed664f30dca64656f80baf7b861f4c7efe71ba6833"
+    },
+    {
+      "source": "memory_manager/phase6d/evidence.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6d/evidence.py",
+      "sha256": "a520bf22d2a88248203d5456315bead25035e781469c403aee4aa603e7a19995"
+    },
+    {
+      "source": "memory_manager/phase6d/heartbeat.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6d/heartbeat.py",
+      "sha256": "c17b09311805a8a0d3d592f5a376c16d12d4d7178a2d2cac049d44c8951f35ed"
+    },
+    {
+      "source": "memory_manager/phase6d/worker.py",
+      "target": "/opt/jarvis-2/review/memory_manager/phase6d/worker.py",
+      "sha256": "f26b2343c94c1557493402c94c9ecf0ca7542c9cf62968e718a29c0a1e2aa4e1"
+    },
+    {
+      "source": "memory_manager/schema.sql",
+      "target": "/opt/jarvis-2/review/memory_manager/schema.sql",
+      "sha256": "fecd7eefc42c2b5befe750eb4ad612e765d36a41c0b4d67db827da98256f7028"
+    },
+    {
+      "source": "memory_manager/skills.py",
+      "target": "/opt/jarvis-2/review/memory_manager/skills.py",
+      "sha256": "e419d1f49e13623847b4a34dc7209b9d08ab0466ce1528990dca93506bdeb97a"
+    },
+    {
+      "source": "memory_manager/store.py",
+      "target": "/opt/jarvis-2/review/memory_manager/store.py",
+      "sha256": "d03769cbab66ff72b8295c7b2d7f72ad9bf4d4d8c89fc580f73448db53734426"
+    },
+    {
+      "source": "memory_manager/tests/__init__.py",
+      "target": "/opt/jarvis-2/review/memory_manager/tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "installation_authorized": false
+}

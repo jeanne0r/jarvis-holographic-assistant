@@ -1,0 +1,944 @@
+{
+  "authorization": "User explicitly approved A1 only in this conversation",
+  "scope": "private snapshot + bounded isolated restore; no A2 or B",
+  "actual_service_test": true,
+  "synthetic_query_vector": true,
+  "embedding_service_modified": false,
+  "windows_services_started": false,
+  "backup_contains_real_memory": true,
+  "payloads_exported_to_chat_or_model": false,
+  "off_CT205_backup_copy": false,
+  "attempts": [
+    {
+      "a1_id": "20261114T181811Z-3eb75693",
+      "scope": "A1 only",
+      "version": "qdrant 1.20.0",
+      "binary_sha256": "d60f8c31f7c943849403997562122cce4e3883b7f06936a01187dfd2d2eb81fe",
+      "production_pid_before": 11122,
+      "production_point_writes": 0,
+      "personal_payloads_exported": false,
+      "hermes_ollama_started": false,
+      "backup_directory": "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693",
+      "restore_directory": "/var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693",
+      "started_at": 1794680292.0503705,
+      "passed": false,
+      "cgroup_preflight": {
+        "memory_max": 268435456,
+        "swap_max": 0,
+        "cpu_max": "50000 100000",
+        "memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        }
+      },
+      "before": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "disk_free_before": 5880143872,
+      "memory_available_before": 915922944,
+      "snapshot": {
+        "name": "jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot",
+        "creation_time": null,
+        "size": 168229376,
+        "checksum": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f"
+      },
+      "backup": {
+        "path": "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot",
+        "sha256": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f",
+        "bytes": 168229376
+      },
+      "snapshot_source_count_stable": true,
+      "restore_command_redacted": [
+        "systemd-run",
+        "--quiet",
+        "--unit=jarvis-phase5-restore-20261114t181811z-3eb75693",
+        "--property=MemoryMax=268435456",
+        "--property=MemorySwapMax=0",
+        "--property=CPUQuota=50%",
+        "--property=RuntimeMaxSec=600",
+        "--property=TimeoutStopSec=10",
+        "--property=MemoryAccounting=yes",
+        "--property=CPUAccounting=yes",
+        "--property=OOMPolicy=stop",
+        "--property=KillMode=control-group",
+        "--property=TasksMax=64",
+        "--property=UMask=0077",
+        "--property=WorkingDirectory=/var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693",
+        "--property=NoNewPrivileges=yes",
+        "--property=ProtectSystem=strict",
+        "--property=ReadWritePaths=/var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693",
+        "--property=InaccessiblePaths=/var/lib/jarvis-memory/qdrant /etc/jarvis-memory.env",
+        "/usr/bin/env",
+        "-i",
+        "PATH=/usr/bin:/bin",
+        "HOME=/var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693",
+        "/usr/local/bin/qdrant",
+        "--config-path",
+        "/var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693/config.json",
+        "--snapshot",
+        "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot:jarvis_memory_v1"
+      ],
+      "samples": [
+        {
+          "elapsed": 0.008,
+          "available_bytes": 909595648,
+          "disk_free_bytes": 5543645184,
+          "memory_current": "479232",
+          "memory_peak": "2473984",
+          "process_rss_bytes": 54468608,
+          "cpu_usage_nsec": "7787000",
+          "cgroup": {
+            "memory_max": 268435456,
+            "swap_max": 0,
+            "cpu_max": "50000 100000",
+            "memory_events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            }
+          }
+        }
+      ],
+      "error_class": "RuntimeError",
+      "unit_before_stop": {
+        "RuntimeMaxUSec": "10min",
+        "MainPID": "0",
+        "Result": "exit-code",
+        "OOMPolicy": "stop",
+        "ControlGroup": "",
+        "MemoryCurrent": "[not set]",
+        "CPUUsageNSec": "359018000",
+        "CPUQuotaPerSecUSec": "500ms",
+        "MemoryMax": "268435456",
+        "MemorySwapMax": "0",
+        "ActiveState": "failed",
+        "SubState": "failed"
+      },
+      "temporary_port_closed": true,
+      "production_pid_after": 11122,
+      "production_not_restarted": true,
+      "services_after": {
+        "jarvis-qdrant": "active",
+        "jarvis-embeddings": "active"
+      },
+      "production_metadata_after": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "finished_at": 1794680295.7577846,
+      "disk_free_after": 5375107072,
+      "memory_available_after": 912647168
+    },
+    {
+      "a1_id": "20261114T182147Z-245508ef",
+      "scope": "A1 only",
+      "version": "qdrant 1.20.0",
+      "binary_sha256": "d60f8c31f7c943849403997562122cce4e3883b7f06936a01187dfd2d2eb81fe",
+      "production_pid_before": 11122,
+      "production_point_writes": 0,
+      "personal_payloads_exported": false,
+      "hermes_ollama_started": false,
+      "backup_directory": "/var/lib/jarvis-memory/phase5-backup/20261114T182147Z-245508ef",
+      "restore_directory": "/var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef",
+      "started_at": 1794680507.4641073,
+      "passed": false,
+      "cgroup_preflight": {
+        "private_network": true,
+        "memory_max": 268435456,
+        "swap_max": 0,
+        "cpu_max": "50000 100000",
+        "memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        }
+      },
+      "before": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "disk_free_before": 5375082496,
+      "memory_available_before": 914581504,
+      "reused_manifest": "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/manifest.json",
+      "snapshot": {
+        "name": "jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot",
+        "creation_time": null,
+        "size": 168229376,
+        "checksum": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f"
+      },
+      "backup": {
+        "path": "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot",
+        "sha256": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f",
+        "bytes": 168229376
+      },
+      "restore_command_redacted": [
+        "systemd-run",
+        "--quiet",
+        "--unit=jarvis-phase5-restore-20261114t182147z-245508ef",
+        "--property=MemoryMax=268435456",
+        "--property=PrivateNetwork=yes",
+        "--property=MemorySwapMax=0",
+        "--property=CPUQuota=50%",
+        "--property=RuntimeMaxSec=600",
+        "--property=TimeoutStopSec=10",
+        "--property=MemoryAccounting=yes",
+        "--property=CPUAccounting=yes",
+        "--property=OOMPolicy=stop",
+        "--property=KillMode=control-group",
+        "--property=TasksMax=64",
+        "--property=UMask=0077",
+        "--property=WorkingDirectory=/var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef",
+        "--property=NoNewPrivileges=yes",
+        "--property=ProtectSystem=strict",
+        "--property=ReadWritePaths=/var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef",
+        "--property=InaccessiblePaths=/var/lib/jarvis-memory/qdrant /etc/jarvis-memory.env",
+        "/usr/bin/env",
+        "-i",
+        "PATH=/usr/bin:/bin",
+        "HOME=/var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef",
+        "QDRANT__SERVICE__HOST=127.0.0.1",
+        "QDRANT__SERVICE__HTTP_PORT=16333",
+        "QDRANT__TELEMETRY_DISABLED=true",
+        "/usr/local/bin/qdrant",
+        "--config-path",
+        "/var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef/config.yaml",
+        "--snapshot",
+        "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot:jarvis_memory_v1"
+      ],
+      "samples": [
+        {
+          "elapsed": 0.011,
+          "available_bytes": 914164736,
+          "disk_free_bytes": 5375078400,
+          "memory_current": "524288",
+          "memory_peak": "1978368",
+          "process_rss_bytes": 5644288,
+          "cpu_usage_nsec": "6219000",
+          "cgroup": {
+            "private_network": true,
+            "memory_max": 268435456,
+            "swap_max": 0,
+            "cpu_max": "50000 100000",
+            "memory_events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            }
+          }
+        }
+      ],
+      "error_class": "RuntimeError",
+      "unit_before_stop": {
+        "RuntimeMaxUSec": "10min",
+        "MainPID": "0",
+        "Result": "exit-code",
+        "OOMPolicy": "stop",
+        "ControlGroup": "",
+        "MemoryCurrent": "[not set]",
+        "CPUUsageNSec": "248231000",
+        "CPUQuotaPerSecUSec": "500ms",
+        "MemoryMax": "268435456",
+        "MemorySwapMax": "0",
+        "ActiveState": "failed",
+        "SubState": "failed"
+      },
+      "temporary_port_closed": true,
+      "production_pid_after": 11122,
+      "production_not_restarted": true,
+      "services_after": {
+        "jarvis-qdrant": "active",
+        "jarvis-embeddings": "active"
+      },
+      "production_metadata_after": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "finished_at": 1794680508.9761739,
+      "disk_free_after": 5206548480,
+      "memory_available_after": 914825216
+    },
+    {
+      "a1_id": "20261114T182330Z-0b504a9b",
+      "scope": "A1 only",
+      "version": "qdrant 1.20.0",
+      "binary_sha256": "d60f8c31f7c943849403997562122cce4e3883b7f06936a01187dfd2d2eb81fe",
+      "production_pid_before": 11122,
+      "production_point_writes": 0,
+      "personal_payloads_exported": false,
+      "hermes_ollama_started": false,
+      "backup_directory": "/var/lib/jarvis-memory/phase5-backup/20261114T182330Z-0b504a9b",
+      "restore_directory": "/var/lib/jarvis-memory/phase5-restore/20261114T182330Z-0b504a9b",
+      "started_at": 1794680610.6013796,
+      "passed": true,
+      "cgroup_preflight": {
+        "private_network": true,
+        "memory_max": 268435456,
+        "swap_max": 0,
+        "cpu_max": "50000 100000",
+        "memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        }
+      },
+      "before": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "disk_free_before": 5206528000,
+      "memory_available_before": 914841600,
+      "reused_manifest": "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/manifest.json",
+      "snapshot": {
+        "name": "jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot",
+        "creation_time": null,
+        "size": 168229376,
+        "checksum": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f"
+      },
+      "backup": {
+        "path": "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot",
+        "sha256": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f",
+        "bytes": 168229376
+      },
+      "restore_command_redacted": [
+        "systemd-run",
+        "--quiet",
+        "--unit=jarvis-phase5-restore-20261114t182330z-0b504a9b",
+        "--property=MemoryMax=268435456",
+        "--property=PrivateNetwork=yes",
+        "--property=MemorySwapMax=0",
+        "--property=CPUQuota=50%",
+        "--property=RuntimeMaxSec=600",
+        "--property=TimeoutStopSec=10",
+        "--property=MemoryAccounting=yes",
+        "--property=CPUAccounting=yes",
+        "--property=OOMPolicy=stop",
+        "--property=KillMode=control-group",
+        "--property=TasksMax=64",
+        "--property=UMask=0077",
+        "--property=WorkingDirectory=/var/lib/jarvis-memory/phase5-restore/20261114T182330Z-0b504a9b",
+        "--property=NoNewPrivileges=yes",
+        "--property=ProtectSystem=strict",
+        "--property=ReadWritePaths=/var/lib/jarvis-memory/phase5-restore/20261114T182330Z-0b504a9b",
+        "--property=InaccessiblePaths=/var/lib/jarvis-memory/qdrant /etc/jarvis-memory.env",
+        "/usr/bin/env",
+        "-i",
+        "PATH=/usr/bin:/bin",
+        "HOME=/var/lib/jarvis-memory/phase5-restore/20261114T182330Z-0b504a9b",
+        "QDRANT__SERVICE__HOST=127.0.0.1",
+        "QDRANT__SERVICE__HTTP_PORT=16333",
+        "QDRANT__TELEMETRY_DISABLED=true",
+        "/usr/local/bin/qdrant",
+        "--config-path",
+        "/var/lib/jarvis-memory/phase5-restore/20261114T182330Z-0b504a9b/config.yaml",
+        "--snapshot",
+        "/var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot:jarvis_memory_v1"
+      ],
+      "samples": [
+        {
+          "elapsed": 0.008,
+          "available_bytes": 913949696,
+          "disk_free_bytes": 5206511616,
+          "memory_current": "524288",
+          "memory_peak": "2084864",
+          "process_rss_bytes": 7827456,
+          "cpu_usage_nsec": "5608000",
+          "cgroup": {
+            "private_network": true,
+            "memory_max": 268435456,
+            "swap_max": 0,
+            "cpu_max": "50000 100000",
+            "memory_events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            }
+          }
+        },
+        {
+          "elapsed": 1.063,
+          "available_bytes": 889106432,
+          "disk_free_bytes": 5037973504,
+          "memory_current": "216788992",
+          "memory_peak": "268435456",
+          "process_rss_bytes": 175792128,
+          "cpu_usage_nsec": "334400000",
+          "cgroup": {
+            "private_network": true,
+            "memory_max": 268435456,
+            "swap_max": 0,
+            "cpu_max": "50000 100000",
+            "memory_events": {
+              "low": "0",
+              "high": "0",
+              "max": "72",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            }
+          }
+        }
+      ],
+      "restored_metadata": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "restored_version": "1.20.0",
+      "query": {
+        "synthetic_vector": true,
+        "returned": 3,
+        "payloads_requested": false,
+        "vectors_requested": false,
+        "finite_scores": true
+      },
+      "checks": {
+        "unauthenticated_denied": true,
+        "version": true,
+        "count": true,
+        "vectors": true,
+        "payload_indexes": true,
+        "query": true,
+        "backup_hash": true
+      },
+      "exact_restored_count": 41428,
+      "final_unit_properties": {
+        "RuntimeMaxUSec": "10min",
+        "MainPID": "111742",
+        "Result": "success",
+        "OOMPolicy": "stop",
+        "ControlGroup": "/system.slice/jarvis-phase5-restore-20261114t182330z-0b504a9b.service",
+        "MemoryCurrent": "220631040",
+        "CPUUsageNSec": "344038000",
+        "CPUQuotaPerSecUSec": "500ms",
+        "MemoryMax": "268435456",
+        "MemorySwapMax": "0",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "unit_before_stop": {
+        "RuntimeMaxUSec": "10min",
+        "MainPID": "111742",
+        "Result": "success",
+        "OOMPolicy": "stop",
+        "ControlGroup": "/system.slice/jarvis-phase5-restore-20261114t182330z-0b504a9b.service",
+        "MemoryCurrent": "220631040",
+        "CPUUsageNSec": "344038000",
+        "CPUQuotaPerSecUSec": "500ms",
+        "MemoryMax": "268435456",
+        "MemorySwapMax": "0",
+        "ActiveState": "active",
+        "SubState": "running"
+      },
+      "unit_after_stop": {
+        "RuntimeMaxUSec": "infinity",
+        "MainPID": "0",
+        "Result": "success",
+        "OOMPolicy": "",
+        "ControlGroup": "",
+        "MemoryCurrent": "[not set]",
+        "CPUUsageNSec": "[not set]",
+        "CPUQuotaPerSecUSec": "infinity",
+        "MemoryMax": "infinity",
+        "MemorySwapMax": "infinity",
+        "ActiveState": "inactive",
+        "SubState": "dead"
+      },
+      "verifier_stopped": true,
+      "temporary_port_closed": true,
+      "production_pid_after": 11122,
+      "production_not_restarted": true,
+      "services_after": {
+        "jarvis-qdrant": "active",
+        "jarvis-embeddings": "active"
+      },
+      "production_metadata_after": {
+        "status": "green",
+        "optimizer_status": "ok",
+        "indexed_vectors_count": 41428,
+        "points_count": 41428,
+        "segments_count": 2,
+        "config": {
+          "params": {
+            "vectors": {
+              "size": 384,
+              "distance": "Cosine",
+              "on_disk": true
+            },
+            "shard_number": 1,
+            "replication_factor": 1,
+            "write_consistency_factor": 1,
+            "on_disk_payload": true
+          },
+          "hnsw_config": {
+            "m": 16,
+            "ef_construct": 100,
+            "full_scan_threshold": 10000,
+            "max_indexing_threads": 0,
+            "on_disk": true
+          },
+          "optimizer_config": {
+            "deleted_threshold": 0.2,
+            "vacuum_min_vector_number": 1000,
+            "default_segment_number": 2,
+            "max_segment_size": null,
+            "memmap_threshold": null,
+            "indexing_threshold": 10000,
+            "flush_interval_sec": 5,
+            "max_optimization_threads": null,
+            "prevent_unoptimized": null
+          },
+          "wal_config": {
+            "wal_capacity_mb": 32,
+            "wal_segments_ahead": 0,
+            "wal_retain_closed": 1
+          },
+          "quantization_config": null
+        },
+        "payload_schema": {
+          "version": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "doc_id": {
+            "data_type": "keyword",
+            "points": 41428
+          },
+          "space": {
+            "data_type": "keyword",
+            "points": 41428
+          }
+        },
+        "update_queue": {
+          "length": 0
+        },
+        "created_at": "2026-11-11T21:53:11.986Z"
+      },
+      "finished_at": 1794680613.035854,
+      "disk_free_after": 5037973504,
+      "memory_available_after": 915196928
+    }
+  ],
+  "final_read_only_verification": {
+    "mode": "final read-only verification",
+    "source_sha256": "542768af6a35b101cd41a37e2479469f4f7157613e98fc54ee6da0daa19864b1",
+    "units": [
+      "jarvis-phase5-restore-20261114t181811z-3eb75693.service loaded failed failed /usr/bin/env -i PATH=/usr/bin:/bin HOME=/var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693 /usr/local/bin/qdrant --config-path /var/lib/jarvis-memory/phase5-restore/20261114T181811Z-3eb75693/config.json --snapshot /var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot:jarvis_memory_v1",
+      "jarvis-phase5-restore-20261114t182147z-245508ef.service loaded failed failed /usr/bin/env -i PATH=/usr/bin:/bin HOME=/var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef QDRANT__SERVICE__HOST=127.0.0.1 QDRANT__SERVICE__HTTP_PORT=16333 QDRANT__TELEMETRY_DISABLED=true /usr/local/bin/qdrant --config-path /var/lib/jarvis-memory/phase5-restore/20261114T182147Z-245508ef/config.yaml --snapshot /var/lib/jarvis-memory/phase5-backup/20261114T181811Z-3eb75693/jarvis_memory_v1-4536996489444372-2026-11-14-18-18-12-0.snapshot:jarvis_memory_v1"
+    ],
+    "active_units": [],
+    "backup_permissions": {
+      "directory": "0o700",
+      "archive": "0o600",
+      "manifest": "0o600"
+    },
+    "backup_sha256": "92f138189be20e3256d150b744f15cb12ee46240aae4b29e1f3935c09b1d0a9f",
+    "production_qdrant_pid": 11122,
+    "production_embeddings_pid": 9998,
+    "snapshot_original_count": 1,
+    "ct205_available_bytes": 921008128
+  },
+  "passed": true,
+  "resource_note": "Sampled cgroup memory.peak reached 256 MiB with max events=72, oom=0, oom_kill=0 at the final sample. RSS sample 175792128 bytes; these are distinct measures.",
+  "failures_explained": [
+    {
+      "id": "20261114T181811Z-3eb75693",
+      "cause": "JSON config not loaded by installed binary; default REST port occupied. Logs also reported default telemetry enabled; no external emission measurement. No listener startup message observed. Process exited; services unchanged."
+    },
+    {
+      "id": "20261114T182147Z-245508ef",
+      "cause": "Explicit temp_path outside collection parent caused snapshot final rename to fail: destination storage/collections parent absent. Corrected with private collection parent creation and default adjacent temp path."
+    }
+  ],
+  "local_tests": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "memory_manager.phase5.test_memory",
+      "memory_manager.phase5.test_qdrant_a1",
+      "-v"
+    ],
+    "passed": true,
+    "output": "test_api_mcp_hybrid_e2e_synthetic_restart (memory_manager.phase5.test_memory.Phase5.test_api_mcp_hybrid_e2e_synthetic_restart) ... ok\ntest_backup_additive_idempotent (memory_manager.phase5.test_memory.Phase5.test_backup_additive_idempotent) ... ok\ntest_collection_vector_and_bounds (memory_manager.phase5.test_memory.Phase5.test_collection_vector_and_bounds) ... ok\ntest_correction_rejects_stale_remote_revision (memory_manager.phase5.test_memory.Phase5.test_correction_rejects_stale_remote_revision) ... ok\ntest_crash_ack_reopen_no_duplicate (memory_manager.phase5.test_memory.Phase5.test_crash_ack_reopen_no_duplicate) ... ok\ntest_disputed_and_expired_not_independent_evidence (memory_manager.phase5.test_memory.Phase5.test_disputed_and_expired_not_independent_evidence) ... ok\ntest_dry_run_import_provenance_dedup_contradiction (memory_manager.phase5.test_memory.Phase5.test_dry_run_import_provenance_dedup_contradiction) ... ok\ntest_extended_skills_and_release_remains_candidate (memory_manager.phase5.test_memory.Phase5.test_extended_skills_and_release_remains_candidate) ... ok\ntest_frozen_qwen_unsafe_claims_cannot_grant_capabilities (memory_manager.phase5.test_memory.Phase5.test_frozen_qwen_unsafe_claims_cannot_grant_capabilities) ... ok\ntest_fts_fallback_and_wrong_pipeline (memory_manager.phase5.test_memory.Phase5.test_fts_fallback_and_wrong_pipeline) ... ok\ntest_historical_startup_readonly_guard (memory_manager.phase5.test_memory.Phase5.test_historical_startup_readonly_guard) ... ok\ntest_index_idempotent_and_stable_rebuild (memory_manager.phase5.test_memory.Phase5.test_index_idempotent_and_stable_rebuild) ... ok\ntest_injection_security_regressions (memory_manager.phase5.test_memory.Phase5.test_injection_security_regressions) ... ok\ntest_logical_hide_restore_and_acl (memory_manager.phase5.test_memory.Phase5.test_logical_hide_restore_and_acl) ... ok\ntest_noncompleted_ack_has_no_checkpoint (memory_manager.phase5.test_memory.Phase5.test_noncompleted_ack_has_no_checkpoint) ... ok\ntest_provider_pin_and_context_no_model_load (memory_manager.phase5.test_memory.Phase5.test_provider_pin_and_context_no_model_load) ... ok\ntest_remote_payload_cannot_forge_acl_or_content (memory_manager.phase5.test_memory.Phase5.test_remote_payload_cannot_forge_acl_or_content) ... ok\ntest_approval_checked_before_machine_access (memory_manager.phase5.test_qdrant_a1.Safety.test_approval_checked_before_machine_access) ... ok\ntest_backup_is_private_exclusive_and_hash_verified (memory_manager.phase5.test_qdrant_a1.Safety.test_backup_is_private_exclusive_and_hash_verified) ... ok\ntest_production_write_allowlist_and_port (memory_manager.phase5.test_qdrant_a1.Safety.test_production_write_allowlist_and_port) ... ok\ntest_redirect_is_denied (memory_manager.phase5.test_qdrant_a1.Safety.test_redirect_is_denied) ... ok\ntest_resource_properties_are_explicit (memory_manager.phase5.test_qdrant_a1.Safety.test_resource_properties_are_explicit) ... ok\ntest_yaml_config_and_private_network_are_explicit (memory_manager.phase5.test_qdrant_a1.Safety.test_yaml_config_and_private_network_are_explicit) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 5.195s\n\nOK\n"
+  },
+  "runner_sha256": "d7f0932daa26ecc0f80496a2e8b042f30d59b27a20b05c429b2e82e12cb5cd1b",
+  "derived_checks": {
+    "restored_full_collection_config_matches_snapshot_source": true,
+    "production_config_before_after_equal": true,
+    "source_code_unchanged": true
+  }
+}

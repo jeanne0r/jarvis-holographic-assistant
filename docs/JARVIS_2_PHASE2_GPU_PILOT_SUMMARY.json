@@ -1,0 +1,106 @@
+{
+  "reports": [
+    {
+      "file": "JARVIS_2_PHASE2_GPU_BENCHMARK_REAL.json",
+      "sha256": "3656ec46468b5cfb2ca3bd61226718f349a6d308835887751126f16616e4a5b1",
+      "completed_inferences": 0,
+      "passed_cases": 0,
+      "cases_recorded": 1,
+      "sampled_peak_vram_mib": 7448.0,
+      "sampled_peak_power_w": 98.65,
+      "sampled_board_energy_wh": 0.4796424618141519,
+      "energy_coverage_seconds": 59.91920208930969,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "median_latency_seconds": null
+    },
+    {
+      "file": "JARVIS_2_PHASE2_GPU_BENCHMARK_NO_THINKING.json",
+      "sha256": "f7a58a7d1b77942023ae89df788bfff28a52e3e076a2d3c4e3a6876d407bfe62",
+      "completed_inferences": 7,
+      "passed_cases": 4,
+      "cases_recorded": 7,
+      "sampled_peak_vram_mib": 7460.0,
+      "sampled_peak_power_w": 116.85,
+      "sampled_board_energy_wh": 1.7084754236340522,
+      "energy_coverage_seconds": 69.61024785041809,
+      "input_tokens": 350,
+      "output_tokens": 172,
+      "median_latency_seconds": 4.59996152005624
+    },
+    {
+      "file": "JARVIS_2_PHASE2_GPU_BENCHMARK_V2.json",
+      "sha256": "01effc2cd5a5d632e8f5676fa5908a638296b58c2155ee984f99e196b6e7cbd9",
+      "completed_inferences": 0,
+      "passed_cases": 0,
+      "cases_recorded": 0,
+      "sampled_peak_vram_mib": null,
+      "sampled_peak_power_w": null,
+      "sampled_board_energy_wh": 0,
+      "energy_coverage_seconds": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "median_latency_seconds": null
+    },
+    {
+      "file": "JARVIS_2_PHASE2_GPU_BENCHMARK_V2_FINAL.json",
+      "sha256": "755566943790e3b6bf92aab2814e4de3f7d00cf653695a1c77c8e1017acf7af1",
+      "completed_inferences": 7,
+      "passed_cases": 6,
+      "cases_recorded": 7,
+      "sampled_peak_vram_mib": 7198.0,
+      "sampled_peak_power_w": 172.32,
+      "sampled_board_energy_wh": 1.5859459930943118,
+      "energy_coverage_seconds": 51.570781230926514,
+      "input_tokens": 445,
+      "output_tokens": 125,
+      "median_latency_seconds": 4.357125477981754
+    }
+  ],
+  "cleanup_verified": {
+    "windows": {
+      "listening": false
+    },
+    "processes": {
+      "ollama_processes": [],
+      "kryptex_processes": [
+        "Kryptex",
+        "Kryptex",
+        "Kryptex",
+        "Kryptex",
+        "KryptexService"
+      ]
+    },
+    "vm_tunnel_closed": true
+  },
+  "model_metadata": {
+    "details": {
+      "parent_model": "Qwen3.8-9B-Uncensored-HauhauCS-Aggressive-MTP-GGUF-NVFP4:latest",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "9.2B",
+      "quantization_level": "Q4_K_M"
+    },
+    "capabilities": [
+      "tools",
+      "thinking",
+      "completion",
+      "vision"
+    ],
+    "model_info": {
+      "general.architecture": "qwen35",
+      "general.file_type": 15,
+      "general.parameter_count": 9197093888,
+      "qwen35.context_length": 262144
+    }
+  },
+  "limitations": [
+    "Power is sampled NVIDIA board telemetry, not a wall-socket measurement; unsampled intervals excluded.",
+    "First request timed out; its token usage is unknown.",
+    "A completed model call is not an end-to-end Hermes runtime validation.",
+    "The two benchmark versions have different label contracts and are not a model-quality improvement comparison."
+  ]
+}

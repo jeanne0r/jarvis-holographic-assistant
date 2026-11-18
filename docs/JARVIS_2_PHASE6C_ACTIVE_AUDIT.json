@@ -1,0 +1,208 @@
+{
+  "at_utc": "2026-11-15T06:32:46.888139+00:00",
+  "production_writes": 0,
+  "windows_operations": 0,
+  "private_conversations_read": false,
+  "service": [
+    "MainPID=2033987",
+    "ExecMainStartTimestamp=Fri 2026-11-13 21:29:24 UTC",
+    "ActiveState=active"
+  ],
+  "node": "v18.19.1",
+  "configured_engine": "hybrid",
+  "status_observations": [
+    {
+      "route": "/api/jarvis/voice/status",
+      "status": 200,
+      "credential_sent": false,
+      "safe_fields": {
+        "engine": "hybrid",
+        "speechOnly": true,
+        "configured": true,
+        "transcriptionModel": "gemini-3.5-transcribe",
+        "synthesisModel": "gemini-3.8-flash-lite-tts"
+      }
+    },
+    {
+      "route": "/api/jarvis/session",
+      "status": 404,
+      "credential_sent": false,
+      "safe_fields": {}
+    }
+  ],
+  "reviewed_targets": [
+    {
+      "path": "/home/user/workspace/jarvis/jarvis-session-auth.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "6e09cdcae6adc8c3bc2f957116edc183ea946ab06925c49a2fcae796a47615c8",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/hermes-server-auth.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/hermes-voice-tools.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "79ceaff38551840ff2cc39edbe9f2b6372cb75a08425c17156477738c79bddff",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/hermes-bridge-client.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "0fb65d7cfcfd53785741ed633821dfd4cf89dada0235fba46438ba388c3a8c21",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/jarvis-hermes-experimental.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "3813153c5d65e26f06c8c9599880ef781cad69f9fd8dac05cb9d93764e5cb9d2",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/hybrid-mission-admission.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "270c0b9da48ee6e9b6c20fc36d850bef6dd283b39a841d12de184b94344207df",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/phase6-gateway.mjs",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "ea754afe8787d8720a711cdf82e7cc6d87590f0708a4735a83736d6cb78cdd1b",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/workspace/jarvis/backend.mjs",
+      "active_sha256": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "a67744f1b6af66180410c83477b5097aba03f7b47f075fb405c78fc13b52df92",
+      "installed": false,
+      "mtime_utc": "2026-11-13T19:24:45.108430+00:00"
+    },
+    {
+      "path": "/home/user/workspace/jarvis/voice-memory.py",
+      "active_sha256": "68ae9c1e3ae0241038ee1598a1df654e65c547121a41eb1f6e3be881d58b3718",
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "fd15eecaa94d646642eb1bda419bb8f43b111bd033485df8ee3b368e9fdb0de3",
+      "installed": false,
+      "mtime_utc": "2026-11-13T09:56:30.577164+00:00"
+    },
+    {
+      "path": "/home/user/workspace/jarvis/store.py",
+      "active_sha256": "3feca4e8ceeccfa6c106d0a9e8acc01116735ec0a5141c8b753881b0ae382c2c",
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "b5ae430808df57561d8f17d26a6aa9c25ea64f78140ab558ca198985d89af687",
+      "installed": false,
+      "mtime_utc": "2026-11-11T22:11:40.220447+00:00"
+    },
+    {
+      "path": "/home/user/gateway/server.js",
+      "active_sha256": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "d5c6558f793236438b63f11a5706cc36ee37b2d287aa09f60612c4f4e98cbf8e",
+      "installed": false,
+      "mtime_utc": "2026-11-12T18:35:16.637611+00:00"
+    },
+    {
+      "path": "/home/user/gateway/public/jarvis/index.html",
+      "active_sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d",
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "16622493087776469d1c15fa1b1d3f63d87995611e6a6b14e78340de8a4df5f3",
+      "installed": false,
+      "mtime_utc": "2026-11-13T21:29:24.783602+00:00"
+    },
+    {
+      "path": "/home/user/gateway/public/jarvis/hermes-missions.js",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "658eb0322540f89fc57438426addd520d6ca1ecead6e32d231ab6287eb384965",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/gateway/public/jarvis/hermes-missions.css",
+      "active_sha256": null,
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273",
+      "installed": false,
+      "mtime_utc": null
+    },
+    {
+      "path": "/home/user/gateway/public/jarvis/voice-router.js",
+      "active_sha256": "b848df088de7a1a614aa8497debed3156aa9f0a3ed809ffdfe2ae213dfc010fb",
+      "matches_reviewed_preimage": true,
+      "phase6b_final_sha256": "202f0de323ca36b4fc83912f13753da8556449c71b0f39c05d5495c10decaf2d",
+      "installed": false,
+      "mtime_utc": "2026-11-13T15:16:16.477687+00:00"
+    }
+  ],
+  "additional_code_hashes": {
+    "/home/user/workspace/jarvis/ai.mjs": "89db8122232766ab56969731e8104e34314116c1e465bc60392cd9e0d21b981b",
+    "/home/user/workspace/jarvis/hybrid-brain.mjs": "713635b9b47eb9e8d021a4a4bb92b2007a39c0f2fc9cd6830f5897b58b3b7b4f",
+    "/home/user/workspace/jarvis/codex-worker.mjs": "7351dc258f24cca16accbd9ee0580f66fa01aa1381ec97dd6b9385f4354fb661",
+    "/home/user/workspace/jarvis/tools-server.mjs": "97661ec0e515f5e0bf829388ea737cbe9ae2805072c7342874edcd7fd74c3452",
+    "/home/user/workspace/jarvis/speech.mjs": "51abf650647446e59d42bc1ef7612035f9f1b7b82029e139e84d901f52e3a3fd",
+    "/home/user/workspace/jarvis/core-settings.mjs": "70dff229869a9cd11c5cc5e70e0c9847a86773e5d7fdca6389327805504dcb30",
+    "/home/user/workspace/jarvis/memory-map.mjs": "2745541dd7261e13eb97d815055836c4a64f3fff3ce43005cbf12a1d50d8dd07",
+    "/home/user/gateway/public/jarvis/app.js": "80d5341134f7b2fd6777cdd72dd067ed96f6ffcdb9891f4c460990a114266814",
+    "/home/user/gateway/public/jarvis/codex-voice.js": "1d87f1da88313e123b05e6a539d4f8f3ee90d82e08894965ac9cdde268e2a31b",
+    "/home/user/gateway/public/jarvis/live.js": "0067033521d6a15f69f235cf31c64cb43468f37d6ca11517b4b868e4e5eaccef",
+    "/home/user/gateway/public/jarvis/archive.js": "91c4bdeef401c6f626019fddde215a18193d13900a37d6efd760ff0ee6739cd6"
+  },
+  "gateway_literal_routes": [
+    "/",
+    "/api/chat",
+    "/api/dosing-calibration/latest",
+    "/api/dosing-calibration/run",
+    "/api/energy-live",
+    "/api/fridge/barcode",
+    "/api/fridge/date",
+    "/api/fridge/items",
+    "/api/fridge/name",
+    "/api/fridge/remove-by-barcode",
+    "/api/fridge/stock",
+    "/api/fridge/vision",
+    "/api/health",
+    "/api/home-report",
+    "/api/icloud/addressbooks",
+    "/api/icloud/calendars",
+    "/api/icloud/contacts",
+    "/api/icloud/events",
+    "/api/icloud/status",
+    "/api/magic-mirror",
+    "/api/mining-report",
+    "/api/mirror/apple",
+    "/api/mirror/tasks",
+    "/api/nilm-report",
+    "/api/projects",
+    "/api/runs",
+    "/api/s9/control",
+    "/api/s9/power",
+    "/api/tree",
+    "/astro",
+    "/astro/",
+    "/jarvis",
+    "/jarvis/",
+    "/miroir",
+    "/miroir/",
+    "/solana-paper",
+    "/solana-paper/"
+  ],
+  "all_reviewed_preimages_unchanged": true
+}

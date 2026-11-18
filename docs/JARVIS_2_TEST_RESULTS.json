@@ -1,0 +1,95 @@
+{
+  "evaluated_at": "2026-11-13T22:04:25.025446+00:00",
+  "data": "synthetic",
+  "model_calls": 0,
+  "production_writes": 0,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "memory_manager/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output": "test_01_fact_correction_retains_old_configuration (test_memory.MemoryTests.test_01_fact_correction_retains_old_configuration) ... ok\ntest_02_conflicting_sources_remain_unresolved (test_memory.MemoryTests.test_02_conflicting_sources_remain_unresolved) ... ok\ntest_03_project_decision_changes (test_memory.MemoryTests.test_03_project_decision_changes) ... ok\ntest_04_episode_retrieval_is_analogy_not_proof (test_memory.MemoryTests.test_04_episode_retrieval_is_analogy_not_proof) ... ok\ntest_05_skill_improves_after_failure_without_regression (test_memory.MemoryTests.test_05_skill_improves_after_failure_without_regression) ... ok\ntest_06_consolidation_process_death_and_restart_no_duplicates (test_memory.MemoryTests.test_06_consolidation_process_death_and_restart_no_duplicates) ... ok\ntest_07_external_injection_cannot_promote_correct_or_act (test_memory.MemoryTests.test_07_external_injection_cannot_promote_correct_or_act) ... ok\ntest_acl_applies_to_search_history_and_vector_hits (test_memory.MemoryTests.test_acl_applies_to_search_history_and_vector_hits) ... ok\ntest_additive_schema_idempotent_and_foreign_database_refused (test_memory.MemoryTests.test_additive_schema_idempotent_and_foreign_database_refused) ... ok\ntest_compensating_undo_and_stale_write (test_memory.MemoryTests.test_compensating_undo_and_stale_write) ... ok\ntest_consolidation_pause_weekly_and_failure_budget (test_memory.MemoryTests.test_consolidation_pause_weekly_and_failure_budget) ... ok\ntest_full_observe_consolidate_verify_retrieve_apply_improve_cycle (test_memory.MemoryTests.test_full_observe_consolidate_verify_retrieve_apply_improve_cycle) ... ok\ntest_http_auth_proposals_and_mcp_end_to_end (test_memory.MemoryTests.test_http_auth_proposals_and_mcp_end_to_end) ... ok\ntest_idempotency_collision_and_atomic_rollback (test_memory.MemoryTests.test_idempotency_collision_and_atomic_rollback) ... ok\ntest_injected_indexer_idempotent_and_no_production_collection (test_memory.MemoryTests.test_injected_indexer_idempotent_and_no_production_collection) ... ok\ntest_mission_registry_restart_and_approval_boundary (test_memory.MemoryTests.test_mission_registry_restart_and_approval_boundary) ... ok\ntest_secret_ingress_rejected_without_persistence (test_memory.MemoryTests.test_secret_ingress_rejected_without_persistence) ... ok\ntest_validity_and_grounded_verification (test_memory.MemoryTests.test_validity_and_grounded_verification) ... ok\ntest_vector_stale_hits_cannot_resurrect_superseded_facts (test_memory.MemoryTests.test_vector_stale_hits_cannot_resurrect_superseded_facts) ... ok\ntest_wal_backup_is_restorable_and_cannot_overwrite (test_memory.MemoryTests.test_wal_backup_is_restorable_and_cannot_overwrite) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 5.758s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "test_store.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: ZIP numbered JSON, import deduplication, selected branch, search, durable note, validation, invalid import rollback.\n"
+    },
+    {
+      "command": [
+        "python3",
+        "test_spaces.py"
+      ],
+      "exit_code": 0,
+      "output": "PASS: separate counts/search/details, notes, move, invalid spaces, scoped imports, deduplication, ownership preserved on refresh.\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "test_conversations",
+        "test_voice_memory"
+      ],
+      "exit_code": 0,
+      "output": ".......\n----------------------------------------------------------------------\nRan 7 tests in 1.722s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "semantic",
+        "-p",
+        "test_search.py"
+      ],
+      "exit_code": 0,
+      "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.251s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_codex_worker.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS: warm process reuse, isolated ephemeral threads, concurrent response routing, final-message parsing, abort propagation without action replay, recovery and sandbox policy.\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_user_corrections.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS: current user evidence only, scoped correction/replacement/provenance, bounded recall, personal priority, no readings or invented HA IDs, truthful persistence receipts and complete correction forgetting.\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_home_assistant.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS: all-domain overview, brightness %, unavailable state, minimal attributes, flattened command fields, exact discovered targets, parameter validation, command readback, no automatic retries.\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_hybrid_brain.mjs"
+      ],
+      "exit_code": 0,
+      "output": "PASS hybrid: both channels, public bypass, contextual local delegation, whole-batch guard before effects, public travel without HA, metering, cancellation and no silent fallback.\n"
+    }
+  ],
+  "passed": true
+}

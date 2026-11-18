@@ -1,0 +1,9 @@
+{
+  "at_utc": "2026-11-14T21:51:17Z",
+  "active_preimages_unchanged": true,
+  "checked_target_files": 16,
+  "service_state": "MainPID=2033987\nActiveState=active",
+  "real_model_calls": 0,
+  "new_C1_trials": 0,
+  "production_patch_applied": false
+}

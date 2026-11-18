@@ -1,0 +1,30 @@
+{
+  "origin": "user supplied administrator terminal output",
+  "passed": true,
+  "network": {
+    "loopback": {
+      "connected": true,
+      "local_port": 48937
+    },
+    "non_loopback": {
+      "connected": false,
+      "errno": null,
+      "timed_out": true,
+      "local_port": 38813
+    }
+  },
+  "effective_bpf_hooks": [
+    "cgroup_device",
+    "cgroup_inet_egress",
+    "cgroup_inet_ingress"
+  ],
+  "unconfined_controls_before": true,
+  "unconfined_controls_after": true,
+  "receiver_witness": {
+    "loopback_seen": true,
+    "non_loopback_seen": false
+  },
+  "pilot_started": false,
+  "scope": "Transient system unit only. Does not validate the stopped user unit or an uninstalled definitive system unit.",
+  "next_step": "Separate authorization required for dedicated system account, root-owned runtime/state copies and system unit installation. Validate final unit confinement before application startup. No boot enablement."
+}

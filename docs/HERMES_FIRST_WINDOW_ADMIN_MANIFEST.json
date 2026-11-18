@@ -1,0 +1,9 @@
+{
+  "purpose": "First authorized human-click window; no automatic mission",
+  "files": {
+    "ops/pilot-network/run-worker-window.py": "519123b5155d1b45d4a9faf165a1d80ec6e050f9f499253d2d32295b56a40a53",
+    "memory_manager/phase6/test_worker_window_admin.py": "8a9588d15f12c15a84cde587e42edbf3107c524740df7ba5c61f7431f2ec938b"
+  },
+  "base_manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+  "effective_manifest_sha256": "347f2fed8d9c306f2b646cfba11c2f65973fd803e349e19f764e22d27c4f4c11"
+}

@@ -1,0 +1,167 @@
+{
+  "mode": "read-only",
+  "payloads_read": false,
+  "services": {
+    "jarvis-qdrant": "active",
+    "jarvis-embeddings": "active"
+  },
+  "auth_configured": true,
+  "qdrant": {
+    "title": "qdrant - vector search engine",
+    "version": "1.20.0",
+    "commit": "222b2e44ab1c3f17e8246396ead6558e45041df7"
+  },
+  "collections": {
+    "result": {
+      "collections": [
+        {
+          "name": "jarvis_memory_v1"
+        }
+      ]
+    },
+    "status": "ok",
+    "time": 3.465e-06
+  },
+  "historical_collection": {
+    "result": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "indexed_vectors_count": 41369,
+      "points_count": 41407,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 384,
+            "distance": "Cosine",
+            "on_disk": true
+          },
+          "shard_number": 1,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "on_disk_payload": true
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": true
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 2,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null
+      },
+      "payload_schema": {
+        "version": {
+          "data_type": "keyword",
+          "points": 41407
+        },
+        "doc_id": {
+          "data_type": "keyword",
+          "points": 41407
+        },
+        "space": {
+          "data_type": "keyword",
+          "points": 41407
+        }
+      },
+      "update_queue": {
+        "length": 0
+      },
+      "created_at": "2026-11-11T21:53:11.986Z"
+    },
+    "status": "ok",
+    "time": 0.000176137
+  },
+  "experimental_collection": {
+    "http_error": 404
+  },
+  "embedding_health": {
+    "ready": true,
+    "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "collection": "jarvis_memory_v1",
+    "points": 41407
+  },
+  "qdrant_unauthenticated": {
+    "http_error": 401
+  },
+  "embeddings_unauthenticated": {
+    "http_error": 403
+  },
+  "embedding_source": {
+    "path": "/opt/jarvis-memory/service.py",
+    "sha256": "542768af6a35b101cd41a37e2479469f4f7157613e98fc54ee6da0daa19864b1",
+    "routes": [
+      [
+        "get",
+        "/health"
+      ],
+      [
+        "post",
+        "/index"
+      ],
+      [
+        "post",
+        "/search"
+      ],
+      [
+        "post",
+        "/prune"
+      ]
+    ]
+  },
+  "model_files": [
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/files_metadata.json",
+      "bytes": 726,
+      "sha256": "f3375a4e4eb393663797794da7251533a5d44f48bf28d3b1cf937865ef8c7642"
+    },
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/trees/faf4aa4225822f3bc6376869cb1164e8e3feedd0.json",
+      "bytes": 1551,
+      "sha256": "8554c64e76b7108fe08d2be4ce180e285cbd8b40f4ca9113a5d5ec903cb7cd54"
+    },
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/snapshots/faf4aa4225822f3bc6376869cb1164e8e3feedd0/model_optimized.onnx",
+      "bytes": 235052644,
+      "sha256": "634d0f66c29dc934c8fa72b8a4fe91dd4d420a22f1d82a241058d4316e659a99"
+    },
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/snapshots/faf4aa4225822f3bc6376869cb1164e8e3feedd0/tokenizer.json",
+      "bytes": 17083009,
+      "sha256": "fa685fc160bbdbab64058d4fc91b60e62d207e8dc60b9af5c002c5ab946ded00"
+    },
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/snapshots/faf4aa4225822f3bc6376869cb1164e8e3feedd0/config.json",
+      "bytes": 673,
+      "sha256": "c8ec081fdad2df991bf5abbf18418fec7a5cdaa421f60ffb060a30040b8c376f"
+    },
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/snapshots/faf4aa4225822f3bc6376869cb1164e8e3feedd0/tokenizer_config.json",
+      "bytes": 1416,
+      "sha256": "0666eebf692422757e1dddf3c9fb1ded73ba3dc726c5828671fc89e45bf3609f"
+    },
+    {
+      "path": "/var/lib/jarvis-memory/models/models--Qdrant--paraphrase-multilingual-MiniLM-L12-v2-onnx-Q/snapshots/faf4aa4225822f3bc6376869cb1164e8e3feedd0/special_tokens_map.json",
+      "bytes": 964,
+      "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835"
+    }
+  ],
+  "disk_free_bytes": 5881020416,
+  "memory_available_kib": 894262
+}

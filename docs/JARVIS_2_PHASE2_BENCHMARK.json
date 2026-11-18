@@ -1,0 +1,53 @@
+{
+  "benchmark_version": 2,
+  "mode": "simulated_harness",
+  "model": null,
+  "cases": [
+    {
+      "case": "facts_fr",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    },
+    {
+      "case": "classification",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    },
+    {
+      "case": "contradiction",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    },
+    {
+      "case": "project",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    },
+    {
+      "case": "tool_selection",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    },
+    {
+      "case": "reasoning",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    },
+    {
+      "case": "permissions",
+      "passed": true,
+      "error_class": null,
+      "metrics": {}
+    }
+  ],
+  "passed": true,
+  "gpu_benchmark_performed": false,
+  "vram_peak_mib": null,
+  "note": "No model-quality or GPU-performance claim from simulated runs."
+}

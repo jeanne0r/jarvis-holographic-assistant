@@ -1,0 +1,24 @@
+#!/bin/bash
+# Forced command of the jarvis-deploy SSH key (authorized_keys command=...). Runs as jarvis-deploy.
+# The only thing the key can do: upload a bundle, or ask the root helper for one allow-listed action.
+set -uo pipefail
+umask 022
+INBOX=/var/lib/jarvis-deploy/inbox
+read -r -a ARGS <<< "${SSH_ORIGINAL_COMMAND:-}"
+CMD=${ARGS[0]:-}
+log() { logger -t jarvis-deploy -- "$*"; }
+case "$CMD" in
+  put-bundle)
+    NAME=${ARGS[1]:-}
+    [[ ${#ARGS[@]} -eq 2 && "$NAME" =~ ^jarvis-[0-9a-f]{7}\.bundle$ ]] || { echo "usage: put-bundle jarvis-<7hex>.bundle" >&2; exit 2; }
+    TMP=$(mktemp "$INBOX/.upload-XXXXXX") || exit 2
+    head -c 52428801 > "$TMP"
+    [ "$(stat -c %s "$TMP")" -le 52428800 ] || { rm -f "$TMP"; echo "bundle > 50 MiB refused" >&2; exit 2; }
+    chmod 0644 "$TMP"; mv -f "$TMP" "$INBOX/$NAME"
+    log "put-bundle $NAME $(sha256sum "$INBOX/$NAME" | cut -d' ' -f1)"
+    sha256sum "$INBOX/$NAME" | cut -d' ' -f1 ;;
+  pull|run|status|journal|hash)
+    log "request: $SSH_ORIGINAL_COMMAND"
+    exec sudo -n /usr/local/sbin/jarvis-deploy-root "${ARGS[@]}" ;;
+  *) echo "refused: put-bundle | pull | run | status | journal | hash" >&2; log "refused: ${SSH_ORIGINAL_COMMAND:-<empty>}"; exit 2 ;;
+esac

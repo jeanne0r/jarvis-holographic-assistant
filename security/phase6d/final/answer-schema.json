@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "properties": {
+    "answer": {
+      "type": "string"
+    },
+    "speech": {
+      "type": "string"
+    },
+    "userCorrections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "preference",
+              "rule"
+            ]
+          },
+          "key": {
+            "type": "string"
+          },
+          "fact": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "entity_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "key",
+          "fact",
+          "evidence",
+          "entity_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "resolvedEntities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "action": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "none",
+            "switch_space",
+            "navigate",
+            "search",
+            "save_note",
+            "open_app",
+            "capability"
+          ]
+        },
+        "target": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "target",
+        "title",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "answer",
+    "speech",
+    "userCorrections",
+    "resolvedEntities",
+    "sourceIds",
+    "action"
+  ],
+  "additionalProperties": false
+}

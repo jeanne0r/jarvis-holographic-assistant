@@ -1,0 +1,349 @@
+--- /dev/null
++++ b/home/user/workspace/jarvis/jarvis-session-auth.mjs
+@@ -0,0 +1,42 @@
++// Server-issued per-person sessions. No gateway master token or visual identity.
++import {serverAuthenticator} from './hermes-server-auth.mjs';
++export const trustedRequests=new WeakMap();
++export function sessionRegistry({credentials,grants,roles,origin,now=()=>Date.now()}){
++ const base=new URL(origin);
++ if(base.origin!==origin||!(base.protocol==='https:'||(base.protocol==='http:'&&base.hostname==='127.0.0.1'))||!(roles instanceof Map))throw Error('Pinned secure origin and roles required');
++ const verify=serverAuthenticator({credentials,grants,now});
++ const permissions=new Map([...roles].map(([k,v])=>[k,new Set(v)]));
++ function authenticate(req){
++  const header=req.headers.authorization;
++  const cookies=(req.headers.cookie||'').split(';').map(x=>x.trim()).filter(x=>x.startsWith('JarvisSession='));
++  if(cookies.length>1)return null;
++  const bearer=header||(cookies.length?'Bearer '+cookies[0].slice('JarvisSession='.length):'');
++  const id=verify({headers:{authorization:bearer}});
++  if(!id)return null;
++  return {...id,roles:[...(permissions.get(id.subject)||[])],defaultSpace:id.spaces[0]};
++ }
++ const sameOrigin=req=>req.headers.origin===origin;
++ return {authenticate,sameOrigin,origin,async handle(req,res,url){
++  if(url.pathname!=='/api/jarvis/session')return false;
++  const send=(code,data,headers={})=>{res.writeHead(code,{'content-type':'application/json','cache-control':'no-store',...headers});res.end(JSON.stringify(data));return true};
++  if(req.method==='GET'){const id=authenticate(req);return send(id?200:401,id?{subject:id.subject,spaces:id.spaces,roles:id.roles}:{error:'Authentication required'})}
++  if(!sameOrigin(req))return send(403,{error:'Origin denied'});
++  if(req.method==='DELETE')return send(200,{signedOut:true},{'set-cookie':`JarvisSession=; Path=/api/jarvis; HttpOnly; SameSite=Strict; Max-Age=0${base.protocol==='https:'?'; Secure':''}`});
++  if(req.method!=='POST')return send(405,{error:'Method denied'});
++  if(req.headers['transfer-encoding']||!/^\d+$/.test(req.headers['content-length']||'')||Number(req.headers['content-length'])>512)return send(413,{error:'Body limit'});
++  const chunks=[];let size=0;
++  for await(const chunk of req){size+=chunk.length;if(size>512)return send(413,{error:'Body limit'});chunks.push(chunk)}
++  if(size!==Number(req.headers['content-length']))return send(400,{error:'Body length'});
++  let data;try{data=JSON.parse(Buffer.concat(chunks).toString())}catch{return send(400,{error:'Invalid JSON'})}
++  if(!data||Object.keys(data).join()!=='token'||typeof data.token!=='string')return send(400,{error:'Session token only'});
++  const id=authenticate({headers:{authorization:'Bearer '+data.token}});if(!id)return send(401,{error:'Session denied'});
++  return send(200,{subject:id.subject,spaces:id.spaces},{'set-cookie':`JarvisSession=${data.token}; Path=/api/jarvis; HttpOnly; SameSite=Strict${base.protocol==='https:'?'; Secure':''}`});
++ }};
++}
++export function requiredPermission(method,action){
++ if(action==='live/tool')return 'voice'; // Each actual tool receives an independent permission check.
++ if(action.startsWith('hermes/'))return action.endsWith('/approvals')?'missions.approve':method==='GET'?'missions.read':action.endsWith('/cancel')?'missions.cancel':'missions.create';
++ if(method==='GET')return ({docs:'memory.read',doc:'memory.read','memory/map':'memory.read','memory/status':'memory.read','live/status':'voice','voice/status':'voice',capabilities:'voice','live/costs':'usage.read','openai/usage':'usage.read','evolution/status':'development','evolution/diff':'development'})[action];
++ if(method==='POST')return ({'live/session':'voice','voice/session':'voice','voice/transcribe':'voice','voice/speak':'voice','conversations/record':'memory.write',notes:'memory.write',move:'memory.move',sync:'memory.admin',import:'memory.admin',ask:'conversation','capabilities/run':'capabilities','live/usage':'usage.write','live/balance':'usage.admin'})[action];
++ return undefined;
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/hermes-server-auth.mjs
+@@ -0,0 +1,18 @@
++// Node 18, offline preparation. Opaque server-issued sessions, never visual profiles.
++import {createHash,timingSafeEqual} from 'node:crypto';
++export function serverAuthenticator({credentials,grants,now=()=>Date.now()}={}){
++ if(!Array.isArray(credentials)||!(grants instanceof Map))throw Error('Server registry required');
++ const records=credentials.map(c=>{
++  if(!/^[a-f0-9]{64}$/.test(c.sha256)||typeof c.subject!=='string'||!Number.isFinite(c.expiresAt))throw Error('Invalid session record');
++  return {...c,digest:Buffer.from(c.sha256,'hex')};
++ });
++ const acl=new Map([...grants].map(([subject,spaces])=>[subject,Object.freeze([...spaces])]));
++ return req=>{
++  const header=req.headers.authorization;
++  if(typeof header!=='string'||!/^Bearer [A-Za-z0-9_-]{43,128}$/.test(header))return null;
++  const hash=createHash('sha256').update(header.slice(7)).digest();
++  const match=records.find(c=>timingSafeEqual(hash,c.digest)&&c.expiresAt>now());
++  if(!match||!acl.has(match.subject))return null;
++  return {subject:match.subject,spaces:[...acl.get(match.subject)]};
++ };
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/hermes-voice-tools.mjs
+@@ -0,0 +1,20 @@
++// Optional Gemini tool; admission/lookup only, never an agent loop or audio code.
++let service=null;
++export const HERMES_TEMPLATE='doselab-current';
++export const HERMES_OBJECTIVE='DoseLab X4 synthétique : retrouve la configuration actuelle des quatre cellules de pesée et explique les modifications historiques avec leurs sources exactes.';
++export const missionTool={name:'mission_hermes',description:'Enregistre une mission autonome synthétique DoseLab, ou consulte son état/résultat. N’attends jamais sa fin. Aucun équipement, donnée personnelle ni approbation.',parameters:{type:'OBJECT',properties:{action:{type:'STRING',enum:['create','status','result']},mission_id:{type:'STRING'}},required:['action']}};
++export function configureHermesVoice(value){service=value}
++export function hermesTools(identity){return service&&(!service.enabled||service.enabled())&&identity?.roles?.includes('missions.read')?[missionTool]:[]}
++export async function hermesVoice(args,session,callId){
++ if(!service||!session.identity)throw Error('Hermes disabled');
++ if(!args||Object.keys(args).some(k=>!['action','mission_id'].includes(k)))throw Error('Mission fields denied');
++ return service({identity:session.identity,space:session.space,args,callId,sessionId:session.id});
++}
++export function legacyToolPermission(name){
++ if(name==='piloter_home_assistant')return 'physical';
++ if(name==='evolution_jarvis')return 'development';
++ if(name==='memoire_jarvis')return 'memory.write';
++ if(name==='chercher_souvenirs')return 'memory.read';
++ if(['consulter_home_assistant','commandes_home_assistant'].includes(name))return 'home.read';
++ return 'capabilities';
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/hermes-bridge-client.mjs
+@@ -0,0 +1,32 @@
++// Node 18. Only a controller loopback endpoint; never a model or Windows API.
++import http from 'node:http';
++export function bridgeClient({baseURL,token,scope='private',timeoutMs=1200,maxBytes=65536}={}){
++ const base=new URL(baseURL);
++ if(base.protocol!=='http:'||base.hostname!=='127.0.0.1'||base.username||base.password||base.pathname!=='/'||base.search||base.hash)throw Error('Controller loopback only');
++ if(typeof token!=='string'||!/^[A-Za-z0-9_-]{32,256}$/.test(token)||!['private','shared'].includes(scope))throw Error('Server credential and scope required');
++ if(!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>5000||!Number.isInteger(maxBytes)||maxBytes<1||maxBytes>1048576)throw Error('Bounded transport required');
++ return Object.freeze({scope,request(method,path,{body,headers={},signal}={}){
++  if(!((['GET','POST'].includes(method)&&path==='/v1/missions')||(/^\/v1\/missions\/[A-Za-z0-9-]+(?:\/(events|results|cancel|approvals))?$/.test(path)&&((method==='GET'&&!/\/(cancel|approvals)$/.test(path))||(method==='POST'&&/\/(cancel|approvals)$/.test(path))))))throw Error('Bridge route denied');
++  if(Object.keys(headers).some(k=>!['Idempotency-Key','Last-Event-ID'].includes(k)))throw Error('Caller header denied');
++  for(const value of Object.values(headers))if(typeof value!=='string'||!/^[-A-Za-z0-9_]{1,120}$/.test(value))throw Error('Header value denied');
++  const raw=body===undefined?undefined:Buffer.from(JSON.stringify(body));
++  if(raw&&raw.length>16000)throw Error('Request limit');
++  return new Promise((resolve,reject)=>{
++   const req=http.request(new URL(path,base),{method,signal,headers:{...headers,Authorization:'Bearer '+token,...(raw?{'content-type':'application/json','content-length':raw.length}:{})}},res=>{
++    const parts=[];let size=0;
++    res.on('data',part=>{size+=part.length;if(size>maxBytes){reject(Error('Response limit'));res.destroy();req.destroy();return;}parts.push(part)});
++    res.on('error',reject);
++    res.on('end',()=>{try{
++     const type=(res.headers['content-type']||'').split(';')[0];
++     if(!['application/json','text/event-stream'].includes(type))throw Error('Response type denied');
++     const text=Buffer.concat(parts).toString('utf8');
++     resolve({status:res.statusCode,type,body:type==='application/json'?JSON.parse(text):text});
++    }catch{reject(Error('Invalid bridge response'))}});
++   });
++   req.setTimeout(timeoutMs,()=>req.destroy(Error('Bridge timeout')));
++   // Also bound the total duration, including a peer slowly sending bytes.
++   const deadline=setTimeout(()=>req.destroy(Error('Bridge deadline')),timeoutMs);
++   req.on('close',()=>clearTimeout(deadline));req.on('error',reject);req.end(raw);
++  });
++ }});
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/jarvis-hermes-experimental.mjs
+@@ -0,0 +1,70 @@
++// Node 18. Inert until explicitly mounted with trusted server-side identities.
++// This module performs no imports of production stores, no agent execution.
++const PREFIX='/api/jarvis/hermes';
++const tools=['memory.search','memory.propose','report'];
++export function experimentalHermes({enabled=false,authenticate,clients,approvalClients,timeoutMs=1500}={}){
++ if(enabled&&(!authenticate||!clients))throw Error('Trusted identities required');
++ if(!Number.isFinite(timeoutMs)||timeoutMs<=0||timeoutMs>5000)throw Error('Bounded transport timeout required');
++ return async function(req,res,url){
++  if(url.pathname!==PREFIX&&!url.pathname.startsWith(PREFIX+'/'))return false;
++  const send=(code,value,type='application/json')=>{res.writeHead(code,{'content-type':type,'cache-control':'no-store'});res.end(type==='application/json'?JSON.stringify(value):value);return true};
++  if(!enabled)return send(404,{error:'Disabled'});
++  try{
++   // authenticate MUST verify a server-issued identity, including requested space.
++   // Never implement it using a browser-provided owner or mere Origin equality.
++   const identity=await authenticate(req);
++   if(!identity)return send(401,{error:'Authentication required'});
++   const space=url.searchParams.get('space');
++   if(typeof identity.subject!=='string'||!Array.isArray(identity.spaces)||!space||!identity.spaces.includes(space))return send(403,{error:'Space denied'});
++   const approving=url.pathname.endsWith('/approvals');
++   if(approving&&!approvalClients)return send(404,{error:'Operation denied'});
++   const client=(approving?approvalClients:clients)?.get(identity.subject)?.get(space);
++   if(!client)return send(403,{error:'No bound server identity'});
++   const sub=url.pathname.slice(PREFIX.length);
++   let path='/v1/missions',body,method=req.method;
++   const headers={};
++   if(sub==='/missions'&&method==='GET'){
++    // Canonical server-owned listing, no browser owner filter.
++   }else if(sub==='/missions'&&method==='POST'){
++    const key=req.headers['idempotency-key'];
++    if(typeof key!=='string'||!/^[a-zA-Z0-9_-]{1,120}$/.test(key))return send(400,{error:'Idempotency key required'});
++    if(req.headers['transfer-encoding']||!/^\d+$/.test(req.headers['content-length']||'')||Number(req.headers['content-length'])>8000)return send(413,{error:'Body limit'});
++    const parts=[];let length=0;
++    for await(const part of req){length+=part.length;if(length>8000)return send(413,{error:'Body limit'});parts.push(part)}
++    if(length!==Number(req.headers['content-length']))return send(400,{error:'Body length'});
++    const data=JSON.parse(Buffer.concat(parts).toString());
++    if(Object.keys(data).join()!=='objective'||typeof data.objective!=='string'||data.objective.length<1||data.objective.length>2000)return send(400,{error:'Objective only'});
++    body={scope:client.scope,definition:{objective:data.objective,trigger:'jarvis-experimental',priority:1,memory_context:[],plan:['retrieve','report'],allowed_tools:tools,
++       budget:{tokens:0,cost_micros:0,local_tokens:98304,seconds:240,attempts:1}}};
++    headers['Idempotency-Key']=key;
++   }else{
++    const match=/^\/missions\/([a-zA-Z0-9-]+)(?:\/(events|cancel|results|approvals))?$/.exec(sub);
++    if(!match||!(method==='GET'&&!['cancel','approvals'].includes(match[2])||method==='POST'&&['cancel','approvals'].includes(match[2])))return send(404,{error:'Operation denied'});
++    if(match[2]==='approvals'){
++     if(!identity.roles?.includes('missions.approve'))return send(403,{error:'Human approval required'});
++     if(req.headers['transfer-encoding']||!/^\d+$/.test(req.headers['content-length']||'')||Number(req.headers['content-length'])>1000)return send(413,{error:'Body limit'});
++     let raw='';for await(const part of req){raw+=part.toString();if(Buffer.byteLength(raw)>1000)return send(413,{error:'Body limit'})}
++     if(Buffer.byteLength(raw)!==Number(req.headers['content-length']))return send(400,{error:'Body length'});
++     body=JSON.parse(raw);
++     if(Object.keys(body).sort().join()!=='approval_id,choice,fingerprint'||!['once','deny'].includes(body.choice))return send(400,{error:'Exact approval only'});
++    }
++    path+='/'+match[1]+(match[2]?'/'+match[2]:'');
++    if(method==='POST'&&match[2]!=='approvals')body={};
++    if(match[2]==='events'){
++     const after=req.headers['last-event-id']||'0';
++     if(!/^\d{1,12}$/.test(after))return send(400,{error:'Invalid event cursor'});
++     headers['Last-Event-ID']=after;
++    }
++   }
++   // client is an injected, per-owner/per-space private transport. Its endpoint
++   // and credential never come from the request. No model / paid fallback here.
++   const controller=new AbortController();let timer;
++   const expiry=new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('Deadline'))},timeoutMs)});
++   try{
++    const result=await Promise.race([client.request(method,path,{body,headers,signal:controller.signal}),expiry]);
++    if(![200,201,202,400,401,403,404,409,422,503].includes(result.status))return send(502,{error:'Bridge error'});
++    return send(result.status,result.body,result.type||'application/json');
++   }finally{clearTimeout(timer)}
++  }catch{return send(503,{error:'Bridge unavailable; existing conversation remains available'})}
++ };
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/hybrid-mission-admission.mjs
+@@ -0,0 +1,38 @@
++// A host-only request binding, never configured by HTTP/model arguments.
++import {createHash} from 'node:crypto';
++export const trustedHybridAdmissions=new WeakMap();
++const accepted=new Set([
++ 'jarvis demande a hermes de verifier la configuration doselab',
++ 'demande a hermes de verifier la configuration doselab',
++ 'jarvis demande a hermes de verifier la configuration doselab x4',
++ 'demande a hermes de verifier la configuration doselab x4',
++]);
++export function missionIntent(question){
++ const text=question.normalize('NFKC').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().trim().replace(/[.!?]+$/,'').replace(/\s+/g,' ').replace(/^jarvis, /,'jarvis ');
++ if(accepted.has(text))return 'doselab-current';
++ // Unsupported Hermes instructions must never fall through to the broad Codex worker.
++ return /herm[eèéê]s/iu.test(question.normalize('NFKC'))?'unsupported':null;
++}
++export function hybridAdmission({identity,space,enabled,create,audit}){
++ return async data=>{
++  const intent=missionIntent(data.question);
++  if(!intent)return null; // zero bridge/model calls for ordinary conversation
++  const response=(status,answer,extra={})=>({status,body:{answer,speech:answer,sources:[],sourceIds:[],action:null,...extra}});
++  if(intent==='unsupported')return response(422,'Seule la demande synthétique « demande à Hermes de vérifier la configuration DoseLab » est autorisée.');
++  if(!identity.roles.includes('missions.create')||!identity.spaces.includes(space))return response(403,'Création de mission Hermes non autorisée.');
++  if(!enabled())return response(503,'Hermes est désactivé. Aucune mission créée et aucun repli automatique.');
++  // Existing voice and written clients already issue a stable archive id/turn.
++  // Missing/ambiguous identifiers require an explicit new request, never a blind retry.
++  if(!/^[A-Za-z0-9_-]{1,128}$/.test(data.archive?.id||'')||!Number.isSafeInteger(data.archive?.turn)||data.archive.turn<0)return response(409,'Identifiant de demande stable requis. Aucune mission créée.');
++  const key=createHash('sha256').update(JSON.stringify(['hybrid-doselab-v1',identity.subject,space,data.archive.id,data.archive.turn])).digest('hex');
++  try{
++   await audit({event:'hybrid_mission_admission',subject:identity.subject,space,template:intent,request_key:key});
++   const mission=await create(key);
++   return response(202,'La mission synthétique DoseLab est enregistrée. Tu peux continuer la conversation et suivre son résultat dans le panneau des missions.',{mission,execution:{engine:'hermes-admission',routing:'hybrid',asynchronous:true}});
++  }catch{return response(503,'Admission Hermes indisponible ou incertaine. Consulte le panneau ; aucun repli vers Codex ni nouvelle mission automatique.');}
++ };
++}
++export async function handleHybridAdmission(req,data){
++ const handler=trustedHybridAdmissions.get(req);
++ return handler?handler(data):null;
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/phase6-gateway.mjs
+@@ -0,0 +1,108 @@
++// Optional gateway mount; all production effects require an explicit reviewed flag.
++import {hybridAdmission,trustedHybridAdmissions} from './hybrid-mission-admission.mjs';
++import {Readable} from 'node:stream';
++import {createHash} from 'node:crypto';
++import {readFile,lstat,open} from 'node:fs/promises';
++import {sessionRegistry,trustedRequests,requiredPermission} from './jarvis-session-auth.mjs';
++import {experimentalHermes} from './jarvis-hermes-experimental.mjs';
++import {bridgeClient} from './hermes-bridge-client.mjs';
++import {HERMES_OBJECTIVE} from './hermes-voice-tools.mjs';
++
++export function gatewayIntegration({legacy,sessions,clients,approvalClients,audit,enabled=false,hybridEnabled=false,nativeLiveEnabled=false}){
++ let flag=enabled===true;
++ const facade=experimentalHermes({enabled:true,authenticate:req=>trustedRequests.get(req),clients,approvalClients});
++ const send=(res,status,body)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(body));return true};
++ async function invoke(identity,space,method,sub,body,key){
++  const raw=body===undefined?'':JSON.stringify(body),req=Readable.from(raw?[Buffer.from(raw)]:[]);
++  req.method=method;req.headers={'content-length':String(Buffer.byteLength(raw)),...(key?{'idempotency-key':key}:{})};
++  trustedRequests.set(req,identity);let result;
++  const res={writeHead(status){this.status=status},end(text){result={status:this.status,body:JSON.parse(text)}}};
++  await facade(req,res,new URL('http://127.0.0.1/api/jarvis/hermes/'+sub+'?space='+encodeURIComponent(space)));
++  if(result.status>=400)throw Error('Mission unavailable or denied');return result.body;
++ }
++ const voice=async({identity,space,args,callId,sessionId})=>{
++  if(!flag)throw Error('Hermes disabled');
++  const role={create:'missions.create',status:'missions.read',result:'missions.read'}[args.action];
++  if(!role||!identity.roles.includes(role)||!identity.spaces.includes(space))throw Error('Mission denied');
++  if(args.action==='create'){
++   if(args.mission_id!==undefined)throw Error('Synthetic template only');
++   const key=createHash('sha256').update(JSON.stringify([identity.subject,sessionId,callId])).digest('hex');
++   return invoke(identity,space,'POST','missions',{objective:HERMES_OBJECTIVE},key);
++  }
++  if(!/^[A-Za-z0-9-]{1,128}$/.test(args.mission_id||''))throw Error('Mission id required');
++  return invoke(identity,space,'GET','missions/'+args.mission_id+(args.action==='result'?'/results':''));
++ };
++ voice.enabled=()=>flag;
++ return {voice,setEnabled(value){if(typeof value!=='boolean')throw Error('Boolean flag');flag=value},async handle(req,res,url){
++  if(!url.pathname.startsWith('/api/jarvis/'))return false;
++  if(await sessions.handle(req,res,url))return true;
++  const identity=sessions.authenticate(req);if(!identity)return send(res,401,{error:'Authentication required'});
++  if(!['GET','HEAD'].includes(req.method)&&!sessions.sameOrigin(req))return send(res,403,{error:'Origin denied'});
++  const spaces=url.searchParams.getAll('space');if(spaces.length>1)return send(res,403,{error:'Ambiguous space'});
++  const space=spaces[0]||identity.defaultSpace;
++  if(!identity.spaces.includes(space))return send(res,403,{error:'Space denied'});
++  const action=url.pathname.slice('/api/jarvis/'.length);
++  if(action==='hermes/config')return send(res,200,{enabled:flag,syntheticOnly:true,templates:flag?['doselab-current']:[],availability:'worker-reports-via-mission-events'});
++  if(action.startsWith('hermes/')&&!flag)return send(res,404,{error:'Hermes disabled'});
++  if(['live/session','live/tool'].includes(action)&&!nativeLiveEnabled)return send(res,403,{error:'Native Live is outside the hybrid pilot'});
++  const permission=requiredPermission(req.method,action);
++  if(!permission||!identity.roles.includes(permission))return send(res,403,{error:'Route denied'});
++  if(action==='memory/map'&&!identity.spaces.includes('commun'))return send(res,403,{error:'Map includes common space; explicit grant required'});
++  // Initial integration never opens broad shell/sync/import/development routes.
++  if(['sync','import','evolution/status','evolution/diff'].includes(action))return send(res,403,{error:'Requires separate route review'});
++  trustedRequests.set(req,identity);url.searchParams.set('space',space);
++  if(action==='ask')trustedHybridAdmissions.set(req,hybridAdmission({identity,space,enabled:()=>flag&&hybridEnabled,audit,create:key=>invoke(identity,space,'POST','missions',{objective:HERMES_OBJECTIVE},key)}));
++  try{
++   await audit({event:'route_admitted',subject:identity.subject,space,route:action,method:req.method});
++   if(action.startsWith('hermes/')){
++    if(action==='hermes/missions'&&req.method==='POST'){
++     // Voice and UI share the same fixed synthetic template. No private objective
++     // or browser-provided memory context is sent to Windows.
++     if(req.headers['transfer-encoding']||!/^\d+$/.test(req.headers['content-length']||'')||Number(req.headers['content-length'])>512)return send(res,413,{error:'Template body limit'});
++     let raw='';for await(const part of req){raw+=part.toString();if(Buffer.byteLength(raw)>512)return send(res,413,{error:'Template body limit'})}
++     if(Buffer.byteLength(raw)!==Number(req.headers['content-length']))return send(res,400,{error:'Body length'});
++     const data=JSON.parse(raw);
++     if(Object.keys(data).join()!=='template'||data.template!=='doselab-current')return send(res,400,{error:'Synthetic template only'});
++     const result=await invoke(identity,space,'POST','missions',{objective:HERMES_OBJECTIVE},req.headers['idempotency-key']);
++     return send(res,202,result);
++    }
++    await facade(req,res,url);return true;
++   }
++   await legacy(req,res,url);return true;
++  }catch{return send(res,503,{error:'Service unavailable; no automatic replay'})}
++ }};
++}
++
++async function privateJSON(path){
++ const st=await lstat(path);if(!st.isFile()||st.isSymbolicLink()||(st.mode&0o077)||st.uid!==process.getuid())throw Error('Private owned config required');
++ return JSON.parse(await readFile(path,'utf8'));
++}
++export async function mountJarvisPhase6(legacy,env=process.env){
++ if(env.JARVIS_HERMES_NATIVE_LIVE==='1')throw Error('Native Live requires its separate reviewed patch; hybrid pilot only');
++ if(env.JARVIS_SERVER_AUTH!=='1'){
++  if(env.JARVIS_HERMES_ENABLED==='1')throw Error('Hermes requires server authentication');
++  return legacy;
++ }
++ const cfg=await privateJSON(env.JARVIS_PHASE6_CONFIG);
++ const sessions=sessionRegistry({credentials:cfg.credentials,grants:new Map(cfg.grants),roles:new Map(cfg.roles),origin:cfg.origin});
++ const make=async records=>{
++  const out=new Map();
++  for(const row of records||[]){
++   const secret=await privateJSON(row.credentialFile);
++   if(!out.has(row.subject))out.set(row.subject,new Map());
++   out.get(row.subject).set(row.space,bridgeClient({baseURL:row.baseURL,token:secret.token,scope:row.scope}));
++  }return out;
++ };
++ const auditPath=env.JARVIS_PHASE6_AUDIT;
++ const st=await lstat(auditPath);if(!st.isFile()||st.isSymbolicLink()||(st.mode&0o077)||st.uid!==process.getuid())throw Error('Private existing audit file required');
++ const audit=async event=>{const f=await open(auditPath,'a');try{await f.write(JSON.stringify({...event,at:new Date().toISOString()})+'\n');await f.sync()}finally{await f.close()}};
++ const integration=gatewayIntegration({legacy,sessions,clients:await make(cfg.clients),approvalClients:await make(cfg.approvalClients),audit,enabled:false,hybridEnabled:false,nativeLiveEnabled:false});
++ const armed=env.JARVIS_HERMES_ENABLED==='1';
++ if(armed&&!env.JARVIS_PHASE6_SWITCH)throw Error('Private feature switch file required');
++ return async(req,res,url)=>{
++  let enabled=false;
++  if(armed){try{const state=await privateJSON(env.JARVIS_PHASE6_SWITCH);enabled=Object.keys(state).join()==='enabled'&&state.enabled===true}catch{/* missing or invalid switch disables Hermes only */}}
++  integration.setEnabled(enabled);
++  return integration.handle(req,res,url);
++ };
++}

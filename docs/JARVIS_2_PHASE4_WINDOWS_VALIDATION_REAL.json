@@ -1,0 +1,254 @@
+{
+  "runtime": "native Windows Hermes, actual GPU and MCP, synthetic canonical SQLite only",
+  "hermes_commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+  "python": "3.14.10",
+  "uv": {
+    "version": "0.13.8",
+    "source": "https://github.com/astral-sh/uv/releases/download/0.13.8/uv-x86_64-pc-windows-msvc.zip",
+    "sha256": "529e78a9cec6cd7e3e014f7ecd8bda0c113969d4ed0f2efeedb85c30943325b8",
+    "uv_exe_sha256": "03fa174894b9d0cbe08762d40d1c2c64d10e875bd56f1a1e334ee1e00d60cdbe"
+  },
+  "ollama": "0.35.1",
+  "model": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 64000,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "native_missions_passed": 3,
+  "model_calls": 8,
+  "local_tokens": 34596,
+  "inference_seconds": 39.5379437089432,
+  "admission_seconds": [
+    0.018393844016827643,
+    0.015372656984254718,
+    0.02102725300937891
+  ],
+  "max_gpu_used_mib": 6945.0,
+  "min_gpu_free_mib": 3295.0,
+  "sampled_gpu_power_peak_w": 333.44,
+  "sampled_gpu_energy_wh_estimate": 2.60802906458444,
+  "energy_coverage_seconds": 98.13102507591248,
+  "energy_note": "Interpolated card power samples only, includes idle/loading; not whole-PC energy or isolated CUDA kernel time.",
+  "max_hermes_job_peak_bytes": 378339328,
+  "max_ollama_job_peak_bytes": 8252043264,
+  "served_context_samples": [
+    64000
+  ],
+  "prechecks": {
+    "account": "gamer\\hermeslab",
+    "checks": {
+      "non_admin": true,
+      "loopback": true,
+      "egress_blocked": true,
+      "acl": true,
+      "runtime_readonly": true,
+      "tokens": true,
+      "job": true,
+      "cold_api": true,
+      "cold_stopped": true
+    },
+    "passed": true
+  },
+  "network_standard": {
+    "identity": "gamer\\hermeslab",
+    "adminGroup": false,
+    "connections": [
+      {
+        "host": "127.0.0.1",
+        "port": 18793,
+        "connected": true,
+        "error": null
+      },
+      {
+        "host": "192.0.2.16",
+        "port": 22,
+        "connected": false,
+        "error": "Une tentative d'accès à un socket de manière interdite par ses autorisations d'accès a été tentée 192.0.2.16:22"
+      },
+      {
+        "host": "192.0.2.215",
+        "port": 8123,
+        "connected": false,
+        "error": "Une tentative d'accès à un socket de manière interdite par ses autorisations d'accès a été tentée 192.0.2.215:8123"
+      },
+      {
+        "host": "192.0.2.238",
+        "port": 6333,
+        "connected": false,
+        "error": "Une tentative d'accès à un socket de manière interdite par ses autorisations d'accès a été tentée 192.0.2.238:6333"
+      },
+      {
+        "host": "1.1.1.1",
+        "port": 443,
+        "connected": false,
+        "error": "Une tentative d'accès à un socket de manière interdite par ses autorisations d'accès a été tentée 1.1.1.1:443"
+      }
+    ]
+  },
+  "network_admin": {
+    "identity": "gamer\\codexdiag",
+    "adminGroup": true,
+    "connections": [
+      {
+        "host": "127.0.0.1",
+        "port": 18793,
+        "connected": true,
+        "error": null
+      },
+      {
+        "host": "192.0.2.16",
+        "port": 22,
+        "connected": true,
+        "error": null
+      },
+      {
+        "host": "1.1.1.1",
+        "port": 443,
+        "connected": true,
+        "error": null
+      }
+    ]
+  },
+  "acl": {
+    "identity": "gamer\\hermeslab",
+    "privateCanaryReadDenied": true,
+    "codeWriteDenied": true,
+    "runWriteAllowed": true,
+    "tokenWriteDenied": true,
+    "tokenProtected": true,
+    "tokenOwner": "S-1-5-32-544",
+    "tokenAllowSids": [
+      "S-1-5-18",
+      "S-1-5-32-544",
+      "S-1-5-21-2264169241-3571605829-2205423299-1005"
+    ]
+  },
+  "job_probe": {
+    "exit": {
+      "pid": 16912,
+      "reason": "exited",
+      "exit_code_before_job_close": 0,
+      "resource_profile": "hermes",
+      "memory_limit_bytes": 2147483648,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 9711616,
+      "peak_process_memory_bytes": 7798784,
+      "elapsed_seconds": 0.05329870000423398,
+      "owned_process_stopped_after_close": true
+    },
+    "deadline_descendant": {
+      "pid": 19488,
+      "reason": "deadline",
+      "exit_code_before_job_close": 259,
+      "resource_profile": "hermes",
+      "memory_limit_bytes": 2147483648,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 85196800,
+      "peak_process_memory_bytes": 74985472,
+      "elapsed_seconds": 4.189122199997655,
+      "owned_process_stopped_after_close": true
+    },
+    "descendant_stopped": true,
+    "memory_ceiling": {
+      "pid": 20140,
+      "reason": "exited",
+      "exit_code_before_job_close": 0,
+      "resource_profile": "hermes",
+      "memory_limit_bytes": 2147483648,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 3236900864,
+      "peak_process_memory_bytes": 3235008512,
+      "elapsed_seconds": 0.05307740000716876,
+      "owned_process_stopped_after_close": true
+    },
+    "allocation": "denied",
+    "peak_counter_note": "PeakJobMemory includes an attempted rejected 3GiB allocation; this is not RSS.",
+    "passed": true
+  },
+  "cold_start": {
+    "inference_calls": 0,
+    "gpu_started": false,
+    "models": {
+      "object": "list",
+      "data": [
+        {
+          "id": "hermes-agent",
+          "object": "model",
+          "created": 1794674692,
+          "owned_by": "hermes",
+          "permission": [],
+          "root": "hermes-agent",
+          "parent": null
+        }
+      ]
+    },
+    "api_ready": true,
+    "supervisors": [
+      {
+        "pid": 10588,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 305487872,
+        "peak_process_memory_bytes": 215126016,
+        "elapsed_seconds": 16.63959179999074,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "718c09a9b8bb47baa559667cb0b95dc7"
+      }
+    ]
+  },
+  "final_cleanup": {
+    "machine": "GAMER",
+    "boot": "2026-11-13T11:10:28.4624550Z",
+    "available_kib": 23686220,
+    "listeners": [],
+    "supervisors": [],
+    "kryptexUi": true,
+    "accountEnabled": true
+  },
+  "allowance_closed": {
+    "started_at": 1794674771.0,
+    "expires_at": 1794676571.0,
+    "calls": 17,
+    "missions": 4,
+    "closed": true
+  },
+  "production_writes": 0,
+  "paid_api_calls": 0,
+  "limitations": [
+    "No Windows OS reboot",
+    "No in-flight mission crash test on actual model; restart reconciliation remains simulated",
+    "Candidate is a declarative procedure with three fixed synthetic checks; no script publication or equipment execution",
+    "No real Qdrant/CT205 integration",
+    "The exact Windows environment variable causing slow initialization is not isolated"
+  ],
+  "windows_overlay_sha256": {
+    "memory_manager/phase4/job.py": "a183b647b6b7f42f4c7a532bc8d76c3b1085ca69971be2403ce590146a57e172",
+    "ops/phase4-run-ollama-windows.py": "0825f6326a7e065b172cc266cc18b0e2c6b5f31e28917593ab3cb74945f7256c",
+    "ops/phase4-test-job-windows.py": "1e23569ee9e55f8a1be500f6ebdf25d08b6279b36983b8f31f4770525ed998a0"
+  },
+  "windows_overlay_verified_on_machine": true,
+  "ipv6_user_scope_probe": {
+    "observed_adapter": {
+      "interfaceIndex": 10,
+      "ipv6BindingEnabled": false,
+      "ipv6Addresses": []
+    },
+    "ula_attempt": {
+      "standard": "NetworkUnreachable",
+      "admin": "NetworkUnreachable"
+    },
+    "loopback": {
+      "standard_connected": true,
+      "admin_connected": true
+    },
+    "conclusion": "External IPv6 filtering is configured but not proven by these probes; the LAN adapter has no IPv6 address. No network settings changed."
+  }
+}

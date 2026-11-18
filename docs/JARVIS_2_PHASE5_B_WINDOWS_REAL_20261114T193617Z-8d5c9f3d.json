@@ -1,0 +1,1719 @@
+{
+  "started_at_utc": "2026-11-14T19:36:18Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "samples": [
+    {
+      "available": true,
+      "observed_at": 1794684984.6455204,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 94.32,
+      "utilization": 0.0,
+      "temperature_c": 31.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684987.2096756,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 87.35,
+      "utilization": 0.0,
+      "temperature_c": 30.72,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684989.7804859,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 13.61,
+      "utilization": 0.0,
+      "temperature_c": 29.09,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684992.3240342,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.86,
+      "utilization": 0.0,
+      "temperature_c": 28.81,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684994.8968234,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.61,
+      "utilization": 0.0,
+      "temperature_c": 28.78,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794684997.461442,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.51,
+      "utilization": 0.0,
+      "temperature_c": 28.72,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685000.029685,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.88,
+      "utilization": 0.0,
+      "temperature_c": 28.72,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685002.5924613,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.86,
+      "utilization": 0.0,
+      "temperature_c": 28.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685005.1658382,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 9.0,
+      "utilization": 0.0,
+      "temperature_c": 28.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685007.7385788,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.92,
+      "utilization": 0.0,
+      "temperature_c": 28.62,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685010.3109689,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.87,
+      "utilization": 0.0,
+      "temperature_c": 28.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685012.912715,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 9.0,
+      "utilization": 0.0,
+      "temperature_c": 28.62,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685015.5426211,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 5981.0,
+      "free_mib": 4259.0,
+      "driver": "621.24",
+      "power_w": 103.84,
+      "utilization": 4.0,
+      "temperature_c": 33.25,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685018.161672,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 234.71,
+      "utilization": 0.0,
+      "temperature_c": 36.75,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685020.7487566,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 97.19,
+      "utilization": 0.0,
+      "temperature_c": 34.31,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685023.3345072,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 5981.0,
+      "free_mib": 4259.0,
+      "driver": "621.24",
+      "power_w": 95.49,
+      "utilization": 5.0,
+      "temperature_c": 34.56,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685025.919905,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 291.36,
+      "utilization": 21.0,
+      "temperature_c": 46.41,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685028.5563302,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 3773.0,
+      "free_mib": 6467.0,
+      "driver": "621.24",
+      "power_w": 95.83,
+      "utilization": 34.0,
+      "temperature_c": 36.34,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685031.1269376,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6869.0,
+      "free_mib": 3371.0,
+      "driver": "621.24",
+      "power_w": 335.6,
+      "utilization": 77.0,
+      "temperature_c": 48.09,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685033.7226353,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 107.22,
+      "utilization": 0.0,
+      "temperature_c": 39.06,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685036.3185287,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 78.21,
+      "utilization": 0.0,
+      "temperature_c": 36.34,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685038.8704271,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 12.55,
+      "utilization": 0.0,
+      "temperature_c": 34.03,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685041.4424345,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.72,
+      "utilization": 0.0,
+      "temperature_c": 33.69,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685044.012151,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 9.05,
+      "utilization": 0.0,
+      "temperature_c": 33.5,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685046.5817308,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.81,
+      "utilization": 0.0,
+      "temperature_c": 33.34,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685049.1595805,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 9.03,
+      "utilization": 0.0,
+      "temperature_c": 33.16,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685051.7414289,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1257.0,
+      "free_mib": 8983.0,
+      "driver": "621.24",
+      "power_w": 87.41,
+      "utilization": 1.0,
+      "temperature_c": 36.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685054.313093,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6867.0,
+      "free_mib": 3373.0,
+      "driver": "621.24",
+      "power_w": 206.39,
+      "utilization": 99.0,
+      "temperature_c": 49.22,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685056.870766,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 107.0,
+      "utilization": 0.0,
+      "temperature_c": 39.56,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685059.4714396,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 2409.0,
+      "free_mib": 7831.0,
+      "driver": "621.24",
+      "power_w": 95.49,
+      "utilization": 0.0,
+      "temperature_c": 38.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685062.047536,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6869.0,
+      "free_mib": 3371.0,
+      "driver": "621.24",
+      "power_w": 323.89,
+      "utilization": 74.0,
+      "temperature_c": 52.31,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685064.6247253,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 109.24,
+      "utilization": 0.0,
+      "temperature_c": 42.25,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685067.1997144,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6867.0,
+      "free_mib": 3373.0,
+      "driver": "621.24",
+      "power_w": 100.35,
+      "utilization": 0.0,
+      "temperature_c": 41.53,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685069.7805362,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6869.0,
+      "free_mib": 3371.0,
+      "driver": "621.24",
+      "power_w": 309.88,
+      "utilization": 80.0,
+      "temperature_c": 53.19,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685072.3672495,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 108.85,
+      "utilization": 0.0,
+      "temperature_c": 44.12,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685074.9314678,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 49.52,
+      "utilization": 0.0,
+      "temperature_c": 39.22,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685077.5032642,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 9.57,
+      "utilization": 0.0,
+      "temperature_c": 38.59,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685080.0880573,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.61,
+      "utilization": 0.0,
+      "temperature_c": 38.16,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685082.6618378,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.6,
+      "utilization": 0.0,
+      "temperature_c": 37.81,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685085.235211,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.87,
+      "utilization": 0.0,
+      "temperature_c": 37.59,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685087.8059957,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 8.88,
+      "utilization": 0.0,
+      "temperature_c": 37.41,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685090.3822117,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 5981.0,
+      "free_mib": 4259.0,
+      "driver": "621.24",
+      "power_w": 103.54,
+      "utilization": 33.0,
+      "temperature_c": 42.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685092.9598517,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1219.0,
+      "free_mib": 9021.0,
+      "driver": "621.24",
+      "power_w": 247.16,
+      "utilization": 0.0,
+      "temperature_c": 46.91,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685095.558827,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 97.03,
+      "utilization": 0.0,
+      "temperature_c": 43.81,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685098.1312733,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6627.0,
+      "free_mib": 3613.0,
+      "driver": "621.24",
+      "power_w": 108.25,
+      "utilization": 1.0,
+      "temperature_c": 44.62,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685100.716252,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6867.0,
+      "free_mib": 3373.0,
+      "driver": "621.24",
+      "power_w": 310.33,
+      "utilization": 81.0,
+      "temperature_c": 55.94,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794685103.316846,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 112.93,
+      "utilization": 0.0,
+      "temperature_c": 47.84,
+      "miner_running": false
+    }
+  ],
+  "cleanup": {
+    "supervisor": {
+      "pid": 4216,
+      "reason": "operator_stop",
+      "exit_code_before_job_close": 259,
+      "resource_profile": "ollama",
+      "memory_limit_bytes": 12884901888,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 8248930304,
+      "peak_process_memory_bytes": 8153329664,
+      "elapsed_seconds": 123.57165770001302,
+      "owned_process_stopped_after_close": true
+    },
+    "listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794685107.4779656,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1068.0,
+      "free_mib": 9172.0,
+      "driver": "621.24",
+      "power_w": 20.49,
+      "utilization": 0.0,
+      "temperature_c": 41.69,
+      "miner_running": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794684980.0895967,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1068.0,
+    "free_mib": 9172.0,
+    "driver": "621.24",
+    "power_w": 8.41,
+    "utilization": 0.0,
+    "temperature_c": 28.09,
+    "miner_running": false
+  },
+  "server_identity": {
+    "listening": true,
+    "addresses": [
+      "127.0.0.1"
+    ],
+    "pid": 11932,
+    "started": "2026-11-14T19:36:21.4026282Z",
+    "name": "ollama"
+  },
+  "configuration": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 64000,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "residency_samples": [
+    {
+      "observed_at": 1794685031.130143,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794685054.3155015,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794685062.0504692,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794685067.2022424,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794685100.7187319,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    }
+  ],
+  "native_windows": {
+    "attempt_id": "20261114T193635Z",
+    "hermes_runtime_tested": true,
+    "paid_api_calls": 0,
+    "missions": [
+      {
+        "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+        "admission_seconds": 0.01647621497977525,
+        "number": 1,
+        "skill_mode": false,
+        "bridge_status": {
+          "id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+          "owner": "phase3-synthetic",
+          "scope": "private",
+          "event_key": "native-hermes-20261114T193635Z-1",
+          "state": "completed",
+          "definition": {
+            "allowed_tools": [
+              "memory.search",
+              "report"
+            ],
+            "budget": {
+              "attempts": 1,
+              "cost_micros": 0,
+              "local_tokens": 98304,
+              "seconds": 180,
+              "tokens": 0
+            },
+            "memory_context": [],
+            "objective": "Analyse DoseLab X4 : recherche d’abord « masse nominale identique » via jarvis_memory_search, puis consulte l’historique. Explique la configuration actuelle et les anciennes valeurs remplacées, en citant les références synthetic://doselab/correction et synthetic://doselab/old. Utilise les outils réellement.",
+            "plan": [
+              "Consult controlled memory tools",
+              "Report with provenance"
+            ],
+            "priority": 1,
+            "trigger": "approved-synthetic-pilot"
+          },
+          "created": 1794685006.986137,
+          "updated": 1794685032.7299502,
+          "events": [
+            {
+              "seq": 1,
+              "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+              "state": "queued",
+              "actor": "phase3-synthetic",
+              "evidence": "{}",
+              "created": 1794685006.986137
+            }
+          ],
+          "dispatch_state": "completed",
+          "upstream_id": "run_62a82a0e0da548bdbef8c2fa46c99e86",
+          "approvals": []
+        },
+        "events": [
+          {
+            "seq": 1,
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "event_key": "admitted",
+            "kind": "queued",
+            "data": "{\"mission_id\":\"f2a8d773-466b-4667-8b84-45c8684ba638\"}",
+            "created": 1794685006.995065
+          },
+          {
+            "seq": 2,
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "event_key": "submitted",
+            "kind": "running",
+            "data": "{\"run_id\":\"run_62a82a0e0da548bdbef8c2fa46c99e86\"}",
+            "created": 1794685007.113762
+          },
+          {
+            "seq": 3,
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "event_key": "upstream-running",
+            "kind": "progress",
+            "data": "{\"upstream_state\":\"running\"}",
+            "created": 1794685008.1425214
+          },
+          {
+            "seq": 27,
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "event_key": "terminal",
+            "kind": "completed",
+            "data": "{\"output\":\"**Configuration actuelle DoseLab X4 :** 4 cellules de pesée identiques à 1 kg chacune (réf. `synthetic://doselab/correction`).\\n\\n**Valeurs précédentes remplacées :**\\n- **v1 (old) :** [1, 2, 5, 10] kg — ref. `synthetic://doselab/old`\\n- **v2 (intermédiaire) :** [1, 1, 1, 1] kg — ref. `synthetic://doselab/correction`\\n\\n**Leçon diagnostique :** Vérifier la fraîcheur avant de produire un diagnostic ; demander une revue humaine sinon (ref. `synthetic://doselab/experience`).\",\"output_withheld\":false,\"usage\":{\"input_tokens\":13418,\"output_tokens\":372,\"total_tokens\":13790},\"validation\":\"unreviewed\"}",
+            "created": 1794685032.730091
+          }
+        ],
+        "native_status": {
+          "object": "hermes.run",
+          "model": "qwen3.5:4b",
+          "runtime": {
+            "provider": "",
+            "model": "",
+            "route_source": "raw_request",
+            "requested": {
+              "provider": "",
+              "model": "qwen3.5:4b"
+            }
+          },
+          "created_at": 1794685007.0750213,
+          "pending_controls": [],
+          "run_id": "run_62a82a0e0da548bdbef8c2fa46c99e86",
+          "status": "completed",
+          "session_id": "run_62a82a0e0da548bdbef8c2fa46c99e86",
+          "admission_id": "3f69e21d72584e1aaaef1874ba9c3447",
+          "execution_generation": 1,
+          "output": "**Configuration actuelle DoseLab X4 :** 4 cellules de pesée identiques à 1 kg chacune (réf. `synthetic://doselab/correction`).\n\n**Valeurs précédentes remplacées :**\n- **v1 (old) :** [1, 2, 5, 10] kg — ref. `synthetic://doselab/old`\n- **v2 (intermédiaire) :** [1, 1, 1, 1] kg — ref. `synthetic://doselab/correction`\n\n**Leçon diagnostique :** Vérifier la fraîcheur avant de produire un diagnostic ; demander une revue humaine sinon (ref. `synthetic://doselab/experience`).",
+          "usage": {
+            "input_tokens": 13418,
+            "output_tokens": 372,
+            "total_tokens": 13790
+          }
+        },
+        "native_events_sse": ": open\n\nid: 0\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685017.575954, \"tool\": \"mcp__jarvis__jarvis_memory_search\", \"preview\": \"\", \"tool_call_id\": \"pilot-a1b1c4a7-4877-4501-b85b-99e615ec7ab9-0\", \"seq\": 0}\n\nid: 1\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685019.8422108, \"tool\": \"mcp__jarvis__jarvis_memory_search\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-a1b1c4a7-4877-4501-b85b-99e615ec7ab9-0\", \"preview\": \"\", \"seq\": 1}\n\nid: 2\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685019.8452313, \"tool\": \"mcp__jarvis__jarvis_memory_project\", \"preview\": \"\", \"tool_call_id\": \"pilot-a1b1c4a7-4877-4501-b85b-99e615ec7ab9-1\", \"seq\": 2}\n\nid: 3\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685019.9088492, \"tool\": \"mcp__jarvis__jarvis_memory_project\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-a1b1c4a7-4877-4501-b85b-99e615ec7ab9-1\", \"preview\": \"\", \"seq\": 3}\n\nid: 4\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685025.5949664, \"tool\": \"mcp__jarvis__jarvis_memory_history\", \"preview\": \"\", \"tool_call_id\": \"pilot-3631ef1c-235b-4c49-b611-1ca238803add-0\", \"seq\": 4}\n\nid: 5\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685025.6049623, \"tool\": \"mcp__jarvis__jarvis_memory_history\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-3631ef1c-235b-4c49-b611-1ca238803add-0\", \"preview\": \"\", \"seq\": 5}\n\nid: 6\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685025.6082475, \"tool\": \"mcp__jarvis__jarvis_memory_history\", \"preview\": \"\", \"tool_call_id\": \"pilot-3631ef1c-235b-4c49-b611-1ca238803add-1\", \"seq\": 6}\n\nid: 7\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685025.6177247, \"tool\": \"mcp__jarvis__jarvis_memory_history\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-3631ef1c-235b-4c49-b611-1ca238803add-1\", \"preview\": \"\", \"seq\": 7}\n\nid: 8\ndata: {\"event\": \"message.delta\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685031.9339678, \"delta\": \"\\n\\n**Configuration actuelle DoseLab X4 :** 4 cellules de pes\\u00e9e identiques \\u00e0 1 kg chacune (r\\u00e9f. `synthetic://doselab/correction`).\\n\\n**Valeurs pr\\u00e9c\\u00e9dentes remplac\\u00e9es :**\\n- **v1 (old) :** [1, 2, 5, 10] kg \\u2014 ref. `synthetic://doselab/old`\\n- **v2 (interm\\u00e9diaire) :** [1, 1, 1, 1] kg \\u2014 ref. `synthetic://doselab/correction`\\n\\n**Le\\u00e7on diagnostique :** V\\u00e9rifier la fra\\u00eecheur avant de produire un diagnostic ; demander une revue humaine sinon (ref. `synthetic://doselab/experience`).\", \"seq\": 8}\n\nid: 9\ndata: {\"event\": \"run.completed\", \"run_id\": \"run_62a82a0e0da548bdbef8c2fa46c99e86\", \"timestamp\": 1794685032.0136266, \"output\": \"**Configuration actuelle DoseLab X4 :** 4 cellules de pes\\u00e9e identiques \\u00e0 1 kg chacune (r\\u00e9f. `synthetic://doselab/correction`).\\n\\n**Valeurs pr\\u00e9c\\u00e9dentes remplac\\u00e9es :**\\n- **v1 (old) :** [1, 2, 5, 10] kg \\u2014 ref. `synthetic://doselab/old`\\n- **v2 (interm\\u00e9diaire) :** [1, 1, 1, 1] kg \\u2014 ref. `synthetic://doselab/correction`\\n\\n**Le\\u00e7on diagnostique :** V\\u00e9rifier la fra\\u00eecheur avant de produire un diagnostic ; demander une revue humaine sinon (ref. `synthetic://doselab/experience`).\", \"usage\": {\"input_tokens\": 13418, \"output_tokens\": 372, \"total_tokens\": 13790}, \"runtime\": {\"provider\": \"\", \"model\": \"\", \"route_source\": \"raw_request\", \"requested\": {\"provider\": \"\", \"model\": \"qwen3.5:4b\"}}, \"completed\": true, \"partial\": false, \"interrupted\": false, \"seq\": 9}\n\n: stream closed\n\n",
+        "experience_ids": [
+          "2b9302b1-5d37-49d9-bff3-9f67dc4f789b"
+        ],
+        "usage": [
+          {
+            "id": "a1b1c4a7-4877-4501-b85b-99e615ec7ab9",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 3319,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 4.852658263989724,
+            "state": "settled",
+            "created": 1794685012.5691152
+          },
+          {
+            "id": "3631ef1c-235b-4c49-b611-1ca238803add",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 4402,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 5.075205365079455,
+            "state": "settled",
+            "created": 1794685020.4548342
+          },
+          {
+            "id": "8d7a73a8-7a17-41b1-a86c-1f0e60d5a8a3",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "f2a8d773-466b-4667-8b84-45c8684ba638",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 6069,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 5.674632726004347,
+            "state": "settled",
+            "created": 1794685026.202272
+          }
+        ],
+        "skills": [],
+        "active_skills": 0,
+        "successful_native_tools": [
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_history"
+        ],
+        "checks": {
+          "native_completed": true,
+          "experience_recorded": true,
+          "no_remote_cost": true,
+          "native_search_called": true,
+          "native_history_called": true,
+          "current_source_cited": true,
+          "old_source_cited": true
+        },
+        "passed": true
+      },
+      {
+        "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+        "admission_seconds": 0.01621980592608452,
+        "number": 2,
+        "skill_mode": true,
+        "bridge_status": {
+          "id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+          "owner": "phase3-synthetic",
+          "scope": "private",
+          "event_key": "native-hermes-20261114T193635Z-2",
+          "state": "completed",
+          "definition": {
+            "allowed_tools": [
+              "memory.search",
+              "report",
+              "memory.propose"
+            ],
+            "budget": {
+              "attempts": 1,
+              "cost_micros": 0,
+              "local_tokens": 98304,
+              "seconds": 180,
+              "tokens": 0
+            },
+            "memory_context": [],
+            "objective": "Consulte l’expérience synthétique DoseLab X4 et propose une compétence candidate de diagnostic avec contrôle de fraîcheur et revue humaine. Aucune publication. Utilise jarvis_skill_propose avec spec contenant exactement name (doselab_freshness), version (1), description, allowed_tools ([memory.search, report]), checks ([flow, freshness]); sources contient uniquement memory_id, identifiant stable de l’expérience confirmée retrouvée. N’utilise ni id (révision), ni source.ref dans sources. Aucune publication.",
+            "plan": [
+              "Consult controlled memory tools",
+              "Report with provenance"
+            ],
+            "priority": 1,
+            "trigger": "approved-synthetic-pilot"
+          },
+          "created": 1794685044.5528228,
+          "updated": 1794685070.207935,
+          "events": [
+            {
+              "seq": 2,
+              "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+              "state": "queued",
+              "actor": "phase3-synthetic",
+              "evidence": "{}",
+              "created": 1794685044.5528228
+            }
+          ],
+          "dispatch_state": "completed",
+          "upstream_id": "run_590d16957d52491594f31a954a2e1e6b",
+          "approvals": []
+        },
+        "events": [
+          {
+            "seq": 28,
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "event_key": "admitted",
+            "kind": "queued",
+            "data": "{\"mission_id\":\"94de5af3-3213-441d-b62b-a96fb1077ff7\"}",
+            "created": 1794685044.5626175
+          },
+          {
+            "seq": 29,
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "event_key": "submitted",
+            "kind": "running",
+            "data": "{\"run_id\":\"run_590d16957d52491594f31a954a2e1e6b\"}",
+            "created": 1794685044.6729076
+          },
+          {
+            "seq": 30,
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "event_key": "upstream-running",
+            "kind": "progress",
+            "data": "{\"upstream_state\":\"running\"}",
+            "created": 1794685045.698223
+          },
+          {
+            "seq": 54,
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "event_key": "terminal",
+            "kind": "completed",
+            "data": "{\"output\":\"**Compétence proposée :** `doselab_freshness` v1  \\n**Description :** Diagnostic de contrôle de fraîcheur des mesures avant production de conclusion ; demande revue humaine si fraîcheur non vérifiée.  \\n**Outils autorisés :** `memory.search`, `report`  \\n**Contrôles :** `flow`, `freshness`  \\n**Source :** `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (expérience DoseLab X4 confirmée)  \\n\\n**État :** candidate  \\n**Fingerprint :** ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba  \\n\\n✅ Proposée avec contrôle de fraîcheur et revue humaine.  \\n❌ Aucune publication incluse.\",\"output_withheld\":false,\"usage\":{\"input_tokens\":14221,\"output_tokens\":392,\"total_tokens\":14613},\"validation\":\"unreviewed\"}",
+            "created": 1794685070.208097
+          }
+        ],
+        "native_status": {
+          "object": "hermes.run",
+          "model": "qwen3.5:4b",
+          "runtime": {
+            "provider": "",
+            "model": "",
+            "route_source": "raw_request",
+            "requested": {
+              "provider": "",
+              "model": "qwen3.5:4b"
+            }
+          },
+          "created_at": 1794685044.6359158,
+          "pending_controls": [],
+          "run_id": "run_590d16957d52491594f31a954a2e1e6b",
+          "status": "completed",
+          "session_id": "run_590d16957d52491594f31a954a2e1e6b",
+          "admission_id": "c1e64f12ffab4ce98ad08189a10c10fa",
+          "execution_generation": 1,
+          "output": "**Compétence proposée :** `doselab_freshness` v1  \n**Description :** Diagnostic de contrôle de fraîcheur des mesures avant production de conclusion ; demande revue humaine si fraîcheur non vérifiée.  \n**Outils autorisés :** `memory.search`, `report`  \n**Contrôles :** `flow`, `freshness`  \n**Source :** `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (expérience DoseLab X4 confirmée)  \n\n**État :** candidate  \n**Fingerprint :** ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba  \n\n✅ Proposée avec contrôle de fraîcheur et revue humaine.  \n❌ Aucune publication incluse.",
+          "usage": {
+            "input_tokens": 14221,
+            "output_tokens": 392,
+            "total_tokens": 14613
+          }
+        },
+        "native_events_sse": ": open\n\nid: 0\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_590d16957d52491594f31a954a2e1e6b\", \"timestamp\": 1794685054.799396, \"tool\": \"mcp__jarvis__jarvis_memory_search\", \"preview\": \"\", \"tool_call_id\": \"pilot-93af8b63-faa8-4d01-afd7-1e35b5fde97b-0\", \"seq\": 0}\n\nid: 1\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_590d16957d52491594f31a954a2e1e6b\", \"timestamp\": 1794685057.1072774, \"tool\": \"mcp__jarvis__jarvis_memory_search\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-93af8b63-faa8-4d01-afd7-1e35b5fde97b-0\", \"preview\": \"\", \"seq\": 1}\n\nid: 2\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_590d16957d52491594f31a954a2e1e6b\", \"timestamp\": 1794685063.0676372, \"tool\": \"mcp__jarvis__jarvis_skill_propose\", \"preview\": \"\", \"tool_call_id\": \"pilot-b7eb12a8-6c5d-4f02-b7e7-30560764db2a-0\", \"seq\": 2}\n\nid: 3\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_590d16957d52491594f31a954a2e1e6b\", \"timestamp\": 1794685063.0861495, \"tool\": \"mcp__jarvis__jarvis_skill_propose\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-b7eb12a8-6c5d-4f02-b7e7-30560764db2a-0\", \"preview\": \"\", \"seq\": 3}\n\nid: 4\ndata: {\"event\": \"message.delta\", \"run_id\": \"run_590d16957d52491594f31a954a2e1e6b\", \"timestamp\": 1794685069.7361438, \"delta\": \"\\n\\n**Comp\\u00e9tence propos\\u00e9e :** `doselab_freshness` v1  \\n**Description :** Diagnostic de contr\\u00f4le de fra\\u00eecheur des mesures avant production de conclusion ; demande revue humaine si fra\\u00eecheur non v\\u00e9rifi\\u00e9e.  \\n**Outils autoris\\u00e9s :** `memory.search`, `report`  \\n**Contr\\u00f4les :** `flow`, `freshness`  \\n**Source :** `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (exp\\u00e9rience DoseLab X4 confirm\\u00e9e)  \\n\\n**\\u00c9tat :** candidate  \\n**Fingerprint :** ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba  \\n\\n\\u2705 Propos\\u00e9e avec contr\\u00f4le de fra\\u00eecheur et revue humaine.  \\n\\u274c Aucune publication incluse.\", \"seq\": 4}\n\nid: 5\ndata: {\"event\": \"run.completed\", \"run_id\": \"run_590d16957d52491594f31a954a2e1e6b\", \"timestamp\": 1794685069.8420227, \"output\": \"**Comp\\u00e9tence propos\\u00e9e :** `doselab_freshness` v1  \\n**Description :** Diagnostic de contr\\u00f4le de fra\\u00eecheur des mesures avant production de conclusion ; demande revue humaine si fra\\u00eecheur non v\\u00e9rifi\\u00e9e.  \\n**Outils autoris\\u00e9s :** `memory.search`, `report`  \\n**Contr\\u00f4les :** `flow`, `freshness`  \\n**Source :** `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (exp\\u00e9rience DoseLab X4 confirm\\u00e9e)  \\n\\n**\\u00c9tat :** candidate  \\n**Fingerprint :** ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba  \\n\\n\\u2705 Propos\\u00e9e avec contr\\u00f4le de fra\\u00eecheur et revue humaine.  \\n\\u274c Aucune publication incluse.\", \"usage\": {\"input_tokens\": 14221, \"output_tokens\": 392, \"total_tokens\": 14613}, \"runtime\": {\"provider\": \"\", \"model\": \"\", \"route_source\": \"raw_request\", \"requested\": {\"provider\": \"\", \"model\": \"qwen3.5:4b\"}}, \"completed\": true, \"partial\": false, \"interrupted\": false, \"seq\": 5}\n\n: stream closed\n\n",
+        "experience_ids": [
+          "36e1f6db-cf1d-4af2-a188-dba8f1ef6a40"
+        ],
+        "usage": [
+          {
+            "id": "93af8b63-faa8-4d01-afd7-1e35b5fde97b",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 3538,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 4.499365241965279,
+            "state": "settled",
+            "created": 1794685050.1342566
+          },
+          {
+            "id": "b7eb12a8-6c5d-4f02-b7e7-30560764db2a",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 5346,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 5.336030217935331,
+            "state": "settled",
+            "created": 1794685057.6549978
+          },
+          {
+            "id": "f9786669-060d-431d-b2ff-635c9fd52067",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "94de5af3-3213-441d-b62b-a96fb1077ff7",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 5729,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 5.939472846919671,
+            "state": "settled",
+            "created": 1794685063.726613
+          }
+        ],
+        "skills": [
+          {
+            "name": "doselab_freshness",
+            "version": 1,
+            "state": "candidate",
+            "sources": "[{\"memory_id\":\"10c0b0ad-bc09-4ad7-ab4e-e1901e381910\",\"revision\":\"c78417d0-ce33-4bb8-a294-a22049d84ddd\"}]"
+          }
+        ],
+        "active_skills": 0,
+        "candidate_evaluations": [
+          {
+            "spec_hash": "ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba",
+            "suite_hash": "2db1e25f9b8e48bac2e2d2d778816a324961adb1380e852260ee28a5185ef933",
+            "results": [
+              true,
+              true,
+              true
+            ],
+            "passed": true,
+            "passed_count": 3,
+            "total": 3,
+            "extended": {
+              "spec_hash": "ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba",
+              "suite_hash": "862f2aebd904abd7f46e30fdfeefd47acb8170deba0edf6baca814b5c35bdca9",
+              "results": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "passed": true,
+              "total": 16,
+              "passed_count": 16
+            },
+            "agent_publication_denied": true
+          }
+        ],
+        "successful_native_tools": [
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_propose"
+        ],
+        "checks": {
+          "native_completed": true,
+          "experience_recorded": true,
+          "no_remote_cost": true,
+          "native_skill_proposal_called": true,
+          "candidate_only": true,
+          "confirmed_experience_linked": true,
+          "nothing_published": true,
+          "regression_evaluation_passed": true,
+          "agent_publication_denied": true
+        },
+        "passed": true
+      },
+      {
+        "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+        "admission_seconds": 0.01876743300817907,
+        "number": 3,
+        "skill_mode": true,
+        "bridge_status": {
+          "id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+          "owner": "phase3-synthetic",
+          "scope": "private",
+          "event_key": "native-hermes-20261114T193635Z-3",
+          "state": "completed",
+          "definition": {
+            "allowed_tools": [
+              "memory.search",
+              "report"
+            ],
+            "budget": {
+              "attempts": 1,
+              "cost_micros": 0,
+              "local_tokens": 98304,
+              "seconds": 180,
+              "tokens": 0
+            },
+            "memory_context": [],
+            "objective": "Retrouve via jarvis_skill_get la compétence doselab_freshness version 1. Rapporte son état candidate, son fingerprint et ses sources ; aucune proposition ou publication. Consulte aussi jarvis_memory_experiences pour retrouver le résultat synthétique d’une mission précédente (source mission://), en distinguant récit de mission et fait vérifié.",
+            "plan": [
+              "Consult controlled memory tools",
+              "Report with provenance"
+            ],
+            "priority": 1,
+            "trigger": "approved-synthetic-pilot"
+          },
+          "created": 1794685082.0391686,
+          "updated": 1794685102.6885448,
+          "events": [
+            {
+              "seq": 3,
+              "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+              "state": "queued",
+              "actor": "phase3-synthetic",
+              "evidence": "{}",
+              "created": 1794685082.0391686
+            }
+          ],
+          "dispatch_state": "completed",
+          "upstream_id": "run_696767f41aef4a9cac2e747dc69e74e4",
+          "approvals": []
+        },
+        "events": [
+          {
+            "seq": 55,
+            "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+            "event_key": "admitted",
+            "kind": "queued",
+            "data": "{\"mission_id\":\"0287a583-82a0-4826-bc0b-01e1b8cf0221\"}",
+            "created": 1794685082.0487301
+          },
+          {
+            "seq": 56,
+            "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+            "event_key": "submitted",
+            "kind": "running",
+            "data": "{\"run_id\":\"run_696767f41aef4a9cac2e747dc69e74e4\"}",
+            "created": 1794685082.1731234
+          },
+          {
+            "seq": 57,
+            "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+            "event_key": "upstream-running",
+            "kind": "progress",
+            "data": "{\"upstream_state\":\"running\"}",
+            "created": 1794685083.218634
+          },
+          {
+            "seq": 76,
+            "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+            "event_key": "terminal",
+            "kind": "completed",
+            "data": "{\"output\":\"**Compétence `doselab_freshness` v1 — État candidate**\\n\\n- **Fingerprint:** `ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba`\\n- **Description:** Diagnostic de contrôle de fraîcheur des mesures avant production de conclusion ; demande revue humaine si fraîcheur non vérifiée.\\n- **Outils autorisés:** `memory.search`, `report`\\n- **Contrôles:** `flow`, `freshness`\\n- **État:** candidate (non publiée, pas d'autorisation d'exécution)\\n- **Évaluation:** passée (3/3 contrôles validés)\\n- **Source unique:** memory `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (rév. `c78417d0-ce33-4bb8-a294-a22049d84ddd`)\\n\\n**Expérience synthétique mission précédente:**\\nLa compétence a été proposée sans publication, basée sur une expérience DoseLab X4 confirmée par l'utilisateur : \\\"Vérifier la fraîcheur avant de produire un diagnostic ; demander une revue humaine sinon.\\\"\",\"output_withheld\":false,\"usage\":{\"input_tokens\":9116,\"output_tokens\":399,\"total_tokens\":9515},\"validation\":\"unreviewed\"}",
+            "created": 1794685102.6887448
+          }
+        ],
+        "native_status": {
+          "object": "hermes.run",
+          "model": "qwen3.5:4b",
+          "runtime": {
+            "provider": "",
+            "model": "",
+            "route_source": "raw_request",
+            "requested": {
+              "provider": "",
+              "model": "qwen3.5:4b"
+            }
+          },
+          "created_at": 1794685082.1289442,
+          "pending_controls": [],
+          "run_id": "run_696767f41aef4a9cac2e747dc69e74e4",
+          "status": "completed",
+          "session_id": "run_696767f41aef4a9cac2e747dc69e74e4",
+          "admission_id": "21ff527320404aa6970371d72ebefde3",
+          "execution_generation": 1,
+          "output": "**Compétence `doselab_freshness` v1 — État candidate**\n\n- **Fingerprint:** `ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba`\n- **Description:** Diagnostic de contrôle de fraîcheur des mesures avant production de conclusion ; demande revue humaine si fraîcheur non vérifiée.\n- **Outils autorisés:** `memory.search`, `report`\n- **Contrôles:** `flow`, `freshness`\n- **État:** candidate (non publiée, pas d'autorisation d'exécution)\n- **Évaluation:** passée (3/3 contrôles validés)\n- **Source unique:** memory `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (rév. `c78417d0-ce33-4bb8-a294-a22049d84ddd`)\n\n**Expérience synthétique mission précédente:**\nLa compétence a été proposée sans publication, basée sur une expérience DoseLab X4 confirmée par l'utilisateur : \"Vérifier la fraîcheur avant de produire un diagnostic ; demander une revue humaine sinon.\"",
+          "usage": {
+            "input_tokens": 9116,
+            "output_tokens": 399,
+            "total_tokens": 9515
+          }
+        },
+        "native_events_sse": ": open\n\nid: 0\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_696767f41aef4a9cac2e747dc69e74e4\", \"timestamp\": 1794685092.4208903, \"tool\": \"mcp__jarvis__jarvis_skill_get\", \"preview\": \"doselab_freshness\", \"tool_call_id\": \"pilot-9f4591b4-3d55-45ce-b8ba-edda58c0ec8c-0\", \"seq\": 0}\n\nid: 1\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_696767f41aef4a9cac2e747dc69e74e4\", \"timestamp\": 1794685092.4771073, \"tool\": \"mcp__jarvis__jarvis_skill_get\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-9f4591b4-3d55-45ce-b8ba-edda58c0ec8c-0\", \"preview\": \"\", \"seq\": 1}\n\nid: 2\ndata: {\"event\": \"tool.started\", \"run_id\": \"run_696767f41aef4a9cac2e747dc69e74e4\", \"timestamp\": 1794685092.4796195, \"tool\": \"mcp__jarvis__jarvis_memory_experiences\", \"preview\": \"\", \"tool_call_id\": \"pilot-9f4591b4-3d55-45ce-b8ba-edda58c0ec8c-1\", \"seq\": 2}\n\nid: 3\ndata: {\"event\": \"tool.completed\", \"run_id\": \"run_696767f41aef4a9cac2e747dc69e74e4\", \"timestamp\": 1794685094.738124, \"tool\": \"mcp__jarvis__jarvis_memory_experiences\", \"duration\": 0, \"error\": false, \"tool_call_id\": \"pilot-9f4591b4-3d55-45ce-b8ba-edda58c0ec8c-1\", \"preview\": \"\", \"seq\": 3}\n\nid: 4\ndata: {\"event\": \"message.delta\", \"run_id\": \"run_696767f41aef4a9cac2e747dc69e74e4\", \"timestamp\": 1794685102.0324938, \"delta\": \"\\n\\n**Comp\\u00e9tence `doselab_freshness` v1 \\u2014 \\u00c9tat candidate**\\n\\n- **Fingerprint:** `ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba`\\n- **Description:** Diagnostic de contr\\u00f4le de fra\\u00eecheur des mesures avant production de conclusion ; demande revue humaine si fra\\u00eecheur non v\\u00e9rifi\\u00e9e.\\n- **Outils autoris\\u00e9s:** `memory.search`, `report`\\n- **Contr\\u00f4les:** `flow`, `freshness`\\n- **\\u00c9tat:** candidate (non publi\\u00e9e, pas d'autorisation d'ex\\u00e9cution)\\n- **\\u00c9valuation:** pass\\u00e9e (3/3 contr\\u00f4les valid\\u00e9s)\\n- **Source unique:** memory `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (r\\u00e9v. `c78417d0-ce33-4bb8-a294-a22049d84ddd`)\\n\\n**Exp\\u00e9rience synth\\u00e9tique mission pr\\u00e9c\\u00e9dente:**\\nLa comp\\u00e9tence a \\u00e9t\\u00e9 propos\\u00e9e sans publication, bas\\u00e9e sur une exp\\u00e9rience DoseLab X4 confirm\\u00e9e par l'utilisateur : \\\"V\\u00e9rifier la fra\\u00eecheur avant de produire un diagnostic ; demander une revue humaine sinon.\\\"\", \"seq\": 4}\n\nid: 5\ndata: {\"event\": \"run.completed\", \"run_id\": \"run_696767f41aef4a9cac2e747dc69e74e4\", \"timestamp\": 1794685102.1312563, \"output\": \"**Comp\\u00e9tence `doselab_freshness` v1 \\u2014 \\u00c9tat candidate**\\n\\n- **Fingerprint:** `ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba`\\n- **Description:** Diagnostic de contr\\u00f4le de fra\\u00eecheur des mesures avant production de conclusion ; demande revue humaine si fra\\u00eecheur non v\\u00e9rifi\\u00e9e.\\n- **Outils autoris\\u00e9s:** `memory.search`, `report`\\n- **Contr\\u00f4les:** `flow`, `freshness`\\n- **\\u00c9tat:** candidate (non publi\\u00e9e, pas d'autorisation d'ex\\u00e9cution)\\n- **\\u00c9valuation:** pass\\u00e9e (3/3 contr\\u00f4les valid\\u00e9s)\\n- **Source unique:** memory `10c0b0ad-bc09-4ad7-ab4e-e1901e381910` (r\\u00e9v. `c78417d0-ce33-4bb8-a294-a22049d84ddd`)\\n\\n**Exp\\u00e9rience synth\\u00e9tique mission pr\\u00e9c\\u00e9dente:**\\nLa comp\\u00e9tence a \\u00e9t\\u00e9 propos\\u00e9e sans publication, bas\\u00e9e sur une exp\\u00e9rience DoseLab X4 confirm\\u00e9e par l'utilisateur : \\\"V\\u00e9rifier la fra\\u00eecheur avant de produire un diagnostic ; demander une revue humaine sinon.\\\"\", \"usage\": {\"input_tokens\": 9116, \"output_tokens\": 399, \"total_tokens\": 9515}, \"runtime\": {\"provider\": \"\", \"model\": \"\", \"route_source\": \"raw_request\", \"requested\": {\"provider\": \"\", \"model\": \"qwen3.5:4b\"}}, \"completed\": true, \"partial\": false, \"interrupted\": false, \"seq\": 5}\n\n: stream closed\n\n",
+        "experience_ids": [
+          "7e7c194f-dab3-45a2-950e-7a66248952d1"
+        ],
+        "usage": [
+          {
+            "id": "9f4591b4-3d55-45ce-b8ba-edda58c0ec8c",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 3327,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 4.589459719951265,
+            "state": "settled",
+            "created": 1794685087.6713257
+          },
+          {
+            "id": "d3f51fdc-2376-48e6-982d-ce6618276985",
+            "budget_id": "af80d9f0-3606-46b6-b8cb-0ebfe814c47a",
+            "month": "2026-11",
+            "mission_id": "0287a583-82a0-4826-bc0b-01e1b8cf0221",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": 6188,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": 0,
+            "latency": 6.689096889924258,
+            "state": "settled",
+            "created": 1794685095.2789068
+          }
+        ],
+        "skills": [
+          {
+            "name": "doselab_freshness",
+            "version": 1,
+            "state": "candidate",
+            "sources": "[{\"memory_id\":\"10c0b0ad-bc09-4ad7-ab4e-e1901e381910\",\"revision\":\"c78417d0-ce33-4bb8-a294-a22049d84ddd\"}]"
+          }
+        ],
+        "active_skills": 0,
+        "candidate_evaluations": [
+          {
+            "spec_hash": "ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba",
+            "suite_hash": "2db1e25f9b8e48bac2e2d2d778816a324961adb1380e852260ee28a5185ef933",
+            "results": [
+              true,
+              true,
+              true
+            ],
+            "passed": true,
+            "passed_count": 3,
+            "total": 3,
+            "extended": {
+              "spec_hash": "ca26bc7b4636de9de9f381e69f56f06028b02f4e49089e1b0e5983cc665075ba",
+              "suite_hash": "862f2aebd904abd7f46e30fdfeefd47acb8170deba0edf6baca814b5c35bdca9",
+              "results": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "passed": true,
+              "total": 16,
+              "passed_count": 16
+            },
+            "agent_publication_denied": true
+          }
+        ],
+        "successful_native_tools": [
+          "mcp__jarvis__jarvis_skill_get",
+          "mcp__jarvis__jarvis_memory_experiences"
+        ],
+        "checks": {
+          "native_completed": true,
+          "experience_recorded": true,
+          "no_remote_cost": true,
+          "candidate_only": true,
+          "confirmed_experience_linked": true,
+          "nothing_published": true,
+          "regression_evaluation_passed": true,
+          "agent_publication_denied": true,
+          "native_skill_lookup_after_restart": true,
+          "fingerprint_returned": true
+        },
+        "passed": true
+      }
+    ],
+    "model_requests": [
+      {
+        "at": 1794685012.0057244,
+        "bytes": 13868,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 3238,
+          "completion_tokens": 81,
+          "total_tokens": 3319
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794685019.8888214,
+        "bytes": 17392,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 4269,
+          "completion_tokens": 133,
+          "total_tokens": 4402
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794685025.617465,
+        "bytes": 22251,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 5911,
+          "completion_tokens": 158,
+          "total_tokens": 6069
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "at": 1794685049.5658877,
+        "bytes": 15104,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get",
+          "mcp__jarvis__jarvis_skill_propose"
+        ],
+        "usage": {
+          "prompt_tokens": 3494,
+          "completion_tokens": 44,
+          "total_tokens": 3538
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794685057.0789535,
+        "bytes": 20400,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get",
+          "mcp__jarvis__jarvis_skill_propose"
+        ],
+        "usage": {
+          "prompt_tokens": 5204,
+          "completion_tokens": 142,
+          "total_tokens": 5346
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794685063.095952,
+        "bytes": 21674,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get",
+          "mcp__jarvis__jarvis_skill_propose"
+        ],
+        "usage": {
+          "prompt_tokens": 5523,
+          "completion_tokens": 206,
+          "total_tokens": 5729
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "at": 1794685087.0774996,
+        "bytes": 13914,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 3231,
+          "completion_tokens": 96,
+          "total_tokens": 3327
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "at": 1794685094.7120411,
+        "bytes": 22158,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "usage": {
+          "prompt_tokens": 5885,
+          "completion_tokens": 303,
+          "total_tokens": 6188
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "passed": false,
+    "runtime_supervisors": [
+      {
+        "pid": 18556,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 376770560,
+        "peak_process_memory_bytes": 329474048,
+        "elapsed_seconds": 35.019819299996016,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "5bbd6d03e946416e8a2ec9938620fa6e"
+      },
+      {
+        "pid": 16628,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 378019840,
+        "peak_process_memory_bytes": 330858496,
+        "elapsed_seconds": 34.923494999995455,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "06b0758c032b4f14897afd0ad299b5b3"
+      },
+      {
+        "pid": 20632,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 376532992,
+        "peak_process_memory_bytes": 330326016,
+        "elapsed_seconds": 29.851019699999597,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "7efab16374a84e9283f0f8c513bcd0eb"
+      }
+    ],
+    "phase5_index_batches": [
+      {
+        "upserted": 5,
+        "skipped": 0,
+        "complete": true,
+        "deleted": 0
+      }
+    ],
+    "real_semantic_queries": [
+      {
+        "query": "masse nominale identique DoseLab X4",
+        "at": 1794685019.7889366,
+        "fts_count": 2,
+        "canonical_references": [
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910"
+        ]
+      },
+      {
+        "query": "DoseLab X4 expÃ©rience synthÃ©tique diagnostic contrÃ´le fraÃ®cheur",
+        "at": 1794685057.055705,
+        "fts_count": 3,
+        "canonical_references": [
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552"
+        ]
+      },
+      {
+        "query": "mission doselab_freshness version 1 rÃ©sultat synthÃ©tique",
+        "at": 1794685094.6827927,
+        "fts_count": 3,
+        "canonical_references": [
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552"
+        ]
+      }
+    ],
+    "shared_token_limit": 98304,
+    "retrieval_trace": [
+      {
+        "query": "masse nominale identique DoseLab X4",
+        "type": null,
+        "memory_ids": [
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910"
+        ],
+        "sources": [
+          "synthetic://doselab/correction",
+          "synthetic://doselab/experience"
+        ]
+      },
+      {
+        "query": "",
+        "type": "project",
+        "memory_ids": [],
+        "sources": []
+      },
+      {
+        "query": "DoseLab X4 expÃ©rience synthÃ©tique diagnostic contrÃ´le fraÃ®cheur",
+        "type": null,
+        "memory_ids": [
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "e1e624f5-4502-449f-80a6-3d1fd80c6552",
+          "2b9302b1-5d37-49d9-bff3-9f67dc4f789b"
+        ],
+        "sources": [
+          "synthetic://doselab/experience",
+          "synthetic://doselab/correction",
+          "mission://f2a8d773-466b-4667-8b84-45c8684ba638"
+        ]
+      },
+      {
+        "query": "mission doselab_freshness version 1 rÃ©sultat synthÃ©tique",
+        "type": "episode",
+        "memory_ids": [
+          "10c0b0ad-bc09-4ad7-ab4e-e1901e381910",
+          "36e1f6db-cf1d-4af2-a188-dba8f1ef6a40",
+          "2b9302b1-5d37-49d9-bff3-9f67dc4f789b"
+        ],
+        "sources": [
+          "synthetic://doselab/experience",
+          "mission://94de5af3-3213-441d-b62b-a96fb1077ff7",
+          "mission://f2a8d773-466b-4667-8b84-45c8684ba638"
+        ]
+      }
+    ],
+    "persisted_experience_returned": true,
+    "semantic_without_fts_proven": false,
+    "missing_real_semantic_search": true
+  },
+  "passed": false,
+  "finished_at_utc": "2026-11-14T19:38:27Z"
+}

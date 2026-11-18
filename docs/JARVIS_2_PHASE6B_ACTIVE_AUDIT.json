@@ -1,0 +1,23 @@
+{
+  "at_utc": "2026-11-14T22:08:10.315485+00:00",
+  "mode": "read-only-code-and-configuration-metadata",
+  "active_engine": "hybrid",
+  "files": {
+    "/home/user/gateway/server.js": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+    "/home/user/workspace/jarvis/backend.mjs": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+    "/home/user/workspace/jarvis/ai.mjs": "89db8122232766ab56969731e8104e34314116c1e465bc60392cd9e0d21b981b",
+    "/home/user/workspace/jarvis/hybrid-brain.mjs": "713635b9b47eb9e8d021a4a4bb92b2007a39c0f2fc9cd6830f5897b58b3b7b4f",
+    "/home/user/workspace/jarvis/codex-worker.mjs": "7351dc258f24cca16accbd9ee0580f66fa01aa1381ec97dd6b9385f4354fb661",
+    "/home/user/gateway/public/jarvis/codex-voice.js": "1d87f1da88313e123b05e6a539d4f8f3ee90d82e08894965ac9cdde268e2a31b",
+    "/home/user/gateway/public/jarvis/app.js": "80d5341134f7b2fd6777cdd72dd067ed96f6ffcdb9891f4c460990a114266814",
+    "/home/user/gateway/public/jarvis/voice-router.js": "b848df088de7a1a614aa8497debed3156aa9f0a3ed809ffdfe2ae213dfc010fb"
+  },
+  "node": "v18.19.1",
+  "gateway": [
+    "MainPID=2033987",
+    "ActiveState=active"
+  ],
+  "private_conversations_read": false,
+  "production_writes": 0,
+  "windows_operations": 0
+}

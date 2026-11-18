@@ -1,0 +1,21 @@
+# REVIEW ONLY: deterministic test tools, not functional remote Codex yet.
+[Unit]
+Description=Jarvis code executor isolation boundary (review template)
+[Service]
+Type=oneshot
+User=jarvis-code-exec
+Group=jarvis-code-exec
+WorkingDirectory=/var/lib/jarvis-code-exec/worktree
+ExecStart=/opt/jarvis-code-exec/bin/approved-task
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateNetwork=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/jarvis-code-exec/worktree
+RestrictAddressFamilies=AF_UNIX
+RestrictSUIDSGID=yes
+MemoryMax=1G
+TasksMax=64
+RuntimeMaxSec=300
+Restart=no

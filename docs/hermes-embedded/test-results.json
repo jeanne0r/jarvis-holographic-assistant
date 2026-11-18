@@ -1,0 +1,108 @@
+{
+  "recorded_at": "2026-11-15T16:27:24.598914+00:00",
+  "status": "isolated implementation validated; production approval required",
+  "python_regressions": {
+    "command": "python3 -m unittest memory_manager.tests.test_memory memory_manager.phase6.test_interactive memory_manager.phase6.test_embedded -v",
+    "passed": 22,
+    "elapsed_seconds": 37.103
+  },
+  "final_embedded_browser_regression": {
+    "command": "python3 -m unittest memory_manager.phase6.test_embedded -v",
+    "passed": 1,
+    "elapsed_seconds": 28.093,
+    "viewport_widths": [
+      1440,
+      390
+    ],
+    "real_components": [
+      "current holographic HTML and assets",
+      "generated panel/login/formatter",
+      "HTTP relay",
+      "packaged Python/Node pilot",
+      "existing HTTP bridge",
+      "synthetic SQLite"
+    ],
+    "simulated": [
+      "conversation and voice providers",
+      "completed mission result as fixture event"
+    ],
+    "confirmed": [
+      "anonymous deny",
+      "foreign mission owner deny",
+      "authenticated history",
+      "result/provenance display",
+      "cancel",
+      "SQLite state persists across copy restart",
+      "session expires on service restart",
+      "logout",
+      "visual profile remains amelie while authorized lab space is user",
+      "HTML injection inert",
+      "model date retained verbatim",
+      "canonical metadata unavailable shown explicitly",
+      "no direct browser connection to 8796/8797",
+      "zero p2_usage"
+    ]
+  },
+  "http_security": {
+    "command": "node test_hermes_embedded.mjs",
+    "assertions": 42,
+    "passed": true,
+    "coverage": [
+      "cookie scoping",
+      "wrong Host and Origin",
+      "spoofed identity headers",
+      "wrong space",
+      "read-only user cannot cancel",
+      "revocation and expiration",
+      "no admission/approval/bearer bypass",
+      "feature flag missing/false/malformed fails closed",
+      "ordinary ask body untouched with upstream failure"
+    ]
+  },
+  "patch_checks": {
+    "command": "python3 -m scripts.check_embedded_patch data/embedded-preparation/review-final",
+    "passed": true,
+    "scope": "temporary copies only",
+    "checks": [
+      "artifact fingerprints",
+      "4 patches apply",
+      "restoration exact bytes",
+      "only added files removed",
+      "derived runtime manifest validates"
+    ]
+  },
+  "syntax": {
+    "frontend": "node --check passed",
+    "gateway": "node --input-type=module --check < candidate/server.js passed; original gateway package is type module"
+  },
+  "installed_pilot_code_audit": {
+    "verified_files": 40,
+    "mismatches": 0,
+    "private_state_read": false
+  },
+  "production": {
+    "gateway_main_pid": 2033987,
+    "gateway_start_unchanged": "2026-11-13 21:29:24 UTC",
+    "pilot_main_pid": 2488260,
+    "services_restarted": false,
+    "files_modified": false,
+    "physical_actions": 0,
+    "model_calls": 0,
+    "personal_imports": 0,
+    "api_cost_chf": 0
+  },
+  "not_validated": [
+    "production integration",
+    "actual voice sessions",
+    "physical iPhone/Safari",
+    "modified root release startup in its BPF cgroup",
+    "exclusive custody/rotation of historically copied pilot credentials"
+  ],
+  "remaining_approvals": [
+    "actual HTTPS origin",
+    "administrator-only verification and rotation of inherited bridge and human credentials; old copies preserved but invalidated",
+    "root pilot release/config update and supervised restart",
+    "exact gateway/frontend patch plus service restart with S9/audio impact",
+    "opening read/cancel feature switch"
+  ]
+}

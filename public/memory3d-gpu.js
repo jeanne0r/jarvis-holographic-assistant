@@ -1,0 +1,16 @@
+import * as THREE from './vendor/three.module.min.js';
+// One GPU draw call for the complete point cloud. Selection stays on the main canvas.
+export function createPointCloud(viewport,colors){
+ const canvas=document.createElement('canvas');canvas.className='map3d-gpu';canvas.setAttribute('aria-hidden','true');viewport.append(canvas);
+ let renderer;try{renderer=new THREE.WebGLRenderer({canvas,alpha:true,preserveDrawingBuffer:true,antialias:false,powerPreference:'default'});}catch{canvas.remove();return null;}
+ renderer.setClearColor(0,0);renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+ const uniforms={viewport:{value:new THREE.Vector2(1,1)},yaw:{value:0},pitch:{value:0},zoom:{value:1},pixelRatio:{value:renderer.getPixelRatio()},pointSize:{value:3.5}};
+ const geometry=new THREE.BufferGeometry(),material=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWrite:false,uniforms,
+ vertexShader:`attribute vec3 tint; attribute float matchPoint; varying vec3 color; varying float opacity; uniform vec2 viewport; uniform float yaw,pitch,zoom,pixelRatio,pointSize;
+ void main(){float xx=position.x*cos(yaw)+position.z*sin(yaw);float zz=position.z*cos(yaw)-position.x*sin(yaw);float yy=position.y*cos(pitch)-zz*sin(pitch);float depth=position.y*sin(pitch)+zz*cos(pitch);float k=3.5/(3.5-depth);vec2 pixel=vec2(xx,-yy)*min(viewport.x,viewport.y)*.32*zoom*k;gl_Position=vec4(pixel/viewport*2.,0.,1.);gl_PointSize=max(1.,pointSize*k*pixelRatio);color=tint;opacity=matchPoint>.5?.7:.035;}`,
+ fragmentShader:`varying vec3 color;varying float opacity;void main(){float r=length(gl_PointCoord-.5);if(r>.5)discard;gl_FragColor=vec4(color,opacity*(1.-smoothstep(.32,.5,r)));}`});
+ const scene=new THREE.Scene(),camera=new THREE.Camera(),cloud=new THREE.Points(geometry,material);cloud.frustumCulled=false;scene.add(cloud);
+ const palette=Object.fromEntries(Object.entries(colors).map(([key,value])=>[key,new THREE.Color(value).convertLinearToSRGB()]));let lost=false;
+ canvas.addEventListener('webglcontextlost',()=>{lost=true;canvas.hidden=true;});
+ return {get lost(){return lost;},update(points,matches){geometry.dispose();canvas.dataset.points=String(points.length);const positions=new Float32Array(points.length*3),tints=new Float32Array(points.length*3),mask=new Float32Array(points.length);points.forEach((p,i)=>{positions.set(p.position,i*3);const c=palette[p.topic]||palette.Souvenirs;tints.set([c.r,c.g,c.b],i*3);mask[i]=matches(p)?1:0;});geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));geometry.setAttribute('tint',new THREE.BufferAttribute(tints,3));geometry.setAttribute('matchPoint',new THREE.BufferAttribute(mask,1));uniforms.pointSize.value=points.length>10000?2.5:4.5;},render({w,h,yaw,pitch,zoom}){if(lost)return;if(uniforms.viewport.value.x!==w||uniforms.viewport.value.y!==h){renderer.setSize(w,h,false);uniforms.viewport.value.set(w,h);}uniforms.yaw.value=yaw;uniforms.pitch.value=pitch;uniforms.zoom.value=zoom;renderer.render(scene,camera);canvas.dataset.drawCalls=String(renderer.info.render.calls);canvas.dataset.rendered=String(renderer.info.render.points);},dispose(){geometry.dispose();material.dispose();renderer.dispose();canvas.remove();}};
+}

@@ -1,0 +1,241 @@
+{
+  "baseline_commit": "7fda6ae",
+  "mode": "review-only-never-applied-to-active-paths",
+  "lots": [
+    {
+      "lot": "01-persistence",
+      "patch_sha256": "b6465b3715d26841c2bdedd15965eb32cf868904fcf75ae2a6d4139b3a35d22a",
+      "files": [
+        {
+          "source": "ops/production-storage-migrate.py",
+          "release_target": "/opt/jarvis-2/release/ops/production-storage-migrate.py",
+          "before_sha256": null,
+          "after_sha256": "ec32d14551ba4d0fa38df072a18a7cc9fcac1bd99223d3be3dcf7b16f84f5804"
+        },
+        {
+          "source": "gateway-persistent-client.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-persistent-client.mjs",
+          "before_sha256": null,
+          "after_sha256": "e14e3af665659a75205ed4f2310115e6df780e419cbeb8f2effd677869385304"
+        },
+        {
+          "source": "gateway-account-bindings.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-account-bindings.mjs",
+          "before_sha256": null,
+          "after_sha256": "fb7ae168880bee0b52b08a90c20c1a8e47deea6c4e4bf9ca36a276fa967c0575"
+        },
+        {
+          "source": "gateway-fridge-format.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-fridge-format.mjs",
+          "before_sha256": null,
+          "after_sha256": "c2fb7c6535c956a8425e7816a15daaf8cf13d30e563fde89f43d3bfd58c63f63"
+        },
+        {
+          "source": "memory_manager/production/__init__.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/production/__init__.py",
+          "before_sha256": null,
+          "after_sha256": "1586b9ea11427fab7d643ea3214e47cca7844db445a18892d10d14aecc24cd4c"
+        },
+        {
+          "source": "memory_manager/production/persistence.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/production/persistence.py",
+          "before_sha256": null,
+          "after_sha256": "51318f66f0bdbe7002320b6476f1b05a6c8bab81162a939a235c200841f4aec4"
+        },
+        {
+          "source": "memory_manager/production/projection.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/production/projection.py",
+          "before_sha256": null,
+          "after_sha256": "82ebada3c69d84c704212c4a75981bc901ee22c562baaf45676a2b6d91aa72e2"
+        },
+        {
+          "source": "memory_manager/production/storage_main.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/production/storage_main.py",
+          "before_sha256": null,
+          "after_sha256": "67bc5d0a78bba22c8a4be2b90747b2e59301d3b58c3412255efae961e0d78b4b"
+        },
+        {
+          "source": "memory_manager/production/storage_service.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/production/storage_service.py",
+          "before_sha256": null,
+          "after_sha256": "3b5af1683a6697306cb7bdc3ac0a8bed81bab71970f2b3688501336c59623d7e"
+        }
+      ],
+      "copy_apply_reverse_verified": true
+    },
+    {
+      "lot": "02-broker-ipc",
+      "patch_sha256": "a719dfcd067b5999bc74e2ec143de8025307e3e7dbfa34cfd0bdeb869625f571",
+      "files": [
+        {
+          "source": "memory_manager/phase6d/broker/main.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/phase6d/broker/main.py",
+          "before_sha256": "6431d03f98599aa0e5a85f6feb21a026258cad68e5e04d36bf1f4a002018e2c8",
+          "after_sha256": "4bf8cd69fa3c502b96e5a327dd6b7427f2fcb06da25ad428c768783da1f53577"
+        },
+        {
+          "source": "memory_manager/phase6d/broker/transport.py",
+          "release_target": "/opt/jarvis-2/release/memory_manager/phase6d/broker/transport.py",
+          "before_sha256": "b7b2eb74816df076f2e8ed9efd3f3cb6ce008db4255d52e5b918c6e410e55cca",
+          "after_sha256": "7675241b67e8d9866ea47572b9e4038463a34e209531e96c99088d3ed06dfea6"
+        }
+      ],
+      "copy_apply_reverse_verified": true
+    },
+    {
+      "lot": "03-power",
+      "patch_sha256": "6fcb6c73f5c49d9708f23c873b50fef89dcf6de2e415a2e1b42d99b2804205f0",
+      "files": [
+        {
+          "source": "s9-power-service.mjs",
+          "release_target": "/opt/jarvis-2/release/s9-power-service.mjs",
+          "before_sha256": null,
+          "after_sha256": "0df96cd005dfaa47042e988fd221c0298b411984d6044c107a6314b31f4f0fd8"
+        },
+        {
+          "source": "s9-power-main.mjs",
+          "release_target": "/opt/jarvis-2/release/s9-power-main.mjs",
+          "before_sha256": null,
+          "after_sha256": "e473412828b6f7f87212d99b460ab9db244927b76c5bdabbfec5788c65b4126b"
+        }
+      ],
+      "copy_apply_reverse_verified": true
+    },
+    {
+      "lot": "04-entry",
+      "patch_sha256": "558e14bf9c7c1dd5fe0c2544a4f869941622b6c04972546f41d4c7344619412a",
+      "files": [
+        {
+          "source": "gateway-production-entry.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-production-entry.mjs",
+          "before_sha256": null,
+          "after_sha256": "71d76d44e508b3a00c3d9be4361cee19c7cf68765d56e6ab1f022e6adcf2f915"
+        },
+        {
+          "source": "gateway-production-main.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-production-main.mjs",
+          "before_sha256": null,
+          "after_sha256": "d1b17d455a5ae1dd20a4c4a86757e9fe8d6cf85df1bc6290f3d9f885fa4260b0"
+        },
+        {
+          "source": "gateway-service-transport.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-service-transport.mjs",
+          "before_sha256": null,
+          "after_sha256": "a1c8d07c95815d98586821e25ab8b50eec0eaed08fd499002b4f18a217a19159"
+        },
+        {
+          "source": "gateway-compatibility-service.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-compatibility-service.mjs",
+          "before_sha256": null,
+          "after_sha256": "4487520ea372f57d7b8a5ee6a7e47e0f0c9786a3642b3e93b17e98d1f136bd8f"
+        },
+        {
+          "source": "gateway-business.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-business.mjs",
+          "before_sha256": "c317b48e70153e12b9c07105258e9aec01c9f093f96346ea626e76e83f051478",
+          "after_sha256": "b30c3148cdbf90dc0204fe87f3e11ebb46c2b39296cb6592163a38e2150726d5"
+        },
+        {
+          "source": "gateway-hybrid-authorized.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-hybrid-authorized.mjs",
+          "before_sha256": "38d0dd3ccc245f11d793d26ebee8006bf09132f3f33ebc0c5977a5715cf13f8d",
+          "after_sha256": "bb7784ef901af73671d0a7e934864695512b906673c3191d17813d926694012c"
+        },
+        {
+          "source": "gateway-tool-authority.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-tool-authority.mjs",
+          "before_sha256": "65f55bfcf3a2c4554bb5727283dc16a6236d0ca1faf4dceed1459e559ff28de7",
+          "after_sha256": "19529d61291c3af1649957608eaa7ba00efeb0319535fe07be6febc4dcccaf20"
+        },
+        {
+          "source": "gateway-security.mjs",
+          "release_target": "/opt/jarvis-2/release/gateway-security.mjs",
+          "before_sha256": "8cac5b0ddacbbc9693aee883bce5e0c3769d5be0cbe7eefbe3448d71066414f8",
+          "after_sha256": "0633a8e991349bc1b43c27c18191e7361fb8e1a7cb97bc173d1ec9bb801ec90d"
+        },
+        {
+          "source": "backend.mjs",
+          "release_target": "/opt/jarvis-2/release/backend.mjs",
+          "before_sha256": "4800f498b75604f22b7a4cd7d9b956ee0ea5c35e52a39dcca894901d655b2d57",
+          "after_sha256": "b09c0bdaec0c7480c530499b81ec244aef39fe375e896bb32ac3eb189a001e8b"
+        },
+        {
+          "source": "core-settings.mjs",
+          "release_target": "/opt/jarvis-2/release/core-settings.mjs",
+          "before_sha256": "70dff229869a9cd11c5cc5e70e0c9847a86773e5d7fdca6389327805504dcb30",
+          "after_sha256": "115ad5b32110061bef04eaa1db77479034543081bc3fcac24bcd5b8f8c157160"
+        }
+      ],
+      "copy_apply_reverse_verified": true
+    },
+    {
+      "lot": "05-service-templates",
+      "patch_sha256": "6533ac3769717ef07ff8408c31b1822b3822cef73c2ed1c0da7c8eb395bb1821",
+      "files": [
+        {
+          "source": "security/production/jarvis-codex-broker.service.in",
+          "release_target": "/opt/jarvis-2/release/security/production/jarvis-codex-broker.service.in",
+          "before_sha256": null,
+          "after_sha256": "32aba51e5016edd14a8da9d97209476dea8d6ea895720c6fec97ba52df7fec88"
+        },
+        {
+          "source": "security/production/jarvis-codex-executor.service.in",
+          "release_target": "/opt/jarvis-2/release/security/production/jarvis-codex-executor.service.in",
+          "before_sha256": null,
+          "after_sha256": "3914f9d6121582a9ee5b8861e45708d78b144469c59993da0e9d790ad3b24bf3"
+        },
+        {
+          "source": "security/production/jarvis-gateway.service.in",
+          "release_target": "/opt/jarvis-2/release/security/production/jarvis-gateway.service.in",
+          "before_sha256": null,
+          "after_sha256": "e195ce4f3a29441acdbb6a398c16941d003dfc1cbbd111c0214271dff34e0c5e"
+        },
+        {
+          "source": "security/production/jarvis-power.service.in",
+          "release_target": "/opt/jarvis-2/release/security/production/jarvis-power.service.in",
+          "before_sha256": null,
+          "after_sha256": "e1fd6c044d007c36f95aa88a690043b9e62523bf5f9828a847ea5c6435860820"
+        },
+        {
+          "source": "security/production/jarvis-storage.service.in",
+          "release_target": "/opt/jarvis-2/release/security/production/jarvis-storage.service.in",
+          "before_sha256": null,
+          "after_sha256": "3138d70d29396429ec4f9a6b3acff46454a81e1e6bf81237e8e43491c10c75ed"
+        }
+      ],
+      "copy_apply_reverse_verified": true
+    }
+  ],
+  "code_contract_sources": {
+    "gateway": {
+      "source_path": "/home/user/gateway/server.js",
+      "sha256": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3"
+    },
+    "legacy_store": {
+      "source_path": "/home/user/workspace/jarvis-2-memory/store.py",
+      "sha256": "b5ae430808df57561d8f17d26a6aa9c25ea64f78140ab558ca198985d89af687"
+    },
+    "voice_facts": {
+      "source_path": "/home/user/workspace/jarvis-2-memory/voice-memory.py",
+      "sha256": "fd15eecaa94d646642eb1bda419bb8f43b111bd033485df8ee3b368e9fdb0de3"
+    },
+    "german_ai": {
+      "source_path": "/home/user/workspace/allemand-en-poche/ai.mjs",
+      "sha256": "ec8444efb94e2c59130d0a1f64a9295f73e2bb162f4caceb949d9d00cbca8c70"
+    }
+  },
+  "production_activation_ready": false,
+  "blockers": [
+    "dedicated Codex authentication/provider not validated",
+    "complete isolated auxiliary service hosts and image inference path not composed",
+    "independent physical approval transport and single-writer migration not commissioned",
+    "real ownership mapping, OS identities, IPC and network policies unapproved"
+  ],
+  "production_writes": 0,
+  "default_flags": {
+    "history": false,
+    "admission": false,
+    "hybrid": false,
+    "remote_api_budget_chf": 0
+  }
+}

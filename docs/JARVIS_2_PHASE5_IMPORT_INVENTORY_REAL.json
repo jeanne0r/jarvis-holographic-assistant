@@ -1,0 +1,126 @@
+{
+  "mode": "read_only_metadata_only",
+  "personal_content_exported": false,
+  "databases": {
+    "brain": {
+      "tables": {
+        "conversation_sessions": {
+          "columns": [
+            "id",
+            "space",
+            "channel",
+            "created"
+          ],
+          "rows": 84
+        },
+        "conversation_turns": {
+          "columns": [
+            "session_id",
+            "turn",
+            "revision",
+            "user",
+            "assistant",
+            "status",
+            "updated"
+          ],
+          "rows": 176,
+          "updated_range": [
+            1794436249.2859683,
+            1794598438.6087759
+          ]
+        },
+        "docs": {
+          "columns": [
+            "id",
+            "title",
+            "body",
+            "kind",
+            "topic",
+            "status",
+            "source",
+            "updated",
+            "fingerprint",
+            "space"
+          ],
+          "rows": 1287,
+          "updated_range": [
+            1673113529.826197,
+            1794676870.7724695
+          ]
+        }
+      },
+      "duplicate_fingerprints_within_same_space": 0,
+      "document_kinds": [
+        [
+          "ChatGPT",
+          627
+        ],
+        [
+          "Codex",
+          347
+        ],
+        [
+          "Jarvis",
+          176
+        ],
+        [
+          "M\u00e9moire",
+          137
+        ]
+      ]
+    },
+    "voice-memory": {
+      "tables": {
+        "correction_events": {
+          "columns": [
+            "id",
+            "space",
+            "key",
+            "kind",
+            "previous_fact",
+            "new_fact",
+            "evidence",
+            "updated"
+          ],
+          "rows": 0,
+          "updated_range": [
+            null,
+            null
+          ]
+        },
+        "facts": {
+          "columns": [
+            "space",
+            "key",
+            "label",
+            "fact",
+            "entity_id",
+            "area",
+            "updated"
+          ],
+          "rows": 2,
+          "updated_range": [
+            1794433106.7420888,
+            1794511168.1897516
+          ]
+        }
+      }
+    },
+    "semantic-index": {
+      "tables": {
+        "indexed": {
+          "columns": [
+            "doc_id",
+            "version",
+            "updated"
+          ],
+          "rows": 1289,
+          "updated_range": [
+            1794434025.8895946,
+            1794674216.1151953
+          ]
+        }
+      }
+    }
+  }
+}

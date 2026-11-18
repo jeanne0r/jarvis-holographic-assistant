@@ -1,0 +1,201 @@
+{
+  "production_modified": false,
+  "gpu_tests_performed": false,
+  "remote_api_calls": 0,
+  "sources": {
+    "hermes-embedded-api.mjs": "db2f94710871af864ff8caee1357e1da6d3e8f05c34a74ba9b7dac385abfe28a",
+    "hermes-mission-policy.mjs": "da4071ca926bf5b86e08201a1b237d5402549b1875df81f437e47af0b2c07330",
+    "scripts/prepare_operational_hermes.py": "701000060bcfeec0836c2bb8cd95b08526e7eeac7bf703599c52cc59927b83ef",
+    "scripts/prepare_human_missions.py": "9dc62a5d267047b2253f4abbf76987e750220ba38506dcb14af5139bc41fcbf8",
+    "scripts/prepare_mission_policy.py": "c82e5f7f2398573446fdc4eb68bf22cd6135748327ee4ee0ffdef1efddcff333",
+    "public/hermes-mission-view.js": "694ccabef5418c4baac2f0636b9efa403695e7593069b4eee6ee1f0623408be0",
+    "public/hermes-mission-view.css": "99bd3c9ab851a82bb27f3a3e3f9468aa2ae7303a022231796ef29cd0bb39fba3",
+    "memory_manager/phase6/test_human_assets.py": "a3ff6239b68fed56a1e98c11c2d3fe0e06ef668a55ca33c2fdbda4df03ded07f",
+    "test_human_missions_browser.cjs": "4874e7fbe2c5b7b69f4e5d215508955cc94140c6b3422015b7f0b2e3a3a3fe2c",
+    "test_hermes_mission_policy.mjs": "9146a04b11ed93cdc5865d27979099d43b2c340953ed6e56d3f8a5c5a8ad6672"
+  },
+  "lots": {
+    "A": {
+      "candidate_directory": "/home/user/workspace/jarvis-2-memory/data/big-boss/lot-a-ready",
+      "manifest_sha256": "beaa29de00d5c8472f83f2eb72d608ecfeb81ce90e3dc56bfbda88b643373fe8",
+      "manifest": {
+        "production_modified": false,
+        "lot": "A",
+        "gateway_restart_required": false,
+        "private_service_modified": false,
+        "permissions_changed": false,
+        "flags_changed": false,
+        "files": [
+          {
+            "target": "/home/user/gateway/public/jarvis/hermes-embedded.js",
+            "before_sha256": "ad55cebc8493e2c98a72b82d2f6876cac9b88d16109f5e8b07d0bd78be7f4fa9",
+            "after_sha256": "2d2fd69a97449766dc96803d112296957dcf6a151e18b9aa6438e9db359d03e0",
+            "artifact": "hermes-embedded.js",
+            "backup": "hermes-embedded.js.before"
+          },
+          {
+            "target": "/home/user/gateway/public/jarvis/hermes-embedded.css",
+            "before_sha256": "76a0a2d8754824d147134f23d33c5b6425309f4c598d1a4feb5f8fc643ac16a3",
+            "after_sha256": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77",
+            "artifact": "hermes-embedded.css",
+            "backup": "hermes-embedded.css.before"
+          }
+        ]
+      },
+      "artifacts": {
+        "hermes-embedded.css": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77",
+        "hermes-embedded.css.before": "76a0a2d8754824d147134f23d33c5b6425309f4c598d1a4feb5f8fc643ac16a3",
+        "hermes-embedded.css.patch": "5144cbb8aba14e9915acb1c76b8392d24aa098ec967220a923558e3689d61613",
+        "hermes-embedded.js": "2d2fd69a97449766dc96803d112296957dcf6a151e18b9aa6438e9db359d03e0",
+        "hermes-embedded.js.before": "ad55cebc8493e2c98a72b82d2f6876cac9b88d16109f5e8b07d0bd78be7f4fa9",
+        "hermes-embedded.js.patch": "4ce7301ed1b35a7f7bc4f296c3bba32d52df010dbaa44c05cd145db6bcb4ac9b",
+        "manifest.json": "beaa29de00d5c8472f83f2eb72d608ecfeb81ce90e3dc56bfbda88b643373fe8"
+      }
+    },
+    "B-laboratory": {
+      "candidate_directory": "/home/user/workspace/jarvis-2-memory/data/big-boss/lot-b-single-session",
+      "manifest_sha256": "bd11c84198428e2448084c3ed28304d8698847126fbcb49cc8fd46e9895c8c95",
+      "manifest": {
+        "production_modified": false,
+        "lot": "B-laboratory-only",
+        "gateway_restart_required": false,
+        "private_service_modified": false,
+        "permissions_changed": false,
+        "flags_changed": false,
+        "files": [
+          {
+            "target": "/home/user/gateway/public/jarvis/hermes-embedded.js",
+            "before_sha256": "ad55cebc8493e2c98a72b82d2f6876cac9b88d16109f5e8b07d0bd78be7f4fa9",
+            "after_sha256": "f2aa5c6c8337158ca2dd44f222c8f2a3cddb2e839875f8d0169c651f03c62c47",
+            "artifact": "hermes-embedded.js",
+            "backup": "hermes-embedded.js.before"
+          },
+          {
+            "target": "/home/user/gateway/public/jarvis/hermes-embedded.css",
+            "before_sha256": "76a0a2d8754824d147134f23d33c5b6425309f4c598d1a4feb5f8fc643ac16a3",
+            "after_sha256": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77",
+            "artifact": "hermes-embedded.css",
+            "backup": "hermes-embedded.css.before"
+          }
+        ]
+      },
+      "artifacts": {
+        "hermes-embedded.css": "3b31da526267f3c9d1a7d53958d7f05d46d4653eb7a378fb4eac66b2db707f77",
+        "hermes-embedded.css.before": "76a0a2d8754824d147134f23d33c5b6425309f4c598d1a4feb5f8fc643ac16a3",
+        "hermes-embedded.css.patch": "5144cbb8aba14e9915acb1c76b8392d24aa098ec967220a923558e3689d61613",
+        "hermes-embedded.js": "f2aa5c6c8337158ca2dd44f222c8f2a3cddb2e839875f8d0169c651f03c62c47",
+        "hermes-embedded.js.before": "ad55cebc8493e2c98a72b82d2f6876cac9b88d16109f5e8b07d0bd78be7f4fa9",
+        "hermes-embedded.js.patch": "982e765a6ff168e5ae1bead3a02b921d359cbdb0301b8da7850ab4338abb1040",
+        "manifest.json": "bd11c84198428e2448084c3ed28304d8698847126fbcb49cc8fd46e9895c8c95"
+      }
+    },
+    "C-policy": {
+      "candidate_directory": "/home/user/workspace/jarvis-2-memory/data/big-boss/lot-c-policy",
+      "manifest_sha256": "9b4ace6141a196817992a3f08ae6e757f3a96f8c1df584479336a1a266727863",
+      "manifest": {
+        "lot": "C-policy-only",
+        "production_modified": false,
+        "all_flags_unchanged": true,
+        "activation_authorized": false,
+        "state_or_credentials_copied": false,
+        "installed_manifest_sha256": "a330242778228b66340b22cd37ac6ef2f8f24fc0df02382fa87aa3924defd81a",
+        "files": [
+          {
+            "target": "/opt/jarvis-hermes-pilot/deployment-files.json",
+            "artifact": "release/deployment-files.json",
+            "before_sha256": "a330242778228b66340b22cd37ac6ef2f8f24fc0df02382fa87aa3924defd81a",
+            "after_sha256": "81e8e1bb4bdcdd9e6b07c1c7d65bc65e045f2a4bf0815242158889cdd520d036",
+            "backup": "before/deployment-files.json"
+          },
+          {
+            "target": "/opt/jarvis-hermes-pilot/docs/pilot-interactive/manifest.json",
+            "artifact": "release/docs/pilot-interactive/manifest.json",
+            "before_sha256": "53849661f4a2de44c222776382a556597b143f6eba042a5f35ea88ce50065bae",
+            "after_sha256": "cf944b47b52c3f9200a3b3c233b4334433169256b86de466160c4512bc950a3b",
+            "backup": "before/docs/pilot-interactive/manifest.json"
+          },
+          {
+            "target": "/opt/jarvis-hermes-pilot/hermes-embedded-api.mjs",
+            "artifact": "release/hermes-embedded-api.mjs",
+            "before_sha256": "cc934653e01b925783b3c4417555ef941c33ba9ef5cb2c352665da603d4270be",
+            "after_sha256": "db2f94710871af864ff8caee1357e1da6d3e8f05c34a74ba9b7dac385abfe28a",
+            "backup": "before/hermes-embedded-api.mjs"
+          },
+          {
+            "target": "/opt/jarvis-hermes-pilot/hermes-mission-policy.mjs",
+            "artifact": "release/hermes-mission-policy.mjs",
+            "before_sha256": null,
+            "after_sha256": "da4071ca926bf5b86e08201a1b237d5402549b1875df81f437e47af0b2c07330"
+          }
+        ]
+      },
+      "artifacts": {
+        "before/deployment-files.json": "a330242778228b66340b22cd37ac6ef2f8f24fc0df02382fa87aa3924defd81a",
+        "before/docs/pilot-interactive/manifest.json": "53849661f4a2de44c222776382a556597b143f6eba042a5f35ea88ce50065bae",
+        "before/hermes-embedded-api.mjs": "cc934653e01b925783b3c4417555ef941c33ba9ef5cb2c352665da603d4270be",
+        "manifest.json": "9b4ace6141a196817992a3f08ae6e757f3a96f8c1df584479336a1a266727863",
+        "release/deployment-files.json": "81e8e1bb4bdcdd9e6b07c1c7d65bc65e045f2a4bf0815242158889cdd520d036",
+        "release/docs/pilot-interactive/manifest.json": "cf944b47b52c3f9200a3b3c233b4334433169256b86de466160c4512bc950a3b",
+        "release/gateway-route-policy.mjs": "2956806e52187680126df23a2dbd0ac965862f94181f4c4aee7b368b87506c6a",
+        "release/gateway-security-mount.mjs": "d2d500bca556c4159cf38bca84f961fee38b461dbcccd932119f8cf5f538d144",
+        "release/gateway-security.mjs": "0633a8e991349bc1b43c27c18191e7361fb8e1a7cb97bc173d1ec9bb801ec90d",
+        "release/hermes-bridge-client.mjs": "8190c7412a78b9da5652394bd526d0576927be20b43f191aba89efae353678f6",
+        "release/hermes-embedded-api.mjs": "db2f94710871af864ff8caee1357e1da6d3e8f05c34a74ba9b7dac385abfe28a",
+        "release/hermes-embedded-contract.mjs": "ea886f48a9d4a65d4973278e08138316fdca200323584be4e411e815f88dab10",
+        "release/hermes-mission-policy.mjs": "da4071ca926bf5b86e08201a1b237d5402549b1875df81f437e47af0b2c07330",
+        "release/hermes-server-auth.mjs": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228",
+        "release/hermes-voice-tools.mjs": "79ceaff38551840ff2cc39edbe9f2b6372cb75a08425c17156477738c79bddff",
+        "release/hybrid-mission-admission.mjs": "270c0b9da48ee6e9b6c20fc36d850bef6dd283b39a841d12de184b94344207df",
+        "release/jarvis-hermes-experimental.mjs": "4471f9fbd4498d6d10fa3fe7767ebc42687c1e3d30eea48a011168d0c4081380",
+        "release/jarvis-session-auth.mjs": "574feef80fda44f5806770cb8a433b639d7042cc1e48f62c011701f202233edd",
+        "release/memory_manager/__init__.py": "ad86f65d835176cc2b5685593337c9020705996bc83c14c4af70d484132a95bc",
+        "release/memory_manager/api.py": "3e133f9f32ff3085dc6c96bbf9a1aa67eebb6d1291bc33ae19f31470e5f1a754",
+        "release/memory_manager/hermes_mcp.py": "4fd5bff522fccd19aa32ce1b04f325e097256a27928a52ca524dd4260596cb9d",
+        "release/memory_manager/missions.py": "78afe95552fd2d0fa6ca60b5a41147b9f4acabfed20d847408f19eaaecb0a6ab",
+        "release/memory_manager/phase2/__init__.py": "11fc1ff381e2dc98a9954ec44c2a72dc32a625200fbe10bb6eb419970f00324c",
+        "release/memory_manager/phase2/bridge.py": "2b671b7fe909e250a94d5db2f58272c98a4d3ee6992196f20fb0c2d6e164c251",
+        "release/memory_manager/phase2/budgets.py": "3b1443bed9679421ea3b6deaeb19fe447b6554b63fe6301f51c77da6ca349d29",
+        "release/memory_manager/phase2/database.py": "9d40df5af04fb89443ff1fc562597a1595e0c79123978e00ded49a8a0ded88e8",
+        "release/memory_manager/phase2/hermes.py": "6718935b23011b50eb0e70904970e5b315f83fb247c5c0838ea5651ce8dc0038",
+        "release/memory_manager/phase2/http_bridge.py": "ad45c38624ffb4abcf9d715602692782cad16bc81b46d8574b777e1ad235d065",
+        "release/memory_manager/phase2/local_model.py": "cbb1a08aea6234e9037fab177aa6f44d36f180812d3929371ef988fee2a20246",
+        "release/memory_manager/phase2/mcp.py": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef",
+        "release/memory_manager/phase2/memory_tools.py": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+        "release/memory_manager/phase2/schema.sql": "df1b3cbcf704a2b3bc3a5360def7f4253d90e1ad3af75f4bf3a695b3c8bcc21f",
+        "release/memory_manager/phase2/skill_registry.py": "9e4382af4ac33653319c15e11e7355c355727ded68531997117bda847ad74ec4",
+        "release/memory_manager/phase2/validation.py": "9ec2af958d6aa1b16467f0b827f04f4560662c5ba33d28114540a4f9892353f3",
+        "release/memory_manager/phase3/__init__.py": "cfab1539bb0a8359a01d8bb5bd15a6b9f34047a9273fa426088df968e161039e",
+        "release/memory_manager/phase3/lab.py": "5eff052b85e4245ce8d4664edb72cc53981f3196abbf04d3ead5b81943a42176",
+        "release/memory_manager/phase3/mcp.py": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+        "release/memory_manager/phase3/model_gate.py": "6a0d114bd029102a3762a12ea210eb95cb686ee3226e1d8c6739d033b4c05fd4",
+        "release/memory_manager/phase4/__init__.py": "0c1882c084de5a1fb728dde1c37f479b5014621a8cf02da9798f9a44210a83df",
+        "release/memory_manager/phase4/worker.py": "2dfd4cfa71a3716faf1a28e26ecf50a1320bf27ef7c663624bca9d6e8c66769b",
+        "release/memory_manager/phase6/__init__.py": "c7a2194489893f96de77adce1d82f2d7d6a4cd5dcebf6707b2ac86476d9534a6",
+        "release/memory_manager/phase6/interactive.py": "1d17349fbefa1f470d230db003ff13a4aa9c7aa6664c14ab0973f1cc4bfa371c",
+        "release/memory_manager/phase6/operational.py": "99fdda02f51eb7eb82e9a6659578ab9c49b0955af8d6d699f620915f82a8ea36",
+        "release/memory_manager/phase6/worker.py": "b5ac0d51c7e47fe73191b32d94c6a46580da588f97aeeee92512a5ef014e0284",
+        "release/memory_manager/phase6c/__init__.py": "1884d5f677d1dbd7838f62c02b970a9b76d9c4e3c914ebcc0a0d28abeeba1faa",
+        "release/memory_manager/phase6c/canonical_metadata.py": "d679209a4d725bb9ccf090703717921936a06833610318853ec5123a1e7707ad",
+        "release/memory_manager/phase6d/__init__.py": "2c7591ca4999e8c188786f57cfabe6e86e8e43d43ea9fd92fb779ad17cbe81ec",
+        "release/memory_manager/phase6d/database.py": "a5337cac63b29abe4ac3c4ed664f30dca64656f80baf7b861f4c7efe71ba6833",
+        "release/memory_manager/phase6d/evidence.py": "a520bf22d2a88248203d5456315bead25035e781469c403aee4aa603e7a19995",
+        "release/memory_manager/phase6d/heartbeat.py": "c17b09311805a8a0d3d592f5a376c16d12d4d7178a2d2cac049d44c8951f35ed",
+        "release/memory_manager/schema.sql": "fecd7eefc42c2b5befe750eb4ad612e765d36a41c0b4d67db827da98256f7028",
+        "release/memory_manager/store.py": "d03769cbab66ff72b8295c7b2d7f72ad9bf4d4d8c89fc580f73448db53734426",
+        "release/ops/jarvis-hermes-pilot.service.in": "e98a517874aea4ea26deb4a6802e514b11bb3b1c34ae93cd9e1bf30fd30d0ee6",
+        "release/ops/pilot-embedded.mjs": "a33e5e2e5ac347ee452ca52b7daac69eef27ffe24e9cd0e13a4c29986345253a",
+        "release/ops/pilot-interactive.html": "e7107894d306ee435aa08fa0e5585a0860393738ef7b5b14fd710e4482cc6668",
+        "release/ops/pilot-interactive.mjs": "48fd853057ed2791ab17e99e38063c76f5d67678508e49dfd86153965df94fc6",
+        "release/ops/pilot-network/check-system-filter.py": "d9e3fae0333f2ce0d2aae1af477aff0b7be2a67f66450a054d6c5aedcd8c63a4",
+        "release/ops/pilot-network/jarvis-hermes-pilot-system.service": "51cb6ef4965292630989916280134f41e79bd1bc122f942eb616bccb826f1e7e",
+        "release/ops/pilot-network/startup-guard.py": "aeeecd87016da9d7ea89a3d147738f74f33c6582dbc5818a92b5d326788af86e",
+        "release/phase6-gateway.mjs": "73fa7dbd00b69c7e028f951437efbf1393d81cb83f978adef79de06bfa0753d8",
+        "release/public/hermes-canonical.js": "2ac5e7523991a62306e921bd4a256fbac072699837ce582a5e871d2acd72cf32",
+        "release/public/hermes-missions.css": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273",
+        "release/public/hermes-missions.js": "b13d764727e5bf211c5982a5c00e78eb4bf74d4aa89b23e70cb4698343e725b1",
+        "release/public/jarvis-auth.js": "3351664201443b49d4c653478da107788f38f0dd989ed31d7524cfbec0658f2e",
+        "release/scripts/prepare_interactive_pilot.py": "e2b05dc187b3eec341c3d8c923a94ff682830535686856b9d85e96725419a504"
+      }
+    }
+  }
+}

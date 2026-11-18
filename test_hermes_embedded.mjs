@@ -1,0 +1,74 @@
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {embeddedPanel} from './hermes-embedded-api.mjs';
+import {embeddedRelay} from './hermes-embedded-relay.mjs';
+import {PANEL_PREFIX as P} from './hermes-embedded-contract.mjs';
+const listen=s=>new Promise(resolve=>s.listen(0,'127.0.0.1',resolve));
+const close=s=>new Promise(resolve=>{s.closeAllConnections?.();s.close(resolve)});
+let forward,origin,clock=Date.now(),audit=[],calls=[],offline=false,legacy=[];
+const gateway=http.createServer(async(req,res)=>{const url=new URL(req.url,'http://'+req.headers.host);if(await forward(req,res,url))return;let raw='';for await(const c of req)raw+=c;legacy.push([req.method,url.pathname,raw]);res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify({hybrid:'unchanged',body:raw}))});
+await listen(gateway);origin='http://127.0.0.1:'+gateway.address().port;
+const a='A'.repeat(43),b='B'.repeat(43),hash=s=>createHash('sha256').update(s).digest('hex');
+const policy=()=>({credentials:[{subject:'human-a',sha256:hash(a),expiresAt:clock+60000},{subject:'human-b',sha256:hash(b),expiresAt:clock+60000}],grants:new Map([['human-a',['user']],['human-b',['user']]]),roles:new Map([['human-a',['missions.read','missions.cancel']],['human-b',['missions.read']]])});
+let current=policy();
+const api=embeddedPanel({origin,policy:current,refresh:async()=>current,now:()=>clock,audit:async e=>audit.push(e),client:{scope:'private',async request(method,path,options){calls.push([method,path,options.body]);if(offline)throw Error('offline');if(path.endsWith('/canonical'))return {status:403,body:{}};return {status:method==='POST'?202:200,body:path==='/v1/missions'?{items:[{id:'test-1',state:'queued',objective:'DoseLab synthétique'}]}:{state:method==='POST'?'cancelled':'queued',events:[]}}}}});
+const privateServer=http.createServer((req,res)=>void api(req,res,new URL(req.url,'http://127.0.0.1')));
+await listen(privateServer);forward=embeddedRelay({enabled:true,origin,port:privateServer.address().port});
+let assertions=0;
+const eq=(x,y)=>{assert.equal(x,y);assertions++};
+async function call(path,method='GET',data,headers={}){
+ const r=await fetch(origin+P+path,{method,headers:{...(data!==undefined?{'content-type':'application/json',Origin:origin}:{}),...headers},...(data!==undefined?{body:JSON.stringify(data)}:{})});
+ return {status:r.status,body:await r.json(),cookie:r.headers.get('set-cookie')};
+}
+try{
+ eq((await call('/hermes/missions?space=user')).status,401);
+ eq(await new Promise((resolve,reject)=>http.get({hostname:'127.0.0.1',port:gateway.address().port,path:P+'/session',headers:{Host:'evil.invalid'}},r=>{r.resume();r.on('end',()=>resolve(r.statusCode))}).on('error',reject)),403);
+ eq((await call('/hermes/missions?space=user','GET',undefined,{'x-user':'human-a','x-role':'admin'})).status,401);
+ eq((await call('/session','POST',{token:'bad'})).status,401);
+ eq((await call('/session','POST',{token:a},{Origin:'https://evil.invalid'})).status,403);
+ const login=await call('/session','POST',{token:a});eq(login.status,200);
+ assert.match(login.cookie,/^JarvisHermesSession=/);assert.match(login.cookie,/Path=\/api\/jarvis\/hermes-panel; HttpOnly; SameSite=Strict/);assertions+=2;
+ const auth={Cookie:login.cookie.split(';')[0]};
+ eq((await call('/hermes/missions?space=user','GET',undefined,auth)).status,200);
+ eq(calls[0][1],'/v1/missions');
+ eq((await call('/hermes/missions?space=amelie','GET',undefined,auth)).status,403);
+ eq((await call('/hermes/missions?space=user&space=amelie','GET',undefined,auth)).status,403);
+ eq((await call('/hermes/missions?space=user&owner=human-b','GET',undefined,auth)).status,403);
+ eq((await call('/hermes/missions?space=user','POST',{template:'doselab-current'},auth)).status,403);
+ eq((await call('/hermes/missions/test-1/approvals?space=user','POST',{},auth)).status,403);
+ eq((await call('/hermes/missions/test-1/cancel?space=user','POST',{command:'shell'},auth)).status,400);
+ eq((await call('/hermes/missions/test-1/cancel?space=user','POST',{},auth)).status,202);
+ eq(calls.at(-1)[0],'POST');eq(calls.at(-1)[1],'/v1/missions/test-1/cancel');
+ eq((await call('/hermes/missions?space=user','GET',undefined,{Cookie:auth.Cookie.replace('JarvisHermesSession','JarvisSession')})).status,401);
+ eq((await call('/hermes/missions?space=user','GET',undefined,{...auth,Cookie:auth.Cookie+'; '+auth.Cookie})).status,401);
+ eq((await call('/hermes/missions?space=user','GET',undefined,{Authorization:'Bearer '+a})).status,403);
+ const loginb=await call('/session','POST',{token:b});const authb={Cookie:loginb.cookie.split(';')[0]};
+ eq((await call('/hermes/missions?space=user','GET',undefined,authb)).status,200);
+ eq((await call('/hermes/missions/test-1/cancel?space=user','POST',{},authb)).status,403);
+ const config=await call('/hermes/config?space=user','GET',undefined,auth);eq(config.body.enabled,false);eq(config.body.readEnabled,true);
+ eq((await call('/hermes/availability?space=user','GET',undefined,auth)).body.dispatch_allowed,false);
+ offline=true;eq((await call('/hermes/missions?space=user','GET',undefined,auth)).status,503);
+ const ordinary=await fetch(origin+'/api/jarvis/ask',{method:'POST',headers:{'content-type':'application/json'},body:'{"question":"bonjour"}'});eq(ordinary.status,200);eq((await ordinary.json()).body,'{"question":"bonjour"}');eq(legacy.length,1);
+ offline=false;
+ eq((await call('/session','DELETE',undefined,{...auth,Origin:origin})).status,200);
+ eq((await call('/hermes/missions?space=user','GET',undefined,auth)).status,401);
+ current={...current,credentials:[]};eq((await call('/hermes/missions?space=user','GET',undefined,authb)).status,401);
+ current=policy();const renewed=await call('/session','POST',{token:a});clock+=31000*60;
+ eq((await call('/hermes/missions?space=user','GET',undefined,{Cookie:renewed.cookie.split(';')[0]})).status,401);
+ const dir=await mkdtemp(path.join(os.tmpdir(),'hermes-flag-'));
+ try{
+  const flag=path.join(dir,'switch.json');forward=embeddedRelay({enabled:true,origin,port:privateServer.address().port,switchFile:flag});
+  eq((await call('/session')).status,404);
+  await writeFile(flag,JSON.stringify({enabled:false}),{mode:0o600});eq((await call('/session')).status,404);
+  await writeFile(flag,JSON.stringify({enabled:true}));eq((await call('/session')).status,401);
+  await writeFile(flag,'invalid');eq((await call('/session')).status,404);
+  await writeFile(flag,JSON.stringify({enabled:true,roles:['admin']}));eq((await call('/session')).status,404);
+ }finally{await rm(dir,{recursive:true})}
+ forward=embeddedRelay({enabled:false});eq((await call('/hermes/missions?space=user')).status,404);
+ assert.ok(audit.every(e=>!JSON.stringify(e).includes(a)));assertions++;
+ console.log(JSON.stringify({passed:true,assertions,real_http:true,upstream:'simulated',model_calls:0,production_modified:false}));
+}finally{await close(gateway);await close(privateServer)}

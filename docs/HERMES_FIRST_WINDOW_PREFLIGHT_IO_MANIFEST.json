@@ -1,0 +1,12 @@
+{
+  "purpose": "Observable bounded Windows read-only preflight; unchanged security thresholds and execution quotas",
+  "files": {
+    "ops/pilot-network/run-worker-window.py": "3a3fcf2f496525c0a79151ee81ff7182fd26fcaf5cd749bcaf1aa268d8816d42",
+    "memory_manager/phase6/test_worker_window_admin.py": "ba3273f20cb9c83eac4868245e9ab6170c87489961af9de04cf74b70f7cb4e3f"
+  },
+  "base_manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+  "effective_manifest_sha256": "347f2fed8d9c306f2b646cfba11c2f65973fd803e349e19f764e22d27c4f4c11",
+  "previous_manifest_sha256": "18d35457b2e8a09e9f647f5bea5c98b5c83be54b9e150a185ba3ca5d41b710fe",
+  "credential_loader_sha256": "56a87075e51c7aa2074c4c70ba7367dca33bbdee5639e55a72dc9d333584c684",
+  "credential_loader_git_commit": "f1f2ec6e18c49553a6431d9b7476851ee92ca4e2"
+}

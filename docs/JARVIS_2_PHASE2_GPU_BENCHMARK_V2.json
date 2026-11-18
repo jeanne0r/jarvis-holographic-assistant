@@ -1,0 +1,46 @@
+{
+  "benchmark_version": 2,
+  "started_at_utc": "2026-11-13T23:06:24Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "hermes_runtime_tested": false,
+  "cases": [],
+  "samples": [],
+  "cleanup": {
+    "cleanup_requested": true,
+    "windows_listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794611191.8929777,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 95.92,
+      "utilization": 0.0,
+      "temperature_c": 41.94,
+      "miner_running": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794611186.6398458,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1061.0,
+    "free_mib": 9179.0,
+    "driver": "621.24",
+    "power_w": 8.45,
+    "utilization": 0.0,
+    "temperature_c": 37.53,
+    "miner_running": false
+  },
+  "error_class": "RuntimeError",
+  "sampled_peak_vram_mib": null,
+  "sampled_peak_power_w": null,
+  "passed": false,
+  "finished_at_utc": "2026-11-13T23:06:31Z"
+}

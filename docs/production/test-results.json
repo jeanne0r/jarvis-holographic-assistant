@@ -1,0 +1,151 @@
+{
+  "mode": "offline-fixtures-real-sqlite-and-unix-no-inference",
+  "passed": true,
+  "production_writes": 0,
+  "new_private_data_reads": 0,
+  "gpu_calls": 0,
+  "remote_inference_calls": 0,
+  "physical_actions": 0,
+  "historical_pilots_replayed": false,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.production.test_persistence",
+        "memory_manager.tests.test_memory",
+        "memory_manager.phase6d.test_security",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 10.856,
+      "stdout": "",
+      "stderr": "test_actual_schema_documents_archive_revisions_owner_restart (memory_manager.production.test_persistence.PersistentTests.test_actual_schema_documents_archive_revisions_owner_restart) ... ok\ntest_additive_backup_integrity_restored_fixture_only (memory_manager.production.test_persistence.PersistentTests.test_additive_backup_integrity_restored_fixture_only) ... ok\ntest_auxiliary_tasks_and_fridge_use_actual_json_shapes (memory_manager.production.test_persistence.PersistentTests.test_auxiliary_tasks_and_fridge_use_actual_json_shapes) ... ok\ntest_common_access_requires_explicit_grant (memory_manager.production.test_persistence.PersistentTests.test_common_access_requires_explicit_grant) ... ok\ntest_facts_unclaimed_denied_history_and_logical_forget (memory_manager.production.test_persistence.PersistentTests.test_facts_unclaimed_denied_history_and_logical_forget) ... ok\ntest_json_chat_format_backups_filter_accounts_and_reopen (memory_manager.production.test_persistence.PersistentTests.test_json_chat_format_backups_filter_accounts_and_reopen) ... ok\ntest_native_chatgpt_json_and_zip_import_idempotent_sources_dates (memory_manager.production.test_persistence.PersistentTests.test_native_chatgpt_json_and_zip_import_idempotent_sources_dates) ... ok\ntest_prepared_migration_cli_fixture_idempotent_and_no_source_rewrite (memory_manager.production.test_persistence.PersistentTests.test_prepared_migration_cli_fixture_idempotent_and_no_source_rewrite) ... ok\ntest_semantic_map_revalidates_acl_versions_and_legacy_shape (memory_manager.production.test_persistence.PersistentTests.test_semantic_map_revalidates_acl_versions_and_legacy_shape) ... ok\ntest_stream_upload_wrong_owner_offset_and_transaction_rollback (memory_manager.production.test_persistence.PersistentTests.test_stream_upload_wrong_owner_offset_and_transaction_rollback) ... ok\ntest_sync_configured_only_and_existing_unknown_never_adopted (memory_manager.production.test_persistence.PersistentTests.test_sync_configured_only_and_existing_unknown_never_adopted) ... ok\ntest_01_fact_correction_retains_old_configuration (memory_manager.tests.test_memory.MemoryTests.test_01_fact_correction_retains_old_configuration) ... ok\ntest_02_conflicting_sources_remain_unresolved (memory_manager.tests.test_memory.MemoryTests.test_02_conflicting_sources_remain_unresolved) ... ok\ntest_03_project_decision_changes (memory_manager.tests.test_memory.MemoryTests.test_03_project_decision_changes) ... ok\ntest_04_episode_retrieval_is_analogy_not_proof (memory_manager.tests.test_memory.MemoryTests.test_04_episode_retrieval_is_analogy_not_proof) ... ok\ntest_05_skill_improves_after_failure_without_regression (memory_manager.tests.test_memory.MemoryTests.test_05_skill_improves_after_failure_without_regression) ... ok\ntest_06_consolidation_process_death_and_restart_no_duplicates (memory_manager.tests.test_memory.MemoryTests.test_06_consolidation_process_death_and_restart_no_duplicates) ... ok\ntest_07_external_injection_cannot_promote_correct_or_act (memory_manager.tests.test_memory.MemoryTests.test_07_external_injection_cannot_promote_correct_or_act) ... ok\ntest_acl_applies_to_search_history_and_vector_hits (memory_manager.tests.test_memory.MemoryTests.test_acl_applies_to_search_history_and_vector_hits) ... ok\ntest_additive_schema_idempotent_and_foreign_database_refused (memory_manager.tests.test_memory.MemoryTests.test_additive_schema_idempotent_and_foreign_database_refused) ... ok\ntest_compensating_undo_and_stale_write (memory_manager.tests.test_memory.MemoryTests.test_compensating_undo_and_stale_write) ... ok\ntest_consolidation_pause_weekly_and_failure_budget (memory_manager.tests.test_memory.MemoryTests.test_consolidation_pause_weekly_and_failure_budget) ... ok\ntest_full_observe_consolidate_verify_retrieve_apply_improve_cycle (memory_manager.tests.test_memory.MemoryTests.test_full_observe_consolidate_verify_retrieve_apply_improve_cycle) ... ok\ntest_http_auth_proposals_and_mcp_end_to_end (memory_manager.tests.test_memory.MemoryTests.test_http_auth_proposals_and_mcp_end_to_end) ... ok\ntest_idempotency_collision_and_atomic_rollback (memory_manager.tests.test_memory.MemoryTests.test_idempotency_collision_and_atomic_rollback) ... ok\ntest_injected_indexer_idempotent_and_no_production_collection (memory_manager.tests.test_memory.MemoryTests.test_injected_indexer_idempotent_and_no_production_collection) ... ok\ntest_mission_registry_restart_and_approval_boundary (memory_manager.tests.test_memory.MemoryTests.test_mission_registry_restart_and_approval_boundary) ... ok\ntest_secret_ingress_rejected_without_persistence (memory_manager.tests.test_memory.MemoryTests.test_secret_ingress_rejected_without_persistence) ... ok\ntest_validity_and_grounded_verification (memory_manager.tests.test_memory.MemoryTests.test_validity_and_grounded_verification) ... ok\ntest_vector_stale_hits_cannot_resurrect_superseded_facts (memory_manager.tests.test_memory.MemoryTests.test_vector_stale_hits_cannot_resurrect_superseded_facts) ... ok\ntest_wal_backup_is_restorable_and_cannot_overwrite (memory_manager.tests.test_memory.MemoryTests.test_wal_backup_is_restorable_and_cannot_overwrite) ... ok\ntest_authenticated_http_evidence_and_heartbeat (memory_manager.phase6d.test_security.SecurityTests.test_authenticated_http_evidence_and_heartbeat) ... ok\ntest_forged_receipt_wrong_mission_and_model_authority_denied (memory_manager.phase6d.test_security.SecurityTests.test_forged_receipt_wrong_mission_and_model_authority_denied) ... ok\ntest_heartbeat_expiry_replay_busy_and_restart (memory_manager.phase6d.test_security.SecurityTests.test_heartbeat_expiry_replay_busy_and_restart) ... ok\ntest_real_authorized_history_receipt_and_restart (memory_manager.phase6d.test_security.SecurityTests.test_real_authorized_history_receipt_and_restart) ... ok\ntest_search_receipt_revision_binding (memory_manager.phase6d.test_security.SecurityTests.test_search_receipt_revision_binding) ... ok\ntest_verified_backup_restore_and_idempotence (memory_manager.phase6d.test_security.SecurityTests.test_verified_backup_restore_and_idempotence) ... ok\ntest_worker_stale_busy_and_unknown_never_dispatch (memory_manager.phase6d.test_security.SecurityTests.test_worker_stale_busy_and_unknown_never_dispatch) ... ok\n\n----------------------------------------------------------------------\nRan 38 tests in 10.736s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "memory_manager.phase6d.test_final.FinalTests.test_unix_rpc_real_service_without_model"
+      ],
+      "exit_code": 0,
+      "seconds": 0.138,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.062s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "test_production_storage_transport.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.428,
+      "stdout": "{\"passed\":true,\"sqlite_and_unix_transport_real\":true,\"legacy_ddl_from_source\":true,\"private_data_read\":false,\"models_called\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_production_bindings.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.401,
+      "stdout": "{\"passed\":true,\"entry_hybrid_provider_simulated\":true,\"auth_and_revocation\":true,\"no_legacy_codex_bypass\":true,\"power_state_restart_no_replay\":true,\"physical_requests_real\":0,\"remote_inference_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_backend.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.159,
+      "stdout": "{\"passed\":true,\"actual_prepared_handler_body\":true,\"production_module_imported\":false,\"providers_simulated\":true,\"same_space_voice_theft_denied\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_final.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.319,
+      "stdout": "{\"passed\":true,\"account_route_pairs\":53,\"hybrid_public_and_codex_simulated\":true,\"server_lists_filtered\":true,\"shared_space_acl\":true,\"imports_streamed\":true,\"one_session_registry\":true,\"hermes_history_separate_from_admission\":true,\"canonical_and_heartbeat_wired\":true,\"physical_actions_real\":0,\"remote_api_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_security.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.317,
+      "stdout": "{\"passed\":true,\"route_method_pairs\":101,\"protected_pairs_exercised\":97,\"physical_and_shell_handlers_called\":0,\"real_provider_calls\":0,\"voice_cross_subject_denied\":true,\"open_stream_revoked\":true,\"cookie_scope_migration\":true,\"private_mount_revocation_fail_closed\":true,\"static_symlink_and_prefix_denied\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6c_readiness.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.486,
+      "stdout": "{\"passed\":true,\"session_rotation_logout_revocation\":true,\"hot_policy_fail_closed\":true,\"unchanged_valid_voice_identity\":true,\"canonical_dates_without_silent_rewrite\":true,\"history_only_with_create_and_approve_denied\":true,\"policy_request_average_ms\":5.58,\"production_writes\":0,\"gpu_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6_ui.cjs",
+        "--read-only",
+        "--final"
+      ],
+      "exit_code": 0,
+      "seconds": 5.618,
+      "stdout": "PASS history-only panel; UI Chromium desktop/mobile: existing holographic frontend, login, async synthetic mission, source text/XSS rejection, independent approval display, no overflow, microphone remains untouched. All APIs simulated locally.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6d_auth_ui.cjs"
+      ],
+      "exit_code": 0,
+      "seconds": 1.708,
+      "stdout": "{\"passed\":true,\"standalone_auth_without_hermes\":true,\"desktop_mobile\":true,\"secret_not_persisted\":true,\"real_provider_calls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_speech.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.195,
+      "stdout": "PASS: speech-only requests, exact spoken text, no history/tools/key exposure, WAV bounds, session isolation, separate metering, unknown costs on provider failure.\nPASS: incremental PCM speech, arbitrary SSE boundaries, final usage metering and no WAV wait.\nPASS: interrupted synthesis cancels the provider request and keeps incomplete metering honest.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_phase6.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.756,
+      "stdout": "PASS phase6: real local HTTP/SQLite admission, idempotence, events, controller restart, queued persistence, cancel; server auth/ACL/physical and approval denial; flag rollback and durable notification cursor. No Hermes/GPU/production.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "test_production_private_services.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.231,
+      "stdout": "{\"passed\":true,\"private_http_unix_real\":true,\"revoked_session_refused\":true,\"legacy_ask_not_exposed\":true,\"standalone_auth_bootstrap\":true,\"providers_called\":0}\n",
+      "stderr": ""
+    }
+  ]
+}

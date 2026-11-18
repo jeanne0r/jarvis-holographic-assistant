@@ -1,0 +1,10 @@
+{
+  "purpose": "Diagnostic enhancement; read-only flag returns before any arming or Windows checks",
+  "files": {
+    "ops/pilot-network/run-worker-window.py": "3e9351e2598c698f6ed305f0529df68266b49f2d0084ea0df7d8461ddd9c3ff3",
+    "memory_manager/phase6/test_worker_window_admin.py": "24d43594a212719590bc7c704f12372908197c0bdf96ec1c1773a2d2665df7ca"
+  },
+  "base_manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+  "effective_manifest_sha256": "347f2fed8d9c306f2b646cfba11c2f65973fd803e349e19f764e22d27c4f4c11",
+  "previous_manifest_sha256": "810c2341450e4fc8af5d0b695795ea130fc138d496ad48c1092d3a1e6683a285"
+}

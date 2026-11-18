@@ -1,0 +1,20 @@
+{
+  "source": "synthetic Windows state.db read-only",
+  "session_id": "run_69674fdee77a401c885f6bcae6da8e71",
+  "tool_calls": [
+    {
+      "tool": "mcp__jarvis__jarvis_memory_knowledge",
+      "tool_call_id": "pilot-51b76925-2838-495e-bc0a-b2e559db5371-0",
+      "arguments": {
+        "q": "masse nominale identique"
+      }
+    },
+    {
+      "tool": "mcp__jarvis__jarvis_memory_history",
+      "tool_call_id": "pilot-51b76925-2838-495e-bc0a-b2e559db5371-1",
+      "arguments": {
+        "memory_id": "synthetic://doselab/old"
+      }
+    }
+  ]
+}

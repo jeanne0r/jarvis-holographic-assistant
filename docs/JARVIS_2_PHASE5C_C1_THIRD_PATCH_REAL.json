@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "scope": "C1 reviewed lab patch only",
+  "id": "20261114T205350Z-e7349b33",
+  "backup_directory": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T205350Z-e7349b33",
+  "files": [
+    {
+      "path": "memory_manager/phase2/mcp.py",
+      "before_sha256": "4768e36167a74c52b70899de8cefeeadc39704a976f0d2189086b9e2c5883252",
+      "target": "C:\\JarvisHermesLab\\app\\memory_manager\\phase2\\mcp.py",
+      "backup": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T205350Z-e7349b33\\0.before"
+    }
+  ],
+  "new_sha256": {
+    "memory_manager/phase2/mcp.py": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef"
+  },
+  "runtime_started": false
+}

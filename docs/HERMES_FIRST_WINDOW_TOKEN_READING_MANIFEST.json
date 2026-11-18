@@ -1,0 +1,12 @@
+{
+  "purpose": "Use existing token-loader semantics and attest effective Windows identities; no token file change",
+  "files": {
+    "ops/pilot-network/run-worker-window.py": "7fec4d275461ea29fa9abbcd14297ad66e0888bbd5930478f8d1db4bf6c450f4",
+    "memory_manager/phase6/test_worker_window_admin.py": "0687929224fe0c93d1a2ef9b99ff8a2ca05c648abe538d83795bb3befc98f8de"
+  },
+  "base_manifest_sha256": "34abd3ab6c1fe9fad12e3eecb2df77bde963335bd528837ecf91d6f438884ed2",
+  "effective_manifest_sha256": "347f2fed8d9c306f2b646cfba11c2f65973fd803e349e19f764e22d27c4f4c11",
+  "previous_manifest_sha256": "e584d8097d921252ad17ad2e820da13c4d522de2c44cf229ccebf333e32984ea",
+  "credential_loader_sha256": "56a87075e51c7aa2074c4c70ba7367dca33bbdee5639e55a72dc9d333584c684",
+  "credential_loader_git_commit": "f1f2ec6e18c49553a6431d9b7476851ee92ca4e2"
+}

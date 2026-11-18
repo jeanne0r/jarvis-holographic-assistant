@@ -1,0 +1,190 @@
+{
+  "schema": "hermes_on_demand_delivery.v1",
+  "base_commit": "d14a2d5",
+  "package": "/home/user/workspace/jarvis-2-memory/data/hermes-demand/deliverable",
+  "package_manifest_sha256": "0b96327267a67ea05437342626a16428896be94a48a3b877230feb714927154e",
+  "reviewed_sources": {
+    "hermes-embedded-api.mjs": "65e9ca6afe6fbedbeb1702a9e5c243f45ff2ce7fe61872cc11726027d84cf34a",
+    "memory_manager/phase2/mcp.py": "75383b7c0d0acb3a5d73da33cdc9120a114807be104e3d028ed192b803e80adf",
+    "memory_manager/phase2/memory_tools.py": "02769bf00bcafc25b345aeb44be2b89056ab9bcbd7931a835d507ea8f6dccf2c",
+    "memory_manager/phase3/mcp.py": "f77e9d6d945041d7388aa66600e75bad8aff4b6a627c953e8011790113ad00f1",
+    "memory_manager/phase4/native_trial.py": "e5db880122ca98ba8ca896f8edd13f6ade4070f2e99f9c1a25aba42c9f6470bb",
+    "memory_manager/phase6/demand_queue.py": "ec47a88dde5176688942444d7933c845980ae16a200de61cbe1799db630bfe7f",
+    "memory_manager/phase6/demand_service.py": "12e8fb4ebf6d939f64a5d3e393fd157fd33be2545c3cbffb380db151fddf94c7",
+    "memory_manager/phase6/memory_audit.py": "866a20d4592b3207efe63b0f7a6d0787fea0b306558045066ddf4e8d45a66f2c",
+    "memory_manager/phase6/operational.py": "94025dfe43581d325a4dda2d69e69f670220d62cc0ab2bcb3d4e93e9372f7430",
+    "memory_manager/phase6/test_demand.py": "6a9aee232206bd4fede04a45376ef0a76e1a6a06aa5d115949dddf5f0f5809ed",
+    "memory_manager/phase6/test_demand_http.py": "6bee61e54f4608cdbf9a0de1f15acd447d51978c0d104f66e3fb7720072123a5",
+    "memory_manager/phase6/test_supervisor_security.py": "c9f23e8feb1192446bd1c70672a10050899f52b8590e7189c13d1ea58eb48881",
+    "memory_manager/phase6d/evidence.py": "13194e2ff6daf92dbb1fc34ef6a87616febcbeea96e8a6dd742620c99c4b9ecc",
+    "ops/demand/attest-confinement.py": "0cb2641f4a63e73beb586d029169adeb4e864540ef0800f148763fc10dc3f7fc",
+    "ops/demand/jarvis-hermes-confinement.service.in": "e3237fb1a85aef9d4560a871fbde1289cb7bc70ac448f9737cb3ae804ba1291d",
+    "ops/demand/jarvis-hermes-private-boot.service.in": "d4db0782aaafa208db4526bb32162c88ee53fb9065dc50be9d7801d91340dc33",
+    "ops/demand/jarvis-hermes-supervisor.service.in": "1aae3c595d09e2fb8522a9b3b7addee1418dbc767ade89aa6263ec168699b0ce",
+    "ops/demand/private-profile.example.json": "f8b02b6665815f9afb1c9b776f5b4e6bbd9644fa342ca3c7e551ab444e3a9caa",
+    "ops/demand/start-private-queue.py": "be3cd5f979e3995f3669690287c686a16fde97c2954400d2d744dbe413953b29",
+    "ops/demand/supervisor-config.example.json": "bbbd7e6c2dba88907c4d085b0549808ca0318fc2e5b432cd3e3c473611af8476",
+    "ops/demand/supervisor-egress.nft.in": "42474568699679067e4a6436fddf111eca89432d4e8cc57c29b7281f457287ec",
+    "ops/embedded-ui-lab.mjs": "29be00db59c385e2ac3ca3d670d03962d0d682360ba18d5a2e63749ad090bc0a",
+    "ops/pilot-embedded.mjs": "24d97590ed3ff56ba591aee2bc3990d903577efcb37c911522f16e7133ded807",
+    "scripts/audit_gpu.py": "baa83472efd47944c7fb0acf96bd201d62c4a6bea2fcc23e32a086a69a2836eb",
+    "scripts/demand_supervisor.py": "faf801b73965e4a54e52e4e932edbeac1c7797860bec8c34bc9e2581e710b7b1",
+    "scripts/pilot_existing_ollama.py": "6e8d74380d62fbba38ccbb128d956f547b837c965b01d81ca745fe53a409c732",
+    "scripts/pilot_phase4_windows.py": "84446a3a565cd90b137d7867d9e250b56bef3765f26e2b82851f4e69f4fe6c9c",
+    "scripts/pilot_phase6b_panel.py": "83e368116d4621269d323d7c079e594e13c73dded015bc934dfe548f98e13b51",
+    "scripts/prepare_demand.py": "16c2cdbe034a2f80440fbea9f08d72258677302b80af76cf6d2df9de5e304d56",
+    "scripts/run_interactive_hermes.py": "807169e4384ac4e649beac6a29493193b21ed33caa4035c993a57a2b82308f1d",
+    "test_hermes_demand_browser.cjs": "337ed79fb6095fe082a2bd3e98bbd4501a6d96aa4d75c7806a442529fc92213f"
+  },
+  "private_delta": [
+    {
+      "path": "hermes-embedded-api.mjs",
+      "before": "cc934653e01b925783b3c4417555ef941c33ba9ef5cb2c352665da603d4270be",
+      "after": "2f4e2fc6ca3f728bbcd9bd80c4ec0d99ac9b0a8452bf7f09ec1a34fdfe3a6af6"
+    },
+    {
+      "path": "deployment-files.json",
+      "before": "a330242778228b66340b22cd37ac6ef2f8f24fc0df02382fa87aa3924defd81a",
+      "after": "e68cb00758560feed91a17939a60e22722ded7fbdce7fd4e0e97c3cedfda0a49"
+    },
+    {
+      "path": "ops/pilot-embedded.mjs",
+      "before": "a33e5e2e5ac347ee452ca52b7daac69eef27ffe24e9cd0e13a4c29986345253a",
+      "after": "640b01a6bd84e5bfa15d1df098c446d942e19a53d17a187291d4bafa3c4ef758"
+    },
+    {
+      "path": "scripts/text_mission_window.py",
+      "before": null,
+      "after": "9ddbdc612aaf2e750c826ca7890f5a580a3fe78cd77870025d6d0876dd5d48c3"
+    },
+    {
+      "path": "docs/pilot-interactive/manifest.json",
+      "before": "53849661f4a2de44c222776382a556597b143f6eba042a5f35ea88ce50065bae",
+      "after": "d8b08cbd1beb93e3770ed9fb752d38ef51bc0a4985d0f19d16667ca27dc7c025"
+    },
+    {
+      "path": "memory_manager/phase6d/evidence.py",
+      "before": "a520bf22d2a88248203d5456315bead25035e781469c403aee4aa603e7a19995",
+      "after": "13194e2ff6daf92dbb1fc34ef6a87616febcbeea96e8a6dd742620c99c4b9ecc"
+    },
+    {
+      "path": "memory_manager/phase6/memory_audit.py",
+      "before": null,
+      "after": "866a20d4592b3207efe63b0f7a6d0787fea0b306558045066ddf4e8d45a66f2c"
+    },
+    {
+      "path": "memory_manager/phase6/operational.py",
+      "before": "99fdda02f51eb7eb82e9a6659578ab9c49b0955af8d6d699f620915f82a8ea36",
+      "after": "94025dfe43581d325a4dda2d69e69f670220d62cc0ab2bcb3d4e93e9372f7430"
+    },
+    {
+      "path": "memory_manager/phase6/demand_queue.py",
+      "before": null,
+      "after": "ec47a88dde5176688942444d7933c845980ae16a200de61cbe1799db630bfe7f"
+    },
+    {
+      "path": "memory_manager/phase6/demand_service.py",
+      "before": null,
+      "after": "12e8fb4ebf6d939f64a5d3e393fd157fd33be2545c3cbffb380db151fddf94c7"
+    },
+    {
+      "path": "memory_manager/phase3/mcp.py",
+      "before": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+      "after": "f77e9d6d945041d7388aa66600e75bad8aff4b6a627c953e8011790113ad00f1"
+    },
+    {
+      "path": "memory_manager/phase2/memory_tools.py",
+      "before": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+      "after": "02769bf00bcafc25b345aeb44be2b89056ab9bcbd7931a835d507ea8f6dccf2c"
+    },
+    {
+      "path": "memory_manager/phase2/mcp.py",
+      "before": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef",
+      "after": "75383b7c0d0acb3a5d73da33cdc9120a114807be104e3d028ed192b803e80adf"
+    },
+    {
+      "path": "memory_manager/phase2/bridge.py",
+      "before": "2b671b7fe909e250a94d5db2f58272c98a4d3ee6992196f20fb0c2d6e164c251",
+      "after": "d441c0c7ac696a0266a98f41f45a4aa63221630ec9d4c9eb4139517dd0de5e02"
+    }
+  ],
+  "frontend": {
+    "target": "/home/user/gateway/public/jarvis/hermes-embedded.js",
+    "before": "bb091f140d7b54ef896fc14057890285e991968d2c2962096c959f012455695d",
+    "after": "da3d4290d64c5c044fc269a465f3e46c15b8d4a27e11b4076d3aca19b9ede588"
+  },
+  "windows_delta": [
+    {
+      "path": "memory_manager/phase2/mcp.py",
+      "before": "a7543249a1eb75a9f6081795f2ab95593a8cd7c054afefcf66427d855cc0faef",
+      "after": "75383b7c0d0acb3a5d73da33cdc9120a114807be104e3d028ed192b803e80adf"
+    },
+    {
+      "path": "memory_manager/phase2/memory_tools.py",
+      "before": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+      "after": "02769bf00bcafc25b345aeb44be2b89056ab9bcbd7931a835d507ea8f6dccf2c"
+    },
+    {
+      "path": "memory_manager/phase3/mcp.py",
+      "before": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+      "after": "f77e9d6d945041d7388aa66600e75bad8aff4b6a627c953e8011790113ad00f1"
+    }
+  ],
+  "tests": {
+    "python_unit_regression": {
+      "passed": true,
+      "tests": 48,
+      "command": "python3 -B -m unittest memory_manager.phase6.test_supervisor_security memory_manager.phase6.test_demand memory_manager.phase6.test_citation_contract memory_manager.phase6.test_operational memory_manager.phase5c.test_preparation memory_manager.phase6.test_text_window -q"
+    },
+    "http_browser_integration": {
+      "passed": true,
+      "tests": 1,
+      "widths": [
+        1440,
+        390
+      ],
+      "command": "python3 -B -m unittest memory_manager.phase6.test_demand_http -q",
+      "real": [
+        "HTTP",
+        "SQLite",
+        "browser",
+        "existing Controller"
+      ],
+      "simulated": [
+        "Hermes native",
+        "Ollama",
+        "GPU",
+        "process cleanup"
+      ]
+    },
+    "node_regressions": {
+      "test_hermes_operational.mjs": 32,
+      "test_hermes_embedded.mjs": 42,
+      "test_hermes_single_session.mjs": 39,
+      "test_phase6d_security.mjs": {
+        "route_method_pairs": 101,
+        "protected_pairs_exercised": 97
+      }
+    },
+    "python_ast": true,
+    "systemd_static_verify": true,
+    "artifact_hashes_verified": true,
+    "rollback_code_copy_verified": true
+  },
+  "historical_verdict_unchanged": true,
+  "historical_passed": false,
+  "strict_citation_validator_sha256": "9ddbdc612aaf2e750c826ca7890f5a580a3fe78cd77870025d6d0876dd5d48c3",
+  "production_modified": false,
+  "gpu_calls": 0,
+  "paid_api_calls": 0,
+  "approval_blocks": [
+    "private code/frontend/account/network preparation with acceptance and execution disabled",
+    "persistent authenticated synthetic queue acceptance only",
+    "Windows source patches and temporary on-demand execution; boot activation only if explicitly approved"
+  ],
+  "not_yet_validated": [
+    "actual installation and new-unit kernel confinement probes",
+    "dedicated SSH/runtime identity provisioning",
+    "new on-demand lifecycle on real Windows/GPU"
+  ]
+}

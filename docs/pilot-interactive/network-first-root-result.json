@@ -1,0 +1,21 @@
+{
+  "origin": "user supplied terminal output",
+  "historical_verdict_preserved": true,
+  "passed": false,
+  "network": {
+    "loopback": {
+      "connected": true
+    },
+    "non_loopback": {
+      "connected": false,
+      "errno": null
+    }
+  },
+  "effective_bpf_hooks": [
+    "cgroup_device",
+    "cgroup_inet_egress",
+    "cgroup_inet_ingress"
+  ],
+  "pilot_started": false,
+  "interpretation": "System probe has effective ingress/egress hooks. Original check demanded EPERM/EACCES; timeout handling and receiver controls require separate validation. This is not evidence for the stopped user unit."
+}

@@ -1,0 +1,47 @@
+{
+  "pilot": "P6-L2",
+  "integration_passed": true,
+  "review_scope": "synthetic capacity arrays, references, observed timestamps and stable history ids",
+  "checks": {
+    "capacities_current_and_old_present": true,
+    "source_refs_present": true,
+    "source_timestamps_present": true,
+    "stable_history_ids": true,
+    "tools_completed_without_error": true
+  },
+  "canonical_knowledge_sources": [
+    {
+      "memory_id": "9d9a1803-1c5c-47e3-8dc7-ac740dc74d28",
+      "source_ref": "synthetic://doselab/old",
+      "observed": 1700000000.0,
+      "observed_utc": "2023-11-14T22:13:20+00:00",
+      "capacities_kg": [
+        1,
+        2,
+        5,
+        10
+      ]
+    },
+    {
+      "memory_id": "9d9a1803-1c5c-47e3-8dc7-ac740dc74d28",
+      "source_ref": "synthetic://doselab/correction",
+      "observed": 1700000100.0,
+      "observed_utc": "2023-11-14T22:15:00+00:00",
+      "capacities_kg": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "date_error_in_l1_reproduced": false,
+  "general_model_reliability_proven": false,
+  "reported_experience_validation": "inferred/unreviewed_report_not_verified_fact",
+  "knowledge_revision_count": 2,
+  "inferred_episode_count": 1,
+  "published_skills": 0,
+  "screenshot_sha256": "10190b3e9e932e221ea9bca3a8ef499908a5b05e7aedfa8758c74f37d09c8f26",
+  "historical_l1_verdict_unchanged": true,
+  "checked_fields_passed": true
+}

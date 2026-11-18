@@ -1,0 +1,13 @@
+{
+  "observed_at": 1794637128.5071716,
+  "host": "192.0.2.200",
+  "memory": {
+    "available": 3389243392,
+    "free": 2424496128,
+    "total": 16605601792,
+    "used": 13216358400
+  },
+  "requested_vm_memory_bytes": 4294967296,
+  "decision": "do_not_create_vm_insufficient_available_memory",
+  "existing_guests_changed": false
+}

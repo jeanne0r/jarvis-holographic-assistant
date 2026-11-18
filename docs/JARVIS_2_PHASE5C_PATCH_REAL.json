@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "scope": "C1 five-file lab patch only",
+  "id": "20261114T201632Z-f092ced7",
+  "backup_directory": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T201632Z-f092ced7",
+  "files": [
+    {
+      "path": "memory_manager/mcp_utf8.py",
+      "before_sha256": null,
+      "target": "C:\\JarvisHermesLab\\app\\memory_manager\\mcp_utf8.py",
+      "backup": null
+    },
+    {
+      "path": "memory_manager/phase2/mcp.py",
+      "before_sha256": "28d8bc0a78be658a1f75d21193dd68be4ddcda2f7219030b343220385843ab03",
+      "target": "C:\\JarvisHermesLab\\app\\memory_manager\\phase2\\mcp.py",
+      "backup": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T201632Z-f092ced7\\1.before"
+    },
+    {
+      "path": "memory_manager/phase2/memory_tools.py",
+      "before_sha256": "4cf7d12201d57637402441c001806945ccdf69f6c8163a733c33c30eb1affe1d",
+      "target": "C:\\JarvisHermesLab\\app\\memory_manager\\phase2\\memory_tools.py",
+      "backup": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T201632Z-f092ced7\\2.before"
+    },
+    {
+      "path": "memory_manager/phase3/mcp.py",
+      "before_sha256": "50cf681e66471aebd79ee59bf7ed5dd7bc0ef7518a67f7579c2b21c7ec93f7c4",
+      "target": "C:\\JarvisHermesLab\\app\\memory_manager\\phase3\\mcp.py",
+      "backup": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T201632Z-f092ced7\\3.before"
+    },
+    {
+      "path": "memory_manager/phase4/windows.py",
+      "before_sha256": "4830ed7698deaaffc4b0d9fc2a805e7ab85e2784890cd1c1b5a042176bc0c14f",
+      "target": "C:\\JarvisHermesLab\\app\\memory_manager\\phase4\\windows.py",
+      "backup": "C:\\JarvisHermesLab\\staging\\phase5c-20261114T201632Z-f092ced7\\4.before"
+    }
+  ],
+  "new_sha256": {
+    "memory_manager/mcp_utf8.py": "6a1268a189e12125ed334ee1e4f4d74675710c3dbc7a6691fb0e307f835c514e",
+    "memory_manager/phase2/mcp.py": "4768e36167a74c52b70899de8cefeeadc39704a976f0d2189086b9e2c5883252",
+    "memory_manager/phase2/memory_tools.py": "c7af5615b5dc1eb35b78accd5bd3f6044b8237fbc88bc0a0de35cefa416c2aa2",
+    "memory_manager/phase3/mcp.py": "e609d6209a3776a6c04a80988944e8f07efa37ec17f86516c332bcd258a46b69",
+    "memory_manager/phase4/windows.py": "53df3cbfa2e76b5069204afa1b4e8ba5136bb8e328fb67a01a32da2ef50a652a"
+  },
+  "runtime_started": false
+}

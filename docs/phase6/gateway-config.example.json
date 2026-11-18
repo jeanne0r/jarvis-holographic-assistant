@@ -1,0 +1,22 @@
+{
+  "origin": "https://jarvis.invalid",
+  "credentials": [
+    {
+      "subject": "pilot-operator",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expiresAt": 0
+    }
+  ],
+  "grants": [["pilot-operator", ["user"]]],
+  "roles": [["pilot-operator", ["conversation", "voice", "capabilities", "usage.read", "usage.write", "memory.read", "memory.write", "missions.create", "missions.read", "missions.cancel"]]],
+  "clients": [
+    {
+      "subject": "pilot-operator",
+      "space": "user",
+      "scope": "private",
+      "baseURL": "http://127.0.0.1:8792",
+      "credentialFile": "/PRIVATE/phase6/bridge-writer.json"
+    }
+  ],
+  "approvalClients": []
+}

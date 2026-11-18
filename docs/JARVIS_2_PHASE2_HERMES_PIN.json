@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/NousResearch/hermes-agent",
+  "commit": "4959268e312a21a361f248e49030d5f5df3984d5",
+  "files": {
+    "run_agent.py": "9858d5c0971d268b5814a5adc36d64e669a2b023b0ba0ceeb58498c89e9b88d0",
+    "agent/turn_facade.py": "e9176a8ae1d7822fa45c75b680d5ae4be7c949e49c877673aea867cc146856a0",
+    "gateway/platforms/api_server.py": "b3e5f7e87a81e972ddd1048577bdf6ac009d2fd9ac55e89eb40a93d735696395",
+    "gateway/platforms/api_server_runs.py": "565f0570cd1ff771590534586bdb6841cd86530c8e0728ce6e036597cc2a50a6",
+    "tools/session_search_tool.py": "91d90ac955379093720870f2492c5ef1b808e148cb2ed895318db84a9cfa3ad8",
+    "tools/skill_manager_tool.py": "1cfbcf459fd28a92fa1a2755b564f94f950e38e9e411ae0cb298e8464a1e3bab",
+    "tools/memory_tool.py": "791e3561346190d243be91714a8d8ffaeafa72a40a471fe8dc01cf778b4d4a68",
+    "tools/delegate_tool.py": "3fe05db05b873ef866d854fcdd97fe6eff15019fa14dc7e113ec3bd60a1bf3b9",
+    "cron/executions.py": "ac22e4137f047c26b1fba332c0ae0078986d1c082f8afd48cbad10e89389168e"
+  },
+  "contract_static_check": "passed: routes, handlers, request_id/choice and Idempotency-Key verified in source; runtime not executed"
+}

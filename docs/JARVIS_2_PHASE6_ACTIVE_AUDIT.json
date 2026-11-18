@@ -1,0 +1,19 @@
+{
+  "at_utc": "2026-11-14T21:19:28Z",
+  "files": {
+    "/home/user/gateway/server.js": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+    "/home/user/workspace/jarvis/backend.mjs": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+    "/home/user/workspace/jarvis/live.mjs": "64e7543623b6aa16dfb18aa4735a9e92b476cce236801d3e54652f9c973cb054",
+    "/home/user/gateway/public/jarvis/live.js": "0067033521d6a15f69f235cf31c64cb43468f37d6ca11517b4b868e4e5eaccef",
+    "/home/user/gateway/public/jarvis/index.html": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d"
+  },
+  "node": "v18.19.1",
+  "anonymous_probe": {
+    "status": 400,
+    "route": "capabilities with deliberately invalid space",
+    "personal_content_requested": false,
+    "body_retained": false,
+    "credentials_sent": false
+  },
+  "active_core_engine": "hybrid"
+}

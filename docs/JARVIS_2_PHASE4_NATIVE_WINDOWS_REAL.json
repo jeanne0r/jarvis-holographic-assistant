@@ -1,0 +1,767 @@
+{
+  "started_at_utc": "2026-11-14T16:46:11Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "samples": [
+    {
+      "available": true,
+      "observed_at": 1794674777.5801146,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 53.97,
+      "utilization": 0.0,
+      "temperature_c": 32.0,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674782.2205122,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1146.0,
+      "free_mib": 9094.0,
+      "driver": "621.24",
+      "power_w": 94.51,
+      "utilization": 0.0,
+      "temperature_c": 33.28,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674784.7985785,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 94.37,
+      "utilization": 0.0,
+      "temperature_c": 33.56,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674787.3921092,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 94.59,
+      "utilization": 0.0,
+      "temperature_c": 33.94,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674789.9894266,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 94.47,
+      "utilization": 0.0,
+      "temperature_c": 34.31,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674792.565187,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 93.72,
+      "utilization": 0.0,
+      "temperature_c": 33.66,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674795.1405575,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 15.15,
+      "utilization": 0.0,
+      "temperature_c": 31.44,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674797.7339964,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 28.28,
+      "utilization": 8.0,
+      "temperature_c": 33.44,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674800.498503,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 3849.0,
+      "free_mib": 6391.0,
+      "driver": "621.24",
+      "power_w": 93.76,
+      "utilization": 7.0,
+      "temperature_c": 34.75,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674803.0851624,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6029.0,
+      "free_mib": 4211.0,
+      "driver": "621.24",
+      "power_w": 94.0,
+      "utilization": 5.0,
+      "temperature_c": 35.19,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674805.7034483,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 70.43,
+      "utilization": 0.0,
+      "temperature_c": 33.41,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674808.3083222,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 14.94,
+      "utilization": 0.0,
+      "temperature_c": 32.0,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674810.8987606,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 10.31,
+      "utilization": 0.0,
+      "temperature_c": 31.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674813.5264149,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 10.39,
+      "utilization": 0.0,
+      "temperature_c": 31.69,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674816.1221673,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 13.37,
+      "utilization": 1.0,
+      "temperature_c": 31.75,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674818.691526,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 19.72,
+      "utilization": 0.0,
+      "temperature_c": 31.75,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674821.27471,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 11.94,
+      "utilization": 2.0,
+      "temperature_c": 31.72,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674823.8491538,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 13.22,
+      "utilization": 0.0,
+      "temperature_c": 31.75,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674826.4258578,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 11.51,
+      "utilization": 0.0,
+      "temperature_c": 31.72,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674829.0524597,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 10.69,
+      "utilization": 0.0,
+      "temperature_c": 31.5,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674831.6321075,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 10.39,
+      "utilization": 0.0,
+      "temperature_c": 31.41,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674834.2092104,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6057.0,
+      "free_mib": 4183.0,
+      "driver": "621.24",
+      "power_w": 10.45,
+      "utilization": 0.0,
+      "temperature_c": 31.41,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674836.8493543,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6703.0,
+      "free_mib": 3537.0,
+      "driver": "621.24",
+      "power_w": 93.83,
+      "utilization": 4.0,
+      "temperature_c": 34.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674839.457564,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6927.0,
+      "free_mib": 3313.0,
+      "driver": "621.24",
+      "power_w": 59.1,
+      "utilization": 0.0,
+      "temperature_c": 33.78,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674842.035247,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6927.0,
+      "free_mib": 3313.0,
+      "driver": "621.24",
+      "power_w": 20.95,
+      "utilization": 0.0,
+      "temperature_c": 31.91,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674844.6269064,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6927.0,
+      "free_mib": 3313.0,
+      "driver": "621.24",
+      "power_w": 18.59,
+      "utilization": 0.0,
+      "temperature_c": 32.0,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674847.2392406,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6933.0,
+      "free_mib": 3307.0,
+      "driver": "621.24",
+      "power_w": 14.25,
+      "utilization": 0.0,
+      "temperature_c": 31.84,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674849.8482013,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6933.0,
+      "free_mib": 3307.0,
+      "driver": "621.24",
+      "power_w": 17.92,
+      "utilization": 0.0,
+      "temperature_c": 31.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674852.4106622,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6933.0,
+      "free_mib": 3307.0,
+      "driver": "621.24",
+      "power_w": 9.57,
+      "utilization": 0.0,
+      "temperature_c": 31.94,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674854.9883974,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 6935.0,
+      "free_mib": 3305.0,
+      "driver": "621.24",
+      "power_w": 9.81,
+      "utilization": 0.0,
+      "temperature_c": 31.88,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794674857.5681822,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 13.87,
+      "utilization": 16.0,
+      "temperature_c": 31.81,
+      "miner_running": false
+    }
+  ],
+  "cleanup": {
+    "supervisor": {
+      "pid": 2328,
+      "reason": "operator_stop",
+      "exit_code_before_job_close": 259,
+      "resource_profile": "ollama",
+      "memory_limit_bytes": 8589934592,
+      "limit_flags": 8712,
+      "peak_job_memory_bytes": 8157687808,
+      "peak_process_memory_bytes": 8077869056,
+      "elapsed_seconds": 85.48919590000878,
+      "owned_process_stopped_after_close": true
+    },
+    "listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794674862.511757,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1144.0,
+      "free_mib": 9096.0,
+      "driver": "621.24",
+      "power_w": 19.15,
+      "utilization": 0.0,
+      "temperature_c": 32.34,
+      "miner_running": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794674773.3944876,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1144.0,
+    "free_mib": 9096.0,
+    "driver": "621.24",
+    "power_w": 11.74,
+    "utilization": 0.0,
+    "temperature_c": 29.06,
+    "miner_running": false
+  },
+  "server_identity": {
+    "listening": true,
+    "addresses": [
+      "127.0.0.1"
+    ],
+    "pid": 2328,
+    "started": "2026-11-14T16:46:14.5877393Z",
+    "name": "ollama"
+  },
+  "configuration": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 64000,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "residency_samples": [
+    {
+      "observed_at": 1794674836.851503,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674839.4613514,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674842.037075,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674844.6292892,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674847.2415972,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674849.8512683,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674852.4132502,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    },
+    {
+      "observed_at": 1794674854.9909828,
+      "models": [
+        {
+          "name": "qwen3.5:4b",
+          "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+          "size": 5154285812,
+          "size_vram": 5154285812,
+          "context_length": 64000
+        }
+      ]
+    }
+  ],
+  "native_windows": {
+    "attempt_id": "20261114T164617Z",
+    "hermes_runtime_tested": true,
+    "paid_api_calls": 0,
+    "missions": [
+      {
+        "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+        "admission_seconds": 0.017373738111928105,
+        "number": 1,
+        "skill_mode": false,
+        "bridge_status": {
+          "id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+          "owner": "phase3-synthetic",
+          "scope": "private",
+          "event_key": "native-hermes-20261114T164617Z-1",
+          "state": "failed",
+          "definition": {
+            "allowed_tools": [
+              "memory.search",
+              "report"
+            ],
+            "budget": {
+              "attempts": 1,
+              "cost_micros": 0,
+              "local_tokens": 98304,
+              "seconds": 180,
+              "tokens": 0
+            },
+            "memory_context": [],
+            "objective": "Analyse DoseLab X4 : retrouve les cellules actuelles, les anciennes valeurs remplacées et cite les sources de chaque révision. Consulte réellement les outils mémoire.",
+            "plan": [
+              "Consult controlled memory tools",
+              "Report with provenance"
+            ],
+            "priority": 1,
+            "trigger": "approved-synthetic-pilot"
+          },
+          "created": 1794674790.0918362,
+          "updated": 1794674857.7548099,
+          "events": [
+            {
+              "seq": 1,
+              "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+              "state": "queued",
+              "actor": "phase3-synthetic",
+              "evidence": "{}",
+              "created": 1794674790.0918362
+            }
+          ],
+          "dispatch_state": "failed",
+          "upstream_id": "run_b2f9e3273a8a4ee68e840e8c26154a06",
+          "approvals": []
+        },
+        "events": [
+          {
+            "seq": 1,
+            "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+            "event_key": "admitted",
+            "kind": "queued",
+            "data": "{\"mission_id\":\"3cb3801a-e813-4b9e-b899-0a3c442fb3ff\"}",
+            "created": 1794674790.1013594
+          },
+          {
+            "seq": 2,
+            "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+            "event_key": "submitted",
+            "kind": "running",
+            "data": "{\"run_id\":\"run_b2f9e3273a8a4ee68e840e8c26154a06\"}",
+            "created": 1794674790.245882
+          },
+          {
+            "seq": 3,
+            "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+            "event_key": "upstream-running",
+            "kind": "progress",
+            "data": "{\"upstream_state\":\"running\"}",
+            "created": 1794674791.2691102
+          },
+          {
+            "seq": 68,
+            "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+            "event_key": "terminal",
+            "kind": "failed",
+            "data": "{\"output\":\"Native output withheld by sensitive-content filter.\",\"output_withheld\":true,\"usage\":{\"input_tokens\":0,\"output_tokens\":0,\"total_tokens\":0},\"validation\":\"unreviewed\"}",
+            "created": 1794674857.7549248
+          }
+        ],
+        "native_status": {
+          "object": "hermes.run",
+          "model": "qwen3.5:4b",
+          "created_at": 1794674790.222261,
+          "pending_controls": [],
+          "run_id": "run_b2f9e3273a8a4ee68e840e8c26154a06",
+          "status": "failed",
+          "session_id": "run_b2f9e3273a8a4ee68e840e8c26154a06",
+          "admission_id": "871d3f5e65cf4a498d0d64ab800509dc",
+          "execution_generation": 1,
+          "output": "custom rejected your API key, so the model can't be reached. Update it in Settings → Providers, or run `hermes setup` in a terminal.\n\nProvider said: HTTP 403: {\"error\": \"Pilot quota or mission denied\"}",
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+          }
+        },
+        "usage": [
+          {
+            "id": "14ad1f2d-b5df-47de-b34f-90b899a69a33",
+            "budget_id": "cbf90489-10c5-461c-9bdd-1926f3498c75",
+            "month": "2026-11",
+            "mission_id": "3cb3801a-e813-4b9e-b899-0a3c442fb3ff",
+            "parent_call": null,
+            "model": "qwen3.5:4b",
+            "reserved_tokens": 64000,
+            "used_tokens": null,
+            "reserved_remote_micros": 0,
+            "actual_remote_micros": null,
+            "latency": null,
+            "state": "reserved",
+            "created": 1794674796.7170691
+          }
+        ],
+        "skills": [],
+        "active_skills": 0,
+        "successful_native_tools": [],
+        "checks": {
+          "native_completed": false,
+          "experience_recorded": false,
+          "no_remote_cost": false,
+          "native_search_called": false,
+          "native_history_called": false,
+          "current_source_cited": false,
+          "old_source_cited": false
+        },
+        "passed": false
+      }
+    ],
+    "model_requests": [
+      {
+        "at": 1794674796.0960681,
+        "bytes": 13706,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "stream",
+          "stream_options",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "error": "Unavailable: Private endpoint unavailable"
+      },
+      {
+        "at": 1794674856.8342776,
+        "bytes": 13647,
+        "fields": [
+          "messages",
+          "model",
+          "reasoning_effort",
+          "tools"
+        ],
+        "tools": [
+          "mcp__jarvis__jarvis_memory_contradictions",
+          "mcp__jarvis__jarvis_memory_experiences",
+          "mcp__jarvis__jarvis_memory_history",
+          "mcp__jarvis__jarvis_memory_project",
+          "mcp__jarvis__jarvis_memory_search",
+          "mcp__jarvis__jarvis_skill_get"
+        ],
+        "error": "PermissionError: System budget exhausted"
+      }
+    ],
+    "passed": false,
+    "runtime_supervisors": [
+      {
+        "pid": 19788,
+        "reason": "operator_stop",
+        "exit_code_before_job_close": 259,
+        "resource_profile": "hermes",
+        "memory_limit_bytes": 2147483648,
+        "limit_flags": 8712,
+        "peak_job_memory_bytes": 371163136,
+        "peak_process_memory_bytes": 326483968,
+        "elapsed_seconds": 78.29618260001007,
+        "owned_process_stopped_after_close": true,
+        "trial_id": "a833bd3202d54f91b775174ae8cdfa39"
+      }
+    ]
+  },
+  "passed": false,
+  "finished_at_utc": "2026-11-14T16:47:42Z"
+}

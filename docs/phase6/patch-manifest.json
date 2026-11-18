@@ -1,0 +1,131 @@
+{
+  "mode": "prepared-not-authorized-not-deployed",
+  "files": [
+    {
+      "source": "backend.mjs",
+      "target": "/home/user/workspace/jarvis/backend.mjs",
+      "before_sha256": "d605e09029a9f1949d67dd1cc2689c1cc78d7e66ccdb710be3e8ddb93fe50c2c",
+      "after_sha256": "964e4c606b4a1338cd42e247720df07e1750e5ff7e79fbc41babaf817530321c",
+      "new_file": false
+    },
+    {
+      "source": "live.mjs",
+      "target": "/home/user/workspace/jarvis/live.mjs",
+      "before_sha256": "64e7543623b6aa16dfb18aa4735a9e92b476cce236801d3e54652f9c973cb054",
+      "after_sha256": "1b80ef68ccca6ae984fca4ffd4424204c6c7593f0be5b2ed0cb8bab8082fd173",
+      "new_file": false
+    },
+    {
+      "source": "knowledge.mjs",
+      "target": "/home/user/workspace/jarvis/knowledge.mjs",
+      "before_sha256": "bb3757fa4a3099bf6c01c49c00ddf0f83d6393ac77ec290c4058b9de79f165c2",
+      "after_sha256": "eeb8ca28c1a5c3cbe4d7b4e10a25924b2a8292ae96bdc58c3076d844c160b2a4",
+      "new_file": false
+    },
+    {
+      "source": "voice-memory.mjs",
+      "target": "/home/user/workspace/jarvis/voice-memory.mjs",
+      "before_sha256": "84fdb67e63cfa62b69f0ca22dda1bd9ceb37671c4b2a3957a6d998e07db227b6",
+      "after_sha256": "8fe66de59b442cbc2a7de768070e5a7e80bb472d292342f23a6eeb3b4dff5284",
+      "new_file": false
+    },
+    {
+      "source": "voice-memory.py",
+      "target": "/home/user/workspace/jarvis/voice-memory.py",
+      "before_sha256": "68ae9c1e3ae0241038ee1598a1df654e65c547121a41eb1f6e3be881d58b3718",
+      "after_sha256": "fd15eecaa94d646642eb1bda419bb8f43b111bd033485df8ee3b368e9fdb0de3",
+      "new_file": false
+    },
+    {
+      "source": "store.py",
+      "target": "/home/user/workspace/jarvis/store.py",
+      "before_sha256": "3feca4e8ceeccfa6c106d0a9e8acc01116735ec0a5141c8b753881b0ae382c2c",
+      "after_sha256": "b5ae430808df57561d8f17d26a6aa9c25ea64f78140ab558ca198985d89af687",
+      "new_file": false
+    },
+    {
+      "source": "phase6-gateway.mjs",
+      "target": "/home/user/workspace/jarvis/phase6-gateway.mjs",
+      "before_sha256": null,
+      "after_sha256": "0f72971f47adfdac64ead39fbb7cb3a4db297b5d997e1fcbd39fd6a6c22e8994",
+      "new_file": true
+    },
+    {
+      "source": "jarvis-session-auth.mjs",
+      "target": "/home/user/workspace/jarvis/jarvis-session-auth.mjs",
+      "before_sha256": null,
+      "after_sha256": "6e09cdcae6adc8c3bc2f957116edc183ea946ab06925c49a2fcae796a47615c8",
+      "new_file": true
+    },
+    {
+      "source": "hermes-server-auth.mjs",
+      "target": "/home/user/workspace/jarvis/hermes-server-auth.mjs",
+      "before_sha256": null,
+      "after_sha256": "43be4096748ed426310274f76ece99bd22dbe32f77fdaff738ea39ce19627228",
+      "new_file": true
+    },
+    {
+      "source": "hermes-voice-tools.mjs",
+      "target": "/home/user/workspace/jarvis/hermes-voice-tools.mjs",
+      "before_sha256": null,
+      "after_sha256": "79ceaff38551840ff2cc39edbe9f2b6372cb75a08425c17156477738c79bddff",
+      "new_file": true
+    },
+    {
+      "source": "hermes-bridge-client.mjs",
+      "target": "/home/user/workspace/jarvis/hermes-bridge-client.mjs",
+      "before_sha256": null,
+      "after_sha256": "0fb65d7cfcfd53785741ed633821dfd4cf89dada0235fba46438ba388c3a8c21",
+      "new_file": true
+    },
+    {
+      "source": "jarvis-hermes-experimental.mjs",
+      "target": "/home/user/workspace/jarvis/jarvis-hermes-experimental.mjs",
+      "before_sha256": null,
+      "after_sha256": "3813153c5d65e26f06c8c9599880ef781cad69f9fd8dac05cb9d93764e5cb9d2",
+      "new_file": true
+    },
+    {
+      "source": "public/index.html",
+      "target": "/home/user/gateway/public/jarvis/index.html",
+      "before_sha256": "835ea80405e5d0d53b0004608c375a96e21746fdd64b8730db8a88fed1ea667d",
+      "after_sha256": "16622493087776469d1c15fa1b1d3f63d87995611e6a6b14e78340de8a4df5f3",
+      "new_file": false
+    },
+    {
+      "source": "public/hermes-missions.js",
+      "target": "/home/user/gateway/public/jarvis/hermes-missions.js",
+      "before_sha256": null,
+      "after_sha256": "7cd0c834f575bd87bc0b8eb630d9a3692055ab57811c846f1cac848e46afece6",
+      "new_file": true
+    },
+    {
+      "source": "public/hermes-missions.css",
+      "target": "/home/user/gateway/public/jarvis/hermes-missions.css",
+      "before_sha256": null,
+      "after_sha256": "8193ef2c67b9af3574fad1e7ec57a43075812919af7357348a2d22f160425273",
+      "new_file": true
+    },
+    {
+      "source": "generated gateway mount",
+      "target": "/home/user/gateway/server.js",
+      "before_sha256": "2db97a0d75529e5904eb96f39f9f387ca521fb74fc3221069c4dcd28152dbfc3",
+      "after_sha256": "d5c6558f793236438b63f11a5706cc36ee37b2d287aa09f60612c4f4e98cbf8e",
+      "new_file": false
+    }
+  ],
+  "patch_sha256": "f376da2ff66ef50a3b267f1fab8ebd081754e602cc8705c1baf31075ef905f17",
+  "overlay_dry_run_passed": true,
+  "overlay_apply_byte_exact": true,
+  "production_writes": 0,
+  "controller_changes_already_in_isolated_worktree": [
+    "memory_manager/phase2/bridge.py",
+    "memory_manager/phase2/http_bridge.py",
+    "memory_manager/phase6/worker.py"
+  ],
+  "features_default": {
+    "JARVIS_SERVER_AUTH": "0",
+    "JARVIS_HERMES_ENABLED": "0",
+    "private_switch_enabled": false
+  }
+}

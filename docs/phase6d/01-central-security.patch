@@ -1,0 +1,301 @@
+--- /dev/null
++++ b/home/user/workspace/jarvis/jarvis-session-auth.mjs
+@@ -0,0 +1,90 @@
++// Server-issued human sessions, independent of visual profiles and bridge secrets.
++import {createHash,randomBytes} from 'node:crypto';
++import {serverAuthenticator} from './hermes-server-auth.mjs';
++export const trustedRequests=new WeakMap();
++const hash=value=>createHash('sha256').update(value).digest('hex');
++export function sessionRegistry({credentials,grants,roles,origin,now=()=>Date.now(),sessionTTL=30*60*1000,cookiePath='/api/jarvis'}){
++ const base=new URL(origin);
++ if(!['/api/jarvis','/api'].includes(cookiePath))throw Error('Reviewed cookie scope required');
++ if(base.origin!==origin||!(base.protocol==='https:'||(base.protocol==='http:'&&base.hostname==='127.0.0.1'))||!Number.isSafeInteger(sessionTTL)||sessionTTL<1000||sessionTTL>3600000)throw Error('Pinned secure origin and bounded lifetime required');
++ const issued=new Map();let verify,records,spaces,permissions;
++ function updatePolicy(policy){
++  if(!(policy.roles instanceof Map)||!(policy.grants instanceof Map)||!Array.isArray(policy.credentials))throw Error('Server policy required');
++  // Validate fully before publishing any new policy; callers fail closed on error.
++  const nextVerify=serverAuthenticator({credentials:policy.credentials,grants:policy.grants,now});
++  const nextRecords=new Map();
++  for(const c of policy.credentials){if(nextRecords.has(c.sha256))throw Error('Duplicate credential');nextRecords.set(c.sha256,{...c})}
++  const nextSpaces=new Map([...policy.grants].map(([k,v])=>{if(!Array.isArray(v)||v.some(s=>typeof s!=='string'))throw Error('Space grants');return [k,[...v]]}));
++  const nextRoles=new Map([...policy.roles].map(([k,v])=>{if(!Array.isArray(v)||v.some(r=>typeof r!=='string'))throw Error('Role grants');return [k,[...new Set(v)]]}));
++  verify=nextVerify;records=nextRecords;spaces=nextSpaces;permissions=nextRoles;
++  for(const [key,session] of issued){const issuer=records.get(session.issuer);if(session.expiresAt<=now()||!issuer||issuer.subject!==session.subject||issuer.expiresAt<=now())issued.delete(key)}
++ }
++ updatePolicy({credentials,grants,roles});
++ function identity(subject,record,sessionHandle){
++  const grants=spaces.get(subject);if(!grants?.length)return null;
++  return {subject,kind:record?.kind||'human',sessionHandle,spaces:[...grants],roles:[...(permissions.get(subject)||[])],defaultSpace:grants[0]};
++ }
++ function presented(req){
++  const cookies=(req.headers.cookie||'').split(';').map(x=>x.trim()).filter(x=>x.startsWith('JarvisSession='));
++  if(cookies.length>1)return null;
++  if(req.headers.authorization!==undefined){
++   if(typeof req.headers.authorization!=='string'||!/^Bearer [A-Za-z0-9_-]{43,128}$/.test(req.headers.authorization))return null;
++   return {value:req.headers.authorization.slice(7),bearer:true};
++  }
++  return cookies.length?{value:cookies[0].slice('JarvisSession='.length),bearer:false}:null;
++ }
++ function authenticate(req){
++  const entry=presented(req);if(!entry||!/^[A-Za-z0-9_-]{43,128}$/.test(entry.value))return null;
++  const key=hash(entry.value),session=issued.get(key);
++  if(session){
++   const issuer=records.get(session.issuer);
++   if(session.expiresAt<=now()||!issuer||issuer.subject!==session.subject||issuer.expiresAt<=now()){issued.delete(key);return null}
++   return identity(session.subject,issuer,'session:'+key);
++  }
++  // Cookies never accept the long-lived login credential. Explicit API bearer
++  // credentials remain supported and are revoked by removing them from policy.
++  if(!entry.bearer)return null;
++  const principal=verify({headers:{authorization:'Bearer '+entry.value}});
++  return principal?identity(principal.subject,records.get(key),'credential:'+key):null;
++ }
++ const sameOrigin=req=>req.headers.origin===origin;
++ function isActive(id,permission,space){
++  if(!id?.sessionHandle)return false;const [type,key]=id.sessionHandle.split(':');
++  const session=type==='session'?issued.get(key):null,issuer=records.get(session?.issuer||key);
++  if(type!=='session'&&type!=='credential'||!issuer||issuer.subject!==id.subject||issuer.expiresAt<=now()||(type==='session'&&(!session||session.expiresAt<=now())))return false;
++  return spaces.get(id.subject)?.includes(space)&&permissions.get(id.subject)?.includes(permission);
++ }
++ return {authenticate,isActive,sameOrigin,origin,updatePolicy,async handle(req,res,url){
++  if(url.pathname!=='/api/jarvis/session')return false;
++  const send=(code,data,headers={})=>{res.writeHead(code,{'content-type':'application/json','cache-control':'no-store',...headers});res.end(JSON.stringify(data));return true};
++  if(req.method==='GET'){const id=authenticate(req);return send(id?200:401,id?{subject:id.subject,spaces:id.spaces,roles:id.roles}:{error:'Authentication required'})}
++  if(!sameOrigin(req))return send(403,{error:'Origin denied'});
++  if(req.method==='DELETE'){
++   const entry=presented(req);if(entry)issued.delete(hash(entry.value));
++   for(const cookie of (req.headers.cookie||'').split(';').map(x=>x.trim()))if(cookie.startsWith('JarvisSession='))issued.delete(hash(cookie.slice('JarvisSession='.length)));
++   return send(200,{signedOut:true},{'set-cookie':cookiePath==='/api'?[`JarvisSession=; Path=/api/jarvis; HttpOnly; SameSite=Strict; Max-Age=0${base.protocol==='https:'?'; Secure':''}`,`JarvisSession=; Path=${cookiePath}; HttpOnly; SameSite=Strict; Max-Age=0${base.protocol==='https:'?'; Secure':''}`]:`JarvisSession=; Path=${cookiePath}; HttpOnly; SameSite=Strict; Max-Age=0${base.protocol==='https:'?'; Secure':''}`});
++  }
++  if(req.method!=='POST')return send(405,{error:'Method denied'});
++  if(req.headers['transfer-encoding']||!/^\d+$/.test(req.headers['content-length']||'')||Number(req.headers['content-length'])>512)return send(413,{error:'Body limit'});
++  const chunks=[];let size=0;
++  for await(const chunk of req){size+=chunk.length;if(size>512)return send(413,{error:'Body limit'});chunks.push(chunk)}
++  if(size!==Number(req.headers['content-length']))return send(400,{error:'Body length'});
++  let data;try{data=JSON.parse(Buffer.concat(chunks).toString())}catch{return send(400,{error:'Invalid JSON'})}
++  if(!data||Object.keys(data).join()!=='token'||typeof data.token!=='string')return send(400,{error:'Session token only'});
++  const principal=verify({headers:{authorization:'Bearer '+data.token}}),id=principal?identity(principal.subject,records.get(hash(data.token))):null;
++  if(!id||id.kind!=='human')return send(401,{error:'Session denied'});
++  for(const [key,s] of issued)if(s.expiresAt<=now())issued.delete(key);
++  if(issued.size>=1000)return send(429,{error:'Session capacity reached'});
++  const issuer=hash(data.token),expiresAt=Math.min(records.get(issuer).expiresAt,now()+sessionTTL);
++  const token=randomBytes(32).toString('base64url');issued.set(hash(token),{subject:id.subject,issuer,expiresAt});
++  const sessionCookie=`JarvisSession=${token}; Path=${cookiePath}; HttpOnly; SameSite=Strict; Max-Age=${Math.max(0,Math.floor((expiresAt-now())/1000))}${base.protocol==='https:'?'; Secure':''}`;
++  return send(200,{subject:id.subject,spaces:id.spaces,expiresAt},{'set-cookie':cookiePath==='/api'?[`JarvisSession=; Path=/api/jarvis; HttpOnly; SameSite=Strict; Max-Age=0${base.protocol==='https:'?'; Secure':''}`,sessionCookie]:sessionCookie});
++ }};
++}
++export function requiredPermission(method,action){
++ if(action==='live/tool')return 'voice'; // Each actual tool receives an independent permission check.
++ if(action.startsWith('hermes/'))return action.endsWith('/approvals')?'missions.approve':method==='GET'?'missions.read':action.endsWith('/cancel')?'missions.cancel':'missions.create';
++ if(method==='GET')return ({docs:'memory.read',doc:'memory.read','memory/map':'memory.read','memory/status':'memory.read','live/status':'voice','voice/status':'voice',capabilities:'voice','live/costs':'usage.read','openai/usage':'usage.read','evolution/status':'development','evolution/diff':'development'})[action];
++ if(method==='POST')return ({'live/session':'voice','voice/session':'voice','voice/transcribe':'voice','voice/speak':'voice','conversations/record':'memory.write',notes:'memory.write',move:'memory.move',sync:'memory.admin',import:'memory.admin',ask:'conversation','capabilities/run':'capabilities','live/usage':'usage.write','live/balance':'usage.admin'})[action];
++ return undefined;
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/hermes-server-auth.mjs
+@@ -0,0 +1,18 @@
++// Node 18, offline preparation. Opaque server-issued sessions, never visual profiles.
++import {createHash,timingSafeEqual} from 'node:crypto';
++export function serverAuthenticator({credentials,grants,now=()=>Date.now()}={}){
++ if(!Array.isArray(credentials)||!(grants instanceof Map))throw Error('Server registry required');
++ const records=credentials.map(c=>{
++  if(!/^[a-f0-9]{64}$/.test(c.sha256)||typeof c.subject!=='string'||!Number.isFinite(c.expiresAt))throw Error('Invalid session record');
++  return {...c,digest:Buffer.from(c.sha256,'hex')};
++ });
++ const acl=new Map([...grants].map(([subject,spaces])=>[subject,Object.freeze([...spaces])]));
++ return req=>{
++  const header=req.headers.authorization;
++  if(typeof header!=='string'||!/^Bearer [A-Za-z0-9_-]{43,128}$/.test(header))return null;
++  const hash=createHash('sha256').update(header.slice(7)).digest();
++  const match=records.find(c=>timingSafeEqual(hash,c.digest)&&c.expiresAt>now());
++  if(!match||!acl.has(match.subject))return null;
++  return {subject:match.subject,spaces:[...acl.get(match.subject)]};
++ };
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/gateway-route-policy.mjs
+@@ -0,0 +1,72 @@
++// Explicit Node 18 route registry. No provider, shell, database or physical imports.
++const rows=[];
++function add(path,methods,permission,options={}){
++ for(const method of methods.split(' '))rows.push(Object.freeze({path,method,permission,identity:'human',effect:'read',clients:[],...options}));
++}
++add('/api/health','GET','public',{identity:'public',effect:'minimal-health-only',clients:['monitor']});
++add('/api/jarvis/session','GET POST DELETE','session',{identity:'session-protocol',effect:'human-session',clients:['auth-client']});
++const jarvis={
++ 'ask':['POST','conversation','model/tools/archive'],
++ 'capabilities':['GET','capabilities.read','configuration'], 'capabilities/run':['POST','capabilities.execute','external-or-physical'],
++ 'evolution/status':['GET','development.read','development-results'],'evolution/diff':['GET','development.read','file-read'],
++ 'conversations/record':['POST','memory.write','archive-write'],
++ 'memory/map':['GET','memory.read','memory-with-common'], 'memory/status':['GET','memory.read','memory-with-common'],
++ 'voice/status':['GET','voice','configuration'],'live/status':['GET','voice','configuration'],
++ 'openai/usage':['GET','usage.read','provider-request'],'live/costs':['GET','usage.read','usage-read'],
++ 'live/usage':['POST','usage.write','usage-write'],'live/balance':['POST','usage.manage','usage-write'],
++ 'live/tool':['POST','native.tools','model-selected-tools'],'live/session':['POST','native.session','provider-session'],
++ 'voice/session':['POST','voice','voice-session'], 'voice/transcribe':['POST','voice','paid-provider'], 'voice/speak':['POST','voice','paid-provider-stream'],
++ 'move':['POST','memory.move','cross-space-write'],'docs':['GET','memory.read','memory-read'],'doc':['GET','memory.read','memory-read'],
++ 'sync':['POST','memory.sync','global-import'],'notes':['POST','memory.write','memory-write'],'import':['POST','memory.import','file-import'],
++ 'hermes/config':['GET','missions.read','feature-state'],'hermes/missions':['GET','missions.read','mission-read'],
++};
++for(const [p,[methods,permission,effect]] of Object.entries(jarvis))add('/api/jarvis/'+p,methods,permission,{space:true,effect,clients:['jarvis-web','iphone-web'],resource:['ask','docs','doc','capabilities/run','live/tool','live/session','move','sync','import','memory/map','memory/status','evolution/status','evolution/diff'].includes(p)});
++add('/api/jarvis/hermes/missions','POST','missions.create',{space:true,effect:'synthetic-admission',clients:['missions-panel','hybrid-facade']});
++for(const suffix of ['', '/events','/results'])add('/api/jarvis/hermes/missions/:id'+suffix,'GET','missions.read',{space:true,resource:true,effect:'mission-read',clients:['missions-panel']});
++add('/api/jarvis/hermes/missions/:id/cancel','POST','missions.cancel',{space:true,resource:true,effect:'cancel-request',clients:['missions-panel']});
++add('/api/jarvis/hermes/missions/:id/approvals','POST','missions.approve',{space:true,resource:true,effect:'human-approval',clients:['missions-panel'],approval:true});
++add('/api/projects','GET','projects.read',{resource:true,clients:['gateway-ui'],effect:'filesystem-list'});
++add('/api/tree','GET','files.read',{resource:true,clients:['gateway-ui'],effect:'filesystem-read-and-mkdir'});
++add('/api/chat','GET','chat.read',{resource:true,clients:['gateway-ui'],effect:'conversation-read'});
++add('/api/chat','DELETE','chat.delete',{resource:true,clients:['gateway-ui'],effect:'conversation-delete'});
++add('/api/runs','GET','runs.read',{resource:true,clients:['gateway-ui'],effect:'run-list'});
++add('/api/runs','POST','runs.create',{resource:true,clients:['gateway-ui'],effect:'shell/network/files'});
++for(const suffix of ['','/events'])add('/api/runs/:id'+suffix,'GET','runs.read',{resource:true,clients:['gateway-ui'],effect:'run-output'});
++add('/api/s9/control','GET','physical.status',{clients:['s9-ui'],effect:'equipment-status'});
++add('/api/s9/power','POST','physical.s9.power',{physical:true,resource:true,effect:'physical-power',clients:['s9-ui']});
++add('/api/dosing-calibration/run','POST','physical.dosing.calibrate',{physical:true,resource:true,effect:'physical-calibration',clients:['calibration-ui']});
++add('/api/dosing-calibration/latest','GET','calibration.read',{clients:['calibration-ui'],effect:'measurement-read'});
++for(const name of ['magic-mirror','mining-report','home-report','energy-live','nilm-report'])add('/api/'+name,'GET','reports.read',{clients:['mirror-ui','dashboard'],effect:'private-telemetry'});
++add('/api/mirror/apple','GET','calendar.read',{clients:['mirror-ui'],effect:'personal-data'});
++add('/api/mirror/apple','POST','calendar.configure',{resource:true,clients:['mirror-ui'],effect:'account-configuration'});
++add('/api/mirror/tasks','GET','tasks.read',{clients:['mirror-ui'],effect:'task-read'});
++add('/api/mirror/tasks','POST PATCH DELETE','tasks.write',{resource:true,clients:['mirror-ui'],effect:'task-write'});
++for(const name of ['status','calendars','events','addressbooks','contacts'])add('/api/icloud/'+name,'GET','calendar.read',{clients:['mirror-ui'],effect:'personal-data'});
++add('/api/fridge/stock','GET','fridge.read',{clients:['fridge-ui'],effect:'inventory-read'});
++add('/api/fridge/product/:id','GET','fridge.read',{clients:['fridge-ui'],effect:'product-read/network'});
++for(const name of ['vision','barcode','date','name','items','remove-by-barcode'])add('/api/fridge/'+name,'POST',name==='vision'?'fridge.analyse':'fridge.write',{clients:['fridge-ui'],effect:name==='vision'?'paid-vision':'inventory/network'});
++add('/api/fridge/items/:id','PATCH PUT','fridge.write',{clients:['fridge-ui'],resource:true,effect:'inventory-write'});
++add('/api/fridge/items/:id/remove','POST','fridge.write',{clients:['fridge-ui'],resource:true,effect:'inventory-write'});
++for(const name of ['status','image'])add('/api/astro/'+name,'GET','astro.read',{clients:['astro-ui'],effect:'private-display'});
++add('/api/astro/connect','POST','astro.connect',{clients:['astro-ui'],resource:true,effect:'upstream-network/config'});
++for(const name of ['start','answer','close'])add('/api/german/'+name,'POST','german.use',{clients:['german-ui'],resource:name!=='start',effect:name==='close'?'session-delete':'paid-model/session'});
++for(const name of ['report','fast','lightning','trail-lab','loss-audit','annual-trades.csv','dex-trades.csv','analysis.csv'])add('/api/solana-paper/'+name,'GET HEAD','paper.read',{clients:['solana-ui'],effect:'simulation-data-read'});
++add('/api/solana-paper/runs/:epoch/:file','GET HEAD','paper.read',{resource:true,clients:['solana-ui'],effect:'archive-read'});
++export const routeMatrix=Object.freeze(rows);
++const compiled=rows.map(row=>({...row,re:new RegExp('^'+row.path.split('/').map(s=>s.startsWith(':')?'[^/]+':s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('/')+'$')}));
++export function classify(method,path){return compiled.find(r=>r.method===method&&r.re.test(path))||null}
++export const requestIdentity=new WeakMap();
++export function authorize({method,path,identity,space,origin,expectedOrigin,resourceAllowed=false,physicalApproval=false}){
++ const row=classify(method,path);
++ if(!row)return {allowed:false,status:403,reason:'unclassified-route'};
++ if(row.identity==='public')return {allowed:true,row};
++ if(row.identity==='session-protocol')return {allowed:true,row}; // sessionRegistry enforces its own origin/credentials.
++ if(!identity)return {allowed:false,status:401,reason:'authentication'};
++ if(identity.kind!=='human')return {allowed:false,status:403,reason:'human-required'};
++ if(!identity.roles?.includes(row.permission))return {allowed:false,status:403,reason:'permission'};
++ if(row.space&&(!space||!identity.spaces?.includes(space)))return {allowed:false,status:403,reason:'space'};
++ if(!['GET','HEAD'].includes(method)&&origin!==expectedOrigin)return {allowed:false,status:403,reason:'origin'};
++ if(row.resource&&!resourceAllowed)return {allowed:false,status:403,reason:'resource-adapter-required'};
++ if(row.physical&&!physicalApproval)return {allowed:false,status:403,reason:'physical-approval-required'};
++ return {allowed:true,row};
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/gateway-security.mjs
+@@ -0,0 +1,64 @@
++// Central guard candidate. Injected handlers; no imports of live gateway/backends.
++import {open,lstat,realpath} from 'node:fs/promises';
++import {constants} from 'node:fs';
++import path from 'node:path';
++import {createHash} from 'node:crypto';
++import {trustedRequests} from './jarvis-session-auth.mjs';
++import {authorize,classify,requestIdentity} from './gateway-route-policy.mjs';
++const send=(res,status,data)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(data))};
++const within=(root,file)=>file===root||file.startsWith(root+path.sep);
++export async function staticBytes(root,relative){
++ if(typeof relative!=='string'||relative.includes('\\')||relative.split('/').some(p=>!p||p==='.'||p==='..'||p.startsWith('.')))throw Error('Static path denied');
++ const base=await realpath(root),target=path.resolve(base,relative);if(!within(base,target))throw Error('Static boundary');
++ let component=base;
++ for(const part of relative.split('/')){component=path.join(component,part);if((await lstat(component)).isSymbolicLink())throw Error('Static symlink denied')}
++ const f=await open(target,constants.O_RDONLY|constants.O_NOFOLLOW);
++ try{
++  const actual=await realpath('/proc/self/fd/'+f.fd); // Target host is Linux; fail closed elsewhere.
++  const st=await f.stat();if(!within(base,actual)||!st.isFile()||st.size>32*1024*1024)throw Error('Static file denied');
++  return await f.readFile();
++ }finally{await f.close()}
++}
++export function centralGateway({sessions,dispatch,resource=async()=>false,physicalApproval=async()=>false,refresh=async()=>{},publicAssets=new Map(),staticRoot,streamCheckMs=1000,streamMaxMs=45000,audit=async()=>{}}){
++ if(streamCheckMs<10||streamCheckMs>1000||streamMaxMs>45000)throw Error('Bounded revocation checks required');
++ return async(req,res,url)=>{
++  // Check raw target before URL normalization. No encoded separators or dot segments.
++  let raw;try{raw=decodeURIComponent(req.url.split('?')[0])}catch{return send(res,400,{error:'Invalid URL'})}
++  if(raw.includes('\\')||/%2f|%5c/i.test(req.url.split('?')[0])||raw.split('/').some(p=>p==='.'||p==='..'))return send(res,403,{error:'Path denied'});
++  try{
++   await refresh();
++   // All responses are same-origin. No wildcard CORS, even if a legacy handler tries it.
++   const writeHead=res.writeHead.bind(res);
++   res.writeHead=(status,...args)=>{res.removeHeader?.('access-control-allow-origin');const last=args.at(-1);if(last&&typeof last==='object'&&!Array.isArray(last)){const safe={};for(const [k,v]of Object.entries(last))if(!k.toLowerCase().startsWith('access-control-'))safe[k]=v;args[args.length-1]=safe}return writeHead(status,...args)};
++   if(req.headers.origin&&req.headers.origin!==sessions.origin)return send(res,403,{error:'Origin denied'});
++   if(!url.pathname.startsWith('/api/')){
++    if(!['GET','HEAD'].includes(req.method)||!publicAssets.has(url.pathname))return send(res,404,{error:'Static route denied'});
++    const asset=publicAssets.get(url.pathname),bytes=await staticBytes(staticRoot,asset.file);
++    if(!/^[a-f0-9]{64}$/.test(asset.sha256||'')||createHash('sha256').update(bytes).digest('hex')!==asset.sha256)throw Error('Unreviewed static bytes');
++    res.writeHead(200,{'content-type':asset.type,'cache-control':'no-store','x-content-type-options':'nosniff'});return res.end(req.method==='HEAD'?undefined:bytes);
++   }
++   const row=classify(req.method,url.pathname);if(!row)return send(res,403,{error:'Unclassified route'});
++   if(row.permission==='public')return send(res,200,{ok:true});
++   if(await sessions.handle(req,res,url))return;
++   const id=sessions.authenticate(req),values=url.searchParams.getAll('space');
++   if(values.length>1)return send(res,403,{error:'Ambiguous space'});
++   const space=values[0]||id?.defaultSpace;
++   // Cheap identity/origin checks must precede any resource adapter.
++   const preliminary=authorize({method:req.method,path:url.pathname,identity:id,space,origin:req.headers.origin,expectedOrigin:sessions.origin,resourceAllowed:true,physicalApproval:true});
++   if(!preliminary.allowed)return send(res,preliminary.status,{error:preliminary.reason});
++   const allowed=authorize({method:req.method,path:url.pathname,identity:id,space,origin:req.headers.origin,expectedOrigin:sessions.origin,resourceAllowed:!row.resource||await resource({req,url,identity:id,space,row}),physicalApproval:!row.physical||await physicalApproval({req,url,identity:id,space,row})});
++   if(!allowed.allowed)return send(res,allowed.status,{error:allowed.reason});
++   const context={...id,space};requestIdentity.set(req,context);trustedRequests.set(req,context);
++   await audit({subject:id.subject,permission:row.permission,space,method:req.method,route:row.path});
++   const streaming=url.pathname.endsWith('/events')||url.pathname==='/api/jarvis/voice/speak';
++   let timer,deadline;
++   if(streaming){
++    const stop=()=>{clearInterval(timer);clearTimeout(deadline)};
++    res.once('close',stop);res.once('finish',stop);
++    timer=setInterval(()=>{void refresh().then(()=>{if(!sessions.isActive(id,row.permission,space))res.destroy()}).catch(()=>res.destroy())},streamCheckMs);timer.unref();
++    deadline=setTimeout(()=>res.destroy(),streamMaxMs);deadline.unref();
++   }
++   await dispatch(req,res,url);
++  }catch{if(res.headersSent)res.destroy();else send(res,503,{error:'Policy or service unavailable'})}
++ };
++}
+--- /dev/null
++++ b/home/user/workspace/jarvis/gateway-security-mount.mjs
+@@ -0,0 +1,16 @@
++import {open} from 'node:fs/promises';
++import {constants} from 'node:fs';
++import {sessionRegistry} from './jarvis-session-auth.mjs';
++import {centralGateway} from './gateway-security.mjs';
++export async function ownedJSON(file){
++ const fd=await open(file,constants.O_RDONLY|constants.O_NOFOLLOW);
++ try{const st=await fd.stat();if(!st.isFile()||st.uid!==process.getuid()||(st.mode&0o077)||st.size>131072)throw Error('Private policy file required');return JSON.parse(await fd.readFile('utf8'))}finally{await fd.close()}
++}
++export async function mountCentralGateway(dispatch,{policyFile,assetFile,staticRoot,resource,physicalApproval,audit}={}){
++ const first=await ownedJSON(policyFile),assets=await ownedJSON(assetFile);
++ if(!Array.isArray(assets)||assets.some(a=>typeof a.path!=='string'||typeof a.file!=='string'||typeof a.type!=='string'||!/^[a-f0-9]{64}$/.test(a.sha256||'')))throw Error('Explicit asset manifest required');
++ if(new Set(assets.map(a=>a.path)).size!==assets.length)throw Error('Duplicate static route');
++ const sessions=sessionRegistry({...first,grants:new Map(first.grants),roles:new Map(first.roles),cookiePath:'/api'});
++ const refresh=async()=>{const cfg=await ownedJSON(policyFile);if(cfg.origin!==first.origin)throw Error('Origin requires reviewed restart');sessions.updatePolicy({...cfg,grants:new Map(cfg.grants),roles:new Map(cfg.roles)})};
++ return centralGateway({sessions,dispatch,refresh,resource,physicalApproval,audit,staticRoot,publicAssets:new Map(assets.map(a=>[a.path,a]))});
++}
+--- a/home/user/gateway/server.js
++++ b/home/user/gateway/server.js
+@@ -0,0 +1,2 @@
++import {mountCentralGateway} from '/home/user/workspace/jarvis/gateway-security-mount.mjs';
++import {requestIdentity} from '/home/user/workspace/jarvis/gateway-route-policy.mjs';
+@@ -1574 +1576 @@
+-  if (url.pathname.startsWith("/api/s9/") && !isAuthorized(req)) {
++  if (url.pathname.startsWith("/api/s9/") && !requestIdentity.has(req)) {
+@@ -1601 +1603 @@
+-  if (url.pathname.startsWith("/api/icloud/") && !isAuthorized(req)) {
++  if (url.pathname.startsWith("/api/icloud/") && !requestIdentity.has(req)) {
+@@ -1995 +1997 @@
+-async function routeRequest(req, res, protocol = "http") {
++async function dispatchRequest(req, res, protocol = "http") {
+@@ -2017,0 +2020,11 @@
++// Review candidate: no optional insecure fallback. Resource/physical adapters
++// intentionally absent => denied until independently reviewed adapters exist.
++const securedRoute = await mountCentralGateway(
++ (req,res,url)=>dispatchRequest(req,res,url.protocol.slice(0,-1)),
++ {policyFile:process.env.JARVIS_SECURITY_CONFIG,assetFile:process.env.JARVIS_PUBLIC_ASSETS,staticRoot:'/home/user/gateway/public'}
++);
++async function routeRequest(req,res,protocol='http') {
++ try {return await securedRoute(req,res,new URL(req.url,`${protocol}://${req.headers.host}`));}
++ catch {res.writeHead(400);res.end();}
++}
++

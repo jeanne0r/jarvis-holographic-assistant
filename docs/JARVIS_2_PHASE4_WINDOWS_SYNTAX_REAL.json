@@ -1,0 +1,32 @@
+{
+  "computer_name": "GAMER",
+  "python310_version": "Python 3.10.11",
+  "syntax_checks": [
+    {
+      "errors": [],
+      "file": "phase4-audit-windows.ps1",
+      "error_count": 0
+    },
+    {
+      "errors": [],
+      "file": "phase4-provision-account.ps1",
+      "error_count": 0
+    },
+    {
+      "errors": [],
+      "file": "phase4-install-windows.ps1",
+      "error_count": 0
+    },
+    {
+      "errors": [],
+      "file": "phase4-seal-tokens.ps1",
+      "error_count": 0
+    },
+    {
+      "errors": [],
+      "file": "phase4-network-policy.ps1",
+      "error_count": 0
+    }
+  ],
+  "executed_prepared_scripts": false
+}

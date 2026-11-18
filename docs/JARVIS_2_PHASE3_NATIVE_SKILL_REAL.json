@@ -1,0 +1,148 @@
+{
+  "benchmark_version": "phase3-native-hermes",
+  "started_at_utc": "2026-11-14T08:14:41Z",
+  "downloads": 0,
+  "paid_api_calls": 0,
+  "hermes_runtime_tested": false,
+  "cases": [],
+  "samples": [
+    {
+      "available": true,
+      "observed_at": 1794644088.797769,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 94.78,
+      "utilization": 0.0,
+      "temperature_c": 35.91,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794644091.3501785,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 46.51,
+      "utilization": 0.0,
+      "temperature_c": 33.19,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794644093.907059,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 8.49,
+      "utilization": 0.0,
+      "temperature_c": 32.69,
+      "miner_running": false
+    },
+    {
+      "available": true,
+      "observed_at": 1794644096.4677055,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 8.31,
+      "utilization": 0.0,
+      "temperature_c": 32.38,
+      "miner_running": false
+    }
+  ],
+  "cleanup": {
+    "cleanup_requested": true,
+    "windows_listener_after": {
+      "listening": false
+    },
+    "gpu_after": {
+      "available": true,
+      "observed_at": 1794644100.8901827,
+      "name": "NVIDIA GeForce RTX 3080",
+      "total_mib": 10240.0,
+      "used_mib": 1061.0,
+      "free_mib": 9179.0,
+      "driver": "621.24",
+      "power_w": 15.73,
+      "utilization": 0.0,
+      "temperature_c": 32.5,
+      "miner_running": false
+    }
+  },
+  "baseline": {
+    "available": true,
+    "observed_at": 1794644084.050763,
+    "name": "NVIDIA GeForce RTX 3080",
+    "total_mib": 10240.0,
+    "used_mib": 1061.0,
+    "free_mib": 9179.0,
+    "driver": "621.24",
+    "power_w": 8.57,
+    "utilization": 0.0,
+    "temperature_c": 31.81,
+    "miner_running": false
+  },
+  "server_identity": {
+    "listening": true,
+    "addresses": [
+      "127.0.0.1"
+    ],
+    "pid": 23736,
+    "started": "2026-11-14T08:14:45.1861489Z",
+    "name": "ollama"
+  },
+  "ollama_version": "0.35.1",
+  "model": {
+    "name": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "size": 3324173934,
+    "details": {
+      "parent_model": "model.gguf",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "4.2B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 2560
+    }
+  },
+  "configuration": {
+    "model": "qwen3.5:4b",
+    "digest": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "context_tokens": 64000,
+    "max_output_tokens": 768,
+    "timeout_seconds": 60,
+    "protocol": "ollama",
+    "min_free_mib": 8500,
+    "think": false
+  },
+  "native_hermes": {
+    "attempt_id": "20261114T081448Z",
+    "hermes_runtime_tested": false,
+    "paid_api_calls": 0,
+    "missions": [],
+    "model_requests": [],
+    "passed": false,
+    "error_class": "RuntimeError",
+    "error": "Isolated Hermes unit did not start"
+  },
+  "sampled_peak_vram_mib": 1061.0,
+  "sampled_peak_power_w": 94.78,
+  "sampled_board_energy_wh": 0.07559405742386978,
+  "energy_coverage_seconds": 7.669936418533325,
+  "measurement_note": "Board power samples, not wall-socket energy or CUDA time. Unload after every request; host file cache may stay warm. GPU sampling is not a continuous mining watchdog.",
+  "passed": false,
+  "finished_at_utc": "2026-11-14T08:15:00Z"
+}

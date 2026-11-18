@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-11-15T10:08:45.383077+00:00",
+  "authorized_operation": "Install and start only isolated user unit on loopback; no autostart",
+  "manifest_verified": true,
+  "initial_readiness_passed": true,
+  "observed_listeners": [
+    "127.0.0.1:8796",
+    "127.0.0.1:8797"
+  ],
+  "gateway_main_pid_unchanged": 2033987,
+  "unit_installed": true,
+  "unit_enabled": false,
+  "final_state": "inactive",
+  "safety_stop_reason": "systemd warns that unit configures an IP firewall but is not running as root; effective BPF enforcement could not be verified with current rights. No restriction removed.",
+  "bpf_inspection": "unprivileged operation not permitted; sudo requires password; no credential requested or used",
+  "backup_checks": {
+    "memory.sqlite": {
+      "integrity": "ok",
+      "private_mode": "0o600"
+    },
+    "memory.backup.sqlite": {
+      "integrity": "ok",
+      "private_mode": "0o600"
+    },
+    "restore-check.sqlite": {
+      "integrity": "ok",
+      "private_mode": "0o600"
+    }
+  },
+  "backup_restore_equal": true,
+  "windows_contacted": false,
+  "new_missions_created": false,
+  "paid_api_calls": 0,
+  "live_auth_checks_completed": false,
+  "ports_closed_after_stop": true,
+  "next_action": "Privileged read-only inspection of effective cgroup IP filters; do not start again or alter unit until confinement is resolved."
+}
